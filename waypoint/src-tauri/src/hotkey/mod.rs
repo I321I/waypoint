@@ -133,7 +133,6 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .min_inner_size(300.0, 200.0)
         .resizable(true)
         .decorations(false)
-        .transparent(true)
         .build()?;
     Ok(())
 }

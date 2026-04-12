@@ -69,9 +69,35 @@ jobs:
           releaseBody: |
             ## 安裝方式
             - **Windows**：下載 `.msi` 檔案安裝
-            - **Steam Deck / Linux (aarch64)**：下載 `_aarch64.AppImage`，賦予執行權限後執行
+            - **Steam Deck（Flatpak，推薦）**：下載 `_aarch64.flatpak`，在 Desktop Mode 執行 `flatpak install --user io.github.i321i.waypoint_aarch64.flatpak`
+            - **Steam Deck / Linux（AppImage）**：下載 `_aarch64.AppImage`，賦予執行權限後執行
             - **Linux (x86_64)**：下載 `_amd64.AppImage`，賦予執行權限後執行
             - **macOS**：下載 `.dmg` 檔案安裝
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
+
+      - name: Install flatpak-builder
+        if: matrix.platform == 'ubuntu-22.04-arm'
+        run: |
+          sudo apt-get install -y flatpak flatpak-builder
+          flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08
+
+      - name: Build Flatpak
+        if: matrix.platform == 'ubuntu-22.04-arm'
+        run: |
+          cp waypoint/src-tauri/target/aarch64-unknown-linux-gnu/release/waypoint waypoint
+          flatpak-builder --repo=flatpak-repo --force-clean flatpak-build \
+            waypoint/flatpak/io.github.i321i.waypoint.yml
+          flatpak build-bundle flatpak-repo \
+            io.github.i321i.waypoint_aarch64.flatpak \
+            io.github.i321i.waypoint --arch=aarch64
+
+      - name: Upload Flatpak to Release
+        if: matrix.platform == 'ubuntu-22.04-arm'
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: io.github.i321i.waypoint_aarch64.flatpak

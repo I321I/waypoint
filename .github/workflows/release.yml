@@ -60,6 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           projectPath: waypoint
+          beforeBuildCommand: npm run build
           tagName: ${{ github.ref_name }}
           releaseName: 'Waypoint ${{ github.ref_name }}'
           releaseBody: |

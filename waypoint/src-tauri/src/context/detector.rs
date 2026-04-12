@@ -16,7 +16,7 @@ pub fn get_focused_window() -> Option<FocusedWindowInfo> {
 
     unsafe {
         let hwnd = GetForegroundWindow();
-        if hwnd == HWND(0) { return None; }
+        if hwnd == HWND(std::ptr::null_mut()) { return None; }
 
         let mut title_buf = [0u16; 512];
         let len = GetWindowTextW(hwnd, &mut title_buf);
@@ -52,10 +52,8 @@ pub fn get_focused_window() -> Option<FocusedWindowInfo> {
 #[cfg(target_os = "macos")]
 pub fn get_focused_window() -> Option<FocusedWindowInfo> {
     use objc2_app_kit::NSWorkspace;
-    use objc2_foundation::MainThreadMarker;
 
-    let mtm = unsafe { MainThreadMarker::new_unchecked() };
-    let workspace = NSWorkspace::sharedWorkspace(mtm);
+    let workspace = unsafe { NSWorkspace::sharedWorkspace() };
     let app = unsafe { workspace.frontmostApplication() }?;
 
     let process_name = unsafe { app.localizedName() }

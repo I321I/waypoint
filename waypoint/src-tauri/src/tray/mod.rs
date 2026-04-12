@@ -46,3 +46,8 @@ pub fn open_help_window(app: &AppHandle) -> tauri::Result<()> {
     .build()?;
     Ok(())
 }
+
+#[tauri::command]
+pub fn cmd_open_help(app: tauri::AppHandle) -> Result<(), String> {
+    open_help_window(&app).map_err(|e| e.to_string())
+}

@@ -36,6 +36,7 @@ pub fn run() {
             hotkey::cmd_close_note_window,
             hotkey::cmd_register_note_hotkey,
             hotkey::cmd_unregister_hotkey,
+            tray::cmd_open_help,
         ])
         .setup(|app| {
             tray::setup_tray(app)?;

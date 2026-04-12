@@ -54,13 +54,16 @@ jobs:
         working-directory: waypoint
         run: npm install
 
-      - name: Build
+      - name: Build frontend
+        working-directory: waypoint
+        run: npm run build
+
+      - name: Build Tauri
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           projectPath: waypoint
-          beforeBuildCommand: npm run build
           tagName: ${{ github.ref_name }}
           releaseName: 'Waypoint ${{ github.ref_name }}'
           releaseBody: |

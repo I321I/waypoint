@@ -1,21 +1,38 @@
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
-    tray::TrayIconBuilder,
+    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     AppHandle, Manager,
 };
 
+use crate::hotkey::open_list_window;
+
 pub fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
+    let open_item = MenuItem::with_id(app, "open", "開啟 Waypoint", true, None::<&str>)?;
+    let sep1 = PredefinedMenuItem::separator(app)?;
+    let settings_item = MenuItem::with_id(app, "settings", "設定", true, None::<&str>)?;
+    let sep2 = PredefinedMenuItem::separator(app)?;
     let help_item = MenuItem::with_id(app, "help", "使用說明", true, None::<&str>)?;
-    let sep = PredefinedMenuItem::separator(app)?;
+    let sep3 = PredefinedMenuItem::separator(app)?;
     let quit_item = MenuItem::with_id(app, "quit", "結束 Waypoint", true, None::<&str>)?;
 
-    let menu = Menu::with_items(app, &[&help_item, &sep, &quit_item])?;
+    let menu = Menu::with_items(app, &[
+        &open_item, &sep1,
+        &settings_item, &sep2,
+        &help_item, &sep3,
+        &quit_item,
+    ])?;
 
     TrayIconBuilder::new()
         .icon(app.default_window_icon().unwrap().clone())
         .menu(&menu)
         .tooltip("Waypoint")
         .on_menu_event(|app, event| match event.id.as_ref() {
+            "open" => {
+                let _ = open_list_window(app);
+            }
+            "settings" => {
+                let _ = open_settings_window(app);
+            }
             "help" => {
                 let _ = open_help_window(app);
             }
@@ -23,6 +40,18 @@ pub fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
                 app.exit(0);
             }
             _ => {}
+        })
+        .on_tray_icon_event(|tray, event| {
+            // 左鍵單擊 tray icon 直接開啟列表
+            if let TrayIconEvent::Click {
+                button: MouseButton::Left,
+                button_state: MouseButtonState::Up,
+                ..
+            } = event
+            {
+                let app = tray.app_handle();
+                let _ = open_list_window(app);
+            }
         })
         .build(app)?;
 
@@ -47,7 +76,30 @@ pub fn open_help_window(app: &AppHandle) -> tauri::Result<()> {
     Ok(())
 }
 
+pub fn open_settings_window(app: &AppHandle) -> tauri::Result<()> {
+    if let Some(win) = app.get_webview_window("settings") {
+        win.show()?;
+        win.set_focus()?;
+        return Ok(());
+    }
+    tauri::WebviewWindowBuilder::new(
+        app,
+        "settings",
+        tauri::WebviewUrl::App("index.html?view=settings".into()),
+    )
+    .title("Waypoint — 設定")
+    .inner_size(400.0, 300.0)
+    .resizable(false)
+    .build()?;
+    Ok(())
+}
+
 #[tauri::command]
 pub fn cmd_open_help(app: tauri::AppHandle) -> Result<(), String> {
     open_help_window(&app).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn cmd_open_settings(app: tauri::AppHandle) -> Result<(), String> {
+    open_settings_window(&app).map_err(|e| e.to_string())
 }

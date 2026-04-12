@@ -31,12 +31,16 @@ pub fn run() {
             commands::session_cmd::save_session,
             commands::config_cmd::get_app_config,
             commands::config_cmd::set_hotkey,
+            commands::config_cmd::get_autostart,
+            commands::config_cmd::is_autostart_supported,
+            commands::config_cmd::set_autostart,
             hotkey::cmd_open_note_window,
             hotkey::cmd_collapse_all,
             hotkey::cmd_close_note_window,
             hotkey::cmd_register_note_hotkey,
             hotkey::cmd_unregister_hotkey,
             tray::cmd_open_help,
+            tray::cmd_open_settings,
         ])
         .setup(|app| {
             tray::setup_tray(app)?;

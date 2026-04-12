@@ -31,4 +31,4 @@ export interface AppConfig {
   contexts: Record<string, { matchBy: "process" | "title" }>;
 }
 
-export type ViewType = "list" | "note" | "help";
+export type ViewType = "list" | "note" | "help" | "settings";

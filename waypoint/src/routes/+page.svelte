@@ -8,6 +8,7 @@
   let ListWindow: any;
   let NoteWindow: any;
   let HelpWindow: any;
+  let SettingsWindow: any;
 
   onMount(async () => {
     const params = new URLSearchParams(window.location.search);
@@ -25,6 +26,9 @@
     } else if (view === "help") {
       const mod = await import("../windows/HelpWindow.svelte");
       HelpWindow = mod.default;
+    } else if (view === "settings") {
+      const mod = await import("../windows/SettingsWindow.svelte");
+      SettingsWindow = mod.default;
     }
   });
 </script>
@@ -35,4 +39,6 @@
   <svelte:component this={NoteWindow} {noteId} {contextId} />
 {:else if view === "help" && HelpWindow}
   <svelte:component this={HelpWindow} />
+{:else if view === "settings" && SettingsWindow}
+  <svelte:component this={SettingsWindow} />
 {/if}

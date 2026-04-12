@@ -38,6 +38,9 @@ export const session = {
 export const config = {
   get: () => invoke<AppConfig>("get_app_config"),
   setHotkey: (hotkey: string) => invoke<void>("set_hotkey", { hotkey }),
+  getAutostart: () => invoke<boolean>("get_autostart"),
+  isAutostartSupported: () => invoke<boolean>("is_autostart_supported"),
+  setAutostart: (enabled: boolean) => invoke<void>("set_autostart", { enabled }),
 };
 
 export const windows = {
@@ -50,4 +53,5 @@ export const windows = {
     invoke<void>("cmd_register_note_hotkey", { noteId, contextId, hotkey }),
   unregisterHotkey: (hotkey: string) =>
     invoke<void>("cmd_unregister_hotkey", { hotkey }),
+  openSettings: () => invoke<void>("cmd_open_settings"),
 };

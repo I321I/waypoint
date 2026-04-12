@@ -13,10 +13,12 @@
     <section>
       <h2>快捷鍵邏輯（三段式）</h2>
       <table>
-        <tr><th>狀態</th><th>按快捷鍵</th><th>結果</th></tr>
-        <tr><td>無任何視窗</td><td>按一次</td><td>開啟列表 + 還原上次筆記</td></tr>
-        <tr><td>有筆記，無列表</td><td>按一次</td><td>開啟列表</td></tr>
-        <tr><td>列表開著</td><td>再按一次</td><td>儲存 session，收起全部</td></tr>
+        <thead><tr><th>狀態</th><th>按快捷鍵</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td>無任何視窗</td><td>按一次</td><td>開啟列表 + 還原上次筆記</td></tr>
+          <tr><td>有筆記，無列表</td><td>按一次</td><td>開啟列表</td></tr>
+          <tr><td>列表開著</td><td>再按一次</td><td>儲存 session，收起全部</td></tr>
+        </tbody>
       </table>
     </section>
 

@@ -107,7 +107,7 @@
       openNoteIds={openGlobalNoteIds}
       on:opened={(e) => handleNoteOpened(e.detail.noteId, e.detail.isGlobal)}
     />
-    <div class="divider" />
+    <div class="divider"></div>
     {#if currentContextId}
       <ContextSection
         contextId={currentContextId}

@@ -4,7 +4,7 @@ mod error;
 mod hotkey;
 mod state;
 mod storage;
-// mod tray;    // TODO Task 8
+mod tray;
 
 use state::AppState;
 
@@ -38,6 +38,7 @@ pub fn run() {
             hotkey::cmd_unregister_hotkey,
         ])
         .setup(|app| {
+            tray::setup_tray(app)?;
             let config = storage::app_config::load().unwrap_or_default();
             hotkey::register_hotkey(app.handle(), &config.hotkey)?;
             Ok(())

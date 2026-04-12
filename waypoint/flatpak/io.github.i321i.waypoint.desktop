@@ -2,5 +2,7 @@
 Name=Waypoint
 Comment=浮動筆記應用程式
 Exec=waypoint
+Icon=io.github.i321i.waypoint
 Type=Application
 Categories=Utility;
+StartupNotify=false

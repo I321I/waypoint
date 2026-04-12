@@ -8,8 +8,11 @@ finish-args:
   - --share=ipc
   - --socket=fallback-x11
   - --socket=wayland
+  - --socket=session-bus
   - --filesystem=~/waypoint
+  - --filesystem=~/.config/autostart:create
   - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=org.freedesktop.StatusNotifierWatcher
 
 modules:
   - name: waypoint
@@ -17,8 +20,11 @@ modules:
     build-commands:
       - install -Dm755 waypoint /app/bin/waypoint
       - install -Dm644 io.github.i321i.waypoint.desktop /app/share/applications/io.github.i321i.waypoint.desktop
+      - install -Dm644 128x128.png /app/share/icons/hicolor/128x128/apps/io.github.i321i.waypoint.png
     sources:
       - type: file
         path: waypoint
       - type: file
         path: io.github.i321i.waypoint.desktop
+      - type: file
+        path: ../src-tauri/icons/128x128.png

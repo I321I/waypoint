@@ -8,6 +8,7 @@
   import { Markdown } from "@tiptap/markdown";
   import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
   import { common, createLowlight } from "lowlight";
+  import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
 
   export let content: string = "";
   export let fontSize: number = 14;
@@ -31,6 +32,10 @@
         TaskItem.configure({ nested: true }),
         CodeBlockLowlight.configure({ lowlight }),
         Markdown.configure({ transformPastedText: true, transformCopiedText: true }),
+        Table.configure({ resizable: false }),
+        TableRow,
+        TableHeader,
+        TableCell,
       ],
       editorProps: {
         attributes: {

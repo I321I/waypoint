@@ -11,6 +11,7 @@
   let openGlobalNoteIds: string[] = [];
   let openContextNoteIds: string[] = [];
   let unlisten: (() => void) | null = null;
+  let unlistenCollapse: (() => void) | null = null;
 
   function handleNoteOpened(noteId: string, isGlobal: boolean) {
     if (isGlobal) {
@@ -57,10 +58,16 @@
     unlisten = await listen<{ noteId: string; isGlobal: boolean }>("note-closed", (event) => {
       handleNoteClosed(event.payload.noteId, event.payload.isGlobal);
     });
+
+    // Listen for collapse-all-requested event from hotkey handler so session is saved first
+    unlistenCollapse = await listen("waypoint://collapse-all-requested", async () => {
+      await handleCollapseAll();
+    });
   });
 
   onDestroy(() => {
     unlisten?.();
+    unlistenCollapse?.();
   });
 
   async function handleCollapseAll() {

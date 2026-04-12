@@ -16,6 +16,8 @@
   let showAliasInput = false;
   let aliasTarget = "";
   let availableContexts: string[] = [];
+  let showRenameInput = false;
+  let newContextName = "";
 
   async function showContextMenu(e: MouseEvent) {
     e.preventDefault();
@@ -25,7 +27,18 @@
     menuVisible = true;
   }
 
-  function closeMenu() { menuVisible = false; showAliasInput = false; }
+  function closeMenu() { menuVisible = false; showAliasInput = false; showRenameInput = false; }
+
+  async function renameCtx() {
+    if (!newContextName.trim() || newContextName === contextId) {
+      showRenameInput = false;
+      return;
+    }
+    await contextApi.rename(contextId, newContextName.trim());
+    dispatch("renamed", { oldId: contextId, newId: newContextName.trim() });
+    closeMenu();
+    showRenameInput = false;
+  }
 
   async function setMatchBy(matchBy: "process" | "title") {
     await contextApi.setMatchBy(contextId, matchBy);
@@ -87,6 +100,18 @@
         {/each}
       </select>
       <button on:click={() => aliasTarget && setAlias(aliasTarget)}>確認</button>
+    {/if}
+    <div class="divider" />
+    {#if !showRenameInput}
+      <button on:click={() => { showRenameInput = true; newContextName = contextId; }}>重新命名</button>
+    {:else}
+      <input
+        class="alias-select"
+        bind:value={newContextName}
+        placeholder="新名稱"
+        on:keydown={e => e.key === 'Enter' && renameCtx()}
+      />
+      <button on:click={renameCtx}>確認</button>
     {/if}
     <div class="divider" />
     <button class="danger" on:click={deleteCtx}>刪除此 context</button>

@@ -2,7 +2,7 @@ use crate::context::derive_context_id;
 use crate::context::detector::get_focused_window;
 use crate::state::AppState;
 use crate::storage::app_config;
-use tauri::{AppHandle, Manager, WebviewWindowBuilder, WebviewUrl};
+use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder, WebviewUrl};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
 
 #[derive(Debug, PartialEq)]
@@ -48,7 +48,20 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
                 let _ = open_list_window(app);
             }
             HotkeyAction::CollapseAll => {
-                collapse_all_waypoint_windows(app);
+                // Emit event so frontend can save session before collapsing
+                let _ = app.emit("waypoint://collapse-all-requested", ());
+                // Also collapse after a brief delay to handle case
+                // where list window is not mounted (safety fallback)
+                let app2 = app.clone();
+                std::thread::spawn(move || {
+                    std::thread::sleep(std::time::Duration::from_millis(200));
+                    // Only collapse if list window still exists (frontend may have already handled it)
+                    if let Some(list) = app2.get_webview_window("list") {
+                        if list.is_visible().unwrap_or(false) {
+                            collapse_all_waypoint_windows(&app2);
+                        }
+                    }
+                });
             }
         }
     })?;

@@ -24,6 +24,10 @@
     class:active={editor?.isActive("underline")}
     on:click={() => cmd(() => editor!.chain().focus().toggleUnderline().run())}
     title="Underline"><u>U</u></button>
+  <button
+    class:active={editor?.isActive("strike")}
+    on:click={() => cmd(() => editor!.chain().focus().toggleStrike().run())}
+    title="Strikethrough"><s>S</s></button>
   <span class="sep" />
   <button
     class:active={editor?.isActive("heading", { level: 1 })}

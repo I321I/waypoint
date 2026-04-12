@@ -1,0 +1,38 @@
+[package]
+name = "waypoint"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "waypoint_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.0", features = ["tray-icon"] }
+tauri-plugin-global-shortcut = "2.0"
+tauri-plugin-shell = "2.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1", features = ["v4"] }
+dirs = "5"
+thiserror = "1"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows = { version = "0.58", features = [
+  "Win32_UI_WindowsAndMessaging",
+  "Win32_System_Threading",
+  "Win32_Foundation",
+] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+x11rb = { version = "0.13", features = ["allow-unsafe-code"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-app-kit = { version = "0.2", features = ["NSWorkspace", "NSRunningApplication"] }
+objc2-foundation = "0.2"
+
+[dev-dependencies]
+tempfile = "3"

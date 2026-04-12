@@ -16,6 +16,9 @@ modules:
     buildsystem: simple
     build-commands:
       - install -Dm755 waypoint /app/bin/waypoint
+      - install -Dm644 io.github.i321i.waypoint.desktop /app/share/applications/io.github.i321i.waypoint.desktop
     sources:
       - type: file
         path: waypoint
+      - type: file
+        path: io.github.i321i.waypoint.desktop

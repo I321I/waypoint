@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Waypoint
+Comment=浮動筆記應用程式
+Exec=waypoint
+Type=Application
+Categories=Utility;

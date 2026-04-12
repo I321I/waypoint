@@ -1,7 +1,7 @@
 mod commands;
 mod context;
 mod error;
-// mod hotkey;  // TODO Task 7
+mod hotkey;
 mod state;
 mod storage;
 // mod tray;    // TODO Task 8
@@ -31,8 +31,17 @@ pub fn run() {
             commands::session_cmd::save_session,
             commands::config_cmd::get_app_config,
             commands::config_cmd::set_hotkey,
+            hotkey::cmd_open_note_window,
+            hotkey::cmd_collapse_all,
+            hotkey::cmd_close_note_window,
+            hotkey::cmd_register_note_hotkey,
+            hotkey::cmd_unregister_hotkey,
         ])
-        .setup(|_app| Ok(()))
+        .setup(|app| {
+            let config = storage::app_config::load().unwrap_or_default();
+            hotkey::register_hotkey(app.handle(), &config.hotkey)?;
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running Waypoint");
 }

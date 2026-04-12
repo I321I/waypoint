@@ -69,22 +69,34 @@ jobs:
           releaseBody: |
             ## 安裝方式
             - **Windows**：下載 `.msi` 檔案安裝
-            - **Steam Deck（Flatpak，推薦）**：下載 `_aarch64.flatpak`，在 Desktop Mode 執行 `flatpak install --user ./io.github.i321i.waypoint_aarch64.flatpak`
-            - **Steam Deck / Linux（AppImage）**：下載 `_aarch64.AppImage`，賦予執行權限後執行
-            - **Linux (x86_64)**：下載 `_amd64.AppImage`，賦予執行權限後執行
+            - **Steam Deck（Flatpak，推薦）**：下載 `_x86_64.flatpak`，在 Desktop Mode 執行 `flatpak install --user ./io.github.i321i.waypoint_x86_64.flatpak`
+            - **Linux x86_64（AppImage）**：下載 `_amd64.AppImage`，賦予執行權限後執行
+            - **Linux aarch64（Flatpak）**：下載 `_aarch64.flatpak`，執行 `flatpak install --user ./io.github.i321i.waypoint_aarch64.flatpak`
+            - **Linux aarch64（AppImage）**：下載 `_aarch64.AppImage`，賦予執行權限後執行
             - **macOS**：下載 `.dmg` 檔案安裝
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
 
       - name: Install flatpak-builder
-        if: matrix.platform == 'ubuntu-22.04-arm'
+        if: startsWith(matrix.platform, 'ubuntu')
         run: |
           sudo apt-get install -y flatpak flatpak-builder
           sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           sudo flatpak install -y flathub org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08
 
       - name: Build Flatpak
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          cp waypoint/src-tauri/target/release/waypoint waypoint/flatpak/waypoint
+          flatpak-builder --repo=flatpak-repo --force-clean --arch=x86_64 flatpak-build \
+            waypoint/flatpak/io.github.i321i.waypoint.yml
+          flatpak build-bundle flatpak-repo \
+            io.github.i321i.waypoint_x86_64.flatpak \
+            io.github.i321i.waypoint --arch=x86_64 \
+            --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Build Flatpak (aarch64)
         if: matrix.platform == 'ubuntu-22.04-arm'
         run: |
           cp waypoint/src-tauri/target/aarch64-unknown-linux-gnu/release/waypoint waypoint/flatpak/waypoint
@@ -96,6 +108,15 @@ jobs:
             --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 
       - name: Upload Flatpak to Release
+        if: matrix.platform == 'ubuntu-22.04'
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: io.github.i321i.waypoint_x86_64.flatpak
+
+      - name: Upload Flatpak to Release (aarch64)
         if: matrix.platform == 'ubuntu-22.04-arm'
         uses: softprops/action-gh-release@v2
         env:

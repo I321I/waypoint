@@ -87,12 +87,13 @@ jobs:
       - name: Build Flatpak
         if: matrix.platform == 'ubuntu-22.04-arm'
         run: |
-          cp waypoint/src-tauri/target/aarch64-unknown-linux-gnu/release/waypoint waypoint
+          cp waypoint/src-tauri/target/aarch64-unknown-linux-gnu/release/waypoint waypoint/flatpak/waypoint
           flatpak-builder --repo=flatpak-repo --force-clean flatpak-build \
             waypoint/flatpak/io.github.i321i.waypoint.yml
           flatpak build-bundle flatpak-repo \
             io.github.i321i.waypoint_aarch64.flatpak \
-            io.github.i321i.waypoint --arch=aarch64
+            io.github.i321i.waypoint --arch=aarch64 \
+            --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 
       - name: Upload Flatpak to Release
         if: matrix.platform == 'ubuntu-22.04-arm'
@@ -100,4 +101,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag_name: ${{ github.ref_name }}
           files: io.github.i321i.waypoint_aarch64.flatpak

@@ -141,10 +141,8 @@ pub fn list_notes(context_id: Option<&str>) -> Result<Vec<Note>, WaypointError> 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::sync::Mutex;
+    use crate::storage::test_utils::HOME_LOCK;
     use tempfile::TempDir;
-
-    static HOME_LOCK: Mutex<()> = Mutex::new(());
 
     fn setup() -> (TempDir, std::sync::MutexGuard<'static, ()>) {
         let guard = HOME_LOCK.lock().unwrap();

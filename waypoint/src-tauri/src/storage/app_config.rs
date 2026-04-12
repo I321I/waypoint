@@ -63,33 +63,33 @@ pub fn save(config: &AppConfig) -> Result<(), WaypointError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::storage::test_utils::HOME_LOCK;
     use tempfile::TempDir;
 
-    fn with_temp_home(f: impl FnOnce(&TempDir)) {
+    fn setup() -> (TempDir, std::sync::MutexGuard<'static, ()>) {
+        let guard = HOME_LOCK.lock().unwrap();
         let dir = TempDir::new().unwrap();
         std::env::set_var("HOME", dir.path());
-        f(&dir);
+        (dir, guard)
     }
 
     #[test]
     fn load_returns_default_when_no_file() {
-        with_temp_home(|_| {
-            let cfg = load().unwrap();
-            assert_eq!(cfg.hotkey, "Ctrl+Shift+Space");
-            assert!(cfg.context_aliases.is_empty());
-        });
+        let (_dir, _guard) = setup();
+        let cfg = load().unwrap();
+        assert_eq!(cfg.hotkey, "Ctrl+Shift+Space");
+        assert!(cfg.context_aliases.is_empty());
     }
 
     #[test]
     fn save_and_reload_roundtrip() {
-        with_temp_home(|_| {
-            let mut cfg = AppConfig::default();
-            cfg.hotkey = "Ctrl+Alt+N".to_string();
-            cfg.context_aliases.insert("steam_win".to_string(), "steam".to_string());
-            save(&cfg).unwrap();
-            let loaded = load().unwrap();
-            assert_eq!(loaded.hotkey, "Ctrl+Alt+N");
-            assert_eq!(loaded.context_aliases.get("steam_win").unwrap(), "steam");
-        });
+        let (_dir, _guard) = setup();
+        let mut cfg = AppConfig::default();
+        cfg.hotkey = "Ctrl+Alt+N".to_string();
+        cfg.context_aliases.insert("steam_win".to_string(), "steam".to_string());
+        save(&cfg).unwrap();
+        let loaded = load().unwrap();
+        assert_eq!(loaded.hotkey, "Ctrl+Alt+N");
+        assert_eq!(loaded.context_aliases.get("steam_win").unwrap(), "steam");
     }
 }

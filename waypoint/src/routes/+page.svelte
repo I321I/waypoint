@@ -1,44 +1,24 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import type { ViewType } from "$lib/types";
+  import ListWindowComp from "../windows/ListWindow.svelte";
+  import NoteWindowComp from "../windows/NoteWindow.svelte";
+  import HelpWindowComp from "../windows/HelpWindow.svelte";
+  import SettingsWindowComp from "../windows/SettingsWindow.svelte";
 
-  let view: ViewType = "list";
-  let noteId: string | null = null;
-  let contextId: string | null = null;
-  let ListWindow: any;
-  let NoteWindow: any;
-  let HelpWindow: any;
-  let SettingsWindow: any;
-
-  onMount(async () => {
-    const params = new URLSearchParams(window.location.search);
-    view = (params.get("view") as ViewType) ?? "list";
-    noteId = params.get("noteId");
-    contextId = params.get("contextId");
-
-    // Lazy load the appropriate window component
-    if (view === "list") {
-      const mod = await import("../windows/ListWindow.svelte");
-      ListWindow = mod.default;
-    } else if (view === "note") {
-      const mod = await import("../windows/NoteWindow.svelte");
-      NoteWindow = mod.default;
-    } else if (view === "help") {
-      const mod = await import("../windows/HelpWindow.svelte");
-      HelpWindow = mod.default;
-    } else if (view === "settings") {
-      const mod = await import("../windows/SettingsWindow.svelte");
-      SettingsWindow = mod.default;
-    }
-  });
+  // 同步讀取 URL params（ssr: false，window 永遠可用）
+  // 避免 onMount 非同步讀取造成的競態白屏問題
+  const params = new URLSearchParams(window.location.search);
+  const view = (params.get("view") ?? "list") as ViewType;
+  const noteId = params.get("noteId");
+  const contextId = params.get("contextId");
 </script>
 
-{#if view === "list" && ListWindow}
-  <svelte:component this={ListWindow} />
-{:else if view === "note" && NoteWindow && noteId}
-  <svelte:component this={NoteWindow} {noteId} {contextId} />
-{:else if view === "help" && HelpWindow}
-  <svelte:component this={HelpWindow} />
-{:else if view === "settings" && SettingsWindow}
-  <svelte:component this={SettingsWindow} />
+{#if view === "list"}
+  <ListWindowComp />
+{:else if view === "note" && noteId}
+  <NoteWindowComp {noteId} {contextId} />
+{:else if view === "help"}
+  <HelpWindowComp />
+{:else if view === "settings"}
+  <SettingsWindowComp />
 {/if}

@@ -25,6 +25,7 @@ pub fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
     TrayIconBuilder::new()
         .icon(app.default_window_icon().unwrap().clone())
         .menu(&menu)
+        .show_menu_on_left_click(false)
         .tooltip("Waypoint")
         .on_menu_event(|app, event| match event.id.as_ref() {
             "open" => {

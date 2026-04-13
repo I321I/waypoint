@@ -86,7 +86,7 @@
   }
 
   function openSettings() {
-    windows.openSettings().catch(() => {});
+    windowsApi.openSettings().catch(() => {});
   }
 
   const appWindow = getCurrentWindow();

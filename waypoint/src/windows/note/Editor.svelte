@@ -31,7 +31,8 @@
         TaskList,
         TaskItem.configure({ nested: true }),
         CodeBlockLowlight.configure({ lowlight }),
-        Markdown.configure({ transformPastedText: true, transformCopiedText: true }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        Markdown.configure({ transformPastedText: true, transformCopiedText: true } as any),
         Table.configure({ resizable: false }),
         TableRow,
         TableHeader,

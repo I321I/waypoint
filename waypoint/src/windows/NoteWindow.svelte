@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { getCurrentWindow } from "@tauri-apps/api/window";
   import { emit } from "@tauri-apps/api/event";
   import Editor from "./note/Editor.svelte";
   import Toolbar from "./note/Toolbar.svelte";
@@ -15,12 +14,18 @@
   let settingsOpen = false;
   let editorRef: Editor;
   let saveTimeout: ReturnType<typeof setTimeout>;
-  const appWindow = getCurrentWindow();
+  let windowOpacity = 1;
+
+  // 套用視窗透明度（CSS opacity，因 Tauri 2.x JS SDK 無 setOpacity）
+  function applyOpacity(opacity: number) {
+    windowOpacity = opacity;
+    document.documentElement.style.opacity = String(opacity);
+  }
 
   onMount(async () => {
     note = await notesApi.read(contextId, noteId);
     if (note) {
-      await appWindow.setOpacity(note.settings.opacity);
+      applyOpacity(note.settings.opacity);
     }
   });
 
@@ -36,7 +41,7 @@
     if (!note) return;
     note = { ...note, settings: e.detail };
     await notesApi.saveSettings(contextId, noteId, e.detail);
-    await appWindow.setOpacity(e.detail.opacity);
+    applyOpacity(e.detail.opacity);
   }
 
   async function handleClose() {
@@ -45,7 +50,8 @@
   }
 
   async function handleMinimize() {
-    await appWindow.minimize();
+    const { getCurrentWindow } = await import("@tauri-apps/api/window");
+    await getCurrentWindow().minimize();
   }
 </script>
 

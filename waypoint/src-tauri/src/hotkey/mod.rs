@@ -76,7 +76,7 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         *state.list_window_open.lock().unwrap() = true;
         return Ok(());
     }
-    let win = WebviewWindowBuilder::new(app, "list", WebviewUrl::App("index.html?view=list".into()))
+    let win = WebviewWindowBuilder::new(app, "list", WebviewUrl::App("/?view=list".into()))
         .title("Waypoint")
         .inner_size(220.0, 500.0)
         .min_inner_size(180.0, 300.0)
@@ -126,7 +126,7 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         return Ok(());
     }
     let ctx_param = context_id.map(|c| format!("&contextId={}", c)).unwrap_or_default();
-    let url = format!("index.html?view=note&noteId={}{}", note_id, ctx_param);
+    let url = format!("/?view=note&noteId={}{}", note_id, ctx_param);
     WebviewWindowBuilder::new(app, &label, WebviewUrl::App(url.into()))
         .title("Waypoint Note")
         .inner_size(420.0, 600.0)

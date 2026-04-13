@@ -83,6 +83,7 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         .resizable(true)
         .decorations(false)
         .always_on_top(true)
+        .skip_taskbar(true)
         .build()?;
     *state.list_window_open.lock().unwrap() = true;
     let app_handle = app.clone();
@@ -90,7 +91,7 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         if let tauri::WindowEvent::Focused(false) = event {
             let app = app_handle.clone();
             std::thread::spawn(move || {
-                std::thread::sleep(std::time::Duration::from_millis(100));
+                std::thread::sleep(std::time::Duration::from_millis(300));
                 let any_focused = app.webview_windows()
                     .values()
                     .any(|w| w.is_focused().unwrap_or(false));
@@ -133,6 +134,7 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .min_inner_size(300.0, 200.0)
         .resizable(true)
         .decorations(false)
+        .skip_taskbar(true)
         .build()?;
     Ok(())
 }

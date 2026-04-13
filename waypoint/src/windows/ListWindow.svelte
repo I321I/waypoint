@@ -85,6 +85,10 @@
     invoke("cmd_open_help").catch(() => {});
   }
 
+  function openSettings() {
+    windows.openSettings().catch(() => {});
+  }
+
   const appWindow = getCurrentWindow();
   function closeList() { appWindow.hide(); }
 </script>
@@ -96,6 +100,7 @@
       <button class="icon-btn" on:click={openHelp} title="使用說明">?</button>
     </div>
     <div class="titlebar-right">
+      <button class="icon-btn" on:click={openSettings} title="設定">⚙</button>
       <button class="icon-btn" on:click={handleCollapseAll} title="收起全部">⇊</button>
       <button class="icon-btn" on:click={closeList} title="關閉列表">✕</button>
     </div>

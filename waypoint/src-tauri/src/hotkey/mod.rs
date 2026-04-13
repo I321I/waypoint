@@ -86,25 +86,10 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         .skip_taskbar(true)
         .build()?;
     *state.list_window_open.lock().unwrap() = true;
-    let app_handle = app.clone();
-    win.on_window_event(move |event| {
-        if let tauri::WindowEvent::Focused(false) = event {
-            let app = app_handle.clone();
-            std::thread::spawn(move || {
-                std::thread::sleep(std::time::Duration::from_millis(300));
-                let any_focused = app.webview_windows()
-                    .values()
-                    .any(|w| w.is_focused().unwrap_or(false));
-                if !any_focused {
-                    if let Some(list) = app.get_webview_window("list") {
-                        let _ = list.hide();
-                        let state = app.state::<AppState>();
-                        *state.list_window_open.lock().unwrap() = false;
-                    }
-                }
-            });
-        }
-    });
+    // 不使用 focus-based auto-hide：
+    // 1. 拖曳時 Windows 會暫時奪走 focus，auto-hide 會中斷拖曳
+    // 2. 開啟說明/設定視窗時也會觸發，造成列表意外消失
+    // 使用者改靠快捷鍵（CollapseAll）、⇊ 或 ✕ 來關閉列表
     Ok(())
 }
 

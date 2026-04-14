@@ -13,6 +13,11 @@ finish-args:
   - --filesystem=~/.config/autostart:create
   - --talk-name=org.kde.StatusNotifierWatcher
   - --talk-name=org.freedesktop.StatusNotifierWatcher
+  # global shortcut（KDE kglobalaccel + XDG portal）
+  - --talk-name=org.kde.kglobalaccel
+  - --talk-name=org.freedesktop.portal.Desktop
+  # X11 global key grab（fallback-x11 模式下 XGrabKey 需要此權限）
+  - --device=dri
 
 modules:
   - name: waypoint

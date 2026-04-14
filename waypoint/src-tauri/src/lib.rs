@@ -10,11 +10,7 @@ use state::AppState;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    tauri::Builder::default()
-        .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
-            // 第二個實例啟動時，顯示已開啟的列表視窗
-            let _ = hotkey::open_list_window(app);
-        }))
+    let builder = tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .manage(AppState::default())
@@ -51,7 +47,17 @@ pub fn run() {
             let config = storage::app_config::load().unwrap_or_default();
             hotkey::register_hotkey(app.handle(), &config.hotkey)?;
             Ok(())
-        })
+        });
+
+    // single-instance 只在 Windows 啟用
+    // Linux/macOS 的 Flatpak/sandbox 環境下此 plugin 可能初始化失敗，
+    // 造成 app 完全無聲 crash（tray icon 也不顯示）
+    #[cfg(target_os = "windows")]
+    let builder = builder.plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
+        let _ = hotkey::open_list_window(app);
+    }));
+
+    builder
         .run(tauri::generate_context!())
         .expect("error while running Waypoint");
 }

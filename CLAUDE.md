@@ -76,3 +76,32 @@ cd /data/games-note-AIgen/waypoint/src-tauri && cargo test
 2. 撰寫 test（能測什麼就測什麼）
 3. 執行 test，確認全部通過
 4. 執行 git commit（帶 test 檔案一起 commit）
+
+## 每次 UI 修正後必須執行渲染測試（Playwright）
+
+**規則：凡是修改視窗渲染、路由、CSS、元件顯示相關的 bug 或功能，必須執行渲染測試確認通過，才能發布。**
+
+這是因為 Vitest/cargo test 無法測試真實瀏覽器渲染行為。白屏、元件未掛載、樣式未套用等問題只有渲染測試才能提早發現。
+
+### 渲染 Test（Playwright）
+
+```bash
+# 先建置前端
+cd /data/games-note-AIgen/waypoint && npm run build
+
+# 再執行渲染測試（會自動啟動 preview server）
+cd /data/games-note-AIgen/waypoint && npm run test:render
+```
+
+- 測試檔放在 `src/**/*.render.test.pw.ts`
+- 測試覆蓋：各視窗 hash routing 正確渲染、body 不是白色、元件關鍵文字出現
+- 每次修改視窗元件、路由邏輯、CSP 或 app.html 時必須重跑
+
+### 完整測試流程（涵蓋邏輯 + 渲染）
+
+1. 實作修正
+2. 撰寫 Vitest/Rust 單元測試（邏輯層）
+3. `npm test` + `cargo test`，確認全部通過
+4. `npm run build && npm run test:render`，確認渲染正常
+5. 執行 git commit（帶所有 test 檔案一起 commit）
+6. 修正好就發布

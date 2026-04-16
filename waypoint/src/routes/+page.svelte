@@ -1,32 +1,25 @@
 <script lang="ts">
-  import { getCurrentWindow } from "@tauri-apps/api/window";
+  import type { ViewType } from "$lib/types";
   import ListWindowComp from "../windows/ListWindow.svelte";
   import NoteWindowComp from "../windows/NoteWindow.svelte";
   import HelpWindowComp from "../windows/HelpWindow.svelte";
   import SettingsWindowComp from "../windows/SettingsWindow.svelte";
 
-  // 用視窗 label 決定顯示哪個元件——比 URL 解析更可靠（Windows WebView2 可能讀不到 search params）
-  // list        → ListWindow
-  // note-{id}   → NoteWindow
-  // help        → HelpWindow
-  // settings    → SettingsWindow
-  const label = getCurrentWindow().label;
-  const isNote = label.startsWith("note-");
-
-  // noteId 從 label 取，避免 URL 讀不到
-  const noteId = isNote ? label.slice(5) : null;
-  // contextId 仍用 URL（note 視窗的附加參數；若讀不到就當 global note）
-  const contextId = isNote
-    ? new URLSearchParams(window.location.search).get("contextId")
-    : null;
+  // URL hash 路由：#view=list / #view=help / #view=settings / #view=note&noteId=xxx&contextId=yyy
+  // hash 不會被 SvelteKit router 修改，也不依賴 __TAURI_INTERNALS__，跨平台可靠
+  const hashStr = window.location.hash.startsWith('#') ? window.location.hash.slice(1) : '';
+  const params = new URLSearchParams(hashStr);
+  const view = (params.get("view") ?? "list") as ViewType;
+  const noteId = params.get("noteId");
+  const contextId = params.get("contextId");
 </script>
 
-{#if label === "list"}
+{#if view === "list"}
   <ListWindowComp />
-{:else if isNote && noteId}
+{:else if view === "note" && noteId}
   <NoteWindowComp {noteId} {contextId} />
-{:else if label === "help"}
+{:else if view === "help"}
   <HelpWindowComp />
-{:else if label === "settings"}
+{:else if view === "settings"}
   <SettingsWindowComp />
 {/if}

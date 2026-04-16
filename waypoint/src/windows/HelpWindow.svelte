@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { getCurrentWindow } from "@tauri-apps/api/window";
-  const appWindow = getCurrentWindow();
+  import { windows as windowsApi } from "../lib/api";
 </script>
 
 <div class="help-window">
   <div class="titlebar" data-tauri-drag-region>
     <span class="title">Waypoint — 使用說明</span>
-    <button on:click={() => appWindow.close()}>✕</button>
+    <button on:click={() => windowsApi.closeWindow("help").catch(() => {})}>✕</button>
   </div>
 
   <div class="content">

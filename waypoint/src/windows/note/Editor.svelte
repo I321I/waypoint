@@ -9,6 +9,7 @@
   import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
   import { common, createLowlight } from "lowlight";
   import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
+  import Placeholder from "@tiptap/extension-placeholder";
 
   export let content: string = "";
   export let fontSize: number = 14;
@@ -33,6 +34,7 @@
         CodeBlockLowlight.configure({ lowlight }),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         Markdown.configure({ transformPastedText: true, transformCopiedText: true } as any),
+        Placeholder.configure({ placeholder: "輸入文字…" }),
         Table.configure({ resizable: false }),
         TableRow,
         TableHeader,
@@ -90,4 +92,11 @@
   :global(.tiptap-editor input[type="checkbox"]) { margin-right: 6px; accent-color: var(--accent); }
   :global(.tiptap-editor p) { margin: 4px 0; }
   :global(.tiptap-editor strong) { color: var(--text-primary); }
+  :global(.tiptap-editor p.is-editor-empty:first-child::before) {
+    content: attr(data-placeholder);
+    float: left;
+    color: var(--text-secondary);
+    pointer-events: none;
+    height: 0;
+  }
 </style>

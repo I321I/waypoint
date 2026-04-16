@@ -50,8 +50,8 @@
   }
 
   async function handleMinimize() {
-    const { getCurrentWindow } = await import("@tauri-apps/api/window");
-    await getCurrentWindow().minimize();
+    // minimize 用 label，不依賴 getCurrentWindow()
+    await windowsApi.hideWindow(`note-${noteId}`);
   }
 </script>
 

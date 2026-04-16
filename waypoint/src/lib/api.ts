@@ -54,4 +54,8 @@ export const windows = {
   unregisterHotkey: (hotkey: string) =>
     invoke<void>("cmd_unregister_hotkey", { hotkey }),
   openSettings: () => invoke<void>("cmd_open_settings"),
+  /** 用 label 關閉視窗（不依賴 getCurrentWindow()）*/
+  closeWindow: (label: string) => invoke<void>("cmd_close_window", { label }),
+  /** 用 label 隱藏視窗（不依賴 getCurrentWindow()）*/
+  hideWindow: (label: string) => invoke<void>("cmd_hide_window", { label }),
 };

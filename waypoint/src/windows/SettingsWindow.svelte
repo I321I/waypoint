@@ -1,9 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { getCurrentWindow } from "@tauri-apps/api/window";
-  import { config as configApi } from "../lib/api";
-
-  const appWindow = getCurrentWindow();
+  import { config as configApi, windows as windowsApi } from "../lib/api";
 
   let hotkey = "";
   let hotkeyInput = "";
@@ -51,7 +48,7 @@
 <div class="settings-window">
   <div class="titlebar" data-tauri-drag-region>
     <span class="title">Waypoint — 設定</span>
-    <button class="close-btn" on:click={() => appWindow.close()}>✕</button>
+    <button class="close-btn" on:click={() => windowsApi.closeWindow("settings").catch(() => {})}>✕</button>
   </div>
 
   <div class="content">

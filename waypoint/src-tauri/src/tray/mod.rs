@@ -70,7 +70,7 @@ pub fn open_help_window(app: &AppHandle) -> tauri::Result<()> {
     tauri::WebviewWindowBuilder::new(
         app,
         "help",
-        tauri::WebviewUrl::App("/?view=help".into()),
+        tauri::WebviewUrl::App("/#view=help".into()),
     )
     .title("Waypoint — 使用說明")
     .inner_size(600.0, 500.0)
@@ -88,7 +88,7 @@ pub fn open_settings_window(app: &AppHandle) -> tauri::Result<()> {
     tauri::WebviewWindowBuilder::new(
         app,
         "settings",
-        tauri::WebviewUrl::App("/?view=settings".into()),
+        tauri::WebviewUrl::App("/#view=settings".into()),
     )
     .title("Waypoint — 設定")
     .inner_size(400.0, 300.0)

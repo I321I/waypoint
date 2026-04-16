@@ -39,6 +39,8 @@ pub fn run() {
             hotkey::cmd_close_note_window,
             hotkey::cmd_register_note_hotkey,
             hotkey::cmd_unregister_hotkey,
+            hotkey::cmd_close_window,
+            hotkey::cmd_hide_window,
             tray::cmd_open_help,
             tray::cmd_open_settings,
         ])

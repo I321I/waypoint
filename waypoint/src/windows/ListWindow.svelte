@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { getCurrentWindow } from "@tauri-apps/api/window";
   import { listen } from "@tauri-apps/api/event";
   import GlobalSection from "./list/GlobalSection.svelte";
   import ContextSection from "./list/ContextSection.svelte";
@@ -89,8 +88,7 @@
     windowsApi.openSettings().catch(() => {});
   }
 
-  const appWindow = getCurrentWindow();
-  function closeList() { appWindow.hide(); }
+  function closeList() { windowsApi.hideWindow("list").catch(() => {}); }
 </script>
 
 <div class="list-window">

@@ -139,11 +139,7 @@ pub fn register_note_hotkey(
 
 #[tauri::command]
 pub fn cmd_open_note_window(app: AppHandle, note_id: String, context_id: Option<String>) -> Result<(), String> {
-    // 必須在主執行緒建立視窗，否則 WebView2 的 PostMessageW 可能無法被即時處理 → 白屏
-    let app2 = app.clone();
-    app.run_on_main_thread(move || {
-        let _ = open_note_window(&app2, &note_id, context_id.as_deref());
-    }).map_err(|e| e.to_string())
+    open_note_window(&app, &note_id, context_id.as_deref()).map_err(|e| e.to_string())
 }
 
 #[tauri::command]
@@ -180,27 +176,23 @@ pub fn cmd_unregister_hotkey(app: AppHandle, hotkey: String) -> Result<(), Strin
 /// 用 label 關閉視窗（close）——前端不依賴 getCurrentWindow()
 #[tauri::command]
 pub fn cmd_close_window(app: AppHandle, label: String) -> Result<(), String> {
-    let app2 = app.clone();
-    app.run_on_main_thread(move || {
-        if let Some(win) = app2.get_webview_window(&label) {
-            let _ = win.close();
-        }
-    }).map_err(|e| e.to_string())
+    if let Some(win) = app.get_webview_window(&label) {
+        win.close().map_err(|e| e.to_string())?;
+    }
+    Ok(())
 }
 
 /// 用 label 隱藏視窗（hide）——前端不依賴 getCurrentWindow()
 #[tauri::command]
 pub fn cmd_hide_window(app: AppHandle, label: String) -> Result<(), String> {
-    let app2 = app.clone();
-    app.run_on_main_thread(move || {
-        if let Some(win) = app2.get_webview_window(&label) {
-            let _ = win.hide();
-            if label == "list" {
-                let state = app2.state::<crate::state::AppState>();
-                *state.list_window_open.lock().unwrap() = false;
-            }
+    if let Some(win) = app.get_webview_window(&label) {
+        win.hide().map_err(|e| e.to_string())?;
+        if label == "list" {
+            let state = app.state::<crate::state::AppState>();
+            *state.list_window_open.lock().unwrap() = false;
         }
-    }).map_err(|e| e.to_string())
+    }
+    Ok(())
 }
 
 #[cfg(test)]

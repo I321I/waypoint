@@ -133,3 +133,38 @@ cd /data/games-note-AIgen/waypoint && npm run test:render
 4. `npm run build && npm run test:render`，確認渲染正常
 5. 執行 git commit（帶所有 test 檔案一起 commit）
 6. 修正好就發布
+
+## 每次發 release 前必須 E2E 綠燈（Windows WebView2）
+
+**規則：任何修改推上 master 後，`.github/workflows/e2e-windows.yml` 必須綠燈才能發 release tag。**
+
+### E2E Test（WebdriverIO + tauri-driver）
+
+- 位置：`waypoint/e2e/`（`wdio.conf.js` + `specs/*.spec.js`）
+- 跑法（本機 Windows）：
+  ```powershell
+  cd waypoint
+  cargo install tauri-driver --locked
+  npm install
+  npx tauri build --no-bundle
+  $env:WAYPOINT_BINARY = "$PWD\src-tauri\target\release\waypoint.exe"
+  npm run test:e2e
+  ```
+- CI：push master / PR 自動觸發 `e2e-windows` job，runner windows-latest
+
+### 觸發條件
+
+- 修改 UI、路由、CSS、視窗、Rust tauri 指令 — 必須確保 E2E 綠燈後才 tag release
+- 修改 Rust 啟動流程（setup、tray、hotkey）— 同樣 E2E 必綠
+- 純文件修改、CI/workflow 微調 — 仍會觸發，但關注點是主邏輯
+
+### 失敗時
+
+- CI 紅燈 → 立刻看 log（artifact `wdio-logs` 會上傳）
+- 定位失敗原因，補修後再推
+- 不要用「skip E2E」或「暫時關掉」來繞過
+
+### 已知盲點
+
+- 白屏檢測：若 `app.html` 的 inline `body style` 還是深色，即使 CSS 壞了測試也不紅。
+  詳見 `docs/superpowers/plans/2026-04-18-windows-e2e-webview2.md` 與驗證紀錄。

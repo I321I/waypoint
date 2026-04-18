@@ -1,0 +1,91 @@
+name: E2E (Linux / WebKitGTK — Steam Deck 代理)
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e-linux:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            xvfb
+
+      - name: Locate WebKitWebDriver
+        run: |
+          DRIVER=$(find /usr -name WebKitWebDriver -type f 2>/dev/null | head -n1)
+          if [ -z "$DRIVER" ]; then
+            echo "WebKitWebDriver 找不到（libwebkit2gtk-4.1-dev 應已內含）"
+            dpkg -L libwebkit2gtk-4.1-dev | grep -i driver || true
+            dpkg -L libwebkit2gtk-4.1-0 | grep -i driver || true
+            exit 1
+          fi
+          echo "Found at $DRIVER"
+          sudo ln -sf "$DRIVER" /usr/local/bin/WebKitWebDriver
+          WebKitWebDriver --version || true
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            waypoint/src-tauri/target
+          key: ${{ runner.os }}-cargo-e2e-${{ hashFiles('waypoint/src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-e2e-
+
+      - name: Install tauri-driver
+        run: cargo install tauri-driver --locked
+
+      - name: npm install
+        working-directory: waypoint
+        run: npm ci || npm install
+
+      - name: Build frontend
+        working-directory: waypoint
+        run: npm run build
+
+      - name: Build Tauri (release, no bundle)
+        working-directory: waypoint
+        run: npx tauri build --no-bundle
+
+      - name: Run E2E (via xvfb)
+        working-directory: waypoint
+        env:
+          WAYPOINT_BINARY: ${{ github.workspace }}/waypoint/src-tauri/target/release/waypoint
+        run: |
+          xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" \
+            npm run test:e2e
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wdio-logs-linux
+          path: |
+            waypoint/logs/
+          retention-days: 14
+          if-no-files-found: ignore

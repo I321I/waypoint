@@ -9,7 +9,7 @@ on:
 jobs:
   e2e-windows:
     runs-on: windows-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     steps:
       - name: Checkout
@@ -34,6 +34,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-e2e-
 
+      - name: Install tauri-driver
+        run: cargo install tauri-driver --locked
+
       - name: Install frontend dependencies
         working-directory: waypoint
         run: npm ci || npm install
@@ -46,24 +49,27 @@ jobs:
         working-directory: waypoint/src-tauri
         run: cargo build --release
 
+      - name: Locate msedgedriver (windows-latest 內建)
+        shell: pwsh
+        run: |
+          $driver = Get-ChildItem -Path "C:\SeleniumWebDrivers" -Recurse -Filter msedgedriver.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $driver) { throw "msedgedriver.exe 找不到" }
+          Add-Content $env:GITHUB_PATH $driver.DirectoryName
+          Write-Host "msedgedriver at $($driver.FullName)"
+
       - name: Run E2E tests
         working-directory: waypoint
         env:
           WAYPOINT_BINARY: ${{ github.workspace }}\waypoint\src-tauri\target\release\waypoint.exe
         run: npm run test:e2e
 
-      - name: Upload Playwright report on failure
+      - name: Upload E2E logs on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
-          path: waypoint/playwright-report/
+          name: wdio-logs
+          path: |
+            waypoint/logs/
+            waypoint/.wdio-logs/
           retention-days: 14
-
-      - name: Upload traces on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-traces
-          path: waypoint/test-results/
-          retention-days: 14
+          if-no-files-found: ignore

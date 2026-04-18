@@ -36,6 +36,7 @@ export const test = base.extend<{ app: AppFixture }>({
     const proc = spawn(binary, [], {
       env: {
         ...process.env,
+        WAYPOINT_E2E: "1",
         WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: `--remote-debugging-port=${CDP_PORT}`,
       },
       stdio: ["ignore", "pipe", "pipe"],

@@ -115,6 +115,12 @@ pub fn run() {
                 Ok(()) => write_log_line(&format!("register_hotkey ok: {}", &config.hotkey)),
                 Err(e) => write_log_line(&format!("register_hotkey failed ({}): {e}", &config.hotkey)),
             }
+            if std::env::var("WAYPOINT_E2E").is_ok() {
+                write_log_line("WAYPOINT_E2E set: auto-opening list window");
+                if let Err(e) = hotkey::open_list_window(app.handle()) {
+                    write_log_line(&format!("e2e open_list_window failed: {e}"));
+                }
+            }
             Ok(())
         });
 

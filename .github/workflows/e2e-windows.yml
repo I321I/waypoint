@@ -45,9 +45,9 @@ jobs:
         working-directory: waypoint
         run: npm run build
 
-      - name: Build Tauri binary (release)
-        working-directory: waypoint/src-tauri
-        run: cargo build --release
+      - name: Build Tauri binary (release, no bundle)
+        working-directory: waypoint
+        run: npx tauri build --no-bundle
 
       - name: Locate msedgedriver (windows-latest 內建)
         shell: pwsh

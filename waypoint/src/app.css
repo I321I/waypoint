@@ -23,7 +23,7 @@
 }
 
 body {
-  background: var(--bg-primary);
+  background: #ffffff;
   color: var(--text-primary);
   font-family: var(--font-ui);
   font-size: 13px;

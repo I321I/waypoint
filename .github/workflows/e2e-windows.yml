@@ -1,0 +1,69 @@
+name: E2E (Windows / WebView2)
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e-windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            waypoint/src-tauri/target
+          key: ${{ runner.os }}-cargo-e2e-${{ hashFiles('waypoint/src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-e2e-
+
+      - name: Install frontend dependencies
+        working-directory: waypoint
+        run: npm ci || npm install
+
+      - name: Build frontend
+        working-directory: waypoint
+        run: npm run build
+
+      - name: Build Tauri binary (release)
+        working-directory: waypoint/src-tauri
+        run: cargo build --release
+
+      - name: Run E2E tests
+        working-directory: waypoint
+        env:
+          WAYPOINT_BINARY: ${{ github.workspace }}\waypoint\src-tauri\target\release\waypoint.exe
+        run: npm run test:e2e
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: waypoint/playwright-report/
+          retention-days: 14
+
+      - name: Upload traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: waypoint/test-results/
+          retention-days: 14

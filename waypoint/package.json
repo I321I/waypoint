@@ -12,7 +12,8 @@
     "tauri": "tauri",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:render": "playwright test"
+    "test:render": "playwright test",
+    "test:e2e": "playwright test -c playwright.e2e.config.ts"
   },
   "license": "MIT",
   "dependencies": {

@@ -164,6 +164,12 @@ cd /data/games-note-AIgen/waypoint && npm run test:render
 - 定位失敗原因，補修後再推
 - 不要用「skip E2E」或「暫時關掉」來繞過
 
+### Linux / Steam Deck 代理測試
+
+- `.github/workflows/e2e-linux.yml`：ubuntu-22.04 + `webkit2gtk-driver` + `xvfb`
+- 跟 Windows 用同一份 wdio 設定與測試檔（tauri-driver 抽象 OS 差異）
+- 作為 Steam Deck 行為代理（同為 WebKitGTK 引擎）
+
 ### 已知盲點
 
 - 白屏檢測：若 `app.html` 的 inline `body style` 還是深色，即使 CSS 壞了測試也不紅。

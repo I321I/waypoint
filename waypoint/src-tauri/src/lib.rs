@@ -8,8 +8,66 @@ mod tray;
 
 use state::AppState;
 
+/// 寫 panic / 重大錯誤訊息到 log 檔，Steam Deck 等無 console 環境下方便使用者回報。
+///
+/// 位置優先序：
+/// 1. `$XDG_STATE_HOME/waypoint/error.log`
+/// 2. `$HOME/.local/state/waypoint/error.log`
+/// 3. `$HOME/waypoint/error.log`（最後 fallback，跟資料夾同位置）
+fn resolve_log_path(xdg_state: Option<&std::ffi::OsStr>, home: Option<&std::ffi::OsStr>) -> Option<std::path::PathBuf> {
+    let base = xdg_state
+        .map(std::path::PathBuf::from)
+        .or_else(|| home.map(|h| std::path::PathBuf::from(h).join(".local/state")))
+        .or_else(|| home.map(std::path::PathBuf::from))?;
+    Some(base.join("waypoint").join("error.log"))
+}
+
+fn waypoint_log_path() -> Option<std::path::PathBuf> {
+    let xdg = std::env::var_os("XDG_STATE_HOME");
+    let home = std::env::var_os("HOME");
+    resolve_log_path(xdg.as_deref(), home.as_deref())
+}
+
+fn write_log_line(msg: &str) {
+    if let Some(p) = waypoint_log_path() {
+        if let Some(dir) = p.parent() {
+            let _ = std::fs::create_dir_all(dir);
+        }
+        use std::io::Write;
+        if let Ok(mut f) = std::fs::OpenOptions::new().create(true).append(true).open(&p) {
+            let _ = writeln!(f, "[{}] {}", chrono_like_now(), msg);
+        }
+    }
+    eprintln!("[waypoint] {msg}");
+}
+
+fn chrono_like_now() -> String {
+    use std::time::{SystemTime, UNIX_EPOCH};
+    match SystemTime::now().duration_since(UNIX_EPOCH) {
+        Ok(d) => format!("t+{}s", d.as_secs()),
+        Err(_) => "t?".to_string(),
+    }
+}
+
+fn install_panic_hook() {
+    std::panic::set_hook(Box::new(|info| {
+        let loc = info.location().map(|l| format!("{}:{}", l.file(), l.line())).unwrap_or_default();
+        let payload = info.payload();
+        let msg = if let Some(s) = payload.downcast_ref::<&str>() {
+            (*s).to_string()
+        } else if let Some(s) = payload.downcast_ref::<String>() {
+            s.clone()
+        } else {
+            "<non-string panic payload>".to_string()
+        };
+        write_log_line(&format!("PANIC at {loc}: {msg}"));
+    }));
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    install_panic_hook();
+    write_log_line("startup: waypoint launching");
     let builder = tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
@@ -45,9 +103,18 @@ pub fn run() {
             tray::cmd_open_settings,
         ])
         .setup(|app| {
-            tray::setup_tray(app)?;
+            // 兩個初始化都用容錯方式：即使 tray 失敗（如 Steam Deck 無 StatusNotifier），
+            // 至少 hotkey 仍可能工作；反之亦然。失敗原因寫入 log 檔供回報。
+            if let Err(e) = tray::setup_tray(app) {
+                write_log_line(&format!("setup_tray failed: {e}"));
+            } else {
+                write_log_line("setup_tray ok");
+            }
             let config = storage::app_config::load().unwrap_or_default();
-            hotkey::register_hotkey(app.handle(), &config.hotkey)?;
+            match hotkey::register_hotkey(app.handle(), &config.hotkey) {
+                Ok(()) => write_log_line(&format!("register_hotkey ok: {}", &config.hotkey)),
+                Err(e) => write_log_line(&format!("register_hotkey failed ({}): {e}", &config.hotkey)),
+            }
             Ok(())
         });
 
@@ -62,4 +129,28 @@ pub fn run() {
     builder
         .run(tauri::generate_context!())
         .expect("error while running Waypoint");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    use std::ffi::OsStr;
+
+    #[test]
+    fn log_path_prefers_xdg_state_home() {
+        let p = resolve_log_path(Some(OsStr::new("/tmp/xdg")), Some(OsStr::new("/tmp/home"))).unwrap();
+        assert_eq!(p, std::path::PathBuf::from("/tmp/xdg/waypoint/error.log"));
+    }
+
+    #[test]
+    fn log_path_falls_back_to_home_local_state() {
+        let p = resolve_log_path(None, Some(OsStr::new("/tmp/home"))).unwrap();
+        assert_eq!(p, std::path::PathBuf::from("/tmp/home/.local/state/waypoint/error.log"));
+    }
+
+    #[test]
+    fn log_path_returns_none_without_env() {
+        assert!(resolve_log_path(None, None).is_none());
+    }
 }

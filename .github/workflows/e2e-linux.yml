@@ -31,15 +31,29 @@ jobs:
             libappindicator3-dev \
             librsvg2-dev \
             patchelf \
-            xvfb
+            xvfb \
+            webkit2gtk-driver \
+            libwebkit2gtk-4.0-dev || true
+          # webkit2gtk-driver (4.0) 可能已退場；若不存在試 apt 搜尋
+          sudo apt-get install -y webkit2gtk-driver 2>&1 | tail -n 5 || true
 
       - name: Locate WebKitWebDriver
         run: |
-          DRIVER=$(find /usr -name WebKitWebDriver -type f 2>/dev/null | head -n1)
+          set +e
+          echo "=== searching /usr and /opt ==="
+          find /usr /opt -name 'WebKitWebDriver*' 2>/dev/null
+          echo "=== dpkg search ==="
+          dpkg -L webkit2gtk-driver 2>/dev/null | grep -E 'WebKit|driver' || true
+          dpkg -L libwebkit2gtk-4.0-dev 2>/dev/null | grep -E 'WebKit|driver' || true
+          dpkg -L libwebkit2gtk-4.1-0 2>/dev/null | grep -E 'WebKit|driver' || true
+          echo "=== apt-file ==="
+          sudo apt-get install -y apt-file > /dev/null 2>&1
+          sudo apt-file update > /dev/null 2>&1
+          apt-file search WebKitWebDriver 2>/dev/null | head
+          echo "=== decision ==="
+          DRIVER=$(find /usr /opt -name WebKitWebDriver -type f 2>/dev/null | head -n1)
           if [ -z "$DRIVER" ]; then
-            echo "WebKitWebDriver 找不到（libwebkit2gtk-4.1-dev 應已內含）"
-            dpkg -L libwebkit2gtk-4.1-dev | grep -i driver || true
-            dpkg -L libwebkit2gtk-4.1-0 | grep -i driver || true
+            echo "::error::WebKitWebDriver 找不到於任何已知路徑。Ubuntu 22.04 的 webkit2gtk 4.1 似未包 driver。"
             exit 1
           fi
           echo "Found at $DRIVER"

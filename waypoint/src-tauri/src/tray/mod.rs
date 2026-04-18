@@ -75,6 +75,7 @@ pub fn open_help_window(app: &AppHandle) -> tauri::Result<()> {
     .title("Waypoint — 使用說明")
     .inner_size(600.0, 500.0)
     .resizable(true)
+    .decorations(false)
     .build()?;
     Ok(())
 }
@@ -93,24 +94,17 @@ pub fn open_settings_window(app: &AppHandle) -> tauri::Result<()> {
     .title("Waypoint — 設定")
     .inner_size(400.0, 300.0)
     .resizable(false)
+    .decorations(false)
     .build()?;
     Ok(())
 }
 
 #[tauri::command]
 pub fn cmd_open_help(app: tauri::AppHandle) -> Result<(), String> {
-    // 必須在主執行緒建立視窗，避免 WebView2 白屏競態
-    let app2 = app.clone();
-    app.run_on_main_thread(move || {
-        let _ = open_help_window(&app2);
-    }).map_err(|e| e.to_string())
+    open_help_window(&app).map_err(|e| e.to_string())
 }
 
 #[tauri::command]
 pub fn cmd_open_settings(app: tauri::AppHandle) -> Result<(), String> {
-    // 必須在主執行緒建立視窗，避免 WebView2 白屏競態
-    let app2 = app.clone();
-    app.run_on_main_thread(move || {
-        let _ = open_settings_window(&app2);
-    }).map_err(|e| e.to_string())
+    open_settings_window(&app).map_err(|e| e.to_string())
 }

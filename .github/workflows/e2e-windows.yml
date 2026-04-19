@@ -57,19 +57,23 @@ jobs:
           Add-Content $env:GITHUB_PATH $driver.DirectoryName
           Write-Host "msedgedriver at $($driver.FullName)"
 
-      - name: Run E2E tests
+      - name: Run E2E tests (capture stdout/stderr)
         working-directory: waypoint
+        shell: pwsh
         env:
           WAYPOINT_BINARY: ${{ github.workspace }}\waypoint\src-tauri\target\release\waypoint.exe
-        run: npm run test:e2e
+        run: |
+          New-Item -ItemType Directory -Force -Path logs | Out-Null
+          npm run test:e2e *>&1 | Tee-Object -FilePath logs/wdio-full.log
+          exit $LASTEXITCODE
 
-      - name: Upload E2E logs on failure
-        if: failure()
+      - name: Upload E2E logs (always)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: wdio-logs
+          name: wdio-logs-${{ github.run_attempt }}
           path: |
             waypoint/logs/
             waypoint/.wdio-logs/
           retention-days: 14
-          if-no-files-found: ignore
+          if-no-files-found: warn

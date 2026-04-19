@@ -77,3 +77,25 @@ jobs:
             waypoint/.wdio-logs/
           retention-days: 14
           if-no-files-found: warn
+
+      # 失敗時把 log push 到 ci-logs/<sha> 孤兒分支，方便用 MCP get_file_contents 免 token 讀取
+      - name: Push logs to ci-logs branch on failure
+        if: failure()
+        shell: bash
+        working-directory: waypoint
+        run: |
+          set -e
+          if [ ! -f logs/wdio-full.log ]; then
+            echo "no log to push"; exit 0
+          fi
+          cd "$GITHUB_WORKSPACE"
+          BR="ci-logs/${{ github.sha }}-${{ github.run_attempt }}"
+          git config user.email "ci-bot@waypoint"
+          git config user.name "ci-bot"
+          git checkout --orphan "$BR"
+          git rm -rf . >/dev/null 2>&1 || true
+          cp waypoint/logs/wdio-full.log ./wdio-full.log
+          [ -d waypoint/.wdio-logs ] && cp -r waypoint/.wdio-logs ./wdio-logs-dir || true
+          git add -A
+          git commit -m "ci log ${{ github.sha }} attempt ${{ github.run_attempt }}"
+          git push origin "$BR" --force

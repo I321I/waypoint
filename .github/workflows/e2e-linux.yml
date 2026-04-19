@@ -1,10 +1,9 @@
 name: E2E (Linux / WebKitGTK — Steam Deck 代理)
 
 on:
-  push:
-    branches: [master]
-  pull_request:
   workflow_dispatch:
+# Linux E2E 改為手動觸發；日常用 act 本機跑（CLAUDE.md 規範）。
+# 發 release 前若需 GitHub runner 驗證，從 Actions 頁面手動 Run workflow。
 
 jobs:
   e2e-linux:

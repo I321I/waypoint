@@ -34,20 +34,30 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-e2e-
 
+      - name: Prepare logs dir
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force -Path waypoint/logs | Out-Null
+
       - name: Install tauri-driver
-        run: cargo install tauri-driver --locked
+        shell: pwsh
+        run: cargo install tauri-driver --locked *>&1 | Tee-Object -FilePath waypoint/logs/01-tauri-driver.log; exit $LASTEXITCODE
 
       - name: Install frontend dependencies
         working-directory: waypoint
-        run: npm ci || npm install
+        shell: pwsh
+        run: |
+          (npm ci *>&1) -join "`n" | Out-File -FilePath logs/02-npm-install.log -Encoding utf8
+          if ($LASTEXITCODE -ne 0) { npm install *>&1 | Tee-Object -FilePath logs/02-npm-install.log -Append; exit $LASTEXITCODE }
 
       - name: Build frontend
         working-directory: waypoint
-        run: npm run build
+        shell: pwsh
+        run: npm run build *>&1 | Tee-Object -FilePath logs/03-build-frontend.log; exit $LASTEXITCODE
 
       - name: Build Tauri binary (release, no bundle)
         working-directory: waypoint
-        run: npx tauri build --no-bundle
+        shell: pwsh
+        run: npx tauri build --no-bundle *>&1 | Tee-Object -FilePath logs/04-tauri-build.log; exit $LASTEXITCODE
 
       - name: Locate msedgedriver (windows-latest 內建)
         shell: pwsh
@@ -78,24 +88,25 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
 
-      # 失敗時把 log push 到 ci-logs/<sha> 孤兒分支，方便用 MCP get_file_contents 免 token 讀取
+      # 失敗時把所有 log push 到 ci-logs/<sha> 孤兒分支，方便用 MCP get_file_contents 免 token 讀取
       - name: Push logs to ci-logs branch on failure
         if: failure()
         shell: bash
-        working-directory: waypoint
         run: |
-          set -e
-          if [ ! -f logs/wdio-full.log ]; then
-            echo "no log to push"; exit 0
-          fi
+          set +e
           cd "$GITHUB_WORKSPACE"
           BR="ci-logs/${{ github.sha }}-${{ github.run_attempt }}"
           git config user.email "ci-bot@waypoint"
           git config user.name "ci-bot"
           git checkout --orphan "$BR"
           git rm -rf . >/dev/null 2>&1 || true
-          cp waypoint/logs/wdio-full.log ./wdio-full.log
-          [ -d waypoint/.wdio-logs ] && cp -r waypoint/.wdio-logs ./wdio-logs-dir || true
-          git add -A
-          git commit -m "ci log ${{ github.sha }} attempt ${{ github.run_attempt }}"
+          mkdir -p logs
+          if [ -d waypoint/logs ]; then cp -r waypoint/logs/. logs/ 2>/dev/null || true; fi
+          if [ -d waypoint/.wdio-logs ]; then cp -r waypoint/.wdio-logs logs/wdio-logs-dir 2>/dev/null || true; fi
+          ls -la logs/ > logs/_INDEX.txt 2>&1 || true
+          echo "github.sha=${{ github.sha }}" > logs/_meta.txt
+          echo "attempt=${{ github.run_attempt }}" >> logs/_meta.txt
+          echo "run_id=${{ github.run_id }}" >> logs/_meta.txt
+          git add -A logs/
+          git commit -m "ci log ${{ github.sha }} attempt ${{ github.run_attempt }}" --allow-empty
           git push origin "$BR" --force

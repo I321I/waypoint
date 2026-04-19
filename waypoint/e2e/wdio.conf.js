@@ -3,6 +3,21 @@
 import { spawn, spawnSync } from "node:child_process";
 import path from "node:path";
 import os from "node:os";
+import net from "node:net";
+
+async function waitForPort(port, host, timeoutMs) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const ok = await new Promise((resolve) => {
+      const sock = net.connect(port, host);
+      sock.once("connect", () => { sock.end(); resolve(true); });
+      sock.once("error", () => resolve(false));
+    });
+    if (ok) return;
+    await new Promise((r) => setTimeout(r, 200));
+  }
+  throw new Error(`tauri-driver did not listen on ${host}:${port} within ${timeoutMs}ms`);
+}
 
 let tauriDriver;
 
@@ -34,7 +49,7 @@ export const config = {
   reporters: ["spec"],
   waitforTimeout: 15_000,
 
-  beforeSession() {
+  async beforeSession() {
     // 讓 Tauri 自動開列表視窗（tray-only 啟動不會建 WebView）
     process.env.WAYPOINT_E2E = "1";
 
@@ -46,6 +61,9 @@ export const config = {
     tauriDriver.on("error", (err) => {
       console.error("[tauri-driver] spawn error:", err);
     });
+
+    // spawn 是非同步的；第一個 spec 常在 port 4444 還沒 bind 前就 connect → ECONNREFUSED
+    await waitForPort(4444, "127.0.0.1", 20_000);
   },
 
   afterSession() {

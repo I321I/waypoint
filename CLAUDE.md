@@ -1,5 +1,19 @@
 # 專案開發規範
 
+## Git 工作分支策略
+
+**規則：日常開發在 `dev/main`（或其他 `dev/*`）分支進行，不要每個 commit 都推 master。**
+
+原因：`e2e-windows.yml` 的 trigger 是 `push: branches:[master]` + `pull_request`。每推 master 就會跑 Windows runner（耗時且消耗 CI 額度）。
+
+流程：
+1. 平常 commit / push 到 `dev/main`（不開 PR）→ **不會**觸發 e2e-windows
+2. 階段完成、想驗 Windows 行為時 → `git checkout master && git merge --ff-only dev/main && git push origin master` → 觸發 e2e-windows
+3. 純文件 / CI 設定 commit 若不影響邏輯，可用 `[skip ci]` 訊息（即使在 master 也不跑）
+4. 發 tag 前：master 末梢 e2e-windows 綠 + 本機 `act -j e2e-linux` 綠 → `git tag vX.Y.Z && git push --tags`
+
+注意：tag 也要從 master 上打（release.yml 假設 release 內容在 master）。
+
 ## Docker / act 環境變數
 
 **規則：本機（WSL2）執行任何 `docker` 或 `act` 指令前，必須先設定 `DOCKER_HOST`，連到 Windows 端 Docker Desktop 的 TCP daemon。**

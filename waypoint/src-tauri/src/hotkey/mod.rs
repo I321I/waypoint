@@ -137,8 +137,10 @@ pub fn register_note_hotkey(
     Ok(())
 }
 
+// async：見 tray::cmd_open_help 的註解。WebView2 上 sync command + 同步建
+// webview 會 deadlock 原 webview 的 IPC，造成兩邊白屏。
 #[tauri::command]
-pub fn cmd_open_note_window(app: AppHandle, note_id: String, context_id: Option<String>) -> Result<(), String> {
+pub async fn cmd_open_note_window(app: AppHandle, note_id: String, context_id: Option<String>) -> Result<(), String> {
     open_note_window(&app, &note_id, context_id.as_deref()).map_err(|e| e.to_string())
 }
 

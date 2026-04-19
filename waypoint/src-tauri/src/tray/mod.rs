@@ -99,12 +99,17 @@ pub fn open_settings_window(app: &AppHandle) -> tauri::Result<()> {
     Ok(())
 }
 
+// async：sync command 在 main thread 跑，會被 WebviewWindowBuilder::build
+// 阻塞 → 原 webview 的 IPC reply 卡住 → "Timed out receiving message from
+// renderer" → 兩邊白屏（WebView2 特有）。
+// async 命令在 tokio thread 跑，build 內部會 dispatch 回 main thread，
+// 不阻塞原 webview 的 IPC channel。
 #[tauri::command]
-pub fn cmd_open_help(app: tauri::AppHandle) -> Result<(), String> {
+pub async fn cmd_open_help(app: tauri::AppHandle) -> Result<(), String> {
     open_help_window(&app).map_err(|e| e.to_string())
 }
 
 #[tauri::command]
-pub fn cmd_open_settings(app: tauri::AppHandle) -> Result<(), String> {
+pub async fn cmd_open_settings(app: tauri::AppHandle) -> Result<(), String> {
     open_settings_window(&app).map_err(|e| e.to_string())
 }

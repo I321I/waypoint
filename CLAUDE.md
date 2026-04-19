@@ -1,5 +1,36 @@
 # 專案開發規範
 
+## Docker / act 環境變數
+
+**規則：本機（WSL2）執行任何 `docker` 或 `act` 指令前，必須先設定 `DOCKER_HOST`，連到 Windows 端 Docker Desktop 的 TCP daemon。**
+
+```bash
+export DOCKER_HOST=tcp://host.docker.internal:2375
+```
+
+原因：WSL2 內沒有本地 docker daemon，socket `/var/run/docker.sock` 不存在；Docker Desktop 在 Windows 端透過 TCP 2375 暴露。
+
+用法：
+
+- 單次：`export DOCKER_HOST=tcp://host.docker.internal:2375 && docker ps`
+- 跑 act：`export DOCKER_HOST=tcp://host.docker.internal:2375 && act -j e2e-linux`
+- 或在 shell session 開頭一次設定，後續指令直接用
+
+## CI 分工：act vs GitHub 真 runner
+
+act 只能跑 Linux container，Windows/macOS runner 與 ARM 矩陣必須交給 GitHub 真 runner。
+
+| Workflow / Job | 本機 act | GitHub 真 runner |
+|---|---|---|
+| `e2e-linux.yml`（ubuntu-22.04 + WebKitGTK） | ✅ `act -j e2e-linux` | ✅ |
+| `e2e-windows.yml`（windows-latest + WebView2） | ❌ 跑不了 | ✅ 必跑 |
+| `release.yml` matrix `ubuntu-22.04` | ✅ `act -j release --matrix platform:ubuntu-22.04` | ✅ |
+| `release.yml` matrix `ubuntu-22.04-arm` | ❌（QEMU 慢且常卡） | ✅ |
+| `release.yml` matrix `windows-latest` | ❌ | ✅ 必跑 |
+| `release.yml` matrix `macos-latest` | ❌ | ✅ 必跑 |
+
+原則：本機開發迭代用 act 快速驗證 Linux 那條；發 release tag 前除了 GitHub 全平台必須綠燈，**本機 act 也必須跑一次並確認成功**（避免 GitHub 綠燈但 act 環境壞掉的盲點，act 失敗即不可發 tag）。
+
 ## 每次對話必須建立並顯示任務列表
 
 **規則：當使用者要求執行任務（修正、新增功能、重構等）時，必須：**

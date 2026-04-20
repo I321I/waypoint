@@ -44,24 +44,40 @@
     applyOpacity(e.detail.opacity);
   }
 
+  async function flushPendingSave() {
+    if (!editorRef) return;
+    clearTimeout(saveTimeout);
+    const ed = editorRef.getEditor();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const md = (ed?.storage as any)?.markdown?.getMarkdown?.() ?? null;
+    if (md !== null) {
+      await notesApi.saveContent(contextId, noteId, md);
+    }
+  }
+
   async function handleClose() {
+    await flushPendingSave();
     await emit("note-closed", { noteId, contextId, isGlobal: contextId === null });
     await windowsApi.closeNote(noteId);
   }
 
   async function handleMinimize() {
-    // minimize 用 label，不依賴 getCurrentWindow()
-    await windowsApi.hideWindow(`note-${noteId}`);
+    await windowsApi.minimizeWindow(`note-${noteId}`);
+  }
+
+  async function handleMaximize() {
+    await windowsApi.toggleMaximize(`note-${noteId}`);
   }
 </script>
 
 {#if note}
   <div class="note-window">
     <div class="titlebar" data-tauri-drag-region>
-      <span class="note-title">{note.title || "Untitled"}{contextId ? ` — ${contextId}` : ""}</span>
+      <span class="note-title" data-tauri-drag-region>{note.title || "Untitled"}{contextId ? ` — ${contextId}` : ""}</span>
       <div class="titlebar-buttons">
         <button on:click={handleMinimize} title="最小化">—</button>
-        <button on:click={handleClose} title="關閉">✕</button>
+        <button on:click={handleMaximize} title="最大化／還原">▢</button>
+        <button on:click={handleClose} title="儲存並關閉">✕</button>
       </div>
     </div>
 

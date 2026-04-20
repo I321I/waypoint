@@ -58,4 +58,10 @@ export const windows = {
   closeWindow: (label: string) => invoke<void>("cmd_close_window", { label }),
   /** 用 label 隱藏視窗（不依賴 getCurrentWindow()）*/
   hideWindow: (label: string) => invoke<void>("cmd_hide_window", { label }),
+  /** 最小化指定 label 視窗 */
+  minimizeWindow: (label: string) => invoke<void>("cmd_minimize_window", { label }),
+  /** 切換最大化狀態 */
+  toggleMaximize: (label: string) => invoke<void>("cmd_toggle_maximize", { label }),
+  /** 完全結束 Waypoint */
+  exitApp: () => invoke<void>("cmd_exit_app"),
 };

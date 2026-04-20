@@ -34,14 +34,18 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
             .keys()
             .any(|label| label.starts_with("note-"));
         let action = determine_action(list_open, any_note_open);
+        // OpenAll / OpenList 都要重新以「當前前景視窗」推導 context，
+        // 否則列表會一直停留在第一次叫出時的 context（例如 msedge）。
+        if matches!(action, HotkeyAction::OpenAll | HotkeyAction::OpenList) {
+            if let Some(info) = window_info.clone() {
+                let config = app_config::load().unwrap_or_default();
+                let ctx_id = derive_context_id(&info, &config);
+                *state.active_context_id.lock().unwrap() = Some(ctx_id);
+                *state.active_window_info.lock().unwrap() = Some(info);
+            }
+        }
         match action {
             HotkeyAction::OpenAll => {
-                if let Some(info) = window_info {
-                    let config = app_config::load().unwrap_or_default();
-                    let ctx_id = derive_context_id(&info, &config);
-                    *state.active_context_id.lock().unwrap() = Some(ctx_id);
-                    *state.active_window_info.lock().unwrap() = Some(info);
-                }
                 let _ = open_list_window(app);
             }
             HotkeyAction::OpenList => {
@@ -71,12 +75,15 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
 pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
     let state = app.state::<AppState>();
     if let Some(win) = app.get_webview_window("list") {
+        win.unminimize().ok();
         win.show()?;
         win.set_focus()?;
         *state.list_window_open.lock().unwrap() = true;
+        // 通知前端重新載入 context / session（再叫出時也會套用新 context）
+        let _ = app.emit("waypoint://list-shown", ());
         return Ok(());
     }
-    let win = WebviewWindowBuilder::new(app, "list", WebviewUrl::App("/#view=list".into()))
+    let _win = WebviewWindowBuilder::new(app, "list", WebviewUrl::App("/#view=list".into()))
         .title("Waypoint")
         .inner_size(220.0, 500.0)
         .min_inner_size(180.0, 300.0)
@@ -86,11 +93,37 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         .skip_taskbar(true)
         .build()?;
     *state.list_window_open.lock().unwrap() = true;
-    // 不使用 focus-based auto-hide：
-    // 1. 拖曳時 Windows 會暫時奪走 focus，auto-hide 會中斷拖曳
-    // 2. 開啟說明/設定視窗時也會觸發，造成列表意外消失
-    // 使用者改靠快捷鍵（CollapseAll）、⇊ 或 ✕ 來關閉列表
+    attach_list_autohide(app);
     Ok(())
+}
+
+/// 監聽 list 視窗 Focused(false)：若焦點去到「非 Waypoint」的視窗 → 自動隱藏列表。
+///
+/// 為何帶延遲 + 再檢查：
+/// - `data-tauri-drag-region` 拖曳開始時，Win32 會送 WM_KILLFOCUS，若立即隱藏會中斷拖曳。
+/// - 切到 Waypoint 自己的 note 視窗時，也會觸發列表失焦，此時不應隱藏。
+/// - 延遲 180ms 後，檢查「目前前景視窗」是否屬於 Waypoint；不是才隱藏。
+fn attach_list_autohide(app: &AppHandle) {
+    if let Some(list) = app.get_webview_window("list") {
+        let app_clone = app.clone();
+        list.on_window_event(move |event| {
+            if let tauri::WindowEvent::Focused(false) = event {
+                let app2 = app_clone.clone();
+                std::thread::spawn(move || {
+                    std::thread::sleep(std::time::Duration::from_millis(180));
+                    let any_waypoint_focused = app2.webview_windows().values().any(|w| {
+                        w.is_focused().unwrap_or(false)
+                    });
+                    if any_waypoint_focused { return; }
+                    if let Some(list) = app2.get_webview_window("list") {
+                        let _ = list.hide();
+                        let state = app2.state::<AppState>();
+                        *state.list_window_open.lock().unwrap() = false;
+                    }
+                });
+            }
+        });
+    }
 }
 
 pub fn collapse_all_waypoint_windows(app: &AppHandle) {
@@ -195,6 +228,34 @@ pub fn cmd_hide_window(app: AppHandle, label: String) -> Result<(), String> {
         }
     }
     Ok(())
+}
+
+/// 最小化視窗
+#[tauri::command]
+pub fn cmd_minimize_window(app: AppHandle, label: String) -> Result<(), String> {
+    if let Some(win) = app.get_webview_window(&label) {
+        win.minimize().map_err(|e| e.to_string())?;
+    }
+    Ok(())
+}
+
+/// 切換最大化狀態
+#[tauri::command]
+pub fn cmd_toggle_maximize(app: AppHandle, label: String) -> Result<(), String> {
+    if let Some(win) = app.get_webview_window(&label) {
+        if win.is_maximized().unwrap_or(false) {
+            win.unmaximize().map_err(|e| e.to_string())?;
+        } else {
+            win.maximize().map_err(|e| e.to_string())?;
+        }
+    }
+    Ok(())
+}
+
+/// 完全結束 Waypoint
+#[tauri::command]
+pub fn cmd_exit_app(app: AppHandle) {
+    app.exit(0);
 }
 
 #[cfg(test)]

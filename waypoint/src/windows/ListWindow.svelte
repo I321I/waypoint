@@ -11,26 +11,9 @@
   let openContextNoteIds: string[] = [];
   let unlisten: (() => void) | null = null;
   let unlistenCollapse: (() => void) | null = null;
+  let unlistenShown: (() => void) | null = null;
 
-  function handleNoteOpened(noteId: string, isGlobal: boolean) {
-    if (isGlobal) {
-      if (!openGlobalNoteIds.includes(noteId))
-        openGlobalNoteIds = [...openGlobalNoteIds, noteId];
-    } else {
-      if (!openContextNoteIds.includes(noteId))
-        openContextNoteIds = [...openContextNoteIds, noteId];
-    }
-  }
-
-  function handleNoteClosed(noteId: string, isGlobal: boolean) {
-    if (isGlobal) {
-      openGlobalNoteIds = openGlobalNoteIds.filter(id => id !== noteId);
-    } else {
-      openContextNoteIds = openContextNoteIds.filter(id => id !== noteId);
-    }
-  }
-
-  onMount(async () => {
+  async function loadContextAndSession() {
     currentContextId = await contextApi.getActive();
     activeContextId.set(currentContextId);
 
@@ -51,22 +34,51 @@
       for (const nId of sess.openGlobalNotes) {
         await windowsApi.openNote(nId, null);
       }
+    } else {
+      openContextNoteIds = [];
+      openGlobalNoteIds = [];
     }
+  }
 
-    // Listen for note-closed events from note windows
+  function handleNoteOpened(noteId: string, isGlobal: boolean) {
+    if (isGlobal) {
+      if (!openGlobalNoteIds.includes(noteId))
+        openGlobalNoteIds = [...openGlobalNoteIds, noteId];
+    } else {
+      if (!openContextNoteIds.includes(noteId))
+        openContextNoteIds = [...openContextNoteIds, noteId];
+    }
+  }
+
+  function handleNoteClosed(noteId: string, isGlobal: boolean) {
+    if (isGlobal) {
+      openGlobalNoteIds = openGlobalNoteIds.filter(id => id !== noteId);
+    } else {
+      openContextNoteIds = openContextNoteIds.filter(id => id !== noteId);
+    }
+  }
+
+  onMount(async () => {
+    await loadContextAndSession();
+
     unlisten = await listen<{ noteId: string; isGlobal: boolean }>("note-closed", (event) => {
       handleNoteClosed(event.payload.noteId, event.payload.isGlobal);
     });
 
-    // Listen for collapse-all-requested event from hotkey handler so session is saved first
     unlistenCollapse = await listen("waypoint://collapse-all-requested", async () => {
       await handleCollapseAll();
+    });
+
+    // 當 list 再次被叫出（Rust 端重用既存視窗），重新依當前前景 app 載入 context / session
+    unlistenShown = await listen("waypoint://list-shown", async () => {
+      await loadContextAndSession();
     });
   });
 
   onDestroy(() => {
     unlisten?.();
     unlistenCollapse?.();
+    unlistenShown?.();
   });
 
   async function handleCollapseAll() {
@@ -88,19 +100,21 @@
     windowsApi.openSettings().catch(() => {});
   }
 
-  function closeList() { windowsApi.hideWindow("list").catch(() => {}); }
+  function minimizeList() { windowsApi.minimizeWindow("list").catch(() => {}); }
+  function quitApp() { windowsApi.exitApp().catch(() => {}); }
 </script>
 
 <div class="list-window">
   <div class="titlebar" data-tauri-drag-region>
-    <div class="titlebar-left">
-      <span class="app-name">WAYPOINT</span>
+    <div class="titlebar-left" data-tauri-drag-region>
+      <span class="app-name" data-tauri-drag-region>WAYPOINT</span>
       <button class="icon-btn" on:click={openHelp} title="使用說明">?</button>
     </div>
     <div class="titlebar-right">
       <button class="icon-btn" on:click={openSettings} title="設定">⚙</button>
       <button class="icon-btn" on:click={handleCollapseAll} title="收起全部">⇊</button>
-      <button class="icon-btn" on:click={closeList} title="關閉列表">✕</button>
+      <button class="icon-btn" on:click={minimizeList} title="最小化列表">—</button>
+      <button class="icon-btn" on:click={quitApp} title="結束 Waypoint">✕</button>
     </div>
   </div>
 

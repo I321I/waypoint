@@ -99,6 +99,9 @@ pub fn run() {
             hotkey::cmd_unregister_hotkey,
             hotkey::cmd_close_window,
             hotkey::cmd_hide_window,
+            hotkey::cmd_minimize_window,
+            hotkey::cmd_toggle_maximize,
+            hotkey::cmd_exit_app,
             tray::cmd_open_help,
             tray::cmd_open_settings,
         ])

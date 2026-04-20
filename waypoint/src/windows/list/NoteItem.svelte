@@ -4,7 +4,10 @@
   import { createEventDispatcher } from "svelte";
 
   export let note: Note;
+  // 保留 prop 相容性但不再用來產生反藍：使用者希望點開筆記後列表項目回到正常狀態
   export let isOpen: boolean = false;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  void isOpen;
 
   const dispatch = createEventDispatcher();
 
@@ -16,7 +19,6 @@
 
 <button
   class="note-item"
-  class:open={isOpen}
   on:click={handleClick}
   title={note.title}
 >

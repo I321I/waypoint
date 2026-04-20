@@ -8,6 +8,50 @@
   let autostartSupported = false;
   let saving = false;
   let message = "";
+  let capturing = false;
+
+  // 把 KeyboardEvent 轉成 Tauri global shortcut 格式：Ctrl+Shift+Space / Alt+F1 ...
+  function formatShortcut(e: KeyboardEvent): string | null {
+    const parts: string[] = [];
+    if (e.ctrlKey) parts.push("Ctrl");
+    if (e.altKey) parts.push("Alt");
+    if (e.shiftKey) parts.push("Shift");
+    if (e.metaKey) parts.push("Super");
+
+    const key = e.key;
+    // 過濾單獨修飾鍵：使用者還在組鍵
+    if (["Control", "Shift", "Alt", "Meta"].includes(key)) return null;
+
+    let keyName: string;
+    if (key === " ") keyName = "Space";
+    else if (key.startsWith("Arrow")) keyName = key.slice(5); // ArrowUp → Up
+    else if (key.length === 1) keyName = key.toUpperCase();
+    else keyName = key; // F1..F12、Enter、Tab、Escape 等
+
+    parts.push(keyName);
+    return parts.join("+");
+  }
+
+  function startCapture() {
+    capturing = true;
+    hotkeyInput = "按下快捷鍵…";
+  }
+
+  function handleCapture(e: KeyboardEvent) {
+    if (!capturing) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.key === "Escape") {
+      capturing = false;
+      hotkeyInput = hotkey;
+      return;
+    }
+    const combo = formatShortcut(e);
+    if (combo) {
+      hotkeyInput = combo;
+      capturing = false;
+    }
+  }
 
   onMount(async () => {
     const [cfg, supported, autostart] = await Promise.all([
@@ -56,17 +100,21 @@
       <h2>全域快捷鍵</h2>
       <p class="desc">按下快捷鍵開啟／收起 Waypoint 列表</p>
       <div class="row">
-        <input
-          type="text"
-          bind:value={hotkeyInput}
-          placeholder="例如：Ctrl+Shift+Space"
-          class="hotkey-input"
-        />
-        <button on:click={saveHotkey} disabled={saving || hotkeyInput === hotkey}>
+        <button
+          type="button"
+          class="hotkey-capture"
+          class:capturing
+          on:click={startCapture}
+          on:keydown={handleCapture}
+          title="點擊後按下要設定的快捷鍵"
+        >
+          {hotkeyInput || "點擊後按下快捷鍵"}
+        </button>
+        <button on:click={saveHotkey} disabled={saving || hotkeyInput === hotkey || capturing}>
           {saving ? "儲存中…" : "套用"}
         </button>
       </div>
-      <p class="hint">格式：Ctrl+Shift+Space、Alt+F1 等</p>
+      <p class="hint">點擊左側框後按下鍵盤組合鍵（Esc 取消）；範例：Ctrl+Shift+Space、Alt+F1</p>
     </section>
 
     {#if autostartSupported}
@@ -128,10 +176,22 @@
   }
   .desc { font-size: 12px; color: var(--text-secondary); }
   .row { display: flex; align-items: center; gap: 8px; }
-  .hotkey-input {
+  .hotkey-capture {
     flex: 1;
     font-size: 13px;
-    padding: 4px 8px;
+    padding: 6px 10px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    text-align: left;
+    cursor: pointer;
+  }
+  .hotkey-capture:hover { border-color: var(--accent); }
+  .hotkey-capture.capturing {
+    border-color: var(--accent);
+    color: var(--text-link);
+    background: var(--bg-selected);
   }
   .hint { font-size: 11px; color: var(--text-secondary); opacity: 0.7; }
   .toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; }

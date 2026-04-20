@@ -14,6 +14,16 @@ export const notes = {
     invoke<void>("save_note_settings", { contextId, noteId, settings }),
   delete: (contextId: string | null, noteId: string) =>
     invoke<void>("delete_note", { contextId, noteId }),
+  rename: (contextId: string | null, noteId: string, newTitle: string) =>
+    invoke<void>("rename_note", { contextId, noteId, newTitle }),
+  duplicate: (srcContextId: string | null, srcNoteId: string, dstContextId: string | null) =>
+    invoke<Note>("duplicate_note", { srcContextId, srcNoteId, dstContextId }),
+  move: (srcContextId: string | null, noteId: string, dstContextId: string | null) =>
+    invoke<void>("move_note", { srcContextId, noteId, dstContextId }),
+  getOrder: (contextId: string | null) =>
+    invoke<string[]>("get_note_order", { contextId }),
+  setOrder: (contextId: string | null, order: string[]) =>
+    invoke<void>("set_note_order", { contextId, order }),
 };
 
 export const context = {
@@ -62,6 +72,14 @@ export const windows = {
   minimizeWindow: (label: string) => invoke<void>("cmd_minimize_window", { label }),
   /** 切換最大化狀態 */
   toggleMaximize: (label: string) => invoke<void>("cmd_toggle_maximize", { label }),
+  /** 取得視窗外部位置（x, y）physical px，主要給 E2E */
+  getWindowPosition: (label: string) =>
+    invoke<[number, number]>("cmd_get_window_position", { label }),
+  /** 設定視窗外部位置 physical px，主要給 E2E */
+  setWindowPosition: (label: string, x: number, y: number) =>
+    invoke<void>("cmd_set_window_position", { label, x, y }),
+  /** 啟動原生 drag（titlebar mousedown fallback 用） */
+  startDragging: (label: string) => invoke<void>("cmd_start_dragging", { label }),
   /** 完全結束 Waypoint */
   exitApp: () => invoke<void>("cmd_exit_app"),
   /** 快照目前開啟視窗 → 重新啟動 binary → 退出目前 process */

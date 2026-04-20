@@ -162,7 +162,7 @@ test.describe("列表視窗", () => {
     await page.goto("http://localhost:4173/#view=list");
     await page.waitForTimeout(800);
 
-    const closeBtn = page.locator("button[title='關閉列表']");
+    const closeBtn = page.locator("button[title='結束 Waypoint']");
     await expect(closeBtn).toBeVisible({ timeout: 5000 });
     await closeBtn.click();
   });
@@ -192,7 +192,7 @@ test.describe("筆記視窗", () => {
     await page.goto("http://localhost:4173/#view=note&noteId=test-id");
     await page.waitForTimeout(2000);
 
-    const closeBtn = page.locator("button[title='關閉']");
+    const closeBtn = page.locator("button[title='儲存並關閉']");
     await expect(closeBtn).toBeVisible({ timeout: 5000 });
     await closeBtn.click();
   });

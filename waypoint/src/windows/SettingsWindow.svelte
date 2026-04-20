@@ -71,10 +71,16 @@
     try {
       await configApi.setHotkey(hotkeyInput.trim());
       hotkey = hotkeyInput.trim();
-      message = "快捷鍵已儲存，重新啟動後生效";
+      message = "快捷鍵已儲存，需重新啟動才會生效";
+      saving = false;
+      // 直接詢問是否重啟；確認 → 後端會 snapshot 開啟的筆記視窗後重啟 binary，
+      // 啟動時自動還原。
+      const yes = confirm("快捷鍵需重新啟動才能生效，現在重新啟動 Waypoint？\n（目前開啟的筆記視窗將在重啟後自動還原）");
+      if (yes) {
+        await windowsApi.restartApp();
+      }
     } catch (e) {
       message = `儲存失敗：${e}`;
-    } finally {
       saving = false;
     }
   }

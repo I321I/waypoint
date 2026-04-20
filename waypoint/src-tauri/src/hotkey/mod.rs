@@ -251,6 +251,34 @@ pub fn cmd_minimize_window(app: AppHandle, label: String) -> Result<(), String> 
     Ok(())
 }
 
+/// 取得視窗外部位置（physical pixels, 螢幕座標）。
+/// 用途：E2E 測試驗證拖曳前後位置是否改變。
+#[tauri::command]
+pub fn cmd_get_window_position(app: AppHandle, label: String) -> Result<(i32, i32), String> {
+    let win = app.get_webview_window(&label).ok_or_else(|| format!("window not found: {label}"))?;
+    let pos = win.outer_position().map_err(|e| e.to_string())?;
+    Ok((pos.x, pos.y))
+}
+
+/// 設定視窗外部位置（physical pixels）。
+/// 用途：E2E 測試為視窗指定已知起點。
+#[tauri::command]
+pub fn cmd_set_window_position(app: AppHandle, label: String, x: i32, y: i32) -> Result<(), String> {
+    let win = app.get_webview_window(&label).ok_or_else(|| format!("window not found: {label}"))?;
+    win.set_position(tauri::PhysicalPosition::new(x, y)).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+/// 啟動拖曳（讓 webview 以外的地方也能觸發原生 drag）。
+/// 用途：前端 JS 在 titlebar mousedown 上呼叫，作為 data-tauri-drag-region 的 fallback；
+/// 以及 E2E 測試直接觸發 drag + 配合 set_window_position 驗證。
+#[tauri::command]
+pub fn cmd_start_dragging(app: AppHandle, label: String) -> Result<(), String> {
+    let win = app.get_webview_window(&label).ok_or_else(|| format!("window not found: {label}"))?;
+    win.start_dragging().map_err(|e| e.to_string())?;
+    Ok(())
+}
+
 /// 切換最大化狀態
 #[tauri::command]
 pub fn cmd_toggle_maximize(app: AppHandle, label: String) -> Result<(), String> {

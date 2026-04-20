@@ -62,10 +62,27 @@
   async function addNote() {
     const note = await notesApi.create(contextId, "New Note");
     notes = [...notes, note];
+    await notesApi.setOrder(contextId, notes.map((n) => n.id));
   }
 
   function handleOpened(e: CustomEvent) {
     dispatch("opened", e.detail);
+  }
+
+  let draggingId: string | null = null;
+  function onDragstart(e: CustomEvent<{ noteId: string }>) { draggingId = e.detail.noteId; }
+  async function onDrop(e: CustomEvent<{ noteId: string }>) {
+    const targetId = e.detail.noteId;
+    if (!draggingId || draggingId === targetId) { draggingId = null; return; }
+    const srcIdx = notes.findIndex((n) => n.id === draggingId);
+    const dstIdx = notes.findIndex((n) => n.id === targetId);
+    if (srcIdx < 0 || dstIdx < 0) { draggingId = null; return; }
+    const next = notes.slice();
+    const [moved] = next.splice(srcIdx, 1);
+    next.splice(dstIdx, 0, moved);
+    notes = next;
+    draggingId = null;
+    await notesApi.setOrder(contextId, next.map((n) => n.id));
   }
 </script>
 
@@ -77,7 +94,14 @@
     <button class="add-btn" on:click|stopPropagation={addNote} title="新增筆記">+</button>
   </div>
   {#each notes as note (note.id)}
-    <NoteItem {note} isOpen={openNoteIds.includes(note.id)} on:opened={handleOpened} />
+    <NoteItem
+      {note}
+      isOpen={openNoteIds.includes(note.id)}
+      on:opened={handleOpened}
+      on:changed={() => dispatch("changed")}
+      on:dragstart={onDragstart}
+      on:drop={onDrop}
+    />
   {/each}
 </div>
 

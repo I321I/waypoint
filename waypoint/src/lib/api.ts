@@ -64,4 +64,6 @@ export const windows = {
   toggleMaximize: (label: string) => invoke<void>("cmd_toggle_maximize", { label }),
   /** 完全結束 Waypoint */
   exitApp: () => invoke<void>("cmd_exit_app"),
+  /** 快照目前開啟視窗 → 重新啟動 binary → 退出目前 process */
+  restartApp: () => invoke<void>("cmd_restart_app"),
 };

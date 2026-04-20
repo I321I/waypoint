@@ -110,11 +110,17 @@ fn attach_list_autohide(app: &AppHandle) {
             if let tauri::WindowEvent::Focused(false) = event {
                 let app2 = app_clone.clone();
                 std::thread::spawn(move || {
-                    std::thread::sleep(std::time::Duration::from_millis(180));
-                    let any_waypoint_focused = app2.webview_windows().values().any(|w| {
-                        w.is_focused().unwrap_or(false)
-                    });
-                    if any_waypoint_focused { return; }
+                    // 輪詢：Windows 上新視窗取得 foreground 可能晚於 list 失焦事件，
+                    // 單次 sleep 容易誤判成「沒人 focus → 該隱藏」。改為多次輪詢，
+                    // 任一次檢測到 Waypoint 視窗被 focus 就取消隱藏。
+                    // 總等待 ~500ms，足以涵蓋大多數 WebView2 focus transition。
+                    for _ in 0..5 {
+                        std::thread::sleep(std::time::Duration::from_millis(100));
+                        if any_non_list_waypoint_focused(&app2) { return; }
+                    }
+                    // 最後再確認一次（避免剛好在最後 100ms 才取得 focus）
+                    std::thread::sleep(std::time::Duration::from_millis(50));
+                    if any_non_list_waypoint_focused(&app2) { return; }
                     if let Some(list) = app2.get_webview_window("list") {
                         let _ = list.hide();
                         let state = app2.state::<AppState>();
@@ -124,6 +130,12 @@ fn attach_list_autohide(app: &AppHandle) {
             }
         });
     }
+}
+
+fn any_non_list_waypoint_focused(app: &AppHandle) -> bool {
+    app.webview_windows().iter().any(|(label, w)| {
+        label != "list" && w.is_focused().unwrap_or(false)
+    })
 }
 
 pub fn collapse_all_waypoint_windows(app: &AppHandle) {
@@ -256,6 +268,73 @@ pub fn cmd_toggle_maximize(app: AppHandle, label: String) -> Result<(), String> 
 #[tauri::command]
 pub fn cmd_exit_app(app: AppHandle) {
     app.exit(0);
+}
+
+/// 快照當下所有 waypoint 視窗狀態（note-* 與 list）。
+pub fn snapshot_open_windows(app: &AppHandle) -> crate::storage::app_session::AppSession {
+    use crate::storage::app_session::{AppSession, OpenNoteRef};
+    let mut open_notes: Vec<OpenNoteRef> = Vec::new();
+    let mut list_open = false;
+    for (label, win) in app.webview_windows() {
+        if label == "list" {
+            if win.is_visible().unwrap_or(false) { list_open = true; }
+        } else if let Some(note_id) = label.strip_prefix("note-") {
+            if win.is_visible().unwrap_or(false) {
+                // 從 URL hash 解析 contextId（開窗時帶入）
+                let ctx = win
+                    .url()
+                    .ok()
+                    .and_then(|u| {
+                        let s = u.to_string();
+                        let hash = s.split_once('#').map(|(_, h)| h.to_string())?;
+                        let q = hash.trim_start_matches('/');
+                        // view=note&noteId=xxx&contextId=yyy
+                        for kv in q.split('&') {
+                            if let Some(v) = kv.strip_prefix("contextId=") {
+                                return Some(v.to_string());
+                            }
+                        }
+                        None
+                    });
+                open_notes.push(OpenNoteRef {
+                    note_id: note_id.to_string(),
+                    context_id: ctx,
+                });
+            }
+        }
+    }
+    AppSession { open_notes, list_open }
+}
+
+/// 重新啟動 Waypoint：
+/// 1. 把當下開啟的筆記視窗寫入 app_session.json
+/// 2. 以目前 binary 執行新 process
+/// 3. exit(0)
+///
+/// 啟動時 lib.rs 會讀 app_session.json 並還原這些視窗。
+#[tauri::command]
+pub fn cmd_restart_app(app: AppHandle) -> Result<(), String> {
+    let snapshot = snapshot_open_windows(&app);
+    crate::storage::app_session::save(&snapshot).map_err(|e| e.to_string())?;
+    let exe = std::env::current_exe().map_err(|e| e.to_string())?;
+    // 以獨立 process 啟動，避免成為 child（父死 child 受影響）。
+    #[cfg(unix)]
+    {
+        use std::os::unix::process::CommandExt;
+        let _ = std::process::Command::new(&exe).process_group(0).spawn().map_err(|e| e.to_string())?;
+    }
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const DETACHED_PROCESS: u32 = 0x00000008;
+        const CREATE_NEW_PROCESS_GROUP: u32 = 0x00000200;
+        let _ = std::process::Command::new(&exe)
+            .creation_flags(DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
+            .spawn()
+            .map_err(|e| e.to_string())?;
+    }
+    app.exit(0);
+    Ok(())
 }
 
 #[cfg(test)]

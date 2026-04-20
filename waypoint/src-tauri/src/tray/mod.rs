@@ -13,12 +13,15 @@ pub fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
     let sep2 = PredefinedMenuItem::separator(app)?;
     let help_item = MenuItem::with_id(app, "help", "使用說明", true, None::<&str>)?;
     let sep3 = PredefinedMenuItem::separator(app)?;
+    let restart_item = MenuItem::with_id(app, "restart", "重新啟動 Waypoint", true, None::<&str>)?;
+    let sep4 = PredefinedMenuItem::separator(app)?;
     let quit_item = MenuItem::with_id(app, "quit", "結束 Waypoint", true, None::<&str>)?;
 
     let menu = Menu::with_items(app, &[
         &open_item, &sep1,
         &settings_item, &sep2,
         &help_item, &sep3,
+        &restart_item, &sep4,
         &quit_item,
     ])?;
 
@@ -38,6 +41,9 @@ pub fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
             }
             "help" => {
                 let _ = open_help_window(app);
+            }
+            "restart" => {
+                let _ = crate::hotkey::cmd_restart_app(app.clone());
             }
             "quit" => {
                 app.exit(0);

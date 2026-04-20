@@ -102,6 +102,7 @@ pub fn run() {
             hotkey::cmd_minimize_window,
             hotkey::cmd_toggle_maximize,
             hotkey::cmd_exit_app,
+            hotkey::cmd_restart_app,
             tray::cmd_open_help,
             tray::cmd_open_settings,
         ])
@@ -117,6 +118,17 @@ pub fn run() {
             match hotkey::register_hotkey(app.handle(), &config.hotkey) {
                 Ok(()) => write_log_line(&format!("register_hotkey ok: {}", &config.hotkey)),
                 Err(e) => write_log_line(&format!("register_hotkey failed ({}): {e}", &config.hotkey)),
+            }
+            // Restart 後還原：若有 app_session.json（cmd_restart_app 留下的快照），
+            // 依序開回之前的筆記視窗，並視需要叫出列表。讀完即刪檔。
+            if let Some(snapshot) = storage::app_session::take() {
+                write_log_line(&format!("restoring {} notes from app_session", snapshot.open_notes.len()));
+                for n in &snapshot.open_notes {
+                    let _ = hotkey::open_note_window(app.handle(), &n.note_id, n.context_id.as_deref());
+                }
+                if snapshot.list_open {
+                    let _ = hotkey::open_list_window(app.handle());
+                }
             }
             if std::env::var("WAYPOINT_E2E").is_ok() {
                 write_log_line("WAYPOINT_E2E set: auto-opening list window");

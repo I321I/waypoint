@@ -177,14 +177,13 @@ test.describe("筆記視窗", () => {
     await expect(page.locator("text=Test Note")).toBeVisible({ timeout: 8000 });
   });
 
-  test("最小化按鈕（—）存在且可點擊", async ({ page }) => {
+  test("最小化按鈕已移除（R10）", async ({ page }) => {
     await mockTauriWithNote(page);
     await page.goto("http://localhost:4173/#view=note&noteId=test-id");
     await page.waitForTimeout(2000);
 
-    const minBtn = page.locator("button[title='最小化']");
-    await expect(minBtn).toBeVisible({ timeout: 5000 });
-    await minBtn.click();
+    const minBtn = page.locator(".titlebar-buttons button[title='最小化']");
+    await expect(minBtn).toHaveCount(0);
   });
 
   test("關閉按鈕（✕）存在且可點擊", async ({ page }) => {

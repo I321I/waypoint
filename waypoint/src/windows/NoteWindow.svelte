@@ -61,10 +61,6 @@
     await windowsApi.closeNote(noteId);
   }
 
-  async function handleMinimize() {
-    await windowsApi.minimizeWindow(`note-${noteId}`);
-  }
-
   async function handleMaximize() {
     await windowsApi.toggleMaximize(`note-${noteId}`);
   }
@@ -75,7 +71,6 @@
     <div class="titlebar" data-tauri-drag-region>
       <span class="note-title" data-tauri-drag-region>{note.title || "Untitled"}{contextId ? ` — ${contextId}` : ""}</span>
       <div class="titlebar-buttons">
-        <button on:click={handleMinimize} title="最小化">—</button>
         <button on:click={handleMaximize} title="最大化／還原">▢</button>
         <button on:click={handleClose} title="儲存並關閉">✕</button>
       </div>

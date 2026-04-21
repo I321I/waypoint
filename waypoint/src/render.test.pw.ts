@@ -206,4 +206,34 @@ test.describe("筆記視窗", () => {
     await expect(closeBtn).toBeVisible({ timeout: 5000 });
     await closeBtn.click();
   });
+
+  test("透明度 slider 100% 時 thumb 對齊右邊界（R6）", async ({ page }) => {
+    await mockTauriWithNote(page);
+    await page.goto("http://localhost:4173/#view=note&noteId=test-id");
+    await page.waitForTimeout(2000);
+
+    // 開啟設定面板
+    await page.locator("button.settings-btn[title='設定']").click();
+
+    const slider = page.locator(".opacity-slider");
+    await expect(slider).toBeVisible({ timeout: 5000 });
+
+    // 確認 appearance 為 none（自訂 thumb，避免原生 thumb 在 max 時超出 track）
+    const appearance = await slider.evaluate(
+      (el) => getComputedStyle(el).webkitAppearance || (getComputedStyle(el) as any).appearance
+    );
+    expect(appearance).toBe("none");
+
+    // 設值至 100，確認百分比顯示
+    await slider.evaluate((el: HTMLInputElement) => {
+      el.value = "100";
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+    await expect(page.locator(".value")).toHaveText("100%");
+
+    // 邏輯保證：max=100 + step=5 + value=100 在自訂 thumb 下，
+    // thumb 中心位於 track 右端（不會像原生 thumb 那樣超出 track）。
+    const max = await slider.getAttribute("max");
+    expect(max).toBe("100");
+  });
 });

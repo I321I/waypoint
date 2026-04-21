@@ -44,9 +44,10 @@
     <label>透明度</label>
     <div class="slider-row">
       <input
-        type="range" min="0.1" max="1" step="0.05"
-        value={settings.opacity}
-        on:input={e => update({ opacity: parseFloat((e.target as HTMLInputElement).value) })}
+        class="opacity-slider"
+        type="range" min="10" max="100" step="5"
+        value={Math.round(settings.opacity * 100)}
+        on:input={e => update({ opacity: parseInt((e.target as HTMLInputElement).value, 10) / 100 })}
       />
       <span class="value">{Math.round(settings.opacity * 100)}%</span>
     </div>
@@ -81,5 +82,35 @@
   .number-input button { padding: 2px 7px; }
   .slider-row { display: flex; align-items: center; gap: 8px; }
   .slider-row input { flex: 1; accent-color: var(--accent); }
+  /* R6: 自訂 thumb 讓 100% 時對齊右邊界（原生 thumb 在 max 時會超出 track 一半） */
+  .opacity-slider {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    margin: 0;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+  }
+  .opacity-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    margin-top: 0;
+    cursor: pointer;
+  }
+  .opacity-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+  }
   .value { font-size: 11px; color: var(--text-secondary); min-width: 30px; }
 </style>

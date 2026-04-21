@@ -22,6 +22,7 @@
 | R9 | 新增「穿透」（click-through）功能：全域快捷鍵切換、UI 指示、tray 開關 | feat |
 | R10 | 移除筆記的最小化按鈕 [—] | feat |
 | R11 | 筆記 titlebar 加「收起全部並儲存」按鈕（沿用既有 `cmd_collapse_all`） | feat |
+| R12 | 使用說明 / 設定視窗目前無法拖曳，需修復 | bug |
 
 ## 細節設計
 
@@ -126,6 +127,13 @@
 - 後備：Rust 端 hotkey handler 已有 200ms delay safety fallback（list 不在就直接 collapse），筆記事件路徑同樣受惠
 - E2E：開兩個筆記 → 在筆記點 `⇊` → 視窗全關 → 重啟 app → 兩個筆記都還原
 
+### R12 — Help / Settings 視窗拖曳
+
+- 現況：`HelpWindow.svelte` (line 6) 與 `SettingsWindow.svelte` (line 93) 的 titlebar 只有 `data-tauri-drag-region`，缺少 NoteWindow 已有的 `handleTitlebarMousedown` → `windowsApi.startDragging(...)` fallback（NoteWindow 是因為這個原因才加的，見既有註解：「data-tauri-drag-region 在某些平台偶爾失效」）
+- 修法：在兩個 svelte 加上同樣的 `on:mousedown={handleTitlebarMousedown}` handler，傳入對應 window label（`help`、`settings`）
+- 跳過按鈕/輸入框：handler 內 `if (target.closest("button") || target.closest("input")) return`（與 NoteWindow 一致）
+- E2E：在 Help / Settings 視窗對 titlebar 空白處 mousedown + drag → 視窗位置改變
+
 ## 元件邊界
 
 - **`src-tauri/src/hotkey/`**：新增穿透快捷鍵註冊與 handler；移除舊的筆記專屬快捷鍵
@@ -151,6 +159,7 @@
 | R9 | ✅ toggle 邏輯（混合狀態 → 全開 / 全開 → 全關 / 全關 → 全開） | ✅ dot 綠/黃渲染 | ✅ 快捷鍵 + tray 切換 + 視窗 ignoreCursorEvents 行為 |
 | R10 | — | ✅ titlebar 無 [—] | ✅ smoke spec 更新 |
 | R11 | — | ✅ titlebar 有 ⇊ | ✅ 點擊 → 所有筆記關閉 + session 已存 + 重啟還原 |
+| R12 | — | — | ✅ Help / Settings titlebar 拖曳改變視窗位置 |
 
 ## 風險與已知盲點
 
@@ -168,7 +177,7 @@
 ## 落地順序（提供給後續 writing-plans 參考）
 
 1. R1/R2（先封住多餘視窗，避免後續 E2E 噪訊）
-2. R10、R11、R8（純移除/新增 UI，不涉及複雜邏輯）
+2. R10、R11、R8、R12（純移除/新增 UI / 拖曳 fallback，不涉及複雜邏輯）
 3. R3、R4、R6（小修）
 4. R5（真透明，獨立 spike）
 5. R9（穿透完整功能，依賴 R5 的視窗設定）

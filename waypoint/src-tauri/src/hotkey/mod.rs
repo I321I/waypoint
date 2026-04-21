@@ -128,19 +128,6 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
     Ok(())
 }
 
-pub fn register_note_hotkey(
-    app: &AppHandle,
-    hotkey: &str,
-    note_id: String,
-    context_id: Option<String>,
-) -> Result<(), Box<dyn std::error::Error>> {
-    app.global_shortcut().on_shortcut(hotkey, move |app, _shortcut, event| {
-        if event.state != ShortcutState::Pressed { return; }
-        let _ = open_note_window(app, &note_id, context_id.as_deref());
-    })?;
-    Ok(())
-}
-
 // async：見 tray::cmd_open_help 的註解。WebView2 上 sync command + 同步建
 // webview 會 deadlock 原 webview 的 IPC，造成兩邊白屏。
 #[tauri::command]
@@ -160,23 +147,6 @@ pub fn cmd_close_note_window(app: AppHandle, note_id: String) -> Result<(), Stri
         win.close().map_err(|e| e.to_string())?;
     }
     Ok(())
-}
-
-#[tauri::command]
-pub fn cmd_register_note_hotkey(
-    app: AppHandle,
-    note_id: String,
-    context_id: Option<String>,
-    hotkey: String,
-) -> Result<(), String> {
-    register_note_hotkey(&app, &hotkey, note_id, context_id).map_err(|e| e.to_string())
-}
-
-#[tauri::command]
-pub fn cmd_unregister_hotkey(app: AppHandle, hotkey: String) -> Result<(), String> {
-    app.global_shortcut()
-        .unregister(hotkey.as_str())
-        .map_err(|e| e.to_string())
 }
 
 /// 用 label 關閉視窗（close）——前端不依賴 getCurrentWindow()

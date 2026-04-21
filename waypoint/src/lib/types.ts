@@ -8,6 +8,7 @@ export interface WindowBounds {
 export interface NoteSettings {
   fontSize: number;
   opacity: number;
+  /** @deprecated R4：已不再使用筆記專屬快捷鍵；保留欄位以相容舊 JSON 設定。 */
   hotkey: string | null;
   windowBounds: WindowBounds | null;
 }

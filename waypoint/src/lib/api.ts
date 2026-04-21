@@ -49,10 +49,6 @@ export const windows = {
   collapseAll: () => invoke<void>("cmd_collapse_all"),
   closeNote: (noteId: string) =>
     invoke<void>("cmd_close_note_window", { noteId }),
-  registerNoteHotkey: (noteId: string, contextId: string | null, hotkey: string) =>
-    invoke<void>("cmd_register_note_hotkey", { noteId, contextId, hotkey }),
-  unregisterHotkey: (hotkey: string) =>
-    invoke<void>("cmd_unregister_hotkey", { hotkey }),
   openSettings: () => invoke<void>("cmd_open_settings"),
   /** 用 label 關閉視窗（不依賴 getCurrentWindow()）*/
   closeWindow: (label: string) => invoke<void>("cmd_close_window", { label }),

@@ -1,27 +1,17 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import type { NoteSettings } from "../../lib/types";
-  import { windows as windowsApi } from "../../lib/api";
 
   export let settings: NoteSettings;
+  // R4：noteId/contextId 由 NoteWindow 傳入但目前面板不使用，保留 prop 以維持外部 API。
   export let noteId: string;
   export let contextId: string | null;
+  void noteId; void contextId;
   const dispatch = createEventDispatcher<{ change: NoteSettings }>();
 
   function update(patch: Partial<NoteSettings>) {
     settings = { ...settings, ...patch };
     dispatch("change", settings);
-  }
-
-  async function handleHotkeyChange(e: Event) {
-    const hotkey = (e.target as HTMLInputElement).value.trim() || null;
-    if (settings.hotkey) {
-      await windowsApi.unregisterHotkey(settings.hotkey).catch(() => {});
-    }
-    update({ hotkey });
-    if (hotkey) {
-      await windowsApi.registerNoteHotkey(noteId, contextId, hotkey);
-    }
   }
 </script>
 
@@ -53,15 +43,6 @@
     </div>
   </div>
 
-  <div class="setting-row">
-    <label>專屬快捷鍵</label>
-    <input
-      type="text"
-      placeholder="留空不設定"
-      value={settings.hotkey ?? ""}
-      on:change={handleHotkeyChange}
-    />
-  </div>
 </div>
 
 <style>

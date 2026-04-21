@@ -95,8 +95,6 @@ pub fn run() {
             hotkey::cmd_open_note_window,
             hotkey::cmd_collapse_all,
             hotkey::cmd_close_note_window,
-            hotkey::cmd_register_note_hotkey,
-            hotkey::cmd_unregister_hotkey,
             hotkey::cmd_close_window,
             hotkey::cmd_hide_window,
             hotkey::cmd_minimize_window,

@@ -207,6 +207,19 @@ test.describe("筆記視窗", () => {
     await closeBtn.click();
   });
 
+  test("專屬快捷鍵欄位已移除（R4）", async ({ page }) => {
+    await mockTauriWithNote(page);
+    await page.goto("http://localhost:4173/#view=note&noteId=test-id");
+    await page.waitForTimeout(2000);
+
+    await page.locator("button.settings-btn[title='設定']").click();
+    await expect(page.locator(".opacity-slider")).toBeVisible({ timeout: 5000 });
+
+    // 不應再有「專屬快捷鍵」label 或對應 input
+    await expect(page.locator("text=專屬快捷鍵")).toHaveCount(0);
+    await expect(page.locator(".settings-panel input[type='text']")).toHaveCount(0);
+  });
+
   test("透明度 slider 100% 時 thumb 對齊右邊界（R6）", async ({ page }) => {
     await mockTauriWithNote(page);
     await page.goto("http://localhost:4173/#view=note&noteId=test-id");

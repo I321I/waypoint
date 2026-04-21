@@ -122,6 +122,7 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .min_inner_size(300.0, 200.0)
         .resizable(true)
         .decorations(false)
+        .always_on_top(true)
         .skip_taskbar(true)
         .build()?;
     Ok(())
@@ -250,6 +251,19 @@ mod tests {
 
     /// R8: list autohide-on-blur 已移除（避免拖曳時被吃掉焦點而瞬間消失）。
     /// 編譯成功本身就是主要保證；此測試用源碼指紋雙保險。
+    #[test]
+    fn note_window_builder_sets_always_on_top() {
+        let src = include_str!("mod.rs");
+        // 找到 open_note_window 區段，要求 .always_on_top(true)
+        let start = src.find("pub fn open_note_window").expect("open_note_window must exist");
+        let end = src[start..].find("\n}\n").expect("function must close") + start;
+        let body = &src[start..end];
+        assert!(
+            body.contains(".always_on_top(true)"),
+            "open_note_window must call .always_on_top(true) on its WebviewWindowBuilder (R3)"
+        );
+    }
+
     #[test]
     fn no_list_autohide_function() {
         let src = include_str!("mod.rs");

@@ -23,6 +23,7 @@
 | R10 | 移除筆記的最小化按鈕 [—] | feat |
 | R11 | 筆記 titlebar 加「收起全部並儲存」按鈕（沿用既有 `cmd_collapse_all`） | feat |
 | R12 | 使用說明 / 設定視窗目前無法拖曳，需修復 | bug |
+| R13 | 任一 Waypoint 視窗（list/note/settings/help）可見時 → 工作列顯示大圖示應用程式；全部隱藏（純背景）→ 不顯示。可在列表設定開關此功能。tray 小圖示不動。 | feat |
 
 ## 細節設計
 
@@ -134,6 +135,21 @@
 - 跳過按鈕/輸入框：handler 內 `if (target.closest("button") || target.closest("input")) return`（與 NoteWindow 一致）
 - E2E：在 Help / Settings 視窗對 titlebar 空白處 mousedown + drag → 視窗位置改變
 
+### R13 — 工作列大圖示動態顯示
+
+- **目標**：當 Waypoint 有任一可見視窗時，作業系統工作列上要看得到 Waypoint 應用程式（含 icon + 視窗清單，可 alt-tab、可從工作列右鍵切換各視窗）。當所有 Waypoint 視窗都隱藏（純背景 + tray）時，工作列不顯示大圖示。tray 小圖示行為**完全不變**。
+- **實作**：用 Tauri 的 `WebviewWindow::set_skip_taskbar(bool)`
+  - 可見視窗數 > 0 且設定開啟 → 對所有可見視窗 `set_skip_taskbar(false)`
+  - 可見視窗數 = 0 或設定關閉 → 全部 `set_skip_taskbar(true)`
+- **觸發點**：每次視窗 show / hide / create / close 時重算一次（Rust 端集中函式 `refresh_taskbar_visibility()`）
+  - hook 進現有 `open_list_window` / `open_note_window` / collapse_all / handleClose 等路徑
+- **設定**：在列表設定面板新增 `showInTaskbar: boolean`（預設 `true`），存到 `app_config`；`refresh_taskbar_visibility` 讀此 flag 決定是否啟用此特性
+- **跨平台**：`set_skip_taskbar` 在 Windows / Linux 行為一致；macOS 用 dock，行為由 Tauri 抽象（次要平台，不在本次優先驗證範圍）
+- **不影響**：tray icon、tray 右鍵選單、視窗 always_on_top 等屬性
+- **測試**：
+  - cargo test：`refresh_taskbar_visibility` 對給定 (visible_count, setting) → 預期 skip_taskbar 值
+  - E2E：開列表 → 工作列出現 → 收起全部 → 工作列消失；關閉設定 flag 後不論視窗都不顯示
+
 ## 元件邊界
 
 - **`src-tauri/src/hotkey/`**：新增穿透快捷鍵註冊與 handler；移除舊的筆記專屬快捷鍵
@@ -160,6 +176,7 @@
 | R10 | — | ✅ titlebar 無 [—] | ✅ smoke spec 更新 |
 | R11 | — | ✅ titlebar 有 ⇊ | ✅ 點擊 → 所有筆記關閉 + session 已存 + 重啟還原 |
 | R12 | — | — | ✅ Help / Settings titlebar 拖曳改變視窗位置 |
+| R13 | ✅ refresh_taskbar_visibility 邏輯表 | — | ✅ 開列表 → 工作列有；收起 → 工作列無；關 flag → 永遠無 |
 
 ## 風險與已知盲點
 

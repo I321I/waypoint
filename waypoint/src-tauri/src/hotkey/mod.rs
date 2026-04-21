@@ -93,37 +93,7 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         .skip_taskbar(true)
         .build()?;
     *state.list_window_open.lock().unwrap() = true;
-    attach_list_autohide(app);
     Ok(())
-}
-
-/// 監聽 list 視窗 Focused(false)：若焦點去到「非 Waypoint」的視窗 → 自動隱藏列表。
-///
-/// 為何帶延遲 + 再檢查：
-/// - `data-tauri-drag-region` 拖曳開始時，Win32 會送 WM_KILLFOCUS，若立即隱藏會中斷拖曳。
-/// - 切到 Waypoint 自己的 note 視窗時，也會觸發列表失焦，此時不應隱藏。
-/// - 延遲 180ms 後，檢查「目前前景視窗」是否屬於 Waypoint；不是才隱藏。
-fn attach_list_autohide(app: &AppHandle) {
-    if let Some(list) = app.get_webview_window("list") {
-        let app_clone = app.clone();
-        list.on_window_event(move |event| {
-            if let tauri::WindowEvent::Focused(false) = event {
-                let app2 = app_clone.clone();
-                std::thread::spawn(move || {
-                    std::thread::sleep(std::time::Duration::from_millis(180));
-                    let any_waypoint_focused = app2.webview_windows().values().any(|w| {
-                        w.is_focused().unwrap_or(false)
-                    });
-                    if any_waypoint_focused { return; }
-                    if let Some(list) = app2.get_webview_window("list") {
-                        let _ = list.hide();
-                        let state = app2.state::<AppState>();
-                        *state.list_window_open.lock().unwrap() = false;
-                    }
-                });
-            }
-        });
-    }
 }
 
 pub fn collapse_all_waypoint_windows(app: &AppHandle) {
@@ -276,5 +246,18 @@ mod tests {
     fn list_open_triggers_collapse_all() {
         assert_eq!(determine_action(true, false), HotkeyAction::CollapseAll);
         assert_eq!(determine_action(true, true), HotkeyAction::CollapseAll);
+    }
+
+    /// R8: list autohide-on-blur 已移除（避免拖曳時被吃掉焦點而瞬間消失）。
+    /// 編譯成功本身就是主要保證；此測試用源碼指紋雙保險。
+    #[test]
+    fn no_list_autohide_function() {
+        let src = include_str!("mod.rs");
+        // production 程式中的函式定義字串（拆開以免測試本身誤判）。
+        let needle = concat!("fn ", "attach", "_list_autohide");
+        assert!(
+            !src.contains(needle),
+            "list autohide 函式應已移除（R8）"
+        );
     }
 }

@@ -1,9 +1,23 @@
 <script lang="ts">
   import { windows as windowsApi } from "../lib/api";
+  import { getCurrentWindow } from "@tauri-apps/api/window";
+
+  // R12 fallback：data-tauri-drag-region 在 WebView2 上偶爾失效，
+  // 補一個 mousedown handler 直接呼叫 startDragging，跳過 button/input。
+  async function handleTitlebarMousedown(e: MouseEvent) {
+    const target = e.target as HTMLElement | null;
+    if (!target) return;
+    if (target.closest("button, input, textarea, select, a")) return;
+    try {
+      await getCurrentWindow().startDragging();
+    } catch {
+      /* 在瀏覽器 mock 環境忽略 */
+    }
+  }
 </script>
 
 <div class="help-window">
-  <div class="titlebar" data-tauri-drag-region>
+  <div class="titlebar" data-tauri-drag-region on:mousedown={handleTitlebarMousedown}>
     <span class="title">Waypoint — 使用說明</span>
     <button on:click={() => windowsApi.closeWindow("help").catch(() => {})}>✕</button>
   </div>

@@ -177,6 +177,17 @@ test.describe("筆記視窗", () => {
     await expect(page.locator("text=Test Note")).toBeVisible({ timeout: 8000 });
   });
 
+  test("⇊ 收起全部並儲存按鈕存在且可點擊（R11）", async ({ page }) => {
+    await mockTauriWithNote(page);
+    await page.goto("http://localhost:4173/#view=note&noteId=test-id");
+    await page.waitForTimeout(2000);
+
+    const btn = page.locator(".titlebar-buttons button[title='收起全部並儲存']");
+    await expect(btn).toHaveCount(1);
+    await expect(btn).toHaveText("⇊");
+    await btn.click();
+  });
+
   test("最小化按鈕已移除（R10）", async ({ page }) => {
     await mockTauriWithNote(page);
     await page.goto("http://localhost:4173/#view=note&noteId=test-id");

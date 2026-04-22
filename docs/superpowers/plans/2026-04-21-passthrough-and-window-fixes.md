@@ -413,6 +413,8 @@ git add src/windows/note/SettingsPanel.svelte src/windows/note/SettingsPanel.ren
 git commit -m "fix(note): 透明度 slider 100% 時 thumb 對齊右邊界"
 ```
 
+> **Deviation（2026-04-22 補記）**：實作將 `min` 從 spec 的 `0` 改為 `10`、`step` 改為 `5`。理由：避免使用者拉到 0% 後筆記完全透明、無法再點開設定。視為 UX 守門，已於 SettingsPanel.svelte 加註解。
+
 ---
 
 ## Phase 4 — 真透明（R5）

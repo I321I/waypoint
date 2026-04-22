@@ -33,6 +33,7 @@
   <div class="setting-row">
     <label>透明度</label>
     <div class="slider-row">
+      <!-- min=10：UX 守門，避免設成 0% 後筆記完全看不到、難以再點開設定。 -->
       <input
         class="opacity-slider"
         type="range" min="10" max="100" step="5"

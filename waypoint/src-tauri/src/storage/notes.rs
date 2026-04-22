@@ -10,6 +10,7 @@ pub struct NoteSettings {
     pub font_size: u32,
     #[serde(default = "default_opacity")]
     pub opacity: f32,
+    /// R4 已移除筆記專屬快捷鍵；保留欄位僅為向後相容（讀取舊 settings.json 不報錯）。
     #[serde(default)]
     pub hotkey: Option<String>,
     #[serde(default)]

@@ -16,13 +16,15 @@
   let saveTimeout: ReturnType<typeof setTimeout>;
   let windowOpacity = 1;
 
-  // 套用視窗透明度（CSS opacity，因 Tauri 2.x JS SDK 無 setOpacity）
+  // 套用視窗透明度：改用 CSS variable 控制 body rgba 背景，避免文字也被淡化
   function applyOpacity(opacity: number) {
     windowOpacity = opacity;
-    document.documentElement.style.opacity = String(opacity);
+    document.documentElement.style.setProperty('--note-alpha', String(opacity));
   }
 
   onMount(async () => {
+    // 同步加上 class（不等 await），避免閃爍
+    document.body.classList.add('note-view');
     note = await notesApi.read(contextId, noteId);
     if (note) {
       applyOpacity(note.settings.opacity);
@@ -112,6 +114,10 @@
 {/if}
 
 <style>
+  :global(body.note-view) {
+    background: rgba(30, 30, 30, var(--note-alpha, 1)) !important;
+  }
+
   .note-window {
     display: flex;
     flex-direction: column;

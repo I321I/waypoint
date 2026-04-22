@@ -124,6 +124,7 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .decorations(false)
         .always_on_top(true)
         .skip_taskbar(true)
+        .transparent(true)
         .build()?;
     Ok(())
 }
@@ -231,6 +232,18 @@ mod tests {
         assert!(
             body.contains(".always_on_top(true)"),
             "open_note_window must call .always_on_top(true) on its WebviewWindowBuilder (R3)"
+        );
+    }
+
+    #[test]
+    fn open_note_window_sets_transparent() {
+        let src = include_str!("./mod.rs");
+        let start = src.find("pub fn open_note_window").expect("open_note_window must exist");
+        let end = src[start..].find("\n}\n").map(|i| start + i).unwrap_or(src.len());
+        let body = &src[start..end];
+        assert!(
+            body.contains(concat!(".trans", "parent(true)")),
+            "open_note_window must call .transparent(true) for R5"
         );
     }
 

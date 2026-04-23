@@ -15,6 +15,8 @@ pub struct NoteSettings {
     pub hotkey: Option<String>,
     #[serde(default)]
     pub window_bounds: Option<WindowBounds>,
+    #[serde(default)]
+    pub passthrough: bool,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -35,6 +37,7 @@ impl Default for NoteSettings {
             opacity: default_opacity(),
             hotkey: None,
             window_bounds: None,
+            passthrough: false,
         }
     }
 }
@@ -209,5 +212,12 @@ mod tests {
         let loaded = read_note(None, &note.id).unwrap();
         assert_eq!(loaded.settings.font_size, 18);
         assert!((loaded.settings.opacity - 0.8).abs() < 0.001);
+    }
+
+    #[test]
+    fn note_settings_deserializes_without_passthrough_field() {
+        let json = r#"{"fontSize":14,"opacity":1.0,"hotkey":null,"windowBounds":null}"#;
+        let s: NoteSettings = serde_json::from_str(json).unwrap();
+        assert_eq!(s.passthrough, false);
     }
 }

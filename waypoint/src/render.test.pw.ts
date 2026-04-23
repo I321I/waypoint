@@ -41,7 +41,7 @@ async function mockTauriWithNote(page: Page) {
             contextId: null,
             title: "Test Note",
             content: "",
-            settings: { fontSize: 14, opacity: 1, hotkey: null, windowBounds: null },
+            settings: { fontSize: 14, opacity: 1, hotkey: null, windowBounds: null, passthrough: false },
           });
         }
         return Promise.resolve(null);

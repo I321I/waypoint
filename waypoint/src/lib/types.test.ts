@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import type { Note, Session } from "./types";
+import { describe, it, expect, test } from "vitest";
+import type { Note, NoteSettings, Session } from "./types";
 
 describe("types", () => {
   it("Note contextId is null for global notes", () => {
@@ -8,7 +8,7 @@ describe("types", () => {
       contextId: null,
       title: "Test",
       content: "# Test",
-      settings: { fontSize: 14, opacity: 1.0, hotkey: null, windowBounds: null },
+      settings: { fontSize: 14, opacity: 1.0, hotkey: null, windowBounds: null, passthrough: false },
     };
     expect(note.contextId).toBeNull();
   });
@@ -21,4 +21,9 @@ describe("types", () => {
     expect(sess.openContextNotes).toHaveLength(1);
     expect(sess.openGlobalNotes).toHaveLength(1);
   });
+});
+
+test("NoteSettings.passthrough defaults to false", () => {
+  const s: NoteSettings = { fontSize: 14, opacity: 1, hotkey: null, windowBounds: null, passthrough: false };
+  expect(s.passthrough).toBe(false);
 });

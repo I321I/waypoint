@@ -104,6 +104,7 @@ pub fn run() {
             tray::cmd_open_settings,
             commands::passthrough_cmd::cmd_set_passthrough,
             commands::passthrough_cmd::cmd_toggle_passthrough_global,
+            commands::config_cmd::cmd_set_passthrough_hotkey,
         ])
         .setup(|app| {
             // 兩個初始化都用容錯方式：即使 tray 失敗（如 Steam Deck 無 StatusNotifier），
@@ -117,6 +118,10 @@ pub fn run() {
             match hotkey::register_hotkey(app.handle(), &config.hotkey) {
                 Ok(()) => write_log_line(&format!("register_hotkey ok: {}", &config.hotkey)),
                 Err(e) => write_log_line(&format!("register_hotkey failed ({}): {e}", &config.hotkey)),
+            }
+            match hotkey::register_passthrough_hotkey(app.handle(), &config.passthrough_hotkey) {
+                Ok(()) => write_log_line(&format!("register_passthrough_hotkey ok: {}", &config.passthrough_hotkey)),
+                Err(e) => write_log_line(&format!("register_passthrough_hotkey failed ({}): {e}", &config.passthrough_hotkey)),
             }
             if std::env::var("WAYPOINT_E2E").is_ok() {
                 write_log_line("WAYPOINT_E2E set: auto-opening list window");

@@ -41,6 +41,12 @@ export const config = {
   getAutostart: () => invoke<boolean>("get_autostart"),
   isAutostartSupported: () => invoke<boolean>("is_autostart_supported"),
   setAutostart: (enabled: boolean) => invoke<void>("set_autostart", { enabled }),
+  setPassthroughHotkey: (hotkey: string) => invoke<void>("cmd_set_passthrough_hotkey", { hotkey }),
+};
+
+export const passthrough = {
+  toggleGlobal: () => invoke<void>("cmd_toggle_passthrough_global"),
+  setPassthrough: (noteLabel: string, on: boolean) => invoke<void>("cmd_set_passthrough", { noteLabel, on }),
 };
 
 export const windows = {

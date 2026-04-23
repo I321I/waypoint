@@ -25,10 +25,16 @@ pub struct AppConfig {
     pub context_aliases: HashMap<String, String>,
     #[serde(default)]
     pub contexts: HashMap<String, ContextConfig>,
+    #[serde(default = "default_passthrough_hotkey")]
+    pub passthrough_hotkey: String,
 }
 
 fn default_hotkey() -> String {
     "Ctrl+Shift+Space".to_string()
+}
+
+fn default_passthrough_hotkey() -> String {
+    "Ctrl+Shift+T".to_string()
 }
 
 impl Default for AppConfig {
@@ -37,6 +43,7 @@ impl Default for AppConfig {
             hotkey: default_hotkey(),
             context_aliases: HashMap::new(),
             contexts: HashMap::new(),
+            passthrough_hotkey: default_passthrough_hotkey(),
         }
     }
 }
@@ -79,6 +86,19 @@ mod tests {
         let cfg = load().unwrap();
         assert_eq!(cfg.hotkey, "Ctrl+Shift+Space");
         assert!(cfg.context_aliases.is_empty());
+    }
+
+    #[test]
+    fn default_passthrough_hotkey_is_ctrl_shift_t() {
+        let cfg = AppConfig::default();
+        assert_eq!(cfg.passthrough_hotkey, "Ctrl+Shift+T");
+    }
+
+    #[test]
+    fn passthrough_hotkey_deserializes_without_field() {
+        let json = r#"{"hotkey":"Ctrl+Shift+Space"}"#;
+        let cfg: AppConfig = serde_json::from_str(json).unwrap();
+        assert_eq!(cfg.passthrough_hotkey, "Ctrl+Shift+T");
     }
 
     #[test]

@@ -72,6 +72,21 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
     Ok(())
 }
 
+pub fn register_passthrough_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std::error::Error>> {
+    app.global_shortcut().on_shortcut(hotkey, move |app, _shortcut, event| {
+        if event.state != ShortcutState::Pressed {
+            return;
+        }
+        let _ = crate::commands::passthrough_cmd::cmd_toggle_passthrough_global(app.clone());
+    })?;
+    Ok(())
+}
+
+pub fn reregister_passthrough_hotkey(app: &AppHandle, old_hotkey: &str, new_hotkey: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let _ = app.global_shortcut().unregister(old_hotkey);
+    register_passthrough_hotkey(app, new_hotkey)
+}
+
 pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
     let state = app.state::<AppState>();
     if let Some(win) = app.get_webview_window("list") {

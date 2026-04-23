@@ -31,6 +31,7 @@ export interface AppConfig {
   hotkey: string;
   contextAliases: Record<string, string>;
   contexts: Record<string, { matchBy: "process" | "title" }>;
+  passthroughHotkey: string;
 }
 
 export type ViewType = "list" | "note" | "help" | "settings";

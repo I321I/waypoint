@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { config as configApi, windows as windowsApi } from "../lib/api";
+  import { config as configApi, passthrough, windows as windowsApi } from "../lib/api";
   import { getCurrentWindow } from "@tauri-apps/api/window";
 
   // R12 fallback：data-tauri-drag-region 在 WebView2 上偶爾失效，
@@ -23,6 +23,11 @@
   let saving = false;
   let message = "";
   let capturing = false;
+
+  // 穿透快捷鍵
+  let passthroughHotkey = "";
+  let passthroughHotkeyInput = "";
+  let capturingPassthrough = false;
 
   // 把 KeyboardEvent 轉成 Tauri global shortcut 格式：Ctrl+Shift+Space / Alt+F1 ...
   function formatShortcut(e: KeyboardEvent): string | null {
@@ -77,6 +82,8 @@
     hotkeyInput = cfg.hotkey;
     autostartSupported = supported;
     autostartEnabled = autostart;
+    passthroughHotkey = cfg.passthroughHotkey ?? "";
+    passthroughHotkeyInput = passthroughHotkey;
   });
 
   async function saveHotkey() {
@@ -99,6 +106,41 @@
       autostartEnabled = !autostartEnabled;
     } catch (e) {
       message = `設定失敗：${e}`;
+    }
+  }
+
+  function startCapturePassthrough() {
+    capturingPassthrough = true;
+    passthroughHotkeyInput = "按下快捷鍵…";
+  }
+
+  function handleCapturePassthrough(e: KeyboardEvent) {
+    if (!capturingPassthrough) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.key === "Escape") {
+      capturingPassthrough = false;
+      passthroughHotkeyInput = passthroughHotkey;
+      return;
+    }
+    const combo = formatShortcut(e);
+    if (combo) {
+      passthroughHotkeyInput = combo;
+      capturingPassthrough = false;
+    }
+  }
+
+  async function savePassthroughHotkey() {
+    if (!passthroughHotkeyInput.trim()) return;
+    saving = true;
+    try {
+      await configApi.setPassthroughHotkey(passthroughHotkeyInput.trim());
+      passthroughHotkey = passthroughHotkeyInput.trim();
+      message = "穿透快捷鍵已儲存，重新啟動後生效";
+    } catch (e) {
+      message = `儲存失敗：${e}`;
+    } finally {
+      saving = false;
     }
   }
 </script>
@@ -149,6 +191,27 @@
         </div>
       </section>
     {/if}
+
+    <section>
+      <h2>穿透模式快捷鍵</h2>
+      <p class="desc">按下後切換所有筆記穿透狀態</p>
+      <div class="row">
+        <button
+          type="button"
+          class="hotkey-capture"
+          class:capturing={capturingPassthrough}
+          on:click={startCapturePassthrough}
+          on:keydown={handleCapturePassthrough}
+          title="點擊後按下要設定的快捷鍵"
+        >
+          {passthroughHotkeyInput || "點擊後按下快捷鍵"}
+        </button>
+        <button on:click={savePassthroughHotkey} disabled={saving || passthroughHotkeyInput === passthroughHotkey || capturingPassthrough}>
+          {saving ? "儲存中…" : "套用"}
+        </button>
+      </div>
+      <p class="hint">點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+T</p>
+    </section>
 
     {#if message}
       <p class="message">{message}</p>

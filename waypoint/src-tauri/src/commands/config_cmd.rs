@@ -31,6 +31,13 @@ pub fn set_autostart(enabled: bool) -> Result<(), String> {
 }
 
 #[tauri::command]
+pub fn cmd_set_show_in_taskbar(show: bool) -> Result<(), String> {
+    let mut config = app_config::load().map_err(|e| e.to_string())?;
+    config.show_in_taskbar = show;
+    app_config::save(&config).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
 pub fn cmd_set_passthrough_hotkey(app: AppHandle, hotkey: String) -> Result<(), String> {
     let mut config = app_config::load().map_err(|e| e.to_string())?;
     let old_hotkey = config.passthrough_hotkey.clone();

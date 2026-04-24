@@ -29,6 +29,9 @@
   let passthroughHotkeyInput = "";
   let capturingPassthrough = false;
 
+  // 工作列圖示
+  let showInTaskbar = true;
+
   // 把 KeyboardEvent 轉成 Tauri global shortcut 格式：Ctrl+Shift+Space / Alt+F1 ...
   function formatShortcut(e: KeyboardEvent): string | null {
     const parts: string[] = [];
@@ -84,6 +87,7 @@
     autostartEnabled = autostart;
     passthroughHotkey = cfg.passthroughHotkey ?? "";
     passthroughHotkeyInput = passthroughHotkey;
+    showInTaskbar = cfg.showInTaskbar ?? true;
   });
 
   async function saveHotkey() {
@@ -127,6 +131,15 @@
     if (combo) {
       passthroughHotkeyInput = combo;
       capturingPassthrough = false;
+    }
+  }
+
+  async function toggleShowInTaskbar() {
+    try {
+      await configApi.setShowInTaskbar(!showInTaskbar);
+      showInTaskbar = !showInTaskbar;
+    } catch (e) {
+      message = `設定失敗：${e}`;
     }
   }
 
@@ -211,6 +224,23 @@
         </button>
       </div>
       <p class="hint">點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+T</p>
+    </section>
+
+    <section>
+      <h2>工作列圖示</h2>
+      <p class="desc">有筆記視窗開啟時在工作列顯示圖示</p>
+      <div class="row">
+        <label class="toggle">
+          <input
+            type="checkbox"
+            checked={showInTaskbar}
+            on:change={toggleShowInTaskbar}
+          />
+          <span class="toggle-label">
+            {showInTaskbar ? "已啟用" : "已停用"}
+          </span>
+        </label>
+      </div>
     </section>
 
     {#if message}

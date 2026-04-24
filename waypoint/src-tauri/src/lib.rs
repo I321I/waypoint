@@ -105,6 +105,7 @@ pub fn run() {
             commands::passthrough_cmd::cmd_set_passthrough,
             commands::passthrough_cmd::cmd_toggle_passthrough_global,
             commands::config_cmd::cmd_set_passthrough_hotkey,
+            commands::config_cmd::cmd_set_show_in_taskbar,
         ])
         .setup(|app| {
             // 兩個初始化都用容錯方式：即使 tray 失敗（如 Steam Deck 無 StatusNotifier），

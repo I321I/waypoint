@@ -32,6 +32,7 @@ export interface AppConfig {
   contextAliases: Record<string, string>;
   contexts: Record<string, { matchBy: "process" | "title" }>;
   passthroughHotkey: string;
+  showInTaskbar: boolean;
 }
 
 export type ViewType = "list" | "note" | "help" | "settings";

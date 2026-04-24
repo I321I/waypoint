@@ -42,6 +42,7 @@ export const config = {
   isAutostartSupported: () => invoke<boolean>("is_autostart_supported"),
   setAutostart: (enabled: boolean) => invoke<void>("set_autostart", { enabled }),
   setPassthroughHotkey: (hotkey: string) => invoke<void>("cmd_set_passthrough_hotkey", { hotkey }),
+  setShowInTaskbar: (show: boolean) => invoke<void>("cmd_set_show_in_taskbar", { show }),
 };
 
 export const passthrough = {

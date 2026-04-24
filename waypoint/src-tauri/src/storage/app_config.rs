@@ -27,6 +27,8 @@ pub struct AppConfig {
     pub contexts: HashMap<String, ContextConfig>,
     #[serde(default = "default_passthrough_hotkey")]
     pub passthrough_hotkey: String,
+    #[serde(default = "default_show_in_taskbar")]
+    pub show_in_taskbar: bool,
 }
 
 fn default_hotkey() -> String {
@@ -37,6 +39,10 @@ fn default_passthrough_hotkey() -> String {
     "Ctrl+Shift+T".to_string()
 }
 
+fn default_show_in_taskbar() -> bool {
+    true
+}
+
 impl Default for AppConfig {
     fn default() -> Self {
         AppConfig {
@@ -44,6 +50,7 @@ impl Default for AppConfig {
             context_aliases: HashMap::new(),
             contexts: HashMap::new(),
             passthrough_hotkey: default_passthrough_hotkey(),
+            show_in_taskbar: default_show_in_taskbar(),
         }
     }
 }
@@ -99,6 +106,19 @@ mod tests {
         let json = r#"{"hotkey":"Ctrl+Shift+Space"}"#;
         let cfg: AppConfig = serde_json::from_str(json).unwrap();
         assert_eq!(cfg.passthrough_hotkey, "Ctrl+Shift+T");
+    }
+
+    #[test]
+    fn show_in_taskbar_default_is_true() {
+        let cfg = AppConfig::default();
+        assert!(cfg.show_in_taskbar);
+    }
+
+    #[test]
+    fn show_in_taskbar_deserializes_without_field() {
+        let json = r#"{"hotkey":"Ctrl+Shift+Space"}"#;
+        let cfg: AppConfig = serde_json::from_str(json).unwrap();
+        assert!(cfg.show_in_taskbar);
     }
 
     #[test]

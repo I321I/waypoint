@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Note } from "../../lib/types";
   import NoteItem from "./NoteItem.svelte";
+  import ConfirmDialog from "./ConfirmDialog.svelte";
   import { context as contextApi, notes as notesApi } from "../../lib/api";
   import { createEventDispatcher } from "svelte";
 
@@ -18,6 +19,7 @@
   let availableContexts: string[] = [];
   let showRenameInput = false;
   let newContextName = "";
+  let showDeleteConfirm = false;
 
   async function showContextMenu(e: MouseEvent) {
     e.preventDefault();
@@ -51,12 +53,15 @@
     closeMenu();
   }
 
-  async function deleteCtx() {
-    if (confirm(`刪除 context "${contextId}" 及其所有筆記？`)) {
-      await contextApi.delete(contextId);
-      dispatch("deleted", { contextId });
-    }
+  function deleteCtx() {
+    showDeleteConfirm = true;
     closeMenu();
+  }
+
+  async function confirmDelete() {
+    await contextApi.delete(contextId);
+    dispatch("deleted", { contextId });
+    showDeleteConfirm = false;
   }
 
   async function addNote() {
@@ -80,6 +85,16 @@
     <NoteItem {note} isOpen={openNoteIds.includes(note.id)} on:opened={handleOpened} />
   {/each}
 </div>
+
+{#if showDeleteConfirm}
+  <ConfirmDialog
+    message={`刪除 context "${contextId}" 及其所有筆記？`}
+    confirmText="刪除"
+    cancelText="取消"
+    onConfirm={confirmDelete}
+    onCancel={() => { showDeleteConfirm = false; }}
+  />
+{/if}
 
 {#if menuVisible}
   <div

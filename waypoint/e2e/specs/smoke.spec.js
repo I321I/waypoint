@@ -32,7 +32,7 @@ describe("列表視窗 smoke", () => {
   });
 
   it("titlebar 四個按鈕齊全（?、⚙、⇊、✕）", async () => {
-    const titles = ["使用說明", "設定", "收起全部", "關閉列表"];
+    const titles = ["使用說明", "設定", "收起全部", "結束 Waypoint"];
     for (const t of titles) {
       const btn = await browser.$(`button[title="${t}"]`);
       assert.ok(await btn.isExisting(), `按鈕「${t}」不存在`);

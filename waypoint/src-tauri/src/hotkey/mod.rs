@@ -108,6 +108,7 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         .skip_taskbar(true)
         .build()?;
     *state.list_window_open.lock().unwrap() = true;
+    crate::taskbar::refresh_taskbar_visibility(app);
     Ok(())
 }
 
@@ -120,6 +121,7 @@ pub fn collapse_all_waypoint_windows(app: &AppHandle) {
     }
     let state = app.state::<AppState>();
     *state.list_window_open.lock().unwrap() = false;
+    crate::taskbar::refresh_taskbar_visibility(app);
 }
 
 pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>) -> tauri::Result<()> {
@@ -141,6 +143,7 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .skip_taskbar(true)
         .transparent(true)
         .build()?;
+    crate::taskbar::refresh_taskbar_visibility(app);
     Ok(())
 }
 

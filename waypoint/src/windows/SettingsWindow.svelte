@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { config as configApi, passthrough, windows as windowsApi } from "../lib/api";
   import { getCurrentWindow } from "@tauri-apps/api/window";
+  import { emit } from "@tauri-apps/api/event";
 
   // R12 fallback：data-tauri-drag-region 在 WebView2 上偶爾失效，
   // 補一個 mousedown handler 直接呼叫 startDragging，跳過 button/input。
@@ -138,6 +139,7 @@
     try {
       await configApi.setShowInTaskbar(!showInTaskbar);
       showInTaskbar = !showInTaskbar;
+      await emit("waypoint://show-in-taskbar-changed", {});
     } catch (e) {
       message = `設定失敗：${e}`;
     }

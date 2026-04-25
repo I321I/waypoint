@@ -4,9 +4,11 @@ mod error;
 mod hotkey;
 mod state;
 mod storage;
+pub mod taskbar;
 mod tray;
 
 use state::AppState;
+use tauri::Listener;
 
 /// 寫 panic / 重大錯誤訊息到 log 檔，Steam Deck 等無 console 環境下方便使用者回報。
 ///
@@ -123,6 +125,12 @@ pub fn run() {
             match hotkey::register_passthrough_hotkey(app.handle(), &config.passthrough_hotkey) {
                 Ok(()) => write_log_line(&format!("register_passthrough_hotkey ok: {}", &config.passthrough_hotkey)),
                 Err(e) => write_log_line(&format!("register_passthrough_hotkey failed ({}): {e}", &config.passthrough_hotkey)),
+            }
+            {
+                let handle = app.handle().clone();
+                app.listen("waypoint://show-in-taskbar-changed", move |_| {
+                    taskbar::refresh_taskbar_visibility(&handle);
+                });
             }
             if std::env::var("WAYPOINT_E2E").is_ok() {
                 write_log_line("WAYPOINT_E2E set: auto-opening list window");

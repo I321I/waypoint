@@ -114,7 +114,8 @@ test.describe("設定視窗", () => {
     await page.goto("http://localhost:4173/#view=settings");
     await page.waitForTimeout(800);
 
-    await expect(page.locator("button", { hasText: "套用" })).toBeVisible({ timeout: 5000 });
+    // 5.4 之後設定視窗有多個「套用」按鈕（hotkey + passthrough hotkey），改驗至少一個可見
+    await expect(page.locator("button", { hasText: "套用" }).first()).toBeVisible({ timeout: 5000 });
   });
 });
 
@@ -162,7 +163,7 @@ test.describe("列表視窗", () => {
     await page.goto("http://localhost:4173/#view=list");
     await page.waitForTimeout(800);
 
-    const closeBtn = page.locator("button[title='關閉列表']");
+    const closeBtn = page.locator("button[title='結束 Waypoint']");
     await expect(closeBtn).toBeVisible({ timeout: 5000 });
     await closeBtn.click();
   });
@@ -202,7 +203,7 @@ test.describe("筆記視窗", () => {
     await page.goto("http://localhost:4173/#view=note&noteId=test-id");
     await page.waitForTimeout(2000);
 
-    const closeBtn = page.locator("button[title='關閉']");
+    const closeBtn = page.locator("button[title='儲存並關閉']");
     await expect(closeBtn).toBeVisible({ timeout: 5000 });
     await closeBtn.click();
   });

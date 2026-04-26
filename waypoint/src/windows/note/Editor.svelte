@@ -90,6 +90,18 @@
   :global(.tiptap-editor code) { background: var(--bg-tertiary); padding: 1px 4px; border-radius: 2px; font-size: 0.9em; }
   :global(.tiptap-editor pre) { background: var(--bg-tertiary); padding: 10px 12px; border-radius: 3px; margin: 8px 0; overflow-x: auto; }
   :global(.tiptap-editor input[type="checkbox"]) { margin-right: 6px; accent-color: var(--accent); }
+  /* TaskItem 預設 <li><label><input/></label><div><p/></div></li>，p 為 block 會造成
+     checkbox 與文字分兩行。強制 flex + inline p，使核取框與內容同一行。 */
+  :global(.tiptap-editor ul[data-type="taskList"]) { list-style: none; padding-left: 0; }
+  :global(.tiptap-editor ul[data-type="taskList"] li) {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    margin: 2px 0;
+  }
+  :global(.tiptap-editor ul[data-type="taskList"] li > label) { flex-shrink: 0; margin-top: 2px; }
+  :global(.tiptap-editor ul[data-type="taskList"] li > div) { flex: 1; min-width: 0; }
+  :global(.tiptap-editor ul[data-type="taskList"] li > div > p) { margin: 0; display: inline; }
   :global(.tiptap-editor p) { margin: 4px 0; }
   :global(.tiptap-editor strong) { color: var(--text-primary); }
   :global(.tiptap-editor p.is-editor-empty:first-child::before) {

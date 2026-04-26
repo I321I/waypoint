@@ -1,5 +1,7 @@
 pub mod app_config;
+pub mod app_session;
 pub mod autostart;
+pub mod note_order;
 pub mod notes;
 pub mod paths;
 pub mod session;

@@ -203,9 +203,48 @@ cd /data/games-note-AIgen/waypoint && npm run test:render
 - 修改 Rust 啟動流程（setup、tray、hotkey）— 同樣 E2E 必綠
 - 純文件修改、CI/workflow 微調 — 仍會觸發，但關注點是主邏輯
 
+### 確認 Windows E2E 狀態（agent 可直接執行，不依賴 gh CLI）
+
+repo `I321I/waypoint` 是 public，走公開 GitHub REST API，不需 token、不需 `gh auth login`。
+
+**workflow id**：`262677203`（對應 `.github/workflows/e2e-windows.yml`，一次確定就不會變）。
+
+**查最新 master run**：
+
+```bash
+curl -s "https://api.github.com/repos/I321I/waypoint/actions/workflows/262677203/runs?branch=master&per_page=1" \
+  | python3 -c "import json,sys; r=json.load(sys.stdin)['workflow_runs'][0]; print(f\"id={r['id']} sha={r['head_sha'][:7]} status={r['status']} conclusion={r['conclusion']} url={r['html_url']}\")"
+```
+
+**判讀**：
+- `status=queued` / `in_progress` → 還在跑，輪詢等待。
+- `status=completed conclusion=success` → ✅ 綠燈，可 tag release。
+- `status=completed conclusion=failure` / `cancelled` / `timed_out` → ❌ 紅燈，不可 tag。
+- `sha` 必須等於 `git rev-parse master | cut -c1-7`，否則你看到的是更早的 run。
+
+**輪詢指令**（blocking，直到 conclusion 出來才退出）：
+
+```bash
+RUN_ID=$(curl -s "https://api.github.com/repos/I321I/waypoint/actions/workflows/262677203/runs?branch=master&per_page=1" \
+  | python3 -c "import json,sys;print(json.load(sys.stdin)['workflow_runs'][0]['id'])")
+while true; do
+  result=$(curl -s "https://api.github.com/repos/I321I/waypoint/actions/runs/$RUN_ID" \
+    | python3 -c "import json,sys;r=json.load(sys.stdin);print(r.get('status'),r.get('conclusion'))")
+  echo "$result"
+  [[ "$result" != *"None"* && "$result" != in_progress* && "$result" != queued* ]] && break
+  sleep 45
+done
+```
+
+`e2e-linux` 同法，workflow id `262754229`。
+
 ### 失敗時
 
-- CI 紅燈 → 立刻看 log（artifact `wdio-logs` 會上傳）
+- CI 紅燈 → 立刻看 log。本 repo 有 fail-safe 機制：`e2e-windows.yml` 失敗時會把 runner log **push 到 `ci-logs` 分支**（commit 85e5a39），可直接：
+  ```bash
+  git fetch origin ci-logs && git log origin/ci-logs -1 --stat
+  ```
+  也可抓 artifact `wdio-logs`（需 token，麻煩，優先用 ci-logs 分支）。
 - 定位失敗原因，補修後再推
 - 不要用「skip E2E」或「暫時關掉」來繞過
 

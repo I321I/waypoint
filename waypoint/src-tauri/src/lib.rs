@@ -81,6 +81,11 @@ pub fn run() {
             commands::notes::save_content,
             commands::notes::save_note_settings,
             commands::notes::delete_note,
+            commands::notes::rename_note,
+            commands::notes::duplicate_note,
+            commands::notes::move_note,
+            commands::notes::get_note_order,
+            commands::notes::set_note_order,
             commands::context_cmd::get_active_context,
             commands::context_cmd::set_context_match_by,
             commands::context_cmd::set_context_alias,
@@ -101,7 +106,11 @@ pub fn run() {
             hotkey::cmd_hide_window,
             hotkey::cmd_minimize_window,
             hotkey::cmd_toggle_maximize,
+            hotkey::cmd_get_window_position,
+            hotkey::cmd_set_window_position,
+            hotkey::cmd_start_dragging,
             hotkey::cmd_exit_app,
+            hotkey::cmd_restart_app,
             tray::cmd_open_help,
             tray::cmd_open_settings,
             commands::passthrough_cmd::cmd_set_passthrough,
@@ -131,6 +140,17 @@ pub fn run() {
                 app.listen("waypoint://show-in-taskbar-changed", move |_| {
                     taskbar::refresh_taskbar_visibility(&handle);
                 });
+            }
+            // Restart 後還原：若有 app_session.json（cmd_restart_app 留下的快照），
+            // 依序開回之前的筆記視窗，並視需要叫出列表。讀完即刪檔。
+            if let Some(snapshot) = storage::app_session::take() {
+                write_log_line(&format!("restoring {} notes from app_session", snapshot.open_notes.len()));
+                for n in &snapshot.open_notes {
+                    let _ = hotkey::open_note_window(app.handle(), &n.note_id, n.context_id.as_deref());
+                }
+                if snapshot.list_open {
+                    let _ = hotkey::open_list_window(app.handle());
+                }
             }
             if std::env::var("WAYPOINT_E2E").is_ok() {
                 write_log_line("WAYPOINT_E2E set: auto-opening list window");

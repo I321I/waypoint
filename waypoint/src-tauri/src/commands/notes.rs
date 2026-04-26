@@ -34,3 +34,28 @@ pub fn save_note_settings(
 pub fn delete_note(context_id: Option<String>, note_id: String) -> Result<(), WaypointError> {
     notes::delete_note(context_id.as_deref(), &note_id)
 }
+
+#[tauri::command]
+pub fn rename_note(context_id: Option<String>, note_id: String, new_title: String) -> Result<(), WaypointError> {
+    notes::rename_note(context_id.as_deref(), &note_id, &new_title)
+}
+
+#[tauri::command]
+pub fn duplicate_note(src_context_id: Option<String>, src_note_id: String, dst_context_id: Option<String>) -> Result<Note, WaypointError> {
+    notes::duplicate_note(src_context_id.as_deref(), &src_note_id, dst_context_id.as_deref())
+}
+
+#[tauri::command]
+pub fn move_note(src_context_id: Option<String>, note_id: String, dst_context_id: Option<String>) -> Result<(), WaypointError> {
+    notes::move_note(src_context_id.as_deref(), &note_id, dst_context_id.as_deref())
+}
+
+#[tauri::command]
+pub fn get_note_order(context_id: Option<String>) -> Vec<String> {
+    crate::storage::note_order::load(context_id.as_deref())
+}
+
+#[tauri::command]
+pub fn set_note_order(context_id: Option<String>, order: Vec<String>) -> Result<(), WaypointError> {
+    crate::storage::note_order::save(context_id.as_deref(), &order)
+}

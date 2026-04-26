@@ -102,10 +102,27 @@
 
   function minimizeList() { windowsApi.minimizeWindow("list").catch(() => {}); }
   function quitApp() { windowsApi.exitApp().catch(() => {}); }
+
+  async function reloadLists() {
+    const [globals, contexts] = await Promise.all([
+      notesApi.list(null),
+      currentContextId ? notesApi.list(currentContextId) : Promise.resolve([]),
+    ]);
+    globalNotes.set(globals);
+    contextNotes.set(contexts);
+  }
+
+  // Fallback：mousedown 在非 button 區域時啟動原生 drag（data-tauri-drag-region 失效時保底）
+  function handleTitlebarMousedown(e: MouseEvent) {
+    if (e.button !== 0) return;
+    const target = e.target as HTMLElement;
+    if (target.closest("button") || target.closest("input")) return;
+    windowsApi.startDragging("list").catch(() => {});
+  }
 </script>
 
 <div class="list-window">
-  <div class="titlebar" data-tauri-drag-region>
+  <div class="titlebar" data-tauri-drag-region on:mousedown={handleTitlebarMousedown}>
     <div class="titlebar-left" data-tauri-drag-region>
       <span class="app-name" data-tauri-drag-region>WAYPOINT</span>
       <button class="icon-btn" on:click={openHelp} title="使用說明">?</button>
@@ -123,6 +140,7 @@
       notes={$globalNotes}
       openNoteIds={openGlobalNoteIds}
       on:opened={(e) => handleNoteOpened(e.detail.noteId, e.detail.isGlobal)}
+      on:changed={reloadLists}
     />
     <div class="divider"></div>
     {#if currentContextId}
@@ -132,6 +150,7 @@
         openNoteIds={openContextNoteIds}
         on:opened={(e) => handleNoteOpened(e.detail.noteId, e.detail.isGlobal)}
         on:deleted={() => contextNotes.set([])}
+        on:changed={reloadLists}
       />
     {/if}
   </div>
@@ -154,7 +173,9 @@
     background: var(--bg-tertiary);
     border-bottom: 1px solid var(--border);
     min-height: 32px;
+    cursor: grab;
   }
+  .titlebar:active { cursor: grabbing; }
   .titlebar-left { display: flex; align-items: center; gap: 8px; }
   .titlebar-right { display: flex; align-items: center; gap: 6px; }
   .app-name { font-size: 11px; font-weight: bold; color: var(--text-primary); letter-spacing: 1px; }

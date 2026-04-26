@@ -199,6 +199,34 @@ pub fn cmd_minimize_window(app: AppHandle, label: String) -> Result<(), String> 
     Ok(())
 }
 
+/// 取得視窗外部位置（physical pixels, 螢幕座標）。
+/// 用途：E2E 測試驗證拖曳前後位置是否改變。
+#[tauri::command]
+pub fn cmd_get_window_position(app: AppHandle, label: String) -> Result<(i32, i32), String> {
+    let win = app.get_webview_window(&label).ok_or_else(|| format!("window not found: {label}"))?;
+    let pos = win.outer_position().map_err(|e| e.to_string())?;
+    Ok((pos.x, pos.y))
+}
+
+/// 設定視窗外部位置（physical pixels）。
+/// 用途：E2E 測試為視窗指定已知起點。
+#[tauri::command]
+pub fn cmd_set_window_position(app: AppHandle, label: String, x: i32, y: i32) -> Result<(), String> {
+    let win = app.get_webview_window(&label).ok_or_else(|| format!("window not found: {label}"))?;
+    win.set_position(tauri::PhysicalPosition::new(x, y)).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+/// 啟動拖曳（讓 webview 以外的地方也能觸發原生 drag）。
+/// 用途：前端 JS 在 titlebar mousedown 上呼叫，作為 data-tauri-drag-region 的 fallback；
+/// 以及 E2E 測試直接觸發 drag + 配合 set_window_position 驗證。
+#[tauri::command]
+pub fn cmd_start_dragging(app: AppHandle, label: String) -> Result<(), String> {
+    let win = app.get_webview_window(&label).ok_or_else(|| format!("window not found: {label}"))?;
+    win.start_dragging().map_err(|e| e.to_string())?;
+    Ok(())
+}
+
 /// 切換最大化狀態
 #[tauri::command]
 pub fn cmd_toggle_maximize(app: AppHandle, label: String) -> Result<(), String> {
@@ -216,6 +244,73 @@ pub fn cmd_toggle_maximize(app: AppHandle, label: String) -> Result<(), String> 
 #[tauri::command]
 pub fn cmd_exit_app(app: AppHandle) {
     app.exit(0);
+}
+
+/// 快照當下所有 waypoint 視窗狀態（note-* 與 list）。
+pub fn snapshot_open_windows(app: &AppHandle) -> crate::storage::app_session::AppSession {
+    use crate::storage::app_session::{AppSession, OpenNoteRef};
+    let mut open_notes: Vec<OpenNoteRef> = Vec::new();
+    let mut list_open = false;
+    for (label, win) in app.webview_windows() {
+        if label == "list" {
+            if win.is_visible().unwrap_or(false) { list_open = true; }
+        } else if let Some(note_id) = label.strip_prefix("note-") {
+            if win.is_visible().unwrap_or(false) {
+                // 從 URL hash 解析 contextId（開窗時帶入）
+                let ctx = win
+                    .url()
+                    .ok()
+                    .and_then(|u| {
+                        let s = u.to_string();
+                        let hash = s.split_once('#').map(|(_, h)| h.to_string())?;
+                        let q = hash.trim_start_matches('/');
+                        // view=note&noteId=xxx&contextId=yyy
+                        for kv in q.split('&') {
+                            if let Some(v) = kv.strip_prefix("contextId=") {
+                                return Some(v.to_string());
+                            }
+                        }
+                        None
+                    });
+                open_notes.push(OpenNoteRef {
+                    note_id: note_id.to_string(),
+                    context_id: ctx,
+                });
+            }
+        }
+    }
+    AppSession { open_notes, list_open }
+}
+
+/// 重新啟動 Waypoint：
+/// 1. 把當下開啟的筆記視窗寫入 app_session.json
+/// 2. 以目前 binary 執行新 process
+/// 3. exit(0)
+///
+/// 啟動時 lib.rs 會讀 app_session.json 並還原這些視窗。
+#[tauri::command]
+pub fn cmd_restart_app(app: AppHandle) -> Result<(), String> {
+    let snapshot = snapshot_open_windows(&app);
+    crate::storage::app_session::save(&snapshot).map_err(|e| e.to_string())?;
+    let exe = std::env::current_exe().map_err(|e| e.to_string())?;
+    // 以獨立 process 啟動，避免成為 child（父死 child 受影響）。
+    #[cfg(unix)]
+    {
+        use std::os::unix::process::CommandExt;
+        let _ = std::process::Command::new(&exe).process_group(0).spawn().map_err(|e| e.to_string())?;
+    }
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const DETACHED_PROCESS: u32 = 0x00000008;
+        const CREATE_NEW_PROCESS_GROUP: u32 = 0x00000200;
+        let _ = std::process::Command::new(&exe)
+            .creation_flags(DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
+            .spawn()
+            .map_err(|e| e.to_string())?;
+    }
+    app.exit(0);
+    Ok(())
 }
 
 #[cfg(test)]

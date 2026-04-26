@@ -139,7 +139,108 @@ pub fn list_notes(context_id: Option<&str>) -> Result<Vec<Note>, WaypointError> 
             }
         }
     }
-    Ok(notes)
+    // 套用使用者自訂順序（拖曳排序）；新 note 附加尾端。
+    let order = crate::storage::note_order::load(context_id);
+    let ordered = crate::storage::note_order::apply_order(&order, notes, |n| n.id.as_str());
+    Ok(ordered)
+}
+
+/// 重新命名：將 content 首行的 "# title" 換成新的標題（無則插入）。
+pub fn rename_note(context_id: Option<&str>, note_id: &str, new_title: &str) -> Result<(), WaypointError> {
+    let dir = note_dir(context_id, note_id);
+    if !dir.exists() {
+        return Err(WaypointError::NoteNotFound(note_id.to_string()));
+    }
+    let content = std::fs::read_to_string(dir.join("content.md")).unwrap_or_default();
+    let rest = if let Some(nl) = content.find('\n') {
+        let first = &content[..nl];
+        if first.starts_with("# ") {
+            content[nl + 1..].to_string()
+        } else {
+            content.clone()
+        }
+    } else if content.starts_with("# ") {
+        String::new()
+    } else {
+        content.clone()
+    };
+    let merged = if new_title.trim().is_empty() {
+        rest
+    } else {
+        format!("# {}\n{}", new_title.trim(), rest)
+    };
+    std::fs::write(dir.join("content.md"), merged)?;
+    Ok(())
+}
+
+/// 複製筆記到指定 context（含 global）。產生新 UUID；content / settings 一起複製。
+/// 會把新 id 附加到目標 context 的 order 尾端。
+pub fn duplicate_note(src_context_id: Option<&str>, src_note_id: &str, dst_context_id: Option<&str>) -> Result<Note, WaypointError> {
+    let src_dir = note_dir(src_context_id, src_note_id);
+    if !src_dir.exists() {
+        return Err(WaypointError::NoteNotFound(src_note_id.to_string()));
+    }
+    let new_id = Uuid::new_v4().to_string();
+    let dst_dir = note_dir(dst_context_id, &new_id);
+    std::fs::create_dir_all(&dst_dir)?;
+    let content = std::fs::read_to_string(src_dir.join("content.md")).unwrap_or_default();
+    std::fs::write(dst_dir.join("content.md"), &content)?;
+    let settings_str = std::fs::read_to_string(src_dir.join("settings.json"))
+        .unwrap_or_else(|_| "{}".to_string());
+    // 清掉 hotkey：避免兩個 note 共用同一個快捷鍵造成衝突。
+    let mut settings: NoteSettings = serde_json::from_str(&settings_str).unwrap_or_default();
+    settings.hotkey = None;
+    std::fs::write(dst_dir.join("settings.json"), serde_json::to_string_pretty(&settings)?)?;
+    // 附加到目標 order 尾端
+    let mut order = crate::storage::note_order::load(dst_context_id);
+    order.push(new_id.clone());
+    let _ = crate::storage::note_order::save(dst_context_id, &order);
+    read_note(dst_context_id, &new_id)
+}
+
+/// 把筆記搬到另一個 context（保留 UUID）。會同步更新 order：從來源移除，加到目標尾端。
+pub fn move_note(src_context_id: Option<&str>, note_id: &str, dst_context_id: Option<&str>) -> Result<(), WaypointError> {
+    if src_context_id == dst_context_id {
+        return Ok(()); // noop
+    }
+    let src_dir = note_dir(src_context_id, note_id);
+    if !src_dir.exists() {
+        return Err(WaypointError::NoteNotFound(note_id.to_string()));
+    }
+    let dst_dir = note_dir(dst_context_id, note_id);
+    if let Some(parent) = dst_dir.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+    // 先嘗試 rename（同 fs 情況下最快）。跨 fs 失敗時退回 copy + remove。
+    if std::fs::rename(&src_dir, &dst_dir).is_err() {
+        copy_dir_recursive(&src_dir, &dst_dir)?;
+        std::fs::remove_dir_all(&src_dir)?;
+    }
+    // 更新 order
+    let mut src_order = crate::storage::note_order::load(src_context_id);
+    src_order.retain(|id| id != note_id);
+    let _ = crate::storage::note_order::save(src_context_id, &src_order);
+    let mut dst_order = crate::storage::note_order::load(dst_context_id);
+    if !dst_order.contains(&note_id.to_string()) {
+        dst_order.push(note_id.to_string());
+    }
+    let _ = crate::storage::note_order::save(dst_context_id, &dst_order);
+    Ok(())
+}
+
+fn copy_dir_recursive(src: &std::path::Path, dst: &std::path::Path) -> std::io::Result<()> {
+    std::fs::create_dir_all(dst)?;
+    for entry in std::fs::read_dir(src)? {
+        let entry = entry?;
+        let from = entry.path();
+        let to = dst.join(entry.file_name());
+        if from.is_dir() {
+            copy_dir_recursive(&from, &to)?;
+        } else {
+            std::fs::copy(&from, &to)?;
+        }
+    }
+    Ok(())
 }
 
 #[cfg(test)]
@@ -199,6 +300,60 @@ mod tests {
         create_note(Some("steam"), "Note 2").unwrap();
         let notes = list_notes(Some("steam")).unwrap();
         assert_eq!(notes.len(), 2);
+    }
+
+    #[test]
+    fn rename_note_replaces_title_heading() {
+        let (_d, _g) = setup();
+        let n = create_note(None, "X").unwrap();
+        save_content(None, &n.id, "# Old\nbody").unwrap();
+        rename_note(None, &n.id, "New Title").unwrap();
+        let reloaded = read_note(None, &n.id).unwrap();
+        assert_eq!(reloaded.title, "New Title");
+        assert!(reloaded.content.contains("body"));
+    }
+
+    #[test]
+    fn rename_note_inserts_heading_when_missing() {
+        let (_d, _g) = setup();
+        let n = create_note(None, "X").unwrap();
+        save_content(None, &n.id, "plain body").unwrap();
+        rename_note(None, &n.id, "T").unwrap();
+        let reloaded = read_note(None, &n.id).unwrap();
+        assert_eq!(reloaded.title, "T");
+        assert!(reloaded.content.contains("plain body"));
+    }
+
+    #[test]
+    fn duplicate_note_creates_new_uuid() {
+        let (_d, _g) = setup();
+        let n = create_note(None, "orig").unwrap();
+        save_content(None, &n.id, "# A\nb").unwrap();
+        let dup = duplicate_note(None, &n.id, None).unwrap();
+        assert_ne!(dup.id, n.id);
+        assert!(dup.content.contains("# A"));
+        // dup 應該附加到 order 尾端
+        let order = crate::storage::note_order::load(None);
+        assert!(order.contains(&dup.id));
+    }
+
+    #[test]
+    fn duplicate_note_to_different_context() {
+        let (_d, _g) = setup();
+        let n = create_note(None, "g").unwrap();
+        let dup = duplicate_note(None, &n.id, Some("steam")).unwrap();
+        assert_eq!(dup.context_id.as_deref(), Some("steam"));
+        // 原 note 仍在 global
+        assert!(read_note(None, &n.id).is_ok());
+    }
+
+    #[test]
+    fn move_note_changes_context() {
+        let (_d, _g) = setup();
+        let n = create_note(None, "g").unwrap();
+        move_note(None, &n.id, Some("steam")).unwrap();
+        assert!(read_note(None, &n.id).is_err());
+        assert!(read_note(Some("steam"), &n.id).is_ok());
     }
 
     #[test]

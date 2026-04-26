@@ -1,0 +1,136 @@
+name: E2E (macOS / WebKit)
+
+# tauri-driver 目前不支援 macOS（僅 Linux WebKitGTK 與 Windows WebView2）。
+# 所以 macOS E2E 不跑 WDIO specs，改做以下等效驗證：
+#   1. Vitest（前端單元）
+#   2. cargo test（Rust 後端單元）
+#   3. Playwright render test（視窗 hash routing、白屏檢查，跨平台 bug 早期攔截）
+#   4. tauri build --no-bundle（確認 macOS build 不壞）
+#   5. 啟動 binary 2 秒，檢查 process 沒 crash（smoke：白屏、panic、載入失敗都會在 2 秒內露餡）
+#
+# 失敗模式蒐集與 Windows 對齊：all logs → ci-logs 分支。
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e-mac:
+    runs-on: macos-latest
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            waypoint/src-tauri/target
+          key: ${{ runner.os }}-cargo-e2e-${{ hashFiles('waypoint/src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-e2e-
+
+      - name: Prepare logs dir
+        run: mkdir -p waypoint/logs
+
+      - name: Install frontend dependencies
+        working-directory: waypoint
+        run: |
+          (npm ci 2>&1 | tee logs/02-npm-install.log) || (npm install 2>&1 | tee -a logs/02-npm-install.log)
+
+      - name: Install Playwright browsers
+        working-directory: waypoint
+        run: npx playwright install --with-deps chromium 2>&1 | tee logs/02b-playwright-install.log
+
+      - name: Vitest (unit)
+        working-directory: waypoint
+        run: npm test 2>&1 | tee logs/03-vitest.log
+
+      - name: Build frontend
+        working-directory: waypoint
+        run: npm run build 2>&1 | tee logs/04-build-frontend.log
+
+      - name: Playwright render test
+        working-directory: waypoint
+        run: npm run test:render 2>&1 | tee logs/05-render.log
+
+      - name: Cargo test (rust)
+        working-directory: waypoint/src-tauri
+        run: cargo test 2>&1 | tee ../logs/06-cargo-test.log
+
+      - name: Build Tauri binary (release, no bundle)
+        working-directory: waypoint
+        run: npx tauri build --no-bundle 2>&1 | tee logs/07-tauri-build.log
+
+      - name: Smoke launch（2 秒，檢查是否 crash）
+        working-directory: waypoint
+        env:
+          WAYPOINT_E2E: "1"
+        run: |
+          set +e
+          BIN="src-tauri/target/release/waypoint"
+          if [ ! -x "$BIN" ]; then
+            echo "::error::binary not found at $BIN"
+            ls -la src-tauri/target/release/ || true
+            exit 1
+          fi
+          "$BIN" > logs/08-smoke-stdout.log 2> logs/08-smoke-stderr.log &
+          PID=$!
+          sleep 2
+          if ! kill -0 "$PID" 2>/dev/null; then
+            echo "::error::binary crashed within 2s"
+            echo "--- stdout ---"; cat logs/08-smoke-stdout.log
+            echo "--- stderr ---"; cat logs/08-smoke-stderr.log
+            exit 1
+          fi
+          kill "$PID" 2>/dev/null || true
+          sleep 1
+          kill -9 "$PID" 2>/dev/null || true
+          echo "smoke ok"
+
+      - name: Upload logs (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mac-logs-${{ github.run_attempt }}
+          path: |
+            waypoint/logs/
+            waypoint/test-results/
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Push logs to ci-logs branch on failure
+        if: failure()
+        shell: bash
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          BR="ci-logs/${{ github.sha }}-mac-${{ github.run_attempt }}"
+          git config user.email "ci-bot@waypoint"
+          git config user.name "ci-bot"
+          git checkout --orphan "$BR"
+          git rm -rf . >/dev/null 2>&1 || true
+          mkdir -p logs
+          if [ -d waypoint/logs ]; then cp -r waypoint/logs/. logs/ 2>/dev/null || true; fi
+          ls -la logs/ > logs/_INDEX.txt 2>&1 || true
+          echo "github.sha=${{ github.sha }}" > logs/_meta.txt
+          echo "attempt=${{ github.run_attempt }}" >> logs/_meta.txt
+          echo "run_id=${{ github.run_id }}" >> logs/_meta.txt
+          echo "platform=macos-latest" >> logs/_meta.txt
+          git add -A logs/
+          git commit -m "ci log mac ${{ github.sha }} attempt ${{ github.run_attempt }}" --allow-empty
+          git push origin "$BR" --force

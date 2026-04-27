@@ -97,7 +97,10 @@ pub fn save_content(context_id: Option<&str>, note_id: &str, content: &str) -> R
     if !dir.exists() {
         return Err(WaypointError::NoteNotFound(note_id.to_string()));
     }
-    std::fs::write(dir.join("content.md"), content)?;
+    let final_path = dir.join("content.md");
+    let tmp_path = dir.join("content.md.tmp");
+    std::fs::write(&tmp_path, content)?;
+    std::fs::rename(&tmp_path, &final_path)?;
     Ok(())
 }
 
@@ -107,7 +110,10 @@ pub fn save_settings(context_id: Option<&str>, note_id: &str, settings: &NoteSet
         return Err(WaypointError::NoteNotFound(note_id.to_string()));
     }
     let json = serde_json::to_string_pretty(settings)?;
-    std::fs::write(dir.join("settings.json"), json)?;
+    let final_path = dir.join("settings.json");
+    let tmp_path = dir.join("settings.json.tmp");
+    std::fs::write(&tmp_path, json)?;
+    std::fs::rename(&tmp_path, &final_path)?;
     Ok(())
 }
 
@@ -367,6 +373,17 @@ mod tests {
         let loaded = read_note(None, &note.id).unwrap();
         assert_eq!(loaded.settings.font_size, 18);
         assert!((loaded.settings.opacity - 0.8).abs() < 0.001);
+    }
+
+    #[test]
+    fn save_content_uses_atomic_write_no_partial_file() {
+        let (_dir, _guard) = setup();
+        let n = create_note(None, "atomic").unwrap();
+        save_content(None, &n.id, "stage1").unwrap();
+        save_content(None, &n.id, "stage2-much-longer-content-replacing-prior").unwrap();
+        let final_content = std::fs::read_to_string(note_dir(None, &n.id).join("content.md")).unwrap();
+        assert_eq!(final_content, "stage2-much-longer-content-replacing-prior");
+        assert!(!note_dir(None, &n.id).join("content.md.tmp").exists());
     }
 
     #[test]

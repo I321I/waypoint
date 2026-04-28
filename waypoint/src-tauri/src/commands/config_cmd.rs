@@ -1,11 +1,37 @@
 use crate::error::WaypointError;
-use crate::storage::app_config::{self, AppConfig};
+use crate::storage::app_config::{self, AppConfig, ContextConfig};
 use crate::storage::autostart;
-use tauri::AppHandle;
+use serde::Serialize;
+use std::collections::HashMap;
+use tauri::{AppHandle, Manager};
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AppConfigDto {
+    pub hotkey: String,
+    pub context_aliases: HashMap<String, String>,
+    pub contexts: HashMap<String, ContextConfig>,
+    pub passthrough_hotkey: String,
+    pub show_in_taskbar: bool,
+    #[serde(rename = "passthroughHotkeyRegistered")]
+    pub passthrough_hotkey_registered: bool,
+}
 
 #[tauri::command]
-pub fn get_app_config() -> Result<AppConfig, WaypointError> {
-    app_config::load()
+pub fn get_app_config(app: AppHandle) -> Result<AppConfigDto, WaypointError> {
+    let cfg: AppConfig = app_config::load()?;
+    let registered = app
+        .state::<crate::state::AppState>()
+        .passthrough_hotkey_registered
+        .load(std::sync::atomic::Ordering::SeqCst);
+    Ok(AppConfigDto {
+        hotkey: cfg.hotkey,
+        context_aliases: cfg.context_aliases,
+        contexts: cfg.contexts,
+        passthrough_hotkey: cfg.passthrough_hotkey,
+        show_in_taskbar: cfg.show_in_taskbar,
+        passthrough_hotkey_registered: registered,
+    })
 }
 
 #[tauri::command]

@@ -9,6 +9,7 @@ mod tray;
 
 use state::AppState;
 use tauri::Listener;
+use tauri::Manager;
 
 /// 寫 panic / 重大錯誤訊息到 log 檔，Steam Deck 等無 console 環境下方便使用者回報。
 ///
@@ -72,6 +73,7 @@ pub fn run() {
     write_log_line("startup: waypoint launching");
     let builder = tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .manage(AppState::default())
         .invoke_handler(tauri::generate_handler![
@@ -133,7 +135,17 @@ pub fn run() {
             }
             match hotkey::register_passthrough_hotkey(app.handle(), &config.passthrough_hotkey) {
                 Ok(()) => write_log_line(&format!("register_passthrough_hotkey ok: {}", &config.passthrough_hotkey)),
-                Err(e) => write_log_line(&format!("register_passthrough_hotkey failed ({}): {e}", &config.passthrough_hotkey)),
+                Err(e) => {
+                    write_log_line(&format!("register_passthrough_hotkey failed ({}): {e}", &config.passthrough_hotkey));
+                    let state = app.handle().state::<crate::state::AppState>();
+                    state.passthrough_hotkey_registered.store(false, std::sync::atomic::Ordering::SeqCst);
+                    use tauri_plugin_notification::NotificationExt;
+                    let _ = app.handle().notification()
+                        .builder()
+                        .title("Waypoint — 穿透快捷鍵註冊失敗")
+                        .body(format!("「{}」可能已被其他程式占用。請至設定更換。", &config.passthrough_hotkey))
+                        .show();
+                }
             }
             {
                 let handle = app.handle().clone();

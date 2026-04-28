@@ -36,7 +36,7 @@ fn default_hotkey() -> String {
 }
 
 fn default_passthrough_hotkey() -> String {
-    "Ctrl+Shift+T".to_string()
+    "Ctrl+Alt+T".to_string()
 }
 
 fn default_show_in_taskbar() -> bool {
@@ -96,16 +96,16 @@ mod tests {
     }
 
     #[test]
-    fn default_passthrough_hotkey_is_ctrl_shift_t() {
+    fn default_passthrough_hotkey_is_ctrl_alt_t() {
         let cfg = AppConfig::default();
-        assert_eq!(cfg.passthrough_hotkey, "Ctrl+Shift+T");
+        assert_eq!(cfg.passthrough_hotkey, "Ctrl+Alt+T");
     }
 
     #[test]
     fn passthrough_hotkey_deserializes_without_field() {
         let json = r#"{"hotkey":"Ctrl+Shift+Space"}"#;
         let cfg: AppConfig = serde_json::from_str(json).unwrap();
-        assert_eq!(cfg.passthrough_hotkey, "Ctrl+Shift+T");
+        assert_eq!(cfg.passthrough_hotkey, "Ctrl+Alt+T");
     }
 
     #[test]

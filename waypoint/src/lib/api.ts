@@ -85,6 +85,8 @@ export const windows = {
   startDragging: (label: string) => invoke<void>("cmd_start_dragging", { label }),
   /** 完全結束 Waypoint */
   exitApp: () => invoke<void>("cmd_exit_app"),
+  /** 結束 Waypoint 前先廣播 flush，留 ~300ms 給筆記視窗寫入 */
+  exitAppWithFlush: () => invoke<void>("cmd_exit_app_with_flush"),
   /** 快照目前開啟視窗 → 重新啟動 binary → 退出目前 process */
   restartApp: () => invoke<void>("cmd_restart_app"),
 };

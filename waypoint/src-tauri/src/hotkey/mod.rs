@@ -246,6 +246,17 @@ pub fn cmd_exit_app(app: AppHandle) {
     app.exit(0);
 }
 
+/// 完全結束 Waypoint 前先廣播 flush-and-save-now 給所有 note 視窗，
+/// 等指定毫秒讓前端寫入再退出。300ms 足夠 debounce(100ms) + atomic write 完成。
+#[tauri::command]
+pub fn cmd_exit_app_with_flush(app: AppHandle) {
+    let _ = app.emit("waypoint://flush-and-save-now", ());
+    std::thread::spawn(move || {
+        std::thread::sleep(std::time::Duration::from_millis(300));
+        app.exit(0);
+    });
+}
+
 /// 快照當下所有 waypoint 視窗狀態（note-* 與 list）。
 pub fn snapshot_open_windows(app: &AppHandle) -> crate::storage::app_session::AppSession {
     use crate::storage::app_session::{AppSession, OpenNoteRef};

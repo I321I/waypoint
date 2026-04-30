@@ -112,6 +112,7 @@ pub fn run() {
             hotkey::cmd_set_window_position,
             hotkey::cmd_start_dragging,
             hotkey::cmd_exit_app,
+            hotkey::cmd_exit_app_with_flush,
             hotkey::cmd_restart_app,
             tray::cmd_open_help,
             tray::cmd_open_settings,

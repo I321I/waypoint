@@ -25,6 +25,7 @@
   let passthrough = false;
   let unlistenPassthrough: UnlistenFn | null = null;
   let unlistenRenamedFromList: UnlistenFn | null = null;
+  let unlistenFlush: UnlistenFn | null = null;
   void windowOpacity;
 
   // 套用視窗透明度：改用 CSS variable 控制 body rgba 背景，避免文字也被淡化
@@ -61,11 +62,16 @@
         if (note) note = { ...note, title };
       }
     ).catch(() => null);
+    // 結束 app 時主程序廣播 flush -> 立即 flushPendingSave
+    unlistenFlush = await listen("waypoint://flush-and-save-now", async () => {
+      await flushPendingSave();
+    }).catch(() => null);
   });
 
   onDestroy(() => {
     unlistenPassthrough?.();
     unlistenRenamedFromList?.();
+    unlistenFlush?.();
   });
 
   async function handleDotClick() {
@@ -82,7 +88,7 @@
         lastEmittedTitle = title;
         await emit("waypoint://note-title-changed", { noteId, contextId, title });
       }
-    }, 500);
+    }, 100);
   }
 
   function handleTitleInput(e: Event) {

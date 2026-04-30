@@ -109,7 +109,7 @@
   }
 
   function minimizeList() { windowsApi.minimizeWindow("list").catch(() => {}); }
-  function quitApp() { windowsApi.exitApp().catch(() => {}); }
+  function quitApp() { windowsApi.exitAppWithFlush().catch(() => windowsApi.exitApp().catch(() => {})); }
 
   async function reloadLists() {
     const [globals, contexts] = await Promise.all([

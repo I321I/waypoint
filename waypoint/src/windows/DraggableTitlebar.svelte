@@ -12,7 +12,7 @@
   }
 </script>
 
-<div class="draggable-titlebar" data-tauri-drag-region on:mousedown={handleMousedown}>
+<div class="draggable-titlebar titlebar" data-tauri-drag-region on:mousedown={handleMousedown}>
   <slot />
 </div>
 

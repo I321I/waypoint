@@ -5,6 +5,7 @@
   import Editor from "./note/Editor.svelte";
   import Toolbar from "./note/Toolbar.svelte";
   import SettingsPanel from "./note/SettingsPanel.svelte";
+  import TitlebarOpacitySlider from "./note/TitlebarOpacitySlider.svelte";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
   import { notes as notesApi, passthrough as passthroughApi, windows as windowsApi } from "../lib/api";
   import type { Note, NoteSettings } from "../lib/types";
@@ -129,6 +130,17 @@
         <button on:click={handleClose} title="儲存並關閉">✕</button>
       </div>
     </DraggableTitlebar>
+
+    <TitlebarOpacitySlider
+      opacity={note.settings.opacity}
+      on:change={async (e) => {
+        if (!note) return;
+        const next = { ...note.settings, opacity: e.detail };
+        note = { ...note, settings: next };
+        applyOpacity(e.detail);
+        await notesApi.saveSettings(contextId, noteId, next);
+      }}
+    />
 
     <div class="title-row">
       <input

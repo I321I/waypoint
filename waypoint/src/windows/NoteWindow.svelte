@@ -17,12 +17,14 @@
   let note: Note | null = null;
   let title: string = "";
   let body: string = "";
+  let lastEmittedTitle: string = "";
   let settingsOpen = false;
   let editorRef: Editor;
   let saveTimeout: ReturnType<typeof setTimeout>;
   let windowOpacity = 1;
   let passthrough = false;
   let unlistenPassthrough: UnlistenFn | null = null;
+  let unlistenRenamedFromList: UnlistenFn | null = null;
   void windowOpacity;
 
   // 套用視窗透明度：改用 CSS variable 控制 body rgba 背景，避免文字也被淡化
@@ -41,6 +43,7 @@
       const parsed = parseTitleContent(note.content);
       title = parsed.title || note.title || "";
       body = parsed.body;
+      lastEmittedTitle = title;
     }
     unlistenPassthrough = await listen<[string, boolean]>("waypoint://passthrough-changed", (event) => {
       const [label, on] = event.payload;
@@ -48,10 +51,21 @@
         passthrough = on;
       }
     }).catch(() => null);
+    // 列表右鍵改名 -> 更新本視窗 title（不回送 title-changed 避免 echo loop）
+    unlistenRenamedFromList = await listen<{ noteId: string; contextId: string | null; title: string }>(
+      "waypoint://note-renamed-from-list",
+      (event) => {
+        if (event.payload.noteId !== noteId) return;
+        title = event.payload.title;
+        lastEmittedTitle = title;
+        if (note) note = { ...note, title };
+      }
+    ).catch(() => null);
   });
 
   onDestroy(() => {
     unlistenPassthrough?.();
+    unlistenRenamedFromList?.();
   });
 
   async function handleDotClick() {
@@ -64,6 +78,10 @@
     saveTimeout = setTimeout(async () => {
       const merged = joinTitleContent(title, body);
       await notesApi.saveContent(contextId, noteId, merged);
+      if (title !== lastEmittedTitle) {
+        lastEmittedTitle = title;
+        await emit("waypoint://note-title-changed", { noteId, contextId, title });
+      }
     }, 500);
   }
 

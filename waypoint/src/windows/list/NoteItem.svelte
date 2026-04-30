@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Note } from "../../lib/types";
   import { windows, notes as notesApi, context as contextApi } from "../../lib/api";
+  import { emit } from "@tauri-apps/api/event";
   import { createEventDispatcher } from "svelte";
 
   export let note: Note;
@@ -57,6 +58,12 @@
     const newTitle = renameValue.trim();
     if (newTitle && newTitle !== note.title) {
       await notesApi.rename(note.contextId, note.id, newTitle);
+      // 廣播給可能開著的 NoteWindow（不會回送 title-changed，避免 echo loop）
+      await emit("waypoint://note-renamed-from-list", {
+        noteId: note.id,
+        contextId: note.contextId,
+        title: newTitle,
+      });
       dispatch("changed");
     }
     renaming = false;

@@ -13,6 +13,7 @@
   let unlisten: (() => void) | null = null;
   let unlistenCollapse: (() => void) | null = null;
   let unlistenShown: (() => void) | null = null;
+  let unlistenTitleChanged: (() => void) | null = null;
 
   async function loadContextAndSession() {
     currentContextId = await contextApi.getActive();
@@ -74,12 +75,18 @@
     unlistenShown = await listen("waypoint://list-shown", async () => {
       await loadContextAndSession();
     });
+
+    // NoteWindow 改名 -> 重新載入清單
+    unlistenTitleChanged = await listen("waypoint://note-title-changed", async () => {
+      await reloadLists();
+    });
   });
 
   onDestroy(() => {
     unlisten?.();
     unlistenCollapse?.();
     unlistenShown?.();
+    unlistenTitleChanged?.();
   });
 
   async function handleCollapseAll() {

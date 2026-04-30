@@ -1,21 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { config as configApi, passthrough, windows as windowsApi } from "../lib/api";
-  import { getCurrentWindow } from "@tauri-apps/api/window";
   import { emit } from "@tauri-apps/api/event";
-
-  // R12 fallback：data-tauri-drag-region 在 WebView2 上偶爾失效，
-  // 補一個 mousedown handler 直接呼叫 startDragging，跳過 button/input。
-  async function handleTitlebarMousedown(e: MouseEvent) {
-    const target = e.target as HTMLElement | null;
-    if (!target) return;
-    if (target.closest("button, input, textarea, select, a")) return;
-    try {
-      await getCurrentWindow().startDragging();
-    } catch {
-      /* 在瀏覽器 mock 環境忽略 */
-    }
-  }
+  import DraggableTitlebar from "./DraggableTitlebar.svelte";
 
   let hotkey = "";
   let hotkeyInput = "";
@@ -167,10 +154,10 @@
 </script>
 
 <div class="settings-window">
-  <div class="titlebar" data-tauri-drag-region on:mousedown={handleTitlebarMousedown}>
+  <DraggableTitlebar label="settings">
     <span class="title">Waypoint — 設定</span>
     <button class="close-btn" on:click={() => windowsApi.closeWindow("settings").catch(() => {})}>✕</button>
-  </div>
+  </DraggableTitlebar>
 
   <div class="content">
     <section>
@@ -264,15 +251,7 @@
     height: 100vh;
     background: var(--bg-primary);
   }
-  .titlebar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px 12px;
-    background: var(--bg-tertiary);
-    border-bottom: 1px solid var(--border);
-  }
-  .title { font-size: 12px; font-weight: bold; color: var(--text-primary); }
+  .title { font-size: 12px; font-weight: bold; color: var(--text-primary); pointer-events: none; }
   .close-btn { font-size: 12px; padding: 2px 6px; }
   .content {
     flex: 1;

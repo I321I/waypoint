@@ -82,7 +82,7 @@ test.describe("使用說明視窗", () => {
     await page.goto("http://localhost:4173/#view=help");
     await page.waitForTimeout(800);
 
-    const closeBtn = page.locator(".titlebar button").filter({ hasText: "✕" });
+    const closeBtn = page.locator(".draggable-titlebar button").filter({ hasText: "✕" });
     await expect(closeBtn).toBeVisible({ timeout: 5000 });
     // 點擊不應拋出錯誤（invoke 靜默失敗）
     await closeBtn.click();

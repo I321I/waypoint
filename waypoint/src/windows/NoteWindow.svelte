@@ -5,6 +5,7 @@
   import Editor from "./note/Editor.svelte";
   import Toolbar from "./note/Toolbar.svelte";
   import SettingsPanel from "./note/SettingsPanel.svelte";
+  import DraggableTitlebar from "./DraggableTitlebar.svelte";
   import { notes as notesApi, passthrough as passthroughApi, windows as windowsApi } from "../lib/api";
   import type { Note, NoteSettings } from "../lib/types";
   import { parseTitleContent, joinTitleContent } from "../lib/noteFormat";
@@ -109,19 +110,11 @@
     await emit("waypoint://collapse-all-requested");
   }
 
-  // Fallback：data-tauri-drag-region 有時被 child 吃掉 mousedown（buttons、span overflow
-  // 等），導致拖曳失效。這裡在 titlebar 空白區 mousedown 時直接呼叫 start_dragging。
-  function handleTitlebarMousedown(e: MouseEvent) {
-    if (e.button !== 0) return;
-    const target = e.target as HTMLElement;
-    if (target.closest("button") || target.closest("input")) return;
-    windowsApi.startDragging(`note-${noteId}`).catch(() => {});
-  }
 </script>
 
 {#if note}
   <div class="note-window">
-    <div class="titlebar" data-tauri-drag-region on:mousedown={handleTitlebarMousedown}>
+    <DraggableTitlebar label={`note-${noteId}`}>
       <span class="note-title" data-tauri-drag-region>{title || "Untitled"}{contextId ? ` — ${contextId}` : ""}</span>
       <div class="titlebar-buttons">
         <button
@@ -135,7 +128,7 @@
         <button on:click={handleMaximize} title="最大化／還原">▢</button>
         <button on:click={handleClose} title="儲存並關閉">✕</button>
       </div>
-    </div>
+    </DraggableTitlebar>
 
     <div class="title-row">
       <input
@@ -185,21 +178,9 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background: var(--bg-primary);
+    background: rgba(30, 30, 30, var(--note-alpha, 1));
     border: 1px solid var(--border);
   }
-  .titlebar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 10px;
-    background: var(--bg-tertiary);
-    border-bottom: 1px solid var(--border);
-    min-height: 30px;
-    gap: 8px;
-    cursor: grab;
-  }
-  .titlebar:active { cursor: grabbing; }
   .note-title {
     font-size: 12px;
     color: var(--text-secondary);

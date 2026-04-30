@@ -3,6 +3,7 @@
   import { listen } from "@tauri-apps/api/event";
   import GlobalSection from "./list/GlobalSection.svelte";
   import ContextSection from "./list/ContextSection.svelte";
+  import DraggableTitlebar from "./DraggableTitlebar.svelte";
   import { notes as notesApi, context as contextApi, session as sessionApi, windows as windowsApi } from "../lib/api";
   import { globalNotes, contextNotes, activeContextId } from "../lib/stores";
 
@@ -112,17 +113,10 @@
     contextNotes.set(contexts);
   }
 
-  // Fallback：mousedown 在非 button 區域時啟動原生 drag（data-tauri-drag-region 失效時保底）
-  function handleTitlebarMousedown(e: MouseEvent) {
-    if (e.button !== 0) return;
-    const target = e.target as HTMLElement;
-    if (target.closest("button") || target.closest("input")) return;
-    windowsApi.startDragging("list").catch(() => {});
-  }
 </script>
 
 <div class="list-window">
-  <div class="titlebar" data-tauri-drag-region on:mousedown={handleTitlebarMousedown}>
+  <DraggableTitlebar label="list">
     <div class="titlebar-left" data-tauri-drag-region>
       <span class="app-name" data-tauri-drag-region>WAYPOINT</span>
       <button class="icon-btn" on:click={openHelp} title="使用說明">?</button>
@@ -133,7 +127,7 @@
       <button class="icon-btn" on:click={minimizeList} title="最小化列表">—</button>
       <button class="icon-btn" on:click={quitApp} title="結束 Waypoint">✕</button>
     </div>
-  </div>
+  </DraggableTitlebar>
 
   <div class="list-body">
     <GlobalSection
@@ -165,20 +159,9 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
   }
-  .titlebar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 10px;
-    background: var(--bg-tertiary);
-    border-bottom: 1px solid var(--border);
-    min-height: 32px;
-    cursor: grab;
-  }
-  .titlebar:active { cursor: grabbing; }
   .titlebar-left { display: flex; align-items: center; gap: 8px; }
   .titlebar-right { display: flex; align-items: center; gap: 6px; }
-  .app-name { font-size: 11px; font-weight: bold; color: var(--text-primary); letter-spacing: 1px; }
+  .app-name { font-size: 11px; font-weight: bold; color: var(--text-primary); letter-spacing: 1px; pointer-events: none; }
   .icon-btn { font-size: 12px; padding: 2px 5px; }
   .list-body { flex: 1; overflow-y: auto; padding: 4px 0; }
 </style>

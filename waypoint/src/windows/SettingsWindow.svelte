@@ -3,6 +3,7 @@
   import { config as configApi, passthrough, windows as windowsApi } from "../lib/api";
   import { emit } from "@tauri-apps/api/event";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
+  import { findConflict } from "../lib/hotkeyConflicts";
 
   let hotkey = "";
   let hotkeyInput = "";
@@ -19,6 +20,12 @@
 
   // 工作列圖示
   let showInTaskbar = true;
+
+  // 穿透 hotkey 註冊狀態（false 代表開機時被 OS / 其他 app 搶走）
+  let passthroughHotkeyRegistered = true;
+
+  $: hotkeyConflict = findConflict(hotkeyInput);
+  $: passthroughConflict = findConflict(passthroughHotkeyInput);
 
   // 把 KeyboardEvent 轉成 Tauri global shortcut 格式：Ctrl+Shift+Space / Alt+F1 ...
   function formatShortcut(e: KeyboardEvent): string | null {
@@ -76,6 +83,7 @@
     passthroughHotkey = cfg.passthroughHotkey ?? "";
     passthroughHotkeyInput = passthroughHotkey;
     showInTaskbar = cfg.showInTaskbar ?? true;
+    passthroughHotkeyRegistered = cfg.passthroughHotkeyRegistered ?? true;
   });
 
   async function saveHotkey() {
@@ -179,6 +187,9 @@
         </button>
       </div>
       <p class="hint">點擊左側框後按下鍵盤組合鍵（Esc 取消）；範例：Ctrl+Shift+Space、Alt+F1</p>
+      {#if hotkeyConflict}
+        <p class="conflict">⚠ 與 {hotkeyConflict.app} 衝突（{hotkeyConflict.description}），可能無法註冊</p>
+      {/if}
     </section>
 
     {#if autostartSupported}
@@ -218,7 +229,13 @@
           {saving ? "儲存中…" : "套用"}
         </button>
       </div>
-      <p class="hint">點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+T</p>
+      <p class="hint">點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+G</p>
+      {#if passthroughConflict}
+        <p class="conflict">⚠ 與 {passthroughConflict.app} 衝突（{passthroughConflict.description}），可能無法註冊</p>
+      {/if}
+      {#if !passthroughHotkeyRegistered}
+        <p class="conflict">⚠ 目前的穿透快捷鍵註冊失敗（被其他軟體佔用），請改用其他組合並重新啟動</p>
+      {/if}
     </section>
 
     <section>
@@ -292,4 +309,5 @@
   .toggle input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
   .toggle-label { font-size: 13px; color: var(--text-primary); }
   .message { font-size: 12px; color: var(--accent); }
+  .conflict { font-size: 11px; color: #ff9966; }
 </style>

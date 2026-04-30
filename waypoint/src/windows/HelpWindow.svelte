@@ -1,26 +1,15 @@
 <script lang="ts">
   import { windows as windowsApi } from "../lib/api";
-  import { getCurrentWindow } from "@tauri-apps/api/window";
-
-  // R12 fallback：data-tauri-drag-region 在 WebView2 上偶爾失效，
-  // 補一個 mousedown handler 直接呼叫 startDragging，跳過 button/input。
-  async function handleTitlebarMousedown(e: MouseEvent) {
-    const target = e.target as HTMLElement | null;
-    if (!target) return;
-    if (target.closest("button, input, textarea, select, a")) return;
-    try {
-      await getCurrentWindow().startDragging();
-    } catch {
-      /* 在瀏覽器 mock 環境忽略 */
-    }
-  }
+  import DraggableTitlebar from "./DraggableTitlebar.svelte";
+  import pkg from "../../package.json";
+  const version = pkg.version;
 </script>
 
 <div class="help-window">
-  <div class="titlebar" data-tauri-drag-region on:mousedown={handleTitlebarMousedown}>
-    <span class="title">Waypoint — 使用說明</span>
+  <DraggableTitlebar label="help">
+    <span class="title">Waypoint — 使用說明 <span class="version">v{version}</span></span>
     <button on:click={() => windowsApi.closeWindow("help").catch(() => {})}>✕</button>
-  </div>
+  </DraggableTitlebar>
 
   <div class="content">
     <section>
@@ -71,11 +60,8 @@
 
 <style>
   .help-window { display: flex; flex-direction: column; height: 100vh; background: var(--bg-primary); }
-  .titlebar {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 6px 12px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border);
-  }
-  .title { font-size: 12px; font-weight: bold; color: var(--text-primary); }
+  .title { font-size: 12px; font-weight: bold; color: var(--text-primary); pointer-events: none; }
+  .version { font-weight: normal; color: var(--text-secondary); margin-left: 6px; font-size: 11px; }
   .content { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 24px; }
   section { display: flex; flex-direction: column; gap: 8px; }
   h2 { font-size: 13px; color: var(--text-primary); border-bottom: 1px solid var(--border); padding-bottom: 4px; }

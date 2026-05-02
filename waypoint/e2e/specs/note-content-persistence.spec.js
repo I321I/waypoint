@@ -120,4 +120,55 @@ describe("筆記內容關閉後仍持久化", () => {
       `關閉後 read_note 內容遺失：實際 = ${JSON.stringify(readRes.value.content)}`,
     );
   });
+
+  it("關閉後重新開啟，markdown 會 render（# Heading 變 <h1>）", async () => {
+    // 1. 建立並寫入帶 markdown 的內容
+    await switchToListWindow();
+    const createRes = await invokeCmd("create_note", {
+      contextId: null,
+      title: "Markdown render 測試",
+    });
+    assert.ok(createRes.ok, `create_note 失敗: ${createRes.error}`);
+    const noteId = createRes.value.id;
+
+    // 直接寫 markdown 到 disk（避開 Editor 路徑，模擬 saved file）
+    const mdContent = "# Heading\n\n**bold** text";
+    const saveRes = await invokeCmd("save_content", {
+      contextId: null,
+      noteId,
+      content: mdContent,
+    });
+    assert.ok(saveRes.ok, `save_content 失敗: ${saveRes.error}`);
+
+    // 2. 開啟筆記視窗
+    const before = await browser.getWindowHandles();
+    const openRes = await invokeCmd("cmd_open_note_window", {
+      noteId,
+      contextId: null,
+    });
+    assert.ok(openRes.ok, `cmd_open_note_window 失敗: ${openRes.error}`);
+    await switchToNewWindow(before);
+
+    // 3. 等 editor mount + setContent
+    await browser.waitUntil(
+      async () => browser.execute(() => !!(window).__waypointTiptapEditor),
+      { timeout: 10_000, timeoutMsg: "編輯器未掛載" },
+    );
+
+    // 4. editor 內應該有 <h1> 與 <strong> 元素，而不是純文字 # 與 **
+    const editor = await browser.$(".tiptap-editor");
+    const html = await editor.getHTML();
+    assert.ok(
+      /<h1[^>]*>Heading<\/h1>/i.test(html),
+      `markdown 沒被 render — 找不到 <h1>Heading</h1>，實際 HTML：${html}`,
+    );
+    assert.ok(
+      /<strong>bold<\/strong>/i.test(html),
+      `markdown 沒被 render — 找不到 <strong>bold</strong>，實際 HTML：${html}`,
+    );
+    assert.ok(
+      !html.includes("# Heading"),
+      `markdown 原貌仍出現在 HTML（應已 render 掉），實際：${html}`,
+    );
+  });
 });

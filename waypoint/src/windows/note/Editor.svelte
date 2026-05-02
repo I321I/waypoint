@@ -54,7 +54,11 @@
     });
 
     if (content) {
-      editor.commands.setContent(content);
+      // 從硬碟讀回的 content 是 markdown 字串（getMarkdown() 寫入），
+      // 不指定 contentType 會被當 HTML 顯示原貌（# Hello 不變 H1），
+      // 必須帶 { contentType: 'markdown' } 讓 @tiptap/markdown 解析。
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      editor.commands.setContent(content, { contentType: "markdown" } as any);
     }
 
     // 暴露 editor 給 e2e 測試使用（瀏覽器 WebDriver 對 contenteditable 的鍵盤模擬不可靠，

@@ -1,0 +1,1892 @@
+
+> waypoint@0.1.17 test:e2e
+> wdio run e2e/wdio.conf.js
+
+2026-05-02T13:55:40.802Z INFO @wdio/cli:launcher: Run onPrepare hook
+
+Execution of 7 workers started at 2026-05-02T13:55:40.812Z
+
+2026-05-02T13:55:40.815Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-02T13:55:40.815Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-05-02T13:55:40.816Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-05-02T13:55:40.817Z INFO @wdio/local-runner: Start worker 0-0 with arg: run e2e/wdio.conf.js
+2026-05-02T13:55:40.857Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-02T13:55:40.857Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-02T13:55:40.857Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-0] 2026-05-02T13:55:42.422Z INFO @wdio/local-runner: Run worker command: run
+[0-0] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/drag.spec.js
+[0-0] 2026-05-02T13:55:42.863Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-0] 2026-05-02T13:55:42.863Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-0] 2026-05-02T13:55:42.877Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-0] 2026-05-02T13:55:46.191Z INFO webdriver: COMMAND getWindowHandle()
+[0-0] 2026-05-02T13:55:46.191Z INFO webdriver: [GET] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/window
+[0-0] 2026-05-02T13:55:46.196Z INFO webdriver: RESULT 99BCA184AE367874BE5C522154CB3BC0
+[0-0] 2026-05-02T13:55:46.203Z INFO webdriver: COMMAND getPageSource()
+[0-0] 2026-05-02T13:55:46.203Z INFO webdriver: [GET] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/source
+[0-0] 2026-05-02T13:55:46.212Z INFO webdriver: RESULT <html lang="en"><head>
+[0-0]     <meta charset="utf-8">
+[0-0]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-0]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-0]     <title>Waypoint</title>
+[0-0]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-0] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-0] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-0] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-0] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-0] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-0] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-0] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-0] 		
+[0-0]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-0]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-0]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-0]     <div style="display: contents">
+[0-0] 			<script>
+[0-0] 				{
+[0-0] 					__sveltekit_13kje6x = {
+[0-0] 						base: ""
+[0-0] 					};
+[0-0] 
+[0-0] 					const element = document.currentScript.parentElement;
+[0-0] 
+[0-0] 					Promise.all([
+[0-0] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-0] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-0] 					]).then(([kit, app]) => {
+[0-0] 						kit.start(app, element);
+[0-0] 					});
+[0-0] 				}
+[0-0] 			</script>
+[0-0] 		<!----><!----><!----><!----><!----><div class="list-window svelte-701jsl"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><div class="titlebar-left svelte-701jsl" data-tauri-drag-region=""><span class="app-name svelte-701jsl" data-tauri-drag-region="">WAYPOINT</span> <button class="icon-btn svelte-701jsl" title="使用說明">?</button></div> <div class="titlebar-right svelte-701jsl"><button class="icon-btn svelte-701jsl" title="設定">⚙</button> <button class="icon-btn svelte-701jsl" title="收起全部">⇊</button> <button class="icon-btn svelte-701jsl" title="最小化列表">—</button> <button class="icon-btn svelte-701jsl" title="結束 Waypoint">✕</button></div><!----></div><!----> <div class="list-body svelte-701jsl"><div class="section svelte-1hchbgo"><div class="section-header svelte-1hchbgo"><span class="section-label">🌐 全域筆記</span> <button class="add-btn svelte-1hchbgo" title="新增全域筆記">+</button></div> <!----></div><!----> <div class="divider"></div> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-0]   
+[0-0] 
+[0-0] </body></html>
+[0-0] 2026-05-02T13:55:46.214Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-05-02T13:55:46.215Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/execute/sync
+[0-0] 2026-05-02T13:55:46.215Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => typeof window.__TAURI_INTERNALS__?.invoke === \"function\").apply(null, arguments)\n        ","args":[]}
+[0-0] 2026-05-02T13:55:46.228Z INFO webdriver: RESULT true
+[0-0] 2026-05-02T13:55:46.230Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-0] 2026-05-02T13:55:46.231Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/execute/async
+[0-0] 2026-05-02T13:55:46.231Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__.invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["create_note",{"contextId":null,"title":"drag test"}]}
+[0-0] 2026-05-02T13:55:46.241Z INFO webdriver: RESULT {
+[0-0]   ok: true,
+[0-0]   value: {
+[0-0]     content: '',
+[0-0]     contextId: null,
+[0-0]     id: '32284a0c-dcae-4174-b0d5-1ead9cf33ee2',
+[0-0]     settings: {
+[0-0]       fontSize: 14,
+[0-0]       hotkey: null,
+[0-0]       opacity: 1,
+[0-0]       passthrough: false,
+[0-0]       windowBounds: null
+[0-0]     },
+[0-0]     title: 'drag test'
+[0-0]   }
+[0-0] }
+[0-0] 2026-05-02T13:55:46.243Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-05-02T13:55:46.243Z INFO webdriver: [GET] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/window/handles
+[0-0] 2026-05-02T13:55:46.246Z INFO webdriver: RESULT [ '99BCA184AE367874BE5C522154CB3BC0' ]
+[0-0] 2026-05-02T13:55:46.247Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-0] 2026-05-02T13:55:46.247Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/execute/async
+[0-0] 2026-05-02T13:55:46.247Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__.invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_open_note_window",{"noteId":"32284a0c-dcae-4174-b0d5-1ead9cf33ee2","contextId":null}]}
+[0-0] 2026-05-02T13:55:46.399Z INFO webdriver: RESULT { ok: true, value: null }
+[0-0] 2026-05-02T13:55:46.400Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-05-02T13:55:46.401Z INFO webdriver: [GET] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/window/handles
+[0-0] 2026-05-02T13:55:46.428Z INFO webdriver: RESULT [
+[0-0]   '99BCA184AE367874BE5C522154CB3BC0',
+[0-0]   '619D9B4FFD23BA49167A9B08010F0D22'
+[0-0] ]
+[0-0] 2026-05-02T13:55:46.429Z INFO webdriver: COMMAND getWindowHandles()
+[0-0] 2026-05-02T13:55:46.429Z INFO webdriver: [GET] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/window/handles
+[0-0] 2026-05-02T13:55:46.432Z INFO webdriver: RESULT [
+[0-0]   '99BCA184AE367874BE5C522154CB3BC0',
+[0-0]   '619D9B4FFD23BA49167A9B08010F0D22'
+[0-0] ]
+[0-0] 2026-05-02T13:55:46.433Z INFO webdriver: COMMAND switchToWindow("619D9B4FFD23BA49167A9B08010F0D22")
+[0-0] 2026-05-02T13:55:46.434Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/window
+[0-0] 2026-05-02T13:55:46.434Z INFO webdriver: DATA {"handle":"619D9B4FFD23BA49167A9B08010F0D22"}
+[0-0] 2026-05-02T13:55:46.438Z INFO webdriver: RESULT null
+[0-0] 2026-05-02T13:55:46.442Z INFO webdriver: COMMAND findElement("css selector", ".titlebar")
+[0-0] 2026-05-02T13:55:46.442Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/element
+[0-0] 2026-05-02T13:55:46.443Z INFO webdriver: DATA {"using":"css selector","value":".titlebar"}
+[0-0] 2026-05-02T13:55:46.707Z INFO webdriver: RESULT {
+[0-0]   error: 'no such element',
+[0-0]   message: 'no such element: Unable to locate element: {"method":"css selector","selector":".titlebar"}\n' +
+[0-0]     '  (Session info: MicrosoftEdge=146.0.3856.109)',
+[0-0]   stacktrace: '\tmsedgedriver!GetHandleVerifier [0x7ff66d5f17b5+d8e5]\n' +
+[0-0]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d5f1814+d944]\n' +
+[0-0]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d95f78c+37b8bc]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d364d26]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d364fc5]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d3a2a87]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d35b9b7]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d3a07e2]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d35b1fc]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d35a456]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d35b023]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d428bb9]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d425153]\n' +
+[0-0]     '\tmsedgedriver!(No symbol) [0x7ff66d434d64]\n' +
+[0-0]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d60c638+28768]\n' +
+[0-0]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d614df6+30f26]\n' +
+[0-0]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d5f8ef4+15024]\n' +
+[0-0]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d5f9039+15169]\n' +
+[0-0]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d5e6362+2492]\n' +
+[0-0]     '\tKERNEL32!BaseThreadInitThunk [0x7ff88937e8d7+17]\n' +
+[0-0]     '\tntdll!RtlUserThreadStart [0x7ff8894ec53c+2c]\n'
+[0-0] }
+[0-0] 2026-05-02T13:55:46.716Z INFO webdriver: COMMAND findElements("css selector", ".titlebar")
+[0-0] 2026-05-02T13:55:46.717Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/elements
+[0-0] 2026-05-02T13:55:46.717Z INFO webdriver: DATA {"using":"css selector","value":".titlebar"}
+[0-0] 2026-05-02T13:55:46.742Z INFO webdriver: RESULT [
+[0-0]   {
+[0-0]     'element-6066-11e4-a52e-4f735466cecf': 'f.619D9B4FFD23BA49167A9B08010F0D22.d.A43EC70D2E6C7AFC703948D9EE7A73E5.e.4'
+[0-0]   }
+[0-0] ]
+[0-0] 2026-05-02T13:55:46.751Z INFO webdriver: COMMAND findElement("css selector", ".titlebar")
+[0-0] 2026-05-02T13:55:46.751Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/element
+[0-0] 2026-05-02T13:55:46.751Z INFO webdriver: DATA {"using":"css selector","value":".titlebar"}
+[0-0] 2026-05-02T13:55:46.759Z INFO webdriver: RESULT {
+[0-0]   'element-6066-11e4-a52e-4f735466cecf': 'f.619D9B4FFD23BA49167A9B08010F0D22.d.A43EC70D2E6C7AFC703948D9EE7A73E5.e.4'
+[0-0] }
+[0-0] 2026-05-02T13:55:46.762Z INFO webdriver: COMMAND getElementAttribute("f.619D9B4FFD23BA49167A9B08010F0D22.d.A43EC70D2E6C7AFC703948D9EE7A73E5.e.4", "data-tauri-drag-region")
+[0-0] 2026-05-02T13:55:46.762Z INFO webdriver: [GET] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/element/f.619D9B4FFD23BA49167A9B08010F0D22.d.A43EC70D2E6C7AFC703948D9EE7A73E5.e.4/attribute/data-tauri-drag-region
+[0-0] 2026-05-02T13:55:46.768Z INFO webdriver: RESULT 
+[0-0] 2026-05-02T13:55:46.769Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-0] 2026-05-02T13:55:46.769Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/execute/sync
+[0-0] 2026-05-02T13:55:46.770Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => {\r\n      const bar = document.querySelector(\".titlebar\");\r\n      if (!bar) return null;\r\n      const r = bar.getBoundingClientRect();\r\n      const cx = r.left + r.width / 2;\r\n      const cy = r.top + r.height / 2;\r\n      const el = document.elementFromPoint(cx, cy);\r\n      if (!el) return null;\r\n      // 回傳最靠近的、帶有 data-tauri-drag-region 的祖先 / 自身\r\n      let cur = el;\r\n      while (cur) {\r\n        if (cur.getAttribute && cur.getAttribute(\"data-tauri-drag-region\") !== null) {\r\n          return cur.className || cur.tagName;\r\n        }\r\n        cur = cur.parentElement;\r\n      }\r\n      return `NO_DRAG_REGION(${el.tagName}.${el.className})`;\r\n    }).apply(null, arguments)\n        ","args":[]}
+[0-0] 2026-05-02T13:55:46.776Z INFO webdriver: RESULT draggable-titlebar titlebar svelte-5wg0lt
+[0-0] 2026-05-02T13:55:46.777Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-0] 2026-05-02T13:55:46.777Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/execute/async
+[0-0] 2026-05-02T13:55:46.777Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__.invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_start_dragging",{"label":"note-32284a0c-dcae-4174-b0d5-1ead9cf33ee2"}]}
+[0-0] 2026-05-02T13:55:46.784Z INFO webdriver: RESULT { ok: true, value: null }
+[0-0] 2026-05-02T13:55:46.785Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-0] 2026-05-02T13:55:46.785Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/execute/async
+[0-0] 2026-05-02T13:55:46.785Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__.invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_get_window_position",{"label":"note-32284a0c-dcae-4174-b0d5-1ead9cf33ee2"}]}
+[0-0] 2026-05-02T13:55:46.796Z INFO webdriver: RESULT { ok: true, value: [ 52, 52 ] }
+[0-0] 2026-05-02T13:55:46.796Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-0] 2026-05-02T13:55:46.796Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/execute/async
+[0-0] 2026-05-02T13:55:46.797Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__.invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_set_window_position",{"label":"note-32284a0c-dcae-4174-b0d5-1ead9cf33ee2","x":172,"y":132}]}
+[0-0] 2026-05-02T13:55:46.803Z INFO webdriver: RESULT { ok: true, value: null }
+[0-0] 2026-05-02T13:55:46.803Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-0] 2026-05-02T13:55:46.804Z INFO webdriver: [POST] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea/execute/async
+[0-0] 2026-05-02T13:55:46.804Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__.invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_get_window_position",{"label":"note-32284a0c-dcae-4174-b0d5-1ead9cf33ee2"}]}
+[0-0] 2026-05-02T13:55:46.812Z INFO webdriver: RESULT { ok: true, value: [ 172, 132 ] }
+[0-0] 2026-05-02T13:55:46.814Z INFO webdriver: COMMAND deleteSession()
+[0-0] 2026-05-02T13:55:46.814Z INFO webdriver: [DELETE] http://127.0.0.1:4444/session/0e554a7591256f08fcb32b301aef38ea
+[0-0] 2026-05-02T13:55:46.839Z INFO webdriver: RESULT null
+[0-0] PASSED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/drag.spec.js
+2026-05-02T13:55:46.985Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-02T13:55:46.985Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-02T13:55:46.987Z INFO @wdio/local-runner: Start worker 0-1 with arg: run e2e/wdio.conf.js
+2026-05-02T13:55:47.042Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-02T13:55:47.042Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-02T13:55:47.042Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-1] 2026-05-02T13:55:48.590Z INFO @wdio/local-runner: Run worker command: run
+[0-1] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/multi-window.spec.js
+[0-1] 2026-05-02T13:55:49.025Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-1] 2026-05-02T13:55:49.026Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-1] 2026-05-02T13:55:49.040Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-1] 2026-05-02T13:55:49.751Z INFO webdriver: COMMAND getWindowHandle()
+[0-1] 2026-05-02T13:55:49.752Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window
+[0-1] 2026-05-02T13:55:49.758Z INFO webdriver: RESULT ECE533B9F6CA7969F9A7FD7AD19A6116
+[0-1] 2026-05-02T13:55:49.766Z INFO webdriver: COMMAND getPageSource()
+[0-1] 2026-05-02T13:55:49.766Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/source
+[0-1] 2026-05-02T13:55:49.860Z INFO webdriver: RESULT <html lang="en"><head>
+[0-1]     <meta charset="utf-8">
+[0-1]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-1]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-1]     <title>Waypoint</title>
+[0-1]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-1] 		
+[0-1]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-1]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-1]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-1]     <div style="display: contents">
+[0-1] 			<script>
+[0-1] 				{
+[0-1] 					__sveltekit_13kje6x = {
+[0-1] 						base: ""
+[0-1] 					};
+[0-1] 
+[0-1] 					const element = document.currentScript.parentElement;
+[0-1] 
+[0-1] 					Promise.all([
+[0-1] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-1] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-1] 					]).then(([kit, app]) => {
+[0-1] 						kit.start(app, element);
+[0-1] 					});
+[0-1] 				}
+[0-1] 			</script>
+[0-1] 		<!----><!----><!----><!----><!----><div class="list-window svelte-701jsl"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><div class="titlebar-left svelte-701jsl" data-tauri-drag-region=""><span class="app-name svelte-701jsl" data-tauri-drag-region="">WAYPOINT</span> <button class="icon-btn svelte-701jsl" title="使用說明">?</button></div> <div class="titlebar-right svelte-701jsl"><button class="icon-btn svelte-701jsl" title="設定">⚙</button> <button class="icon-btn svelte-701jsl" title="收起全部">⇊</button> <button class="icon-btn svelte-701jsl" title="最小化列表">—</button> <button class="icon-btn svelte-701jsl" title="結束 Waypoint">✕</button></div><!----></div><!----> <div class="list-body svelte-701jsl"><div class="section svelte-1hchbgo"><div class="section-header svelte-1hchbgo"><span class="section-label">🌐 全域筆記</span> <button class="add-btn svelte-1hchbgo" title="新增全域筆記">+</button></div> <!----></div><!----> <div class="divider"></div> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-1]   
+[0-1] 
+[0-1] </body></html>
+[0-1] 2026-05-02T13:55:49.862Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:49.863Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/sync
+[0-1] 2026-05-02T13:55:49.863Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => typeof window.__TAURI_INTERNALS__?.invoke === \"function\").apply(null, arguments)\n        ","args":[]}
+[0-1] 2026-05-02T13:55:49.892Z INFO webdriver: RESULT true
+[0-1] 2026-05-02T13:55:49.896Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:49.896Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:49.899Z INFO webdriver: RESULT [ 'ECE533B9F6CA7969F9A7FD7AD19A6116' ]
+[0-1] 2026-05-02T13:55:49.901Z INFO webdriver: COMMAND switchToWindow("ECE533B9F6CA7969F9A7FD7AD19A6116")
+[0-1] 2026-05-02T13:55:49.901Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window
+[0-1] 2026-05-02T13:55:49.901Z INFO webdriver: DATA {"handle":"ECE533B9F6CA7969F9A7FD7AD19A6116"}
+[0-1] 2026-05-02T13:55:49.904Z INFO webdriver: RESULT null
+[0-1] 2026-05-02T13:55:49.905Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:49.905Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:49.907Z INFO webdriver: RESULT [ 'ECE533B9F6CA7969F9A7FD7AD19A6116' ]
+[0-1] 2026-05-02T13:55:49.908Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:49.908Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/async
+[0-1] 2026-05-02T13:55:49.908Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_open_help",{}]}
+[0-1] 2026-05-02T13:55:50.061Z INFO webdriver: RESULT { ok: true, value: null }
+[0-1] 2026-05-02T13:55:50.062Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:50.062Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:50.092Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9'
+[0-1] ]
+[0-1] 2026-05-02T13:55:50.093Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:50.093Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:50.096Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9'
+[0-1] ]
+[0-1] 2026-05-02T13:55:50.096Z INFO webdriver: COMMAND switchToWindow("A0DB7DCAE5C9B551889A7245704EA6F9")
+[0-1] 2026-05-02T13:55:50.097Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window
+[0-1] 2026-05-02T13:55:50.097Z INFO webdriver: DATA {"handle":"A0DB7DCAE5C9B551889A7245704EA6F9"}
+[0-1] 2026-05-02T13:55:50.100Z INFO webdriver: RESULT null
+[0-1] 2026-05-02T13:55:50.101Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:50.102Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/sync
+[0-1] 2026-05-02T13:55:50.102Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => document.body.innerText.trim()).apply(null, arguments)\n        ","args":[]}
+[0-1] 2026-05-02T13:55:50.111Z INFO webdriver: RESULT 
+[0-1] 2026-05-02T13:55:50.202Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:50.202Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/sync
+[0-1] 2026-05-02T13:55:50.202Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => document.body.innerText.trim()).apply(null, arguments)\n        ","args":[]}
+[0-1] 2026-05-02T13:55:50.542Z INFO webdriver: RESULT Waypoint — 使用說明 v0.1.17
+[0-1] ✕
+[0-1] 快捷鍵邏輯（三段式）
+[0-1] 狀態	按快捷鍵	結果
+[0-1] 無任何視窗	按一次	開啟列表 + 還原上次筆記
+[0-1] 有筆記，無列表	按一次	開啟列表
+[0-1] 列表開著	再按一次	儲存 session，收起全部
+[0-1] 全域筆記 vs 區域筆記
+[0-1] 全域筆記：無論在哪個應用程式按快捷鍵都會出現在列表中
+[0-1] 區域筆記：只屬於特定應用程式（依 process 名稱或視窗標題識別）
+[0-1] ✕ vs ⇊ 的差異
+[0-1] ✕（關閉按鈕）：永久關閉此筆記，下次不會自動還原
+[0-1] ⇊（收起按鈕）：收起所有視窗，但記住哪些筆記是開著的，下次自動還原
+[0-1] 如何設定 Context 識別方式
+[0-1] 
+[0-1] 在列表視窗中，對 context 標題按右鍵，可選擇：程序名稱 或 視窗標題
+[0-1] 
+[0-1] 跨平台 Context 對應
+[0-1] 
+[0-1] 右鍵選單 →「對應到現有 context...」可將不同 OS 上的同一軟體合併。
+[0-1] 
+[0-1] 資料夾位置
+[0-1] 
+[0-1] 所有筆記和設定存放在：~/waypoint/
+[0-1] 
+[0-1] 複製此資料夾到其他電腦即可使用相同筆記與設定。
+[0-1] 2026-05-02T13:55:50.542Z INFO webdriver: COMMAND getPageSource()
+[0-1] 2026-05-02T13:55:50.543Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/source
+[0-1] 2026-05-02T13:55:50.548Z INFO webdriver: RESULT <html lang="en"><head>
+[0-1]     <meta charset="utf-8">
+[0-1]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-1]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-1]     <title>Waypoint</title>
+[0-1]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-1] 		
+[0-1]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-1]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-1]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-1]     <div style="display: contents">
+[0-1] 			<script>
+[0-1] 				{
+[0-1] 					__sveltekit_13kje6x = {
+[0-1] 						base: ""
+[0-1] 					};
+[0-1] 
+[0-1] 					const element = document.currentScript.parentElement;
+[0-1] 
+[0-1] 					Promise.all([
+[0-1] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-1] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-1] 					]).then(([kit, app]) => {
+[0-1] 						kit.start(app, element);
+[0-1] 					});
+[0-1] 				}
+[0-1] 			</script>
+[0-1] 		<!----><!----><!----><!----><!----><div class="help-window svelte-1g2hxni"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><span class="title svelte-1g2hxni">Waypoint — 使用說明 <span class="version svelte-1g2hxni">v0.1.17</span></span> <button>✕</button><!----></div><!----> <div class="content svelte-1g2hxni"><section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">快捷鍵邏輯（三段式）</h2> <table class="svelte-1g2hxni"><thead><tr><th class="svelte-1g2hxni">狀態</th><th class="svelte-1g2hxni">按快捷鍵</th><th class="svelte-1g2hxni">結果</th></tr></thead><tbody><tr><td class="svelte-1g2hxni">無任何視窗</td><td class="svelte-1g2hxni">按一次</td><td class="svelte-1g2hxni">開啟列表 + 還原上次筆記</td></tr><tr><td class="svelte-1g2hxni">有筆記，無列表</td><td class="svelte-1g2hxni">按一次</td><td class="svelte-1g2hxni">開啟列表</td></tr><tr><td class="svelte-1g2hxni">列表開著</td><td class="svelte-1g2hxni">再按一次</td><td class="svelte-1g2hxni">儲存 session，收起全部</td></tr></tbody></table></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">全域筆記 vs 區域筆記</h2> <ul class="svelte-1g2hxni"><li class="svelte-1g2hxni"><strong>全域筆記：</strong>無論在哪個應用程式按快捷鍵都會出現在列表中</li> <li class="svelte-1g2hxni"><strong>區域筆記：</strong>只屬於特定應用程式（依 process 名稱或視窗標題識別）</li></ul></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">✕ vs ⇊ 的差異</h2> <ul class="svelte-1g2hxni"><li class="svelte-1g2hxni"><strong>✕（關閉按鈕）：</strong>永久關閉此筆記，下次不會自動還原</li> <li class="svelte-1g2hxni"><strong>⇊（收起按鈕）：</strong>收起所有視窗，但記住哪些筆記是開著的，下次自動還原</li></ul></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">如何設定 Context 識別方式</h2> <p class="svelte-1g2hxni">在列表視窗中，對 context 標題按右鍵，可選擇：程序名稱 或 視窗標題</p></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">跨平台 Context 對應</h2> <p class="svelte-1g2hxni">右鍵選單 →「對應到現有 context...」可將不同 OS 上的同一軟體合併。</p></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">資料夾位置</h2> <p class="svelte-1g2hxni">所有筆記和設定存放在：<code class="svelte-1g2hxni">~/waypoint/</code></p> <p class="svelte-1g2hxni">複製此資料夾到其他電腦即可使用相同筆記與設定。</p></section></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-1]   
+[0-1] 
+[0-1] </body></html>
+[0-1] 2026-05-02T13:55:50.550Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:50.551Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:50.566Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9'
+[0-1] ]
+[0-1] 2026-05-02T13:55:50.566Z INFO webdriver: COMMAND switchToWindow("ECE533B9F6CA7969F9A7FD7AD19A6116")
+[0-1] 2026-05-02T13:55:50.567Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window
+[0-1] 2026-05-02T13:55:50.567Z INFO webdriver: DATA {"handle":"ECE533B9F6CA7969F9A7FD7AD19A6116"}
+[0-1] 2026-05-02T13:55:50.570Z INFO webdriver: RESULT null
+[0-1] 2026-05-02T13:55:50.571Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:50.571Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:50.573Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9'
+[0-1] ]
+[0-1] 2026-05-02T13:55:50.574Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:50.574Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/async
+[0-1] 2026-05-02T13:55:50.574Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_open_settings",{}]}
+[0-1] 2026-05-02T13:55:50.721Z INFO webdriver: RESULT { ok: true, value: null }
+[0-1] 2026-05-02T13:55:50.723Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:50.723Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:50.740Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9',
+[0-1]   '30D8F9B2342725CA7B454A8F41396E85'
+[0-1] ]
+[0-1] 2026-05-02T13:55:50.741Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:50.741Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:50.743Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9',
+[0-1]   '30D8F9B2342725CA7B454A8F41396E85'
+[0-1] ]
+[0-1] 2026-05-02T13:55:50.744Z INFO webdriver: COMMAND switchToWindow("30D8F9B2342725CA7B454A8F41396E85")
+[0-1] 2026-05-02T13:55:50.744Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window
+[0-1] 2026-05-02T13:55:50.744Z INFO webdriver: DATA {"handle":"30D8F9B2342725CA7B454A8F41396E85"}
+[0-1] 2026-05-02T13:55:50.756Z INFO webdriver: RESULT null
+[0-1] 2026-05-02T13:55:50.756Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:50.756Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/sync
+[0-1] 2026-05-02T13:55:50.756Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => document.body.innerText.trim()).apply(null, arguments)\n        ","args":[]}
+[0-1] 2026-05-02T13:55:50.764Z INFO webdriver: RESULT 
+[0-1] 2026-05-02T13:55:50.857Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:50.857Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/sync
+[0-1] 2026-05-02T13:55:50.858Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => document.body.innerText.trim()).apply(null, arguments)\n        ","args":[]}
+[0-1] 2026-05-02T13:55:50.933Z INFO webdriver: RESULT Waypoint — 設定
+[0-1] ✕
+[0-1] 全域快捷鍵
+[0-1] 
+[0-1] 按下快捷鍵開啟／收起 Waypoint 列表
+[0-1] 
+[0-1] Ctrl+Shift+Space
+[0-1] 套用
+[0-1] 
+[0-1] 點擊左側框後按下鍵盤組合鍵（Esc 取消）；範例：Ctrl+Shift+Space、Alt+F1
+[0-1] 
+[0-1] 穿透模式快捷鍵
+[0-1] 
+[0-1] 按下後切換所有筆記穿透狀態
+[0-1] 
+[0-1] Ctrl+Shift+G
+[0-1] 套用
+[0-1] 
+[0-1] 點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+G
+[0-1] 
+[0-1] 工作列圖示
+[0-1] 
+[0-1] 有筆記視窗開啟時在工作列顯示圖示
+[0-1] 
+[0-1] 已啟用
+[0-1] 2026-05-02T13:55:50.933Z INFO webdriver: COMMAND getPageSource()
+[0-1] 2026-05-02T13:55:50.933Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/source
+[0-1] 2026-05-02T13:55:50.937Z INFO webdriver: RESULT <html lang="en"><head>
+[0-1]     <meta charset="utf-8">
+[0-1]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-1]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-1]     <title>Waypoint</title>
+[0-1]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-1] 		
+[0-1]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-1]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-1]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-1]     <div style="display: contents">
+[0-1] 			<script>
+[0-1] 				{
+[0-1] 					__sveltekit_13kje6x = {
+[0-1] 						base: ""
+[0-1] 					};
+[0-1] 
+[0-1] 					const element = document.currentScript.parentElement;
+[0-1] 
+[0-1] 					Promise.all([
+[0-1] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-1] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-1] 					]).then(([kit, app]) => {
+[0-1] 						kit.start(app, element);
+[0-1] 					});
+[0-1] 				}
+[0-1] 			</script>
+[0-1] 		<!----><!----><!----><!----><!----><div class="settings-window svelte-1r12bng"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><span class="title svelte-1r12bng">Waypoint — 設定</span> <button class="close-btn svelte-1r12bng">✕</button><!----></div><!----> <div class="content svelte-1r12bng"><section class="svelte-1r12bng"><h2 class="svelte-1r12bng">全域快捷鍵</h2> <p class="desc svelte-1r12bng">按下快捷鍵開啟／收起 Waypoint 列表</p> <div class="row svelte-1r12bng"><button type="button" title="點擊後按下要設定的快捷鍵" class="hotkey-capture svelte-1r12bng">Ctrl+Shift+Space</button> <button disabled="">套用</button></div> <p class="hint svelte-1r12bng">點擊左側框後按下鍵盤組合鍵（Esc 取消）；範例：Ctrl+Shift+Space、Alt+F1</p> <!----></section> <!----> <section class="svelte-1r12bng"><h2 class="svelte-1r12bng">穿透模式快捷鍵</h2> <p class="desc svelte-1r12bng">按下後切換所有筆記穿透狀態</p> <div class="row svelte-1r12bng"><button type="button" title="點擊後按下要設定的快捷鍵" class="hotkey-capture svelte-1r12bng">Ctrl+Shift+G</button> <button disabled="">套用</button></div> <p class="hint svelte-1r12bng">點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+G</p> <!----> <!----></section> <section class="svelte-1r12bng"><h2 class="svelte-1r12bng">工作列圖示</h2> <p class="desc svelte-1r12bng">有筆記視窗開啟時在工作列顯示圖示</p> <div class="row svelte-1r12bng"><label class="toggle svelte-1r12bng"><input type="checkbox" class="svelte-1r12bng"> <span class="toggle-label svelte-1r12bng">已啟用</span></label></div></section> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-1]   
+[0-1] 
+[0-1] </body></html>
+[0-1] 2026-05-02T13:55:50.938Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:50.938Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:50.941Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9',
+[0-1]   '30D8F9B2342725CA7B454A8F41396E85'
+[0-1] ]
+[0-1] 2026-05-02T13:55:50.941Z INFO webdriver: COMMAND switchToWindow("ECE533B9F6CA7969F9A7FD7AD19A6116")
+[0-1] 2026-05-02T13:55:50.941Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window
+[0-1] 2026-05-02T13:55:50.941Z INFO webdriver: DATA {"handle":"ECE533B9F6CA7969F9A7FD7AD19A6116"}
+[0-1] 2026-05-02T13:55:50.944Z INFO webdriver: RESULT null
+[0-1] 2026-05-02T13:55:50.944Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:50.945Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/async
+[0-1] 2026-05-02T13:55:50.945Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["create_note",{"contextId":null,"title":"E2E 測試"}]}
+[0-1] 2026-05-02T13:55:50.953Z INFO webdriver: RESULT {
+[0-1]   ok: true,
+[0-1]   value: {
+[0-1]     content: '',
+[0-1]     contextId: null,
+[0-1]     id: 'ed2fe1d4-02b2-4c59-9d23-030fbfdcae2f',
+[0-1]     settings: {
+[0-1]       fontSize: 14,
+[0-1]       hotkey: null,
+[0-1]       opacity: 1,
+[0-1]       passthrough: false,
+[0-1]       windowBounds: null
+[0-1]     },
+[0-1]     title: 'E2E 測試'
+[0-1]   }
+[0-1] }
+[0-1] 2026-05-02T13:55:50.953Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:50.953Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:50.955Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9',
+[0-1]   '30D8F9B2342725CA7B454A8F41396E85'
+[0-1] ]
+[0-1] 2026-05-02T13:55:50.955Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:50.955Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/async
+[0-1] 2026-05-02T13:55:50.956Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_open_note_window",{"noteId":"ed2fe1d4-02b2-4c59-9d23-030fbfdcae2f","contextId":null}]}
+[0-1] 2026-05-02T13:55:51.124Z INFO webdriver: RESULT { ok: true, value: null }
+[0-1] 2026-05-02T13:55:51.124Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:51.124Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:51.147Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9',
+[0-1]   '30D8F9B2342725CA7B454A8F41396E85',
+[0-1]   '0CA0497AE8C799AEFBB0599E57FA1A6E'
+[0-1] ]
+[0-1] 2026-05-02T13:55:51.147Z INFO webdriver: COMMAND getWindowHandles()
+[0-1] 2026-05-02T13:55:51.148Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window/handles
+[0-1] 2026-05-02T13:55:51.150Z INFO webdriver: RESULT [
+[0-1]   'ECE533B9F6CA7969F9A7FD7AD19A6116',
+[0-1]   'A0DB7DCAE5C9B551889A7245704EA6F9',
+[0-1]   '30D8F9B2342725CA7B454A8F41396E85',
+[0-1]   '0CA0497AE8C799AEFBB0599E57FA1A6E'
+[0-1] ]
+[0-1] 2026-05-02T13:55:51.150Z INFO webdriver: COMMAND switchToWindow("0CA0497AE8C799AEFBB0599E57FA1A6E")
+[0-1] 2026-05-02T13:55:51.151Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/window
+[0-1] 2026-05-02T13:55:51.151Z INFO webdriver: DATA {"handle":"0CA0497AE8C799AEFBB0599E57FA1A6E"}
+[0-1] 2026-05-02T13:55:51.154Z INFO webdriver: RESULT null
+[0-1] 2026-05-02T13:55:51.155Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:51.155Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/sync
+[0-1] 2026-05-02T13:55:51.155Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => document.body.innerText.trim()).apply(null, arguments)\n        ","args":[]}
+[0-1] 2026-05-02T13:55:51.164Z INFO webdriver: RESULT 
+[0-1] 2026-05-02T13:55:51.254Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-1] 2026-05-02T13:55:51.254Z INFO webdriver: [POST] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/execute/sync
+[0-1] 2026-05-02T13:55:51.255Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => document.body.innerText.trim()).apply(null, arguments)\n        ","args":[]}
+[0-1] 2026-05-02T13:55:51.323Z INFO webdriver: RESULT Untitled
+[0-1] 透明度
+[0-1] 100%
+[0-1] ⇊
+[0-1] ▢
+[0-1] ✕
+[0-1] B
+[0-1] I
+[0-1] U
+[0-1] S
+[0-1] H1
+[0-1] H2
+[0-1] H3
+[0-1] ≡
+[0-1] ☑
+[0-1] </>
+[0-1] ⚙
+[0-1] 
+[0-1] 
+[0-1] 
+[0-1] 
+[0-1] Global
+[0-1] Markdown
+[0-1] 2026-05-02T13:55:51.323Z INFO webdriver: COMMAND getPageSource()
+[0-1] 2026-05-02T13:55:51.323Z INFO webdriver: [GET] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a/source
+[0-1] 2026-05-02T13:55:51.327Z INFO webdriver: RESULT <html lang="en"><head>
+[0-1]     <meta charset="utf-8">
+[0-1]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-1]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-1]     <title>Waypoint</title>
+[0-1]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-1] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-1] 		
+[0-1]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"><style data-tiptap-style="">.ProseMirror {
+[0-1]   position: relative;
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror {
+[0-1]   word-wrap: break-word;
+[0-1]   white-space: pre-wrap;
+[0-1]   white-space: break-spaces;
+[0-1]   -webkit-font-variant-ligatures: none;
+[0-1]   font-variant-ligatures: none;
+[0-1]   font-feature-settings: "liga" 0; /* the above doesn't seem to work in Edge */
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror [contenteditable="false"] {
+[0-1]   white-space: normal;
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror [contenteditable="false"] [contenteditable="true"] {
+[0-1]   white-space: pre-wrap;
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror pre {
+[0-1]   white-space: pre-wrap;
+[0-1] }
+[0-1] 
+[0-1] img.ProseMirror-separator {
+[0-1]   display: inline !important;
+[0-1]   border: none !important;
+[0-1]   margin: 0 !important;
+[0-1]   width: 0 !important;
+[0-1]   height: 0 !important;
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror-gapcursor {
+[0-1]   display: none;
+[0-1]   pointer-events: none;
+[0-1]   position: absolute;
+[0-1]   margin: 0;
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror-gapcursor:after {
+[0-1]   content: "";
+[0-1]   display: block;
+[0-1]   position: absolute;
+[0-1]   top: -2px;
+[0-1]   width: 20px;
+[0-1]   border-top: 1px solid black;
+[0-1]   animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
+[0-1] }
+[0-1] 
+[0-1] @keyframes ProseMirror-cursor-blink {
+[0-1]   to {
+[0-1]     visibility: hidden;
+[0-1]   }
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror-hideselection *::selection {
+[0-1]   background: transparent;
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror-hideselection *::-moz-selection {
+[0-1]   background: transparent;
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror-hideselection * {
+[0-1]   caret-color: transparent;
+[0-1] }
+[0-1] 
+[0-1] .ProseMirror-focused .ProseMirror-gapcursor {
+[0-1]   display: block;
+[0-1] }</style></head>
+[0-1]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-1]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc" class="note-view">
+[0-1]     <div style="display: contents">
+[0-1] 			<script>
+[0-1] 				{
+[0-1] 					__sveltekit_13kje6x = {
+[0-1] 						base: ""
+[0-1] 					};
+[0-1] 
+[0-1] 					const element = document.currentScript.parentElement;
+[0-1] 
+[0-1] 					Promise.all([
+[0-1] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-1] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-1] 					]).then(([kit, app]) => {
+[0-1] 						kit.start(app, element);
+[0-1] 					});
+[0-1] 				}
+[0-1] 			</script>
+[0-1] 		<!----><!----><!----><!----><!----><!----><div class="note-window svelte-w3ygfh" style="opacity: 1;"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><span class="note-title svelte-w3ygfh" data-tauri-drag-region="">Untitled</span> <div class="opacity-bar svelte-1sc9gqf"><span class="lbl svelte-1sc9gqf">透明度</span> <input class="slider svelte-1sc9gqf" type="range" min="10" max="100" step="5" title="視窗透明度"> <span class="val svelte-1sc9gqf">100%</span></div><!----> <div class="titlebar-buttons svelte-w3ygfh"><button class="passthrough-dot svelte-w3ygfh dot-on" title="可互動 — 點此啟用穿透"></button> <button title="收起全部並儲存">⇊</button> <button title="最大化／還原">▢</button> <button title="儲存並關閉">✕</button></div><!----></div><!----> <div class="title-row svelte-w3ygfh"><input class="title-input svelte-w3ygfh" type="text" placeholder="標題"></div> <div class="toolbar svelte-1mufjh"><button title="Bold" class="svelte-1mufjh"><b>B</b></button> <button title="Italic" class="svelte-1mufjh"><i>I</i></button> <button title="Underline" class="svelte-1mufjh"><u>U</u></button> <button title="Strikethrough" class="svelte-1mufjh"><s>S</s></button> <span class="sep svelte-1mufjh"></span> <button title="Heading 1" class="svelte-1mufjh">H1</button> <button title="Heading 2" class="svelte-1mufjh">H2</button> <button title="Heading 3" class="svelte-1mufjh">H3</button> <span class="sep svelte-1mufjh"></span> <button title="Bullet list" class="svelte-1mufjh">≡</button> <button title="Task list" class="svelte-1mufjh">☑</button> <button title="Code block" class="svelte-1mufjh">&lt;/&gt;</button> <span class="spacer svelte-1mufjh"></span> <button class="settings-btn svelte-1mufjh" title="設定">⚙</button></div><!----> <div class="editor-area svelte-w3ygfh"><div class="editor-wrap svelte-a50o8t"><div contenteditable="true" role="textbox" translate="no" class="tiptap ProseMirror tiptap-editor" tabindex="0" style="font-size: 14px;"><p data-placeholder="輸入文字…" class="is-empty is-editor-empty"><br class="ProseMirror-trailingBreak"></p></div></div><!----> <!----></div> <div class="statusbar svelte-w3ygfh"><span>Global</span> <span>Markdown</span></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-1]   
+[0-1] 
+[0-1] </body></html>
+[0-1] 2026-05-02T13:55:51.329Z INFO webdriver: COMMAND deleteSession()
+[0-1] 2026-05-02T13:55:51.330Z INFO webdriver: [DELETE] http://127.0.0.1:4444/session/d3cad6362bb23800dbb3001b9911e44a
+[0-1] 2026-05-02T13:55:51.605Z INFO webdriver: RESULT null
+[0-1] PASSED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/multi-window.spec.js
+2026-05-02T13:55:51.737Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-02T13:55:51.737Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-02T13:55:51.738Z INFO @wdio/local-runner: Start worker 0-2 with arg: run e2e/wdio.conf.js
+2026-05-02T13:55:51.789Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-02T13:55:51.789Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-02T13:55:51.789Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-2] 2026-05-02T13:55:53.318Z INFO @wdio/local-runner: Run worker command: run
+[0-2] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/no-stray-window.spec.js
+[0-2] 2026-05-02T13:55:53.746Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-2] 2026-05-02T13:55:53.747Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-2] 2026-05-02T13:55:53.760Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-2] 2026-05-02T13:55:54.803Z INFO webdriver: COMMAND getWindowHandle()
+[0-2] 2026-05-02T13:55:54.804Z INFO webdriver: [GET] http://127.0.0.1:4444/session/ccf691e5457cab080239487351ff3c9d/window
+[0-2] 2026-05-02T13:55:54.809Z INFO webdriver: RESULT 61D9C70236D8A8ED0563A9BCCCACA645
+[0-2] 2026-05-02T13:55:54.816Z INFO webdriver: COMMAND getPageSource()
+[0-2] 2026-05-02T13:55:54.816Z INFO webdriver: [GET] http://127.0.0.1:4444/session/ccf691e5457cab080239487351ff3c9d/source
+[0-2] 2026-05-02T13:55:54.901Z INFO webdriver: RESULT <html lang="en"><head>
+[0-2]     <meta charset="utf-8">
+[0-2]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-2]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-2]     <title>Waypoint</title>
+[0-2]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-2] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-2] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-2] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-2] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-2] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-2] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-2] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-2] 		
+[0-2]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-2]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-2]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-2]     <div style="display: contents">
+[0-2] 			<script>
+[0-2] 				{
+[0-2] 					__sveltekit_13kje6x = {
+[0-2] 						base: ""
+[0-2] 					};
+[0-2] 
+[0-2] 					const element = document.currentScript.parentElement;
+[0-2] 
+[0-2] 					Promise.all([
+[0-2] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-2] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-2] 					]).then(([kit, app]) => {
+[0-2] 						kit.start(app, element);
+[0-2] 					});
+[0-2] 				}
+[0-2] 			</script>
+[0-2] 		<!----><!----><!----><!----><!----><div class="list-window svelte-701jsl"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><div class="titlebar-left svelte-701jsl" data-tauri-drag-region=""><span class="app-name svelte-701jsl" data-tauri-drag-region="">WAYPOINT</span> <button class="icon-btn svelte-701jsl" title="使用說明">?</button></div> <div class="titlebar-right svelte-701jsl"><button class="icon-btn svelte-701jsl" title="設定">⚙</button> <button class="icon-btn svelte-701jsl" title="收起全部">⇊</button> <button class="icon-btn svelte-701jsl" title="最小化列表">—</button> <button class="icon-btn svelte-701jsl" title="結束 Waypoint">✕</button></div><!----></div><!----> <div class="list-body svelte-701jsl"><div class="section svelte-1hchbgo"><div class="section-header svelte-1hchbgo"><span class="section-label">🌐 全域筆記</span> <button class="add-btn svelte-1hchbgo" title="新增全域筆記">+</button></div> <!----></div><!----> <div class="divider"></div> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-2]   
+[0-2] 
+[0-2] </body></html>
+[0-2] 2026-05-02T13:55:54.905Z INFO webdriver: COMMAND getWindowHandles()
+[0-2] 2026-05-02T13:55:54.905Z INFO webdriver: [GET] http://127.0.0.1:4444/session/ccf691e5457cab080239487351ff3c9d/window/handles
+[0-2] 2026-05-02T13:55:54.909Z INFO webdriver: RESULT [ '61D9C70236D8A8ED0563A9BCCCACA645' ]
+[0-2] 2026-05-02T13:55:54.914Z INFO webdriver: COMMAND switchToWindow("61D9C70236D8A8ED0563A9BCCCACA645")
+[0-2] 2026-05-02T13:55:54.914Z INFO webdriver: [POST] http://127.0.0.1:4444/session/ccf691e5457cab080239487351ff3c9d/window
+[0-2] 2026-05-02T13:55:54.915Z INFO webdriver: DATA {"handle":"61D9C70236D8A8ED0563A9BCCCACA645"}
+[0-2] 2026-05-02T13:55:54.920Z INFO webdriver: RESULT null
+[0-2] 2026-05-02T13:55:54.921Z INFO webdriver: COMMAND getUrl()
+[0-2] 2026-05-02T13:55:54.921Z INFO webdriver: [GET] http://127.0.0.1:4444/session/ccf691e5457cab080239487351ff3c9d/url
+[0-2] 2026-05-02T13:55:54.927Z INFO webdriver: RESULT http://tauri.localhost/#view=list
+[0-2] 2026-05-02T13:55:54.930Z INFO webdriver: COMMAND deleteSession()
+[0-2] 2026-05-02T13:55:54.930Z INFO webdriver: [DELETE] http://127.0.0.1:4444/session/ccf691e5457cab080239487351ff3c9d
+[0-2] 2026-05-02T13:55:54.956Z INFO webdriver: RESULT null
+[0-2] PASSED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/no-stray-window.spec.js
+2026-05-02T13:55:55.102Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-02T13:55:55.103Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-02T13:55:55.104Z INFO @wdio/local-runner: Start worker 0-3 with arg: run e2e/wdio.conf.js
+2026-05-02T13:55:55.140Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-02T13:55:55.140Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-02T13:55:55.140Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-3] 2026-05-02T13:55:56.719Z INFO @wdio/local-runner: Run worker command: run
+[0-3] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-collapse-button.spec.js
+[0-3] 2026-05-02T13:55:57.152Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-3] 2026-05-02T13:55:57.153Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-3] 2026-05-02T13:55:57.166Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-3] 2026-05-02T13:55:57.974Z INFO webdriver: COMMAND getWindowHandle()
+[0-3] 2026-05-02T13:55:57.975Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/window
+[0-3] 2026-05-02T13:55:57.980Z INFO webdriver: RESULT D7A3D12FA47D009FF032B643161CF813
+[0-3] 2026-05-02T13:55:57.987Z INFO webdriver: COMMAND getPageSource()
+[0-3] 2026-05-02T13:55:57.987Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/source
+[0-3] 2026-05-02T13:55:57.995Z INFO webdriver: RESULT <html lang="en"><head>
+[0-3]     <meta charset="utf-8">
+[0-3]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-3]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-3]     <title>Waypoint</title>
+[0-3]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-3] 		
+[0-3]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-3]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-3]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-3]     <div style="display: contents">
+[0-3] 			<script>
+[0-3] 				{
+[0-3] 					__sveltekit_13kje6x = {
+[0-3] 						base: ""
+[0-3] 					};
+[0-3] 
+[0-3] 					const element = document.currentScript.parentElement;
+[0-3] 
+[0-3] 					Promise.all([
+[0-3] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-3] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-3] 					]).then(([kit, app]) => {
+[0-3] 						kit.start(app, element);
+[0-3] 					});
+[0-3] 				}
+[0-3] 			</script>
+[0-3] 		<!----><!----><!----><!----><!----><div class="list-window svelte-701jsl"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><div class="titlebar-left svelte-701jsl" data-tauri-drag-region=""><span class="app-name svelte-701jsl" data-tauri-drag-region="">WAYPOINT</span> <button class="icon-btn svelte-701jsl" title="使用說明">?</button></div> <div class="titlebar-right svelte-701jsl"><button class="icon-btn svelte-701jsl" title="設定">⚙</button> <button class="icon-btn svelte-701jsl" title="收起全部">⇊</button> <button class="icon-btn svelte-701jsl" title="最小化列表">—</button> <button class="icon-btn svelte-701jsl" title="結束 Waypoint">✕</button></div><!----></div><!----> <div class="list-body svelte-701jsl"><div class="section svelte-1hchbgo"><div class="section-header svelte-1hchbgo"><span class="section-label">🌐 全域筆記</span> <button class="add-btn svelte-1hchbgo" title="新增全域筆記">+</button></div> <!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="32284a0c-dcae-4174-b0d5-1ead9cf33ee2" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="ed2fe1d4-02b2-4c59-9d23-030fbfdcae2f" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----></div><!----> <div class="divider"></div> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-3]   
+[0-3] 
+[0-3] </body></html>
+[0-3] 2026-05-02T13:55:57.997Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-3] 2026-05-02T13:55:57.997Z INFO webdriver: [POST] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/execute/sync
+[0-3] 2026-05-02T13:55:57.998Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => typeof window.__TAURI_INTERNALS__?.invoke === \"function\").apply(null, arguments)\n        ","args":[]}
+[0-3] 2026-05-02T13:55:58.006Z INFO webdriver: RESULT true
+[0-3] 2026-05-02T13:55:58.010Z INFO webdriver: COMMAND getWindowHandles()
+[0-3] 2026-05-02T13:55:58.010Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/window/handles
+[0-3] 2026-05-02T13:55:58.013Z INFO webdriver: RESULT [ 'D7A3D12FA47D009FF032B643161CF813' ]
+[0-3] 2026-05-02T13:55:58.015Z INFO webdriver: COMMAND switchToWindow("D7A3D12FA47D009FF032B643161CF813")
+[0-3] 2026-05-02T13:55:58.015Z INFO webdriver: [POST] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/window
+[0-3] 2026-05-02T13:55:58.015Z INFO webdriver: DATA {"handle":"D7A3D12FA47D009FF032B643161CF813"}
+[0-3] 2026-05-02T13:55:58.018Z INFO webdriver: RESULT null
+[0-3] 2026-05-02T13:55:58.019Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-3] 2026-05-02T13:55:58.020Z INFO webdriver: [POST] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/execute/async
+[0-3] 2026-05-02T13:55:58.020Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["create_note",{"contextId":null,"title":"Collapse 測試"}]}
+[0-3] 2026-05-02T13:55:58.032Z INFO webdriver: RESULT {
+[0-3]   ok: true,
+[0-3]   value: {
+[0-3]     content: '',
+[0-3]     contextId: null,
+[0-3]     id: '7d6c5db0-e7f7-451f-8e5c-2e0e75e3dfcf',
+[0-3]     settings: {
+[0-3]       fontSize: 14,
+[0-3]       hotkey: null,
+[0-3]       opacity: 1,
+[0-3]       passthrough: false,
+[0-3]       windowBounds: null
+[0-3]     },
+[0-3]     title: 'Collapse 測試'
+[0-3]   }
+[0-3] }
+[0-3] 2026-05-02T13:55:58.033Z INFO webdriver: COMMAND getWindowHandles()
+[0-3] 2026-05-02T13:55:58.033Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/window/handles
+[0-3] 2026-05-02T13:55:58.035Z INFO webdriver: RESULT [ 'D7A3D12FA47D009FF032B643161CF813' ]
+[0-3] 2026-05-02T13:55:58.036Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-3] 2026-05-02T13:55:58.036Z INFO webdriver: [POST] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/execute/async
+[0-3] 2026-05-02T13:55:58.037Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_open_note_window",{"noteId":"7d6c5db0-e7f7-451f-8e5c-2e0e75e3dfcf","contextId":null}]}
+[0-3] 2026-05-02T13:55:58.196Z INFO webdriver: RESULT { ok: true, value: null }
+[0-3] 2026-05-02T13:55:58.197Z INFO webdriver: COMMAND getWindowHandles()
+[0-3] 2026-05-02T13:55:58.198Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/window/handles
+[0-3] 2026-05-02T13:55:58.223Z INFO webdriver: RESULT [
+[0-3]   'D7A3D12FA47D009FF032B643161CF813',
+[0-3]   '2CB8448C5D22B1B2D5EEF06080D41572'
+[0-3] ]
+[0-3] 2026-05-02T13:55:58.223Z INFO webdriver: COMMAND getWindowHandles()
+[0-3] 2026-05-02T13:55:58.224Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/window/handles
+[0-3] 2026-05-02T13:55:58.228Z INFO webdriver: RESULT [
+[0-3]   'D7A3D12FA47D009FF032B643161CF813',
+[0-3]   '2CB8448C5D22B1B2D5EEF06080D41572'
+[0-3] ]
+[0-3] 2026-05-02T13:55:58.228Z INFO webdriver: COMMAND switchToWindow("2CB8448C5D22B1B2D5EEF06080D41572")
+[0-3] 2026-05-02T13:55:58.229Z INFO webdriver: [POST] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/window
+[0-3] 2026-05-02T13:55:58.229Z INFO webdriver: DATA {"handle":"2CB8448C5D22B1B2D5EEF06080D41572"}
+[0-3] 2026-05-02T13:55:58.232Z INFO webdriver: RESULT null
+[0-3] 2026-05-02T13:55:58.232Z INFO webdriver: COMMAND getPageSource()
+[0-3] 2026-05-02T13:55:58.233Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/source
+[0-3] 2026-05-02T13:55:58.238Z INFO webdriver: RESULT <html lang="en"><head>
+[0-3]     <meta charset="utf-8">
+[0-3]     <link rel="icon" href="/favicon.png">
+[0-3]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-3]     <title>Waypoint</title>
+[0-3]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-3] 		
+[0-3]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-3]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-3]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-3]     <div style="display: contents">
+[0-3] 			<script>
+[0-3] 				{
+[0-3] 					__sveltekit_13kje6x = {
+[0-3] 						base: ""
+[0-3] 					};
+[0-3] 
+[0-3] 					const element = document.currentScript.parentElement;
+[0-3] 
+[0-3] 					Promise.all([
+[0-3] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-3] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-3] 					]).then(([kit, app]) => {
+[0-3] 						kit.start(app, element);
+[0-3] 					});
+[0-3] 				}
+[0-3] 			</script>
+[0-3] 		</div>
+[0-3]   
+[0-3] 
+[0-3] </body></html>
+[0-3] 2026-05-02T13:55:58.333Z INFO webdriver: COMMAND getPageSource()
+[0-3] 2026-05-02T13:55:58.334Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/source
+[0-3] 2026-05-02T13:55:58.403Z INFO webdriver: RESULT <html lang="en"><head>
+[0-3]     <meta charset="utf-8">
+[0-3]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-3]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-3]     <title>Waypoint</title>
+[0-3]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-3] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-3] 		
+[0-3]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"><style data-tiptap-style="">.ProseMirror {
+[0-3]   position: relative;
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror {
+[0-3]   word-wrap: break-word;
+[0-3]   white-space: pre-wrap;
+[0-3]   white-space: break-spaces;
+[0-3]   -webkit-font-variant-ligatures: none;
+[0-3]   font-variant-ligatures: none;
+[0-3]   font-feature-settings: "liga" 0; /* the above doesn't seem to work in Edge */
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror [contenteditable="false"] {
+[0-3]   white-space: normal;
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror [contenteditable="false"] [contenteditable="true"] {
+[0-3]   white-space: pre-wrap;
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror pre {
+[0-3]   white-space: pre-wrap;
+[0-3] }
+[0-3] 
+[0-3] img.ProseMirror-separator {
+[0-3]   display: inline !important;
+[0-3]   border: none !important;
+[0-3]   margin: 0 !important;
+[0-3]   width: 0 !important;
+[0-3]   height: 0 !important;
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror-gapcursor {
+[0-3]   display: none;
+[0-3]   pointer-events: none;
+[0-3]   position: absolute;
+[0-3]   margin: 0;
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror-gapcursor:after {
+[0-3]   content: "";
+[0-3]   display: block;
+[0-3]   position: absolute;
+[0-3]   top: -2px;
+[0-3]   width: 20px;
+[0-3]   border-top: 1px solid black;
+[0-3]   animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
+[0-3] }
+[0-3] 
+[0-3] @keyframes ProseMirror-cursor-blink {
+[0-3]   to {
+[0-3]     visibility: hidden;
+[0-3]   }
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror-hideselection *::selection {
+[0-3]   background: transparent;
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror-hideselection *::-moz-selection {
+[0-3]   background: transparent;
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror-hideselection * {
+[0-3]   caret-color: transparent;
+[0-3] }
+[0-3] 
+[0-3] .ProseMirror-focused .ProseMirror-gapcursor {
+[0-3]   display: block;
+[0-3] }</style></head>
+[0-3]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-3]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc" class="note-view">
+[0-3]     <div style="display: contents">
+[0-3] 			<script>
+[0-3] 				{
+[0-3] 					__sveltekit_13kje6x = {
+[0-3] 						base: ""
+[0-3] 					};
+[0-3] 
+[0-3] 					const element = document.currentScript.parentElement;
+[0-3] 
+[0-3] 					Promise.all([
+[0-3] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-3] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-3] 					]).then(([kit, app]) => {
+[0-3] 						kit.start(app, element);
+[0-3] 					});
+[0-3] 				}
+[0-3] 			</script>
+[0-3] 		<!----><!----><!----><!----><!----><!----><div class="note-window svelte-w3ygfh" style="opacity: 1;"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><span class="note-title svelte-w3ygfh" data-tauri-drag-region="">Untitled</span> <div class="opacity-bar svelte-1sc9gqf"><span class="lbl svelte-1sc9gqf">透明度</span> <input class="slider svelte-1sc9gqf" type="range" min="10" max="100" step="5" title="視窗透明度"> <span class="val svelte-1sc9gqf">100%</span></div><!----> <div class="titlebar-buttons svelte-w3ygfh"><button class="passthrough-dot svelte-w3ygfh dot-on" title="可互動 — 點此啟用穿透"></button> <button title="收起全部並儲存">⇊</button> <button title="最大化／還原">▢</button> <button title="儲存並關閉">✕</button></div><!----></div><!----> <div class="title-row svelte-w3ygfh"><input class="title-input svelte-w3ygfh" type="text" placeholder="標題"></div> <div class="toolbar svelte-1mufjh"><button title="Bold" class="svelte-1mufjh"><b>B</b></button> <button title="Italic" class="svelte-1mufjh"><i>I</i></button> <button title="Underline" class="svelte-1mufjh"><u>U</u></button> <button title="Strikethrough" class="svelte-1mufjh"><s>S</s></button> <span class="sep svelte-1mufjh"></span> <button title="Heading 1" class="svelte-1mufjh">H1</button> <button title="Heading 2" class="svelte-1mufjh">H2</button> <button title="Heading 3" class="svelte-1mufjh">H3</button> <span class="sep svelte-1mufjh"></span> <button title="Bullet list" class="svelte-1mufjh">≡</button> <button title="Task list" class="svelte-1mufjh">☑</button> <button title="Code block" class="svelte-1mufjh">&lt;/&gt;</button> <span class="spacer svelte-1mufjh"></span> <button class="settings-btn svelte-1mufjh" title="設定">⚙</button></div><!----> <div class="editor-area svelte-w3ygfh"><div class="editor-wrap svelte-a50o8t"><div contenteditable="true" role="textbox" translate="no" class="tiptap ProseMirror tiptap-editor" tabindex="0" style="font-size: 14px;"><p data-placeholder="輸入文字…" class="is-empty is-editor-empty"><br class="ProseMirror-trailingBreak"></p></div></div><!----> <!----></div> <div class="statusbar svelte-w3ygfh"><span>Global</span> <span>Markdown</span></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-3]   
+[0-3] 
+[0-3] </body></html>
+[0-3] 2026-05-02T13:55:58.407Z INFO webdriver: COMMAND findElement("css selector", "button[title="收起全部並儲存"]")
+[0-3] 2026-05-02T13:55:58.407Z INFO webdriver: [POST] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/element
+[0-3] 2026-05-02T13:55:58.407Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"收起全部並儲存\"]"}
+[0-3] 2026-05-02T13:55:58.438Z INFO webdriver: RESULT {
+[0-3]   'element-6066-11e4-a52e-4f735466cecf': 'f.2CB8448C5D22B1B2D5EEF06080D41572.d.D6512A05A55E22D23A20611D73C9376F.e.4'
+[0-3] }
+[0-3] 2026-05-02T13:55:58.447Z INFO webdriver: COMMAND findElements("css selector", "button[title="收起全部並儲存"]")
+[0-3] 2026-05-02T13:55:58.448Z INFO webdriver: [POST] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/elements
+[0-3] 2026-05-02T13:55:58.448Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"收起全部並儲存\"]"}
+[0-3] 2026-05-02T13:55:58.460Z INFO webdriver: RESULT [
+[0-3]   {
+[0-3]     'element-6066-11e4-a52e-4f735466cecf': 'f.2CB8448C5D22B1B2D5EEF06080D41572.d.D6512A05A55E22D23A20611D73C9376F.e.4'
+[0-3]   }
+[0-3] ]
+[0-3] 2026-05-02T13:55:58.466Z INFO webdriver: COMMAND getElementText("f.2CB8448C5D22B1B2D5EEF06080D41572.d.D6512A05A55E22D23A20611D73C9376F.e.4")
+[0-3] 2026-05-02T13:55:58.466Z INFO webdriver: [GET] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/element/f.2CB8448C5D22B1B2D5EEF06080D41572.d.D6512A05A55E22D23A20611D73C9376F.e.4/text
+[0-3] 2026-05-02T13:55:58.495Z INFO webdriver: RESULT ⇊
+[0-3] 2026-05-02T13:55:58.495Z INFO webdriver: COMMAND elementClick("f.2CB8448C5D22B1B2D5EEF06080D41572.d.D6512A05A55E22D23A20611D73C9376F.e.4")
+[0-3] 2026-05-02T13:55:58.496Z INFO webdriver: [POST] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101/element/f.2CB8448C5D22B1B2D5EEF06080D41572.d.D6512A05A55E22D23A20611D73C9376F.e.4/click
+[0-3] 2026-05-02T13:55:58.496Z INFO webdriver: DATA {}
+[0-3] 2026-05-02T13:55:58.558Z INFO webdriver: RESULT null
+[0-3] 2026-05-02T13:55:58.563Z INFO webdriver: COMMAND deleteSession()
+[0-3] 2026-05-02T13:55:58.563Z INFO webdriver: [DELETE] http://127.0.0.1:4444/session/3ee8728938dca668536684007e2ec101
+[0-3] 2026-05-02T13:55:58.601Z INFO webdriver: RESULT null
+[0-3] PASSED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-collapse-button.spec.js
+2026-05-02T13:55:58.737Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-02T13:55:58.738Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-02T13:55:58.739Z INFO @wdio/local-runner: Start worker 0-4 with arg: run e2e/wdio.conf.js
+2026-05-02T13:55:58.771Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-02T13:55:58.772Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-02T13:55:58.772Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-4] 2026-05-02T13:56:00.301Z INFO @wdio/local-runner: Run worker command: run
+[0-4] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-content-persistence.spec.js
+[0-4] 2026-05-02T13:56:00.730Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-4] 2026-05-02T13:56:00.730Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-4] 2026-05-02T13:56:00.744Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-4] 2026-05-02T13:56:01.459Z INFO webdriver: COMMAND getWindowHandle()
+[0-4] 2026-05-02T13:56:01.459Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window
+[0-4] 2026-05-02T13:56:01.465Z INFO webdriver: RESULT 7D6A7AE63295A0EC6ECDF700CE201F92
+[0-4] 2026-05-02T13:56:01.472Z INFO webdriver: COMMAND getPageSource()
+[0-4] 2026-05-02T13:56:01.473Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/source
+[0-4] 2026-05-02T13:56:01.572Z INFO webdriver: RESULT <html lang="en"><head>
+[0-4]     <meta charset="utf-8">
+[0-4]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-4]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-4]     <title>Waypoint</title>
+[0-4]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-4] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-4] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-4] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-4] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-4] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-4] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-4] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-4] 		
+[0-4]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-4]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-4]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-4]     <div style="display: contents">
+[0-4] 			<script>
+[0-4] 				{
+[0-4] 					__sveltekit_13kje6x = {
+[0-4] 						base: ""
+[0-4] 					};
+[0-4] 
+[0-4] 					const element = document.currentScript.parentElement;
+[0-4] 
+[0-4] 					Promise.all([
+[0-4] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-4] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-4] 					]).then(([kit, app]) => {
+[0-4] 						kit.start(app, element);
+[0-4] 					});
+[0-4] 				}
+[0-4] 			</script>
+[0-4] 		<!----><!----><!----><!----><!----><div class="list-window svelte-701jsl"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><div class="titlebar-left svelte-701jsl" data-tauri-drag-region=""><span class="app-name svelte-701jsl" data-tauri-drag-region="">WAYPOINT</span> <button class="icon-btn svelte-701jsl" title="使用說明">?</button></div> <div class="titlebar-right svelte-701jsl"><button class="icon-btn svelte-701jsl" title="設定">⚙</button> <button class="icon-btn svelte-701jsl" title="收起全部">⇊</button> <button class="icon-btn svelte-701jsl" title="最小化列表">—</button> <button class="icon-btn svelte-701jsl" title="結束 Waypoint">✕</button></div><!----></div><!----> <div class="list-body svelte-701jsl"><div class="section svelte-1hchbgo"><div class="section-header svelte-1hchbgo"><span class="section-label">🌐 全域筆記</span> <button class="add-btn svelte-1hchbgo" title="新增全域筆記">+</button></div> <!----></div><!----> <div class="divider"></div> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-4]   
+[0-4] 
+[0-4] </body></html>
+[0-4] 2026-05-02T13:56:01.575Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-4] 2026-05-02T13:56:01.576Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/execute/sync
+[0-4] 2026-05-02T13:56:01.576Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => typeof window.__TAURI_INTERNALS__?.invoke === \"function\").apply(null, arguments)\n        ","args":[]}
+[0-4] 2026-05-02T13:56:01.588Z INFO webdriver: RESULT true
+[0-4] 2026-05-02T13:56:01.592Z INFO webdriver: COMMAND getWindowHandles()
+[0-4] 2026-05-02T13:56:01.592Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window/handles
+[0-4] 2026-05-02T13:56:01.595Z INFO webdriver: RESULT [ '7D6A7AE63295A0EC6ECDF700CE201F92' ]
+[0-4] 2026-05-02T13:56:01.596Z INFO webdriver: COMMAND switchToWindow("7D6A7AE63295A0EC6ECDF700CE201F92")
+[0-4] 2026-05-02T13:56:01.597Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window
+[0-4] 2026-05-02T13:56:01.597Z INFO webdriver: DATA {"handle":"7D6A7AE63295A0EC6ECDF700CE201F92"}
+[0-4] 2026-05-02T13:56:01.600Z INFO webdriver: RESULT null
+[0-4] 2026-05-02T13:56:01.601Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-4] 2026-05-02T13:56:01.601Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/execute/async
+[0-4] 2026-05-02T13:56:01.601Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["create_note",{"contextId":null,"title":"Persistence 測試"}]}
+[0-4] 2026-05-02T13:56:01.609Z INFO webdriver: RESULT {
+[0-4]   ok: true,
+[0-4]   value: {
+[0-4]     content: '',
+[0-4]     contextId: null,
+[0-4]     id: 'be47ba2a-7ad0-4c92-9e7f-f836d60bb37e',
+[0-4]     settings: {
+[0-4]       fontSize: 14,
+[0-4]       hotkey: null,
+[0-4]       opacity: 1,
+[0-4]       passthrough: false,
+[0-4]       windowBounds: null
+[0-4]     },
+[0-4]     title: 'Persistence 測試'
+[0-4]   }
+[0-4] }
+[0-4] 2026-05-02T13:56:01.610Z INFO webdriver: COMMAND getWindowHandles()
+[0-4] 2026-05-02T13:56:01.611Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window/handles
+[0-4] 2026-05-02T13:56:01.613Z INFO webdriver: RESULT [ '7D6A7AE63295A0EC6ECDF700CE201F92' ]
+[0-4] 2026-05-02T13:56:01.613Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-4] 2026-05-02T13:56:01.614Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/execute/async
+[0-4] 2026-05-02T13:56:01.614Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_open_note_window",{"noteId":"be47ba2a-7ad0-4c92-9e7f-f836d60bb37e","contextId":null}]}
+[0-4] 2026-05-02T13:56:01.765Z INFO webdriver: RESULT { ok: true, value: null }
+[0-4] 2026-05-02T13:56:01.766Z INFO webdriver: COMMAND getWindowHandles()
+[0-4] 2026-05-02T13:56:01.766Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window/handles
+[0-4] 2026-05-02T13:56:01.787Z INFO webdriver: RESULT [
+[0-4]   '7D6A7AE63295A0EC6ECDF700CE201F92',
+[0-4]   'D195BE578E80C324D3E58803B31277F7'
+[0-4] ]
+[0-4] 2026-05-02T13:56:01.788Z INFO webdriver: COMMAND getWindowHandles()
+[0-4] 2026-05-02T13:56:01.789Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window/handles
+[0-4] 2026-05-02T13:56:01.798Z INFO webdriver: RESULT [
+[0-4]   '7D6A7AE63295A0EC6ECDF700CE201F92',
+[0-4]   'D195BE578E80C324D3E58803B31277F7'
+[0-4] ]
+[0-4] 2026-05-02T13:56:01.798Z INFO webdriver: COMMAND switchToWindow("D195BE578E80C324D3E58803B31277F7")
+[0-4] 2026-05-02T13:56:01.799Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window
+[0-4] 2026-05-02T13:56:01.799Z INFO webdriver: DATA {"handle":"D195BE578E80C324D3E58803B31277F7"}
+[0-4] 2026-05-02T13:56:01.802Z INFO webdriver: RESULT null
+[0-4] 2026-05-02T13:56:01.806Z INFO webdriver: COMMAND findElement("css selector", ".tiptap-editor")
+[0-4] 2026-05-02T13:56:01.806Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/element
+[0-4] 2026-05-02T13:56:01.806Z INFO webdriver: DATA {"using":"css selector","value":".tiptap-editor"}
+[0-4] 2026-05-02T13:56:01.822Z INFO webdriver: RESULT {
+[0-4]   error: 'no such element',
+[0-4]   message: 'no such element: Unable to locate element: {"method":"css selector","selector":".tiptap-editor"}\n' +
+[0-4]     '  (Session info: MicrosoftEdge=146.0.3856.109)',
+[0-4]   stacktrace: '\tmsedgedriver!GetHandleVerifier [0x7ff66d5f17b5+d8e5]\n' +
+[0-4]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d5f1814+d944]\n' +
+[0-4]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d95f78c+37b8bc]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d364d26]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d364fc5]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d3a2a87]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d35b9b7]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d3a07e2]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d35b1fc]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d35a456]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d35b023]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d428bb9]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d425153]\n' +
+[0-4]     '\tmsedgedriver!(No symbol) [0x7ff66d434d64]\n' +
+[0-4]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d60c638+28768]\n' +
+[0-4]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d614df6+30f26]\n' +
+[0-4]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d5f8ef4+15024]\n' +
+[0-4]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d5f9039+15169]\n' +
+[0-4]     '\tmsedgedriver!GetHandleVerifier [0x7ff66d5e6362+2492]\n' +
+[0-4]     '\tKERNEL32!BaseThreadInitThunk [0x7ff88937e8d7+17]\n' +
+[0-4]     '\tntdll!RtlUserThreadStart [0x7ff8894ec53c+2c]\n'
+[0-4] }
+[0-4] 2026-05-02T13:56:01.832Z INFO webdriver: COMMAND findElements("css selector", ".tiptap-editor")
+[0-4] 2026-05-02T13:56:01.832Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/elements
+[0-4] 2026-05-02T13:56:01.832Z INFO webdriver: DATA {"using":"css selector","value":".tiptap-editor"}
+[0-4] 2026-05-02T13:56:01.992Z INFO webdriver: RESULT [
+[0-4]   {
+[0-4]     'element-6066-11e4-a52e-4f735466cecf': 'f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.3'
+[0-4]   }
+[0-4] ]
+[0-4] 2026-05-02T13:56:01.997Z INFO webdriver: COMMAND findElement("css selector", ".tiptap-editor")
+[0-4] 2026-05-02T13:56:01.997Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/element
+[0-4] 2026-05-02T13:56:01.997Z INFO webdriver: DATA {"using":"css selector","value":".tiptap-editor"}
+[0-4] 2026-05-02T13:56:02.006Z INFO webdriver: RESULT {
+[0-4]   'element-6066-11e4-a52e-4f735466cecf': 'f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.3'
+[0-4] }
+[0-4] 2026-05-02T13:56:02.008Z INFO webdriver: COMMAND elementClick("f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.3")
+[0-4] 2026-05-02T13:56:02.009Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/element/f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.3/click
+[0-4] 2026-05-02T13:56:02.009Z INFO webdriver: DATA {}
+[0-4] 2026-05-02T13:56:02.067Z INFO webdriver: RESULT null
+[0-4] 2026-05-02T13:56:02.070Z INFO webdriver: COMMAND performActions(<object>)
+[0-4] 2026-05-02T13:56:02.070Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/actions
+[0-4] 2026-05-02T13:56:02.070Z INFO webdriver: DATA {"actions":[{"id":"key1","type":"key","parameters":{},"actions":[{"type":"keyDown","value":"P"},{"type":"keyDown","value":"E"},{"type":"keyDown","value":"R"},{"type":"keyDown","value":"S"},{"type":"keyDown","value":"I"},{"type":"keyDown","value":"S"},{"type":"keyDown","value":"T"},{"type":"keyDown","value":"-"},{"type":"keyDown","value":"1"},{"type":"keyDown","value":"7"},{"type":"keyDown","value":"7"},{"type":"keyDown","value":"7"},{"type":"keyDown","value":"7"},{"type":"keyDown","value":"3"},{"type":"keyDown","value":"0"},{"type":"keyDown","value":"1"},{"type":"keyDown","value":"6"},{"type":"keyDown","value":"2"},{"type":"keyDown","value":"0"},{"type":"keyDown","value":"6"},{"type":"keyDown","value":"8"},{"type":"pause","duration":10},{"type":"keyUp","value":"P"},{"type":"keyUp","value":"E"},{"type":"keyUp","value":"R"},{"type":"keyUp","value":"S"},{"type":"keyUp","value":"I"},{"type":"keyUp","value":"S"},{"type":"keyUp","value":"T"},{"type":"keyUp","value":"-"},{"type":"keyUp","value":"1"},{"type":"keyUp","value":"7"},{"type":"keyUp","value":"7"},{"type":"keyUp","value":"7"},{"type":"keyUp","value":"7"},{"type":"keyUp","value":"3"},{"type":"keyUp","value":"0"},{"type":"keyUp","value":"1"},{"type":"keyUp","value":"6"},{"type":"keyUp","value":"2"},{"type":"keyUp","value":"0"},{"type":"keyUp","value":"6"},{"type":"keyUp","value":"8"}]}]}
+[0-4] 2026-05-02T13:56:02.144Z INFO webdriver: RESULT null
+[0-4] 2026-05-02T13:56:02.145Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-4] 2026-05-02T13:56:02.146Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/execute/sync
+[0-4] 2026-05-02T13:56:02.146Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function getHTML(element, includeSelectorTag) {\n  return element[includeSelectorTag ? \"outerHTML\" : \"innerHTML\"];\n}).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.3","ELEMENT":"f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.3"},true]}
+[0-4] 2026-05-02T13:56:02.153Z INFO webdriver: RESULT <div contenteditable="true" role="textbox" translate="no" class="tiptap ProseMirror tiptap-editor ProseMirror-focused" tabindex="0" style="font-size: 14px;"><p>PERSIST-1777730162068</p></div>
+[0-4] 2026-05-02T13:56:02.156Z INFO webdriver: COMMAND findElement("css selector", "button[title="儲存並關閉"]")
+[0-4] 2026-05-02T13:56:02.156Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/element
+[0-4] 2026-05-02T13:56:02.156Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"儲存並關閉\"]"}
+[0-4] 2026-05-02T13:56:02.167Z INFO webdriver: RESULT {
+[0-4]   'element-6066-11e4-a52e-4f735466cecf': 'f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.5'
+[0-4] }
+[0-4] 2026-05-02T13:56:02.170Z INFO webdriver: COMMAND findElements("css selector", "button[title="儲存並關閉"]")
+[0-4] 2026-05-02T13:56:02.171Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/elements
+[0-4] 2026-05-02T13:56:02.171Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"儲存並關閉\"]"}
+[0-4] 2026-05-02T13:56:02.181Z INFO webdriver: RESULT [
+[0-4]   {
+[0-4]     'element-6066-11e4-a52e-4f735466cecf': 'f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.5'
+[0-4]   }
+[0-4] ]
+[0-4] 2026-05-02T13:56:02.184Z INFO webdriver: COMMAND getWindowHandles()
+[0-4] 2026-05-02T13:56:02.184Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window/handles
+[0-4] 2026-05-02T13:56:02.186Z INFO webdriver: RESULT [
+[0-4]   '7D6A7AE63295A0EC6ECDF700CE201F92',
+[0-4]   'D195BE578E80C324D3E58803B31277F7'
+[0-4] ]
+[0-4] 2026-05-02T13:56:02.186Z INFO webdriver: COMMAND elementClick("f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.5")
+[0-4] 2026-05-02T13:56:02.186Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/element/f.D195BE578E80C324D3E58803B31277F7.d.3C67CD626790906F9BF3D4A6A8D9232B.e.5/click
+[0-4] 2026-05-02T13:56:02.186Z INFO webdriver: DATA {}
+[0-4] 2026-05-02T13:56:02.239Z INFO webdriver: RESULT null
+[0-4] 2026-05-02T13:56:02.239Z INFO webdriver: COMMAND getWindowHandles()
+[0-4] 2026-05-02T13:56:02.240Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window/handles
+[0-4] 2026-05-02T13:56:02.249Z INFO webdriver: RESULT [
+[0-4]   '7D6A7AE63295A0EC6ECDF700CE201F92',
+[0-4]   'D195BE578E80C324D3E58803B31277F7'
+[0-4] ]
+[0-4] 2026-05-02T13:56:02.339Z INFO webdriver: COMMAND getWindowHandles()
+[0-4] 2026-05-02T13:56:02.340Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window/handles
+[0-4] 2026-05-02T13:56:02.342Z INFO webdriver: RESULT [ '7D6A7AE63295A0EC6ECDF700CE201F92' ]
+[0-4] 2026-05-02T13:56:02.342Z INFO webdriver: COMMAND getWindowHandles()
+[0-4] 2026-05-02T13:56:02.342Z INFO webdriver: [GET] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window/handles
+[0-4] 2026-05-02T13:56:02.344Z INFO webdriver: RESULT [ '7D6A7AE63295A0EC6ECDF700CE201F92' ]
+[0-4] 2026-05-02T13:56:02.344Z INFO webdriver: COMMAND switchToWindow("7D6A7AE63295A0EC6ECDF700CE201F92")
+[0-4] 2026-05-02T13:56:02.344Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/window
+[0-4] 2026-05-02T13:56:02.344Z INFO webdriver: DATA {"handle":"7D6A7AE63295A0EC6ECDF700CE201F92"}
+[0-4] 2026-05-02T13:56:02.347Z INFO webdriver: RESULT null
+[0-4] 2026-05-02T13:56:02.347Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-4] 2026-05-02T13:56:02.347Z INFO webdriver: [POST] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b/execute/async
+[0-4] 2026-05-02T13:56:02.347Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["read_note",{"contextId":null,"noteId":"be47ba2a-7ad0-4c92-9e7f-f836d60bb37e"}]}
+[0-4] 2026-05-02T13:56:02.353Z INFO webdriver: RESULT {
+[0-4]   ok: true,
+[0-4]   value: {
+[0-4]     content: '# Untitled\n',
+[0-4]     contextId: null,
+[0-4]     id: 'be47ba2a-7ad0-4c92-9e7f-f836d60bb37e',
+[0-4]     settings: {
+[0-4]       fontSize: 14,
+[0-4]       hotkey: null,
+[0-4]       opacity: 1,
+[0-4]       passthrough: false,
+[0-4]       windowBounds: null
+[0-4]     },
+[0-4]     title: 'Untitled'
+[0-4]   }
+[0-4] }
+[0-4] AssertionError in "筆記內容關閉後仍持久化.輸入內容 → 點 ✕ 關閉 → 重新讀取，內容仍在"
+AssertionError [ERR_ASSERTION]: 關閉後 read_note 內容遺失：實際 = "# Untitled\n"
+    at Context.<anonymous> (file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-content-persistence.spec.js:117:12)
+    at async Context.executeAsync (D:\a\waypoint\waypoint\waypoint\node_modules\@wdio\utils\build\index.js:1108:20)
+    at async Context.testFrameworkFnWrapper (D:\a\waypoint\waypoint\waypoint\node_modules\@wdio\utils\build\index.js:1188:14)
+[0-4] 2026-05-02T13:56:02.371Z INFO webdriver: COMMAND deleteSession()
+[0-4] 2026-05-02T13:56:02.372Z INFO webdriver: [DELETE] http://127.0.0.1:4444/session/97f884c9f2c44eb88e80eaf3bb5a4b4b
+[0-4] 2026-05-02T13:56:02.403Z INFO webdriver: RESULT null
+[0-4] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-content-persistence.spec.js
+2026-05-02T13:56:02.536Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-02T13:56:02.536Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-02T13:56:02.537Z INFO @wdio/local-runner: Start worker 0-5 with arg: run e2e/wdio.conf.js
+2026-05-02T13:56:02.567Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-02T13:56:02.567Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-02T13:56:02.567Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-5] 2026-05-02T13:56:04.113Z INFO @wdio/local-runner: Run worker command: run
+[0-5] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/smoke.spec.js
+[0-5] 2026-05-02T13:56:04.545Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-5] 2026-05-02T13:56:04.545Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-5] 2026-05-02T13:56:04.559Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-5] 2026-05-02T13:56:05.381Z INFO webdriver: COMMAND getWindowHandle()
+[0-5] 2026-05-02T13:56:05.381Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/window
+[0-5] 2026-05-02T13:56:05.386Z INFO webdriver: RESULT F6866C58FEB60725F29CF62D83531EA5
+[0-5] 2026-05-02T13:56:05.392Z INFO webdriver: COMMAND getPageSource()
+[0-5] 2026-05-02T13:56:05.393Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/source
+[0-5] 2026-05-02T13:56:05.400Z INFO webdriver: RESULT <html lang="en"><head>
+[0-5]     <meta charset="utf-8">
+[0-5]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-5]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-5]     <title>Waypoint</title>
+[0-5]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-5] 		
+[0-5]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-5]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-5]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-5]     <div style="display: contents">
+[0-5] 			<script>
+[0-5] 				{
+[0-5] 					__sveltekit_13kje6x = {
+[0-5] 						base: ""
+[0-5] 					};
+[0-5] 
+[0-5] 					const element = document.currentScript.parentElement;
+[0-5] 
+[0-5] 					Promise.all([
+[0-5] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-5] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-5] 					]).then(([kit, app]) => {
+[0-5] 						kit.start(app, element);
+[0-5] 					});
+[0-5] 				}
+[0-5] 			</script>
+[0-5] 		<!----><!----><!----><!----><!----><div class="list-window svelte-701jsl"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><div class="titlebar-left svelte-701jsl" data-tauri-drag-region=""><span class="app-name svelte-701jsl" data-tauri-drag-region="">WAYPOINT</span> <button class="icon-btn svelte-701jsl" title="使用說明">?</button></div> <div class="titlebar-right svelte-701jsl"><button class="icon-btn svelte-701jsl" title="設定">⚙</button> <button class="icon-btn svelte-701jsl" title="收起全部">⇊</button> <button class="icon-btn svelte-701jsl" title="最小化列表">—</button> <button class="icon-btn svelte-701jsl" title="結束 Waypoint">✕</button></div><!----></div><!----> <div class="list-body svelte-701jsl"><div class="section svelte-1hchbgo"><div class="section-header svelte-1hchbgo"><span class="section-label">🌐 全域筆記</span> <button class="add-btn svelte-1hchbgo" title="新增全域筆記">+</button></div> <!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="32284a0c-dcae-4174-b0d5-1ead9cf33ee2" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="7d6c5db0-e7f7-451f-8e5c-2e0e75e3dfcf" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="be47ba2a-7ad0-4c92-9e7f-f836d60bb37e" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="ed2fe1d4-02b2-4c59-9d23-030fbfdcae2f" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----></div><!----> <div class="divider"></div> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-5]   
+[0-5] 
+[0-5] </body></html>
+[0-5] 2026-05-02T13:56:05.405Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.405Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.406Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => getComputedStyle(document.body).backgroundColor).apply(null, arguments)\n        ","args":[]}
+[0-5] 2026-05-02T13:56:05.415Z INFO webdriver: RESULT rgb(30, 30, 30)
+[0-5] 2026-05-02T13:56:05.419Z INFO webdriver: COMMAND findElement("css selector", ".app-name")
+[0-5] 2026-05-02T13:56:05.419Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element
+[0-5] 2026-05-02T13:56:05.420Z INFO webdriver: DATA {"using":"css selector","value":".app-name"}
+[0-5] 2026-05-02T13:56:05.432Z INFO webdriver: RESULT {
+[0-5]   'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.4'
+[0-5] }
+[0-5] 2026-05-02T13:56:05.442Z INFO webdriver: COMMAND findElements("css selector", ".app-name")
+[0-5] 2026-05-02T13:56:05.443Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/elements
+[0-5] 2026-05-02T13:56:05.443Z INFO webdriver: DATA {"using":"css selector","value":".app-name"}
+[0-5] 2026-05-02T13:56:05.455Z INFO webdriver: RESULT [
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.4'
+[0-5]   }
+[0-5] ]
+[0-5] 2026-05-02T13:56:05.461Z INFO webdriver: COMMAND getElementText("f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.4")
+[0-5] 2026-05-02T13:56:05.462Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element/f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.4/text
+[0-5] 2026-05-02T13:56:05.476Z INFO webdriver: RESULT WAYPOINT
+[0-5] 2026-05-02T13:56:05.477Z INFO webdriver: COMMAND findElement("css selector", "button[title="使用說明"]")
+[0-5] 2026-05-02T13:56:05.478Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element
+[0-5] 2026-05-02T13:56:05.478Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"使用說明\"]"}
+[0-5] 2026-05-02T13:56:05.490Z INFO webdriver: RESULT {
+[0-5]   'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5'
+[0-5] }
+[0-5] 2026-05-02T13:56:05.492Z INFO webdriver: COMMAND findElements("css selector", "button[title="使用說明"]")
+[0-5] 2026-05-02T13:56:05.493Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/elements
+[0-5] 2026-05-02T13:56:05.493Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"使用說明\"]"}
+[0-5] 2026-05-02T13:56:05.506Z INFO webdriver: RESULT [
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5'
+[0-5]   }
+[0-5] ]
+[0-5] 2026-05-02T13:56:05.510Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.510Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.511Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function(elem) {\n      try {\n        const style = window.getComputedStyle(elem);\n        return { value: style?.display ?? \"\" };\n      } catch {\n        if (typeof elem.isConnected === \"boolean\" && !elem.isConnected) {\n          throw new Error(\"stale element reference: element is not attached to the page document\");\n        }\n        return { value: \"\" };\n      }\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5"}]}
+[0-5] 2026-05-02T13:56:05.512Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.513Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.513Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function checkVisibility(elem, params) {\n      if (typeof elem.checkVisibility === \"function\") {\n        return elem.checkVisibility(params);\n      }\n      return null;\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5"},{"withinViewport":false,"contentVisibilityAuto":true,"opacityProperty":true,"visibilityProperty":true}]}
+[0-5] 2026-05-02T13:56:05.536Z INFO webdriver: RESULT { value: 'block' }
+[0-5] 2026-05-02T13:56:05.540Z INFO webdriver: RESULT true
+[0-5] 2026-05-02T13:56:05.541Z INFO webdriver: COMMAND findElement("css selector", "button[title="設定"]")
+[0-5] 2026-05-02T13:56:05.541Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element
+[0-5] 2026-05-02T13:56:05.541Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"設定\"]"}
+[0-5] 2026-05-02T13:56:05.553Z INFO webdriver: RESULT {
+[0-5]   'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6'
+[0-5] }
+[0-5] 2026-05-02T13:56:05.556Z INFO webdriver: COMMAND findElements("css selector", "button[title="設定"]")
+[0-5] 2026-05-02T13:56:05.557Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/elements
+[0-5] 2026-05-02T13:56:05.557Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"設定\"]"}
+[0-5] 2026-05-02T13:56:05.568Z INFO webdriver: RESULT [
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6'
+[0-5]   }
+[0-5] ]
+[0-5] 2026-05-02T13:56:05.571Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.571Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.572Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function(elem) {\n      try {\n        const style = window.getComputedStyle(elem);\n        return { value: style?.display ?? \"\" };\n      } catch {\n        if (typeof elem.isConnected === \"boolean\" && !elem.isConnected) {\n          throw new Error(\"stale element reference: element is not attached to the page document\");\n        }\n        return { value: \"\" };\n      }\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6"}]}
+[0-5] 2026-05-02T13:56:05.573Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.573Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.574Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function checkVisibility(elem, params) {\n      if (typeof elem.checkVisibility === \"function\") {\n        return elem.checkVisibility(params);\n      }\n      return null;\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6"},{"withinViewport":false,"contentVisibilityAuto":true,"opacityProperty":true,"visibilityProperty":true}]}
+[0-5] 2026-05-02T13:56:05.580Z INFO webdriver: RESULT { value: 'block' }
+[0-5] 2026-05-02T13:56:05.584Z INFO webdriver: RESULT true
+[0-5] 2026-05-02T13:56:05.585Z INFO webdriver: COMMAND findElement("css selector", "button[title="收起全部"]")
+[0-5] 2026-05-02T13:56:05.585Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element
+[0-5] 2026-05-02T13:56:05.585Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"收起全部\"]"}
+[0-5] 2026-05-02T13:56:05.596Z INFO webdriver: RESULT {
+[0-5]   'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7'
+[0-5] }
+[0-5] 2026-05-02T13:56:05.598Z INFO webdriver: COMMAND findElements("css selector", "button[title="收起全部"]")
+[0-5] 2026-05-02T13:56:05.598Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/elements
+[0-5] 2026-05-02T13:56:05.598Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"收起全部\"]"}
+[0-5] 2026-05-02T13:56:05.610Z INFO webdriver: RESULT [
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7'
+[0-5]   }
+[0-5] ]
+[0-5] 2026-05-02T13:56:05.613Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.613Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.614Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function(elem) {\n      try {\n        const style = window.getComputedStyle(elem);\n        return { value: style?.display ?? \"\" };\n      } catch {\n        if (typeof elem.isConnected === \"boolean\" && !elem.isConnected) {\n          throw new Error(\"stale element reference: element is not attached to the page document\");\n        }\n        return { value: \"\" };\n      }\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7"}]}
+[0-5] 2026-05-02T13:56:05.615Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.615Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.615Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function checkVisibility(elem, params) {\n      if (typeof elem.checkVisibility === \"function\") {\n        return elem.checkVisibility(params);\n      }\n      return null;\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7"},{"withinViewport":false,"contentVisibilityAuto":true,"opacityProperty":true,"visibilityProperty":true}]}
+[0-5] 2026-05-02T13:56:05.622Z INFO webdriver: RESULT { value: 'block' }
+[0-5] 2026-05-02T13:56:05.627Z INFO webdriver: RESULT true
+[0-5] 2026-05-02T13:56:05.627Z INFO webdriver: COMMAND findElement("css selector", "button[title="最小化列表"]")
+[0-5] 2026-05-02T13:56:05.627Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element
+[0-5] 2026-05-02T13:56:05.627Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"最小化列表\"]"}
+[0-5] 2026-05-02T13:56:05.638Z INFO webdriver: RESULT {
+[0-5]   'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8'
+[0-5] }
+[0-5] 2026-05-02T13:56:05.641Z INFO webdriver: COMMAND findElements("css selector", "button[title="最小化列表"]")
+[0-5] 2026-05-02T13:56:05.641Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/elements
+[0-5] 2026-05-02T13:56:05.641Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"最小化列表\"]"}
+[0-5] 2026-05-02T13:56:05.651Z INFO webdriver: RESULT [
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8'
+[0-5]   }
+[0-5] ]
+[0-5] 2026-05-02T13:56:05.654Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.654Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.654Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function(elem) {\n      try {\n        const style = window.getComputedStyle(elem);\n        return { value: style?.display ?? \"\" };\n      } catch {\n        if (typeof elem.isConnected === \"boolean\" && !elem.isConnected) {\n          throw new Error(\"stale element reference: element is not attached to the page document\");\n        }\n        return { value: \"\" };\n      }\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8"}]}
+[0-5] 2026-05-02T13:56:05.655Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.655Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.656Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function checkVisibility(elem, params) {\n      if (typeof elem.checkVisibility === \"function\") {\n        return elem.checkVisibility(params);\n      }\n      return null;\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8"},{"withinViewport":false,"contentVisibilityAuto":true,"opacityProperty":true,"visibilityProperty":true}]}
+[0-5] 2026-05-02T13:56:05.662Z INFO webdriver: RESULT { value: 'block' }
+[0-5] 2026-05-02T13:56:05.666Z INFO webdriver: RESULT true
+[0-5] 2026-05-02T13:56:05.666Z INFO webdriver: COMMAND findElement("css selector", "button[title="結束 Waypoint"]")
+[0-5] 2026-05-02T13:56:05.666Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element
+[0-5] 2026-05-02T13:56:05.666Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"結束 Waypoint\"]"}
+[0-5] 2026-05-02T13:56:05.677Z INFO webdriver: RESULT {
+[0-5]   'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9'
+[0-5] }
+[0-5] 2026-05-02T13:56:05.679Z INFO webdriver: COMMAND findElements("css selector", "button[title="結束 Waypoint"]")
+[0-5] 2026-05-02T13:56:05.679Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/elements
+[0-5] 2026-05-02T13:56:05.679Z INFO webdriver: DATA {"using":"css selector","value":"button[title=\"結束 Waypoint\"]"}
+[0-5] 2026-05-02T13:56:05.689Z INFO webdriver: RESULT [
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9'
+[0-5]   }
+[0-5] ]
+[0-5] 2026-05-02T13:56:05.691Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.692Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.692Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function(elem) {\n      try {\n        const style = window.getComputedStyle(elem);\n        return { value: style?.display ?? \"\" };\n      } catch {\n        if (typeof elem.isConnected === \"boolean\" && !elem.isConnected) {\n          throw new Error(\"stale element reference: element is not attached to the page document\");\n        }\n        return { value: \"\" };\n      }\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9"}]}
+[0-5] 2026-05-02T13:56:05.693Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-5] 2026-05-02T13:56:05.693Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/execute/sync
+[0-5] 2026-05-02T13:56:05.693Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (function checkVisibility(elem, params) {\n      if (typeof elem.checkVisibility === \"function\") {\n        return elem.checkVisibility(params);\n      }\n      return null;\n    }).apply(null, arguments)\n        ","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9","ELEMENT":"f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9"},{"withinViewport":false,"contentVisibilityAuto":true,"opacityProperty":true,"visibilityProperty":true}]}
+[0-5] 2026-05-02T13:56:05.699Z INFO webdriver: RESULT { value: 'block' }
+[0-5] 2026-05-02T13:56:05.704Z INFO webdriver: RESULT true
+[0-5] 2026-05-02T13:56:05.705Z INFO webdriver: COMMAND findElements("css selector", ".titlebar button")
+[0-5] 2026-05-02T13:56:05.705Z INFO webdriver: [POST] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/elements
+[0-5] 2026-05-02T13:56:05.705Z INFO webdriver: DATA {"using":"css selector","value":".titlebar button"}
+[0-5] 2026-05-02T13:56:05.715Z INFO webdriver: RESULT [
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5'
+[0-5]   },
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6'
+[0-5]   },
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7'
+[0-5]   },
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8'
+[0-5]   },
+[0-5]   {
+[0-5]     'element-6066-11e4-a52e-4f735466cecf': 'f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9'
+[0-5]   }
+[0-5] ]
+[0-5] 2026-05-02T13:56:05.722Z INFO webdriver: COMMAND getElementText("f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5")
+[0-5] 2026-05-02T13:56:05.723Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element/f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.5/text
+[0-5] 2026-05-02T13:56:05.731Z INFO webdriver: RESULT ?
+[0-5] 2026-05-02T13:56:05.731Z INFO webdriver: COMMAND getElementText("f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6")
+[0-5] 2026-05-02T13:56:05.731Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element/f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.6/text
+[0-5] 2026-05-02T13:56:05.738Z INFO webdriver: RESULT ⚙
+[0-5] 2026-05-02T13:56:05.739Z INFO webdriver: COMMAND getElementText("f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7")
+[0-5] 2026-05-02T13:56:05.739Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element/f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.7/text
+[0-5] 2026-05-02T13:56:05.746Z INFO webdriver: RESULT ⇊
+[0-5] 2026-05-02T13:56:05.746Z INFO webdriver: COMMAND getElementText("f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8")
+[0-5] 2026-05-02T13:56:05.746Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element/f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.8/text
+[0-5] 2026-05-02T13:56:05.753Z INFO webdriver: RESULT —
+[0-5] 2026-05-02T13:56:05.753Z INFO webdriver: COMMAND getElementText("f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9")
+[0-5] 2026-05-02T13:56:05.754Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/element/f.F6866C58FEB60725F29CF62D83531EA5.d.21D56A3C62726ACD77DC05E9E78AF65F.e.9/text
+[0-5] 2026-05-02T13:56:05.760Z INFO webdriver: RESULT ✕
+[0-5] 2026-05-02T13:56:05.761Z INFO webdriver: COMMAND getPageSource()
+[0-5] 2026-05-02T13:56:05.761Z INFO webdriver: [GET] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b/source
+[0-5] 2026-05-02T13:56:05.764Z INFO webdriver: RESULT <html lang="en"><head>
+[0-5]     <meta charset="utf-8">
+[0-5]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-5]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-5]     <title>Waypoint</title>
+[0-5]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-5] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-5] 		
+[0-5]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-5]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-5]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-5]     <div style="display: contents">
+[0-5] 			<script>
+[0-5] 				{
+[0-5] 					__sveltekit_13kje6x = {
+[0-5] 						base: ""
+[0-5] 					};
+[0-5] 
+[0-5] 					const element = document.currentScript.parentElement;
+[0-5] 
+[0-5] 					Promise.all([
+[0-5] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-5] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-5] 					]).then(([kit, app]) => {
+[0-5] 						kit.start(app, element);
+[0-5] 					});
+[0-5] 				}
+[0-5] 			</script>
+[0-5] 		<!----><!----><!----><!----><!----><div class="list-window svelte-701jsl"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><div class="titlebar-left svelte-701jsl" data-tauri-drag-region=""><span class="app-name svelte-701jsl" data-tauri-drag-region="">WAYPOINT</span> <button class="icon-btn svelte-701jsl" title="使用說明">?</button></div> <div class="titlebar-right svelte-701jsl"><button class="icon-btn svelte-701jsl" title="設定">⚙</button> <button class="icon-btn svelte-701jsl" title="收起全部">⇊</button> <button class="icon-btn svelte-701jsl" title="最小化列表">—</button> <button class="icon-btn svelte-701jsl" title="結束 Waypoint">✕</button></div><!----></div><!----> <div class="list-body svelte-701jsl"><div class="section svelte-1hchbgo"><div class="section-header svelte-1hchbgo"><span class="section-label">🌐 全域筆記</span> <button class="add-btn svelte-1hchbgo" title="新增全域筆記">+</button></div> <!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="32284a0c-dcae-4174-b0d5-1ead9cf33ee2" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="7d6c5db0-e7f7-451f-8e5c-2e0e75e3dfcf" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="be47ba2a-7ad0-4c92-9e7f-f836d60bb37e" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="ed2fe1d4-02b2-4c59-9d23-030fbfdcae2f" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----></div><!----> <div class="divider"></div> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-5]   
+[0-5] 
+[0-5] </body></html>
+[0-5] 2026-05-02T13:56:05.767Z INFO webdriver: COMMAND deleteSession()
+[0-5] 2026-05-02T13:56:05.767Z INFO webdriver: [DELETE] http://127.0.0.1:4444/session/a68bab6f0e15c2e477031a7f90b63f0b
+[0-5] 2026-05-02T13:56:05.797Z INFO webdriver: RESULT null
+[0-5] PASSED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/smoke.spec.js
+2026-05-02T13:56:05.931Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-02T13:56:05.932Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-02T13:56:05.933Z INFO @wdio/local-runner: Start worker 0-6 with arg: run e2e/wdio.conf.js
+2026-05-02T13:56:05.964Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-02T13:56:05.964Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-02T13:56:05.964Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-6] 2026-05-02T13:56:07.524Z INFO @wdio/local-runner: Run worker command: run
+[0-6] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/system-windows-drag.spec.js
+[0-6] 2026-05-02T13:56:07.965Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-6] 2026-05-02T13:56:07.966Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-6] 2026-05-02T13:56:07.980Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-6] 2026-05-02T13:56:08.812Z INFO webdriver: COMMAND getWindowHandle()
+[0-6] 2026-05-02T13:56:08.813Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window
+[0-6] 2026-05-02T13:56:08.818Z INFO webdriver: RESULT F10EF6A983F76AFDA6AA2DE25509AE68
+[0-6] 2026-05-02T13:56:08.824Z INFO webdriver: COMMAND getPageSource()
+[0-6] 2026-05-02T13:56:08.825Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/source
+[0-6] 2026-05-02T13:56:08.831Z INFO webdriver: RESULT <html lang="en"><head>
+[0-6]     <meta charset="utf-8">
+[0-6]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-6]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-6]     <title>Waypoint</title>
+[0-6]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-6] 		
+[0-6]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-6]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-6]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-6]     <div style="display: contents">
+[0-6] 			<script>
+[0-6] 				{
+[0-6] 					__sveltekit_13kje6x = {
+[0-6] 						base: ""
+[0-6] 					};
+[0-6] 
+[0-6] 					const element = document.currentScript.parentElement;
+[0-6] 
+[0-6] 					Promise.all([
+[0-6] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-6] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-6] 					]).then(([kit, app]) => {
+[0-6] 						kit.start(app, element);
+[0-6] 					});
+[0-6] 				}
+[0-6] 			</script>
+[0-6] 		<!----><!----><!----><!----><!----><div class="list-window svelte-701jsl"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><div class="titlebar-left svelte-701jsl" data-tauri-drag-region=""><span class="app-name svelte-701jsl" data-tauri-drag-region="">WAYPOINT</span> <button class="icon-btn svelte-701jsl" title="使用說明">?</button></div> <div class="titlebar-right svelte-701jsl"><button class="icon-btn svelte-701jsl" title="設定">⚙</button> <button class="icon-btn svelte-701jsl" title="收起全部">⇊</button> <button class="icon-btn svelte-701jsl" title="最小化列表">—</button> <button class="icon-btn svelte-701jsl" title="結束 Waypoint">✕</button></div><!----></div><!----> <div class="list-body svelte-701jsl"><div class="section svelte-1hchbgo"><div class="section-header svelte-1hchbgo"><span class="section-label">🌐 全域筆記</span> <button class="add-btn svelte-1hchbgo" title="新增全域筆記">+</button></div> <!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="32284a0c-dcae-4174-b0d5-1ead9cf33ee2" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="7d6c5db0-e7f7-451f-8e5c-2e0e75e3dfcf" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="be47ba2a-7ad0-4c92-9e7f-f836d60bb37e" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----><div role="button" tabindex="0" class="note-item svelte-1mz4n7r" draggable="true" data-note-id="ed2fe1d4-02b2-4c59-9d23-030fbfdcae2f" title="Untitled"><span class="icon svelte-1mz4n7r">📄</span> <span class="title svelte-1mz4n7r">Untitled</span></div><!----> <!----><!----></div><!----> <div class="divider"></div> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-6]   
+[0-6] 
+[0-6] </body></html>
+[0-6] 2026-05-02T13:56:08.834Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-6] 2026-05-02T13:56:08.834Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/execute/sync
+[0-6] 2026-05-02T13:56:08.835Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => typeof window.__TAURI_INTERNALS__?.invoke === \"function\").apply(null, arguments)\n        ","args":[]}
+[0-6] 2026-05-02T13:56:08.844Z INFO webdriver: RESULT true
+[0-6] 2026-05-02T13:56:08.847Z INFO webdriver: COMMAND getWindowHandles()
+[0-6] 2026-05-02T13:56:08.848Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window/handles
+[0-6] 2026-05-02T13:56:08.851Z INFO webdriver: RESULT [ 'F10EF6A983F76AFDA6AA2DE25509AE68' ]
+[0-6] 2026-05-02T13:56:08.853Z INFO webdriver: COMMAND switchToWindow("F10EF6A983F76AFDA6AA2DE25509AE68")
+[0-6] 2026-05-02T13:56:08.854Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window
+[0-6] 2026-05-02T13:56:08.854Z INFO webdriver: DATA {"handle":"F10EF6A983F76AFDA6AA2DE25509AE68"}
+[0-6] 2026-05-02T13:56:08.858Z INFO webdriver: RESULT null
+[0-6] 2026-05-02T13:56:08.858Z INFO webdriver: COMMAND getWindowHandles()
+[0-6] 2026-05-02T13:56:08.858Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window/handles
+[0-6] 2026-05-02T13:56:08.861Z INFO webdriver: RESULT [ 'F10EF6A983F76AFDA6AA2DE25509AE68' ]
+[0-6] 2026-05-02T13:56:08.862Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-6] 2026-05-02T13:56:08.862Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/execute/async
+[0-6] 2026-05-02T13:56:08.862Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_open_help",{}]}
+[0-6] 2026-05-02T13:56:09.007Z INFO webdriver: RESULT { ok: true, value: null }
+[0-6] 2026-05-02T13:56:09.009Z INFO webdriver: COMMAND getWindowHandles()
+[0-6] 2026-05-02T13:56:09.010Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window/handles
+[0-6] 2026-05-02T13:56:09.038Z INFO webdriver: RESULT [
+[0-6]   'F10EF6A983F76AFDA6AA2DE25509AE68',
+[0-6]   '5ED6C083D8C777FD2E17D1DA5116B91A'
+[0-6] ]
+[0-6] 2026-05-02T13:56:09.039Z INFO webdriver: COMMAND getWindowHandles()
+[0-6] 2026-05-02T13:56:09.039Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window/handles
+[0-6] 2026-05-02T13:56:09.046Z INFO webdriver: RESULT [
+[0-6]   'F10EF6A983F76AFDA6AA2DE25509AE68',
+[0-6]   '5ED6C083D8C777FD2E17D1DA5116B91A'
+[0-6] ]
+[0-6] 2026-05-02T13:56:09.050Z INFO webdriver: COMMAND switchToWindow("5ED6C083D8C777FD2E17D1DA5116B91A")
+[0-6] 2026-05-02T13:56:09.050Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window
+[0-6] 2026-05-02T13:56:09.051Z INFO webdriver: DATA {"handle":"5ED6C083D8C777FD2E17D1DA5116B91A"}
+[0-6] 2026-05-02T13:56:09.057Z INFO webdriver: RESULT null
+[0-6] 2026-05-02T13:56:09.057Z INFO webdriver: COMMAND getPageSource()
+[0-6] 2026-05-02T13:56:09.058Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/source
+[0-6] 2026-05-02T13:56:09.064Z INFO webdriver: RESULT <html lang="en"><head>
+[0-6]     <meta charset="utf-8">
+[0-6]     <link rel="icon" href="/favicon.png">
+[0-6]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-6]     <title>Waypoint</title>
+[0-6]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-6] 		
+[0-6]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-6]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-6]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-6]     <div style="display: contents">
+[0-6] 			<script>
+[0-6] 				{
+[0-6] 					__sveltekit_13kje6x = {
+[0-6] 						base: ""
+[0-6] 					};
+[0-6] 
+[0-6] 					const element = document.currentScript.parentElement;
+[0-6] 
+[0-6] 					Promise.all([
+[0-6] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-6] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-6] 					]).then(([kit, app]) => {
+[0-6] 						kit.start(app, element);
+[0-6] 					});
+[0-6] 				}
+[0-6] 			</script>
+[0-6] 		</div>
+[0-6]   
+[0-6] 
+[0-6] </body></html>
+[0-6] 2026-05-02T13:56:09.158Z INFO webdriver: COMMAND getPageSource()
+[0-6] 2026-05-02T13:56:09.159Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/source
+[0-6] 2026-05-02T13:56:09.208Z INFO webdriver: RESULT <html lang="en"><head>
+[0-6]     <meta charset="utf-8">
+[0-6]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-6]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-6]     <title>Waypoint</title>
+[0-6]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-6] 		
+[0-6]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-6]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-6]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-6]     <div style="display: contents">
+[0-6] 			<script>
+[0-6] 				{
+[0-6] 					__sveltekit_13kje6x = {
+[0-6] 						base: ""
+[0-6] 					};
+[0-6] 
+[0-6] 					const element = document.currentScript.parentElement;
+[0-6] 
+[0-6] 					Promise.all([
+[0-6] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-6] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-6] 					]).then(([kit, app]) => {
+[0-6] 						kit.start(app, element);
+[0-6] 					});
+[0-6] 				}
+[0-6] 			</script>
+[0-6] 		<!----><!----><!----><!----><!----><div class="help-window svelte-1g2hxni"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><span class="title svelte-1g2hxni">Waypoint — 使用說明 <span class="version svelte-1g2hxni">v0.1.17</span></span> <button>✕</button><!----></div><!----> <div class="content svelte-1g2hxni"><section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">快捷鍵邏輯（三段式）</h2> <table class="svelte-1g2hxni"><thead><tr><th class="svelte-1g2hxni">狀態</th><th class="svelte-1g2hxni">按快捷鍵</th><th class="svelte-1g2hxni">結果</th></tr></thead><tbody><tr><td class="svelte-1g2hxni">無任何視窗</td><td class="svelte-1g2hxni">按一次</td><td class="svelte-1g2hxni">開啟列表 + 還原上次筆記</td></tr><tr><td class="svelte-1g2hxni">有筆記，無列表</td><td class="svelte-1g2hxni">按一次</td><td class="svelte-1g2hxni">開啟列表</td></tr><tr><td class="svelte-1g2hxni">列表開著</td><td class="svelte-1g2hxni">再按一次</td><td class="svelte-1g2hxni">儲存 session，收起全部</td></tr></tbody></table></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">全域筆記 vs 區域筆記</h2> <ul class="svelte-1g2hxni"><li class="svelte-1g2hxni"><strong>全域筆記：</strong>無論在哪個應用程式按快捷鍵都會出現在列表中</li> <li class="svelte-1g2hxni"><strong>區域筆記：</strong>只屬於特定應用程式（依 process 名稱或視窗標題識別）</li></ul></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">✕ vs ⇊ 的差異</h2> <ul class="svelte-1g2hxni"><li class="svelte-1g2hxni"><strong>✕（關閉按鈕）：</strong>永久關閉此筆記，下次不會自動還原</li> <li class="svelte-1g2hxni"><strong>⇊（收起按鈕）：</strong>收起所有視窗，但記住哪些筆記是開著的，下次自動還原</li></ul></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">如何設定 Context 識別方式</h2> <p class="svelte-1g2hxni">在列表視窗中，對 context 標題按右鍵，可選擇：程序名稱 或 視窗標題</p></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">跨平台 Context 對應</h2> <p class="svelte-1g2hxni">右鍵選單 →「對應到現有 context...」可將不同 OS 上的同一軟體合併。</p></section> <section class="svelte-1g2hxni"><h2 class="svelte-1g2hxni">資料夾位置</h2> <p class="svelte-1g2hxni">所有筆記和設定存放在：<code class="svelte-1g2hxni">~/waypoint/</code></p> <p class="svelte-1g2hxni">複製此資料夾到其他電腦即可使用相同筆記與設定。</p></section></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-6]   
+[0-6] 
+[0-6] </body></html>
+[0-6] 2026-05-02T13:56:09.208Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-6] 2026-05-02T13:56:09.209Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/execute/sync
+[0-6] 2026-05-02T13:56:09.209Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => {\r\n      const tb = document.querySelector(\".titlebar\");\r\n      return !!tb && tb.hasAttribute(\"data-tauri-drag-region\");\r\n    }).apply(null, arguments)\n        ","args":[]}
+[0-6] 2026-05-02T13:56:09.217Z INFO webdriver: RESULT true
+[0-6] 2026-05-02T13:56:09.220Z INFO webdriver: COMMAND getWindowHandles()
+[0-6] 2026-05-02T13:56:09.220Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window/handles
+[0-6] 2026-05-02T13:56:09.234Z INFO webdriver: RESULT [
+[0-6]   'F10EF6A983F76AFDA6AA2DE25509AE68',
+[0-6]   '5ED6C083D8C777FD2E17D1DA5116B91A'
+[0-6] ]
+[0-6] 2026-05-02T13:56:09.234Z INFO webdriver: COMMAND switchToWindow("F10EF6A983F76AFDA6AA2DE25509AE68")
+[0-6] 2026-05-02T13:56:09.235Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window
+[0-6] 2026-05-02T13:56:09.235Z INFO webdriver: DATA {"handle":"F10EF6A983F76AFDA6AA2DE25509AE68"}
+[0-6] 2026-05-02T13:56:09.238Z INFO webdriver: RESULT null
+[0-6] 2026-05-02T13:56:09.238Z INFO webdriver: COMMAND getWindowHandles()
+[0-6] 2026-05-02T13:56:09.239Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window/handles
+[0-6] 2026-05-02T13:56:09.241Z INFO webdriver: RESULT [
+[0-6]   'F10EF6A983F76AFDA6AA2DE25509AE68',
+[0-6]   '5ED6C083D8C777FD2E17D1DA5116B91A'
+[0-6] ]
+[0-6] 2026-05-02T13:56:09.241Z INFO webdriver: COMMAND executeAsyncScript(<fn>, <object>)
+[0-6] 2026-05-02T13:56:09.242Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/execute/async
+[0-6] 2026-05-02T13:56:09.242Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill()\n            return ((c, a, done) => {\r\n      window.__TAURI_INTERNALS__\r\n        .invoke(c, a)\r\n        .then((r) => done({ ok: true, value: r }))\r\n        .catch((e) => done({ ok: false, error: String(e) }));\r\n    }).apply(null, arguments)\n        ","args":["cmd_open_settings",{}]}
+[0-6] 2026-05-02T13:56:09.382Z INFO webdriver: RESULT { ok: true, value: null }
+[0-6] 2026-05-02T13:56:09.387Z INFO webdriver: COMMAND getWindowHandles()
+[0-6] 2026-05-02T13:56:09.387Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window/handles
+[0-6] 2026-05-02T13:56:09.407Z INFO webdriver: RESULT [
+[0-6]   'F10EF6A983F76AFDA6AA2DE25509AE68',
+[0-6]   '5ED6C083D8C777FD2E17D1DA5116B91A',
+[0-6]   'B8758BAEA4B19312E905687F28A3545C'
+[0-6] ]
+[0-6] 2026-05-02T13:56:09.409Z INFO webdriver: COMMAND getWindowHandles()
+[0-6] 2026-05-02T13:56:09.409Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window/handles
+[0-6] 2026-05-02T13:56:09.417Z INFO webdriver: RESULT [
+[0-6]   'F10EF6A983F76AFDA6AA2DE25509AE68',
+[0-6]   '5ED6C083D8C777FD2E17D1DA5116B91A',
+[0-6]   'B8758BAEA4B19312E905687F28A3545C'
+[0-6] ]
+[0-6] 2026-05-02T13:56:09.418Z INFO webdriver: COMMAND switchToWindow("B8758BAEA4B19312E905687F28A3545C")
+[0-6] 2026-05-02T13:56:09.418Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/window
+[0-6] 2026-05-02T13:56:09.418Z INFO webdriver: DATA {"handle":"B8758BAEA4B19312E905687F28A3545C"}
+[0-6] 2026-05-02T13:56:09.422Z INFO webdriver: RESULT null
+[0-6] 2026-05-02T13:56:09.422Z INFO webdriver: COMMAND getPageSource()
+[0-6] 2026-05-02T13:56:09.422Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/source
+[0-6] 2026-05-02T13:56:09.426Z INFO webdriver: RESULT <html lang="en"><head>
+[0-6]     <meta charset="utf-8">
+[0-6]     <link rel="icon" href="/favicon.png">
+[0-6]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-6]     <title>Waypoint</title>
+[0-6]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-6] 		
+[0-6]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-6]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-6]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-6]     <div style="display: contents">
+[0-6] 			<script>
+[0-6] 				{
+[0-6] 					__sveltekit_13kje6x = {
+[0-6] 						base: ""
+[0-6] 					};
+[0-6] 
+[0-6] 					const element = document.currentScript.parentElement;
+[0-6] 
+[0-6] 					Promise.all([
+[0-6] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-6] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-6] 					]).then(([kit, app]) => {
+[0-6] 						kit.start(app, element);
+[0-6] 					});
+[0-6] 				}
+[0-6] 			</script>
+[0-6] 		</div>
+[0-6]   
+[0-6] 
+[0-6] </body></html>
+[0-6] 2026-05-02T13:56:09.522Z INFO webdriver: COMMAND getPageSource()
+[0-6] 2026-05-02T13:56:09.522Z INFO webdriver: [GET] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/source
+[0-6] 2026-05-02T13:56:09.549Z INFO webdriver: RESULT <html lang="en"><head>
+[0-6]     <meta charset="utf-8">
+[0-6]     <link rel="icon" href="http://tauri.localhost/favicon.png">
+[0-6]     <meta name="viewport" content="width=device-width, initial-scale=1">
+[0-6]     <title>Waypoint</title>
+[0-6]     <link href="/_app/immutable/entry/start.B-AkkbLp.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BFvGuk5L.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/BrvQaNFF.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DwxfgNgC.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/entry/app.Czs33DEW.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/CXr6ktTA.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/D9elXV-C.js" rel="modulepreload">
+[0-6] 		<link href="/_app/immutable/chunks/DnwWQDu8.js" rel="modulepreload">
+[0-6] 		
+[0-6]   <link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/0.D7mbmQ2z.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/chunks/C9OVhmEN.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/0.CkmnEqie.css"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/1.CotQDiHt.js"><link rel="modulepreload" as="script" crossorigin="" href="http://tauri.localhost/_app/immutable/nodes/2.ICZczLo8.js"><link rel="stylesheet" crossorigin="" href="http://tauri.localhost/_app/immutable/assets/2.CZVo7hnm.css"></head>
+[0-6]   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
+[0-6]   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+[0-6]     <div style="display: contents">
+[0-6] 			<script>
+[0-6] 				{
+[0-6] 					__sveltekit_13kje6x = {
+[0-6] 						base: ""
+[0-6] 					};
+[0-6] 
+[0-6] 					const element = document.currentScript.parentElement;
+[0-6] 
+[0-6] 					Promise.all([
+[0-6] 						import("/_app/immutable/entry/start.B-AkkbLp.js"),
+[0-6] 						import("/_app/immutable/entry/app.Czs33DEW.js")
+[0-6] 					]).then(([kit, app]) => {
+[0-6] 						kit.start(app, element);
+[0-6] 					});
+[0-6] 				}
+[0-6] 			</script>
+[0-6] 		<!----><!----><!----><!----><!----><div class="settings-window svelte-1r12bng"><div class="draggable-titlebar titlebar svelte-5wg0lt" data-tauri-drag-region=""><span class="title svelte-1r12bng">Waypoint — 設定</span> <button class="close-btn svelte-1r12bng">✕</button><!----></div><!----> <div class="content svelte-1r12bng"><section class="svelte-1r12bng"><h2 class="svelte-1r12bng">全域快捷鍵</h2> <p class="desc svelte-1r12bng">按下快捷鍵開啟／收起 Waypoint 列表</p> <div class="row svelte-1r12bng"><button type="button" title="點擊後按下要設定的快捷鍵" class="hotkey-capture svelte-1r12bng">Ctrl+Shift+Space</button> <button disabled="">套用</button></div> <p class="hint svelte-1r12bng">點擊左側框後按下鍵盤組合鍵（Esc 取消）；範例：Ctrl+Shift+Space、Alt+F1</p> <!----></section> <!----> <section class="svelte-1r12bng"><h2 class="svelte-1r12bng">穿透模式快捷鍵</h2> <p class="desc svelte-1r12bng">按下後切換所有筆記穿透狀態</p> <div class="row svelte-1r12bng"><button type="button" title="點擊後按下要設定的快捷鍵" class="hotkey-capture svelte-1r12bng">Ctrl+Shift+G</button> <button disabled="">套用</button></div> <p class="hint svelte-1r12bng">點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+G</p> <!----> <!----></section> <section class="svelte-1r12bng"><h2 class="svelte-1r12bng">工作列圖示</h2> <p class="desc svelte-1r12bng">有筆記視窗開啟時在工作列顯示圖示</p> <div class="row svelte-1r12bng"><label class="toggle svelte-1r12bng"><input type="checkbox" class="svelte-1r12bng"> <span class="toggle-label svelte-1r12bng">已啟用</span></label></div></section> <!----></div></div><!----> <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0; top: 0; clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px"><!----></div><!----></div>
+[0-6]   
+[0-6] 
+[0-6] </body></html>
+[0-6] 2026-05-02T13:56:09.550Z INFO webdriver: COMMAND executeScript(<fn>, <object>)
+[0-6] 2026-05-02T13:56:09.550Z INFO webdriver: [POST] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a/execute/sync
+[0-6] 2026-05-02T13:56:09.550Z INFO webdriver: DATA {"script":"\n            function webdriverioPolyfill() {\n  var __defProp = Object.defineProperty;\n  var __name = function(target, _value) {\n    return __defProp(target, \"name\", { value: _value, configurable: true });\n  };\n  var __globalThis = typeof globalThis === \"object\" && globalThis || typeof window === \"object\" && window;\n  __globalThis.__name = __name;\n}\n            webdriverioPolyfill();\n            return (() => {\r\n      const tb = document.querySelector(\".titlebar\");\r\n      return !!tb && tb.hasAttribute(\"data-tauri-drag-region\");\r\n    }).apply(null, arguments)\n        ","args":[]}
+[0-6] 2026-05-02T13:56:09.558Z INFO webdriver: RESULT true
+[0-6] 2026-05-02T13:56:09.560Z INFO webdriver: COMMAND deleteSession()
+[0-6] 2026-05-02T13:56:09.560Z INFO webdriver: [DELETE] http://127.0.0.1:4444/session/6cf5192647e3301384b1b9d09b94434a
+[0-6] 2026-05-02T13:56:09.595Z INFO webdriver: RESULT null
+[0-6] PASSED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/system-windows-drag.spec.js
+2026-05-02T13:56:09.720Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[webview2 146.0.3856.109 windows #0-0] Running: webview2 (v146.0.3856.109) on windows
+[webview2 146.0.3856.109 windows #0-0] Session ID: 0e554a7591256f08fcb32b301aef38ea
+[webview2 146.0.3856.109 windows #0-0]
+[webview2 146.0.3856.109 windows #0-0] » e2e\specs\drag.spec.js
+[webview2 146.0.3856.109 windows #0-0] 筆記視窗可拖曳移動
+[webview2 146.0.3856.109 windows #0-0]    ✓ titlebar 有 data-tauri-drag-region 屬性
+[webview2 146.0.3856.109 windows #0-0]    ✓ titlebar 中央的 mousedown target 不是被遮住的 child
+[webview2 146.0.3856.109 windows #0-0]    ✓ cmd_start_dragging 命令存在且不會丟錯（能力檢查）
+[webview2 146.0.3856.109 windows #0-0]    ✓ 程式化位移：set_window_position → get_window_position 可正確變更
+[webview2 146.0.3856.109 windows #0-0]
+[webview2 146.0.3856.109 windows #0-0] 4 passing (644ms)
+------------------------------------------------------------------
+[webview2 146.0.3856.109 windows #0-1] Running: webview2 (v146.0.3856.109) on windows
+[webview2 146.0.3856.109 windows #0-1] Session ID: d3cad6362bb23800dbb3001b9911e44a
+[webview2 146.0.3856.109 windows #0-1]
+[webview2 146.0.3856.109 windows #0-1] » e2e\specs\multi-window.spec.js
+[webview2 146.0.3856.109 windows #0-1] help / settings / note 視窗非白屏
+[webview2 146.0.3856.109 windows #0-1]    ✓ 說明視窗：cmd_open_help 後有內容
+[webview2 146.0.3856.109 windows #0-1]    ✓ 設定視窗：cmd_open_settings 後有內容
+[webview2 146.0.3856.109 windows #0-1]    ✓ 筆記視窗：建新筆記並開啟後有內容
+[webview2 146.0.3856.109 windows #0-1]
+[webview2 146.0.3856.109 windows #0-1] 3 passing (1.8s)
+------------------------------------------------------------------
+[webview2 146.0.3856.109 windows #0-2] Running: webview2 (v146.0.3856.109) on windows
+[webview2 146.0.3856.109 windows #0-2] Session ID: ccf691e5457cab080239487351ff3c9d
+[webview2 146.0.3856.109 windows #0-2]
+[webview2 146.0.3856.109 windows #0-2] » e2e\specs\no-stray-window.spec.js
+[webview2 146.0.3856.109 windows #0-2] 啟動時無多餘視窗
+[webview2 146.0.3856.109 windows #0-2]    ✓ WAYPOINT_E2E 自動啟動後只能存在 list 視窗
+[webview2 146.0.3856.109 windows #0-2]
+[webview2 146.0.3856.109 windows #0-2] 1 passing (148ms)
+------------------------------------------------------------------
+[webview2 146.0.3856.109 windows #0-3] Running: webview2 (v146.0.3856.109) on windows
+[webview2 146.0.3856.109 windows #0-3] Session ID: 3ee8728938dca668536684007e2ec101
+[webview2 146.0.3856.109 windows #0-3]
+[webview2 146.0.3856.109 windows #0-3] » e2e\specs\note-collapse-button.spec.js
+[webview2 146.0.3856.109 windows #0-3] 筆記 titlebar ⇊ 收起按鈕（R11）
+[webview2 146.0.3856.109 windows #0-3]    ✓ ⇊ 按鈕存在於筆記 titlebar，按下後 emit collapse-all-requested
+[webview2 146.0.3856.109 windows #0-3]
+[webview2 146.0.3856.109 windows #0-3] 1 passing (620ms)
+------------------------------------------------------------------
+[webview2 146.0.3856.109 windows #0-4] Running: webview2 (v146.0.3856.109) on windows
+[webview2 146.0.3856.109 windows #0-4] Session ID: 97f884c9f2c44eb88e80eaf3bb5a4b4b
+[webview2 146.0.3856.109 windows #0-4]
+[webview2 146.0.3856.109 windows #0-4] » e2e\specs\note-content-persistence.spec.js
+[webview2 146.0.3856.109 windows #0-4] 筆記內容關閉後仍持久化
+[webview2 146.0.3856.109 windows #0-4]    ✖ 輸入內容 → 點 ✕ 關閉 → 重新讀取，內容仍在
+[webview2 146.0.3856.109 windows #0-4]
+[webview2 146.0.3856.109 windows #0-4] 1 failing (939ms)
+[webview2 146.0.3856.109 windows #0-4]
+[webview2 146.0.3856.109 windows #0-4] 1) 筆記內容關閉後仍持久化 輸入內容 → 點 ✕ 關閉 → 重新讀取，內容仍在
+[webview2 146.0.3856.109 windows #0-4] 關閉後 read_note 內容遺失：實際 = "# Untitled\n"      
+      actual expected
+      
+      falsetrue
+      
+[webview2 146.0.3856.109 windows #0-4] AssertionError [ERR_ASSERTION]: 關閉後 read_note 內容遺失：實際 = "# Untitled\n"
+[webview2 146.0.3856.109 windows #0-4]     at Context.<anonymous> (file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-content-persistence.spec.js:117:12)
+[webview2 146.0.3856.109 windows #0-4]     at async Context.executeAsync (D:\a\waypoint\waypoint\waypoint\node_modules\@wdio\utils\build\index.js:1108:20)
+[webview2 146.0.3856.109 windows #0-4]     at async Context.testFrameworkFnWrapper (D:\a\waypoint\waypoint\waypoint\node_modules\@wdio\utils\build\index.js:1188:14)
+------------------------------------------------------------------
+[webview2 146.0.3856.109 windows #0-5] Running: webview2 (v146.0.3856.109) on windows
+[webview2 146.0.3856.109 windows #0-5] Session ID: a68bab6f0e15c2e477031a7f90b63f0b
+[webview2 146.0.3856.109 windows #0-5]
+[webview2 146.0.3856.109 windows #0-5] » e2e\specs\smoke.spec.js
+[webview2 146.0.3856.109 windows #0-5] 列表視窗 smoke
+[webview2 146.0.3856.109 windows #0-5]    ✓ body 背景不是白色（防白屏）
+[webview2 146.0.3856.109 windows #0-5]    ✓ WAYPOINT 標題顯示於 titlebar
+[webview2 146.0.3856.109 windows #0-5]    ✓ titlebar 五個按鈕齊全（?、⚙、⇊、—、✕）
+[webview2 146.0.3856.109 windows #0-5]    ✓ titlebar 僅一個關閉按鈕（無雙層 X）
+[webview2 146.0.3856.109 windows #0-5]    ✓ 全域筆記 section 存在
+[webview2 146.0.3856.109 windows #0-5]
+[webview2 146.0.3856.109 windows #0-5] 5 passing (411ms)
+------------------------------------------------------------------
+[webview2 146.0.3856.109 windows #0-6] Running: webview2 (v146.0.3856.109) on windows
+[webview2 146.0.3856.109 windows #0-6] Session ID: 6cf5192647e3301384b1b9d09b94434a
+[webview2 146.0.3856.109 windows #0-6]
+[webview2 146.0.3856.109 windows #0-6] » e2e\specs\system-windows-drag.spec.js
+[webview2 146.0.3856.109 windows #0-6] Help / Settings titlebar 拖曳屬性（R12）
+[webview2 146.0.3856.109 windows #0-6]    ✓ Help 視窗 .titlebar 具備 data-tauri-drag-region 屬性
+[webview2 146.0.3856.109 windows #0-6]    ✓ Settings 視窗 .titlebar 具備 data-tauri-drag-region 屬性
+[webview2 146.0.3856.109 windows #0-6]
+[webview2 146.0.3856.109 windows #0-6] 2 passing (777ms)
+
+
+Spec Files:	 6 passed, 1 failed, 7 total (100% completed) in 00:00:28  
+
+2026-05-02T13:56:09.722Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-05-02T13:56:09.981Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
+2026-05-02T13:56:09.981Z INFO @wdio/local-runner: shutting down
+2026-05-02T13:56:09.981Z INFO @wdio/cli:launcher: Run onComplete hook

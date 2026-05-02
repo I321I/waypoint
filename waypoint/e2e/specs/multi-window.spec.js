@@ -79,7 +79,7 @@ describe("help / settings / note 視窗非白屏", () => {
     const res = await invokeCmd("cmd_open_help");
     assert.ok(res.ok, `cmd_open_help 失敗: ${res.error}`);
     await switchToNewWindow(before);
-    await assertNonBlankAndContains(["快捷鍵邏輯", "使用說明"]);
+    await assertNonBlankAndContains(["快捷鍵", "使用說明"]);
   });
 
   it("設定視窗：cmd_open_settings 後有內容", async () => {

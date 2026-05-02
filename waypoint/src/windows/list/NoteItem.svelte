@@ -25,6 +25,7 @@
   let renaming = false;
   let renameValue = "";
   let availableContexts: string[] = [];
+  let deleteDialogOpen = false;
 
   async function handleClick() {
     if (renaming) return;
@@ -82,12 +83,19 @@
     closeMenu();
   }
 
-  async function doDelete() {
-    if (confirm(`刪除筆記「${note.title || "Untitled"}」？`)) {
-      await notesApi.delete(note.contextId, note.id);
-      dispatch("changed");
-    }
+  function doDelete() {
     closeMenu();
+    deleteDialogOpen = true;
+  }
+
+  async function confirmDelete() {
+    await notesApi.delete(note.contextId, note.id);
+    dispatch("changed");
+    deleteDialogOpen = false;
+  }
+
+  function cancelDelete() {
+    deleteDialogOpen = false;
   }
 
   function handleDragStart(e: DragEvent) {
@@ -178,6 +186,27 @@
   </div>
 {/if}
 
+{#if deleteDialogOpen}
+  <div
+    class="dialog-overlay"
+    on:click={cancelDelete}
+    on:keydown={(e) => { if (e.key === "Escape") cancelDelete(); }}
+    role="dialog"
+    aria-modal="true"
+    tabindex="-1"
+  >
+    <div class="dialog" on:click|stopPropagation on:keydown|stopPropagation role="document">
+      <div class="dialog-msg">
+        刪除筆記「<strong>{note.title || "Untitled"}</strong>」？
+      </div>
+      <div class="dialog-actions">
+        <button on:click={cancelDelete}>取消</button>
+        <button class="danger" on:click={confirmDelete} autofocus>刪除</button>
+      </div>
+    </div>
+  </div>
+{/if}
+
 <style>
   .note-item {
     display: flex;
@@ -241,4 +270,60 @@
     background: var(--border);
     margin: 4px 0;
   }
+
+  /* 刪除確認對話框 — 限制寬度避免在 220px 列表視窗中爆寬 */
+  .dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 8px;
+  }
+  .dialog {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+    /* min(列表寬 - padding, 內容上限) — 220px 列表 → 此 box 最寬約 200px */
+    max-width: calc(100vw - 16px);
+    width: 100%;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .dialog-msg {
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  .dialog-msg strong {
+    color: var(--text-link);
+    font-weight: 600;
+  }
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .dialog-actions button {
+    padding: 4px 12px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .dialog-actions button:hover { background: var(--bg-hover); }
+  .dialog-actions button.danger {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: white;
+  }
+  .dialog-actions button.danger:hover { filter: brightness(1.1); }
 </style>

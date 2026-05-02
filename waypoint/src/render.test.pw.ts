@@ -73,7 +73,7 @@ test.describe("使用說明視窗", () => {
     await mockTauriApis(page, "help");
     await page.goto("http://localhost:4173/#view=help");
     await expect(page.locator("text=Waypoint — 使用說明")).toBeVisible({ timeout: 5000 });
-    await expect(page.locator("text=快捷鍵邏輯")).toBeVisible({ timeout: 5000 });
+    await expect(page.locator("h2", { hasText: "快捷鍵" })).toBeVisible({ timeout: 5000 });
     await expect(page.locator("h2", { hasText: "全域筆記 vs 區域筆記" })).toBeVisible({ timeout: 5000 });
   });
 

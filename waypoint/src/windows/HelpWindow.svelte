@@ -1,8 +1,23 @@
 <script lang="ts">
-  import { windows as windowsApi } from "../lib/api";
+  import { onMount } from "svelte";
+  import { windows as windowsApi, config as configApi } from "../lib/api";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
   import pkg from "../../package.json";
   const version = pkg.version;
+
+  // 顯示當前快捷鍵；設定改完後，下次重新開啟使用說明會載入新值。
+  let listHotkey = "Ctrl+Shift+Space";
+  let passthroughHotkey = "Ctrl+Shift+G";
+
+  onMount(async () => {
+    try {
+      const cfg = await configApi.get();
+      listHotkey = cfg.hotkey || listHotkey;
+      passthroughHotkey = cfg.passthroughHotkey || passthroughHotkey;
+    } catch {
+      // bg preview / 測試環境沒有 Tauri IPC 時保留預設值
+    }
+  });
 </script>
 
 <div class="help-window">
@@ -13,15 +28,23 @@
 
   <div class="content">
     <section>
-      <h2>快捷鍵邏輯（三段式）</h2>
+      <h2>快捷鍵</h2>
       <table>
-        <thead><tr><th>狀態</th><th>按快捷鍵</th><th>結果</th></tr></thead>
+        <thead><tr><th>快捷鍵</th><th>功能</th><th>預設</th></tr></thead>
         <tbody>
-          <tr><td>無任何視窗</td><td>按一次</td><td>開啟列表 + 還原上次筆記</td></tr>
-          <tr><td>有筆記，無列表</td><td>按一次</td><td>開啟列表</td></tr>
-          <tr><td>列表開著</td><td>再按一次</td><td>儲存 session，收起全部</td></tr>
+          <tr>
+            <td><strong>呼叫列表</strong></td>
+            <td>列表沒開時 → 開列表（並還原上次的筆記）；列表開著時 → 儲存 session 並收起全部</td>
+            <td><code>{listHotkey}</code></td>
+          </tr>
+          <tr>
+            <td><strong>切換穿透</strong></td>
+            <td>所有筆記同時切換滑鼠穿透：開啟 → 點得到、關掉 → 滑鼠/鍵盤穿過筆記到底層應用程式（適合邊看筆記邊操作其他軟體）</td>
+            <td><code>{passthroughHotkey}</code></td>
+          </tr>
         </tbody>
       </table>
+      <p class="hint">兩個快捷鍵都可在列表視窗的設定（⚙）中重設。</p>
     </section>
 
     <section>
@@ -41,6 +64,11 @@
     </section>
 
     <section>
+      <h2>視窗透明度</h2>
+      <p>每個筆記 titlebar 內有獨立的透明度滑桿（10–100%），可讓視窗整體半透明，方便邊看筆記邊操作下方應用程式。設定值會儲存到該筆記的 settings，下次開啟自動套用。</p>
+    </section>
+
+    <section>
       <h2>如何設定 Context 識別方式</h2>
       <p>在列表視窗中，對 context 標題按右鍵，可選擇：程序名稱 或 視窗標題</p>
     </section>
@@ -52,7 +80,7 @@
 
     <section>
       <h2>資料夾位置</h2>
-      <p>所有筆記和設定存放在：<code>~/waypoint/</code></p>
+      <p>所有筆記和設定存放在：<code>~/waypoint/</code>（Windows: <code>C:\Users\&lt;user&gt;\waypoint\</code>）</p>
       <p>複製此資料夾到其他電腦即可使用相同筆記與設定。</p>
     </section>
   </div>
@@ -69,6 +97,7 @@
   ul { padding-left: 16px; display: flex; flex-direction: column; gap: 4px; }
   li { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
   code { background: var(--bg-tertiary); padding: 1px 5px; border-radius: 2px; color: var(--text-link); }
+  .hint { font-size: 11px; color: var(--text-secondary); font-style: italic; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
   th { text-align: left; padding: 5px 8px; background: var(--bg-tertiary); color: var(--text-secondary); border: 1px solid var(--border); }
   td { padding: 5px 8px; color: var(--text-primary); border: 1px solid var(--border); }

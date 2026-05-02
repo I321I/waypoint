@@ -16,23 +16,21 @@
     type="range" min="10" max="100" step="5"
     value={Math.round(opacity * 100)}
     on:input={onInput}
+    title="視窗透明度"
   />
   <span class="val">{Math.round(opacity * 100)}%</span>
 </div>
 
 <style>
   .opacity-bar {
-    height: 36px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 0 12px;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
+    gap: 6px;
+    flex-shrink: 0;
   }
   .lbl { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.5px; }
   .slider {
-    flex: 1;
+    width: 80px;
     appearance: none;
     -webkit-appearance: none;
     height: 4px;

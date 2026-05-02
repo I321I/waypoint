@@ -221,13 +221,13 @@ test.describe("筆記視窗", () => {
     await expect(page.locator(".settings-panel input[type='text']")).toHaveCount(0);
   });
 
-  test("透明度 slider 在 titlebar 下方常駐，100% 時 thumb 對齊右邊界（R6）", async ({ page }) => {
+  test("透明度 slider 內嵌於 titlebar，100% 時 thumb 對齊右邊界（R6）", async ({ page }) => {
     await mockTauriWithNote(page);
     await page.goto("http://localhost:4173/#view=note&noteId=test-id");
     await page.waitForTimeout(2000);
 
-    // Style A：slider 不需開設定面板，已在 titlebar 下方常駐
-    const slider = page.locator(".opacity-bar .slider");
+    // Style B：slider 已移入 titlebar 內，與標題、視窗按鈕同列
+    const slider = page.locator(".draggable-titlebar .opacity-bar .slider");
     await expect(slider).toBeVisible({ timeout: 5000 });
 
     const appearance = await slider.evaluate(

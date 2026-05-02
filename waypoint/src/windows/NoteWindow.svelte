@@ -28,10 +28,9 @@
   let unlistenFlush: UnlistenFn | null = null;
   void windowOpacity;
 
-  // 套用視窗透明度：改用 CSS variable 控制 body rgba 背景，避免文字也被淡化
+  // 套用視窗透明度：對 .note-window 套 CSS opacity，整個視窗（含 titlebar/編輯區/狀態列）一起變透明
   function applyOpacity(opacity: number) {
     windowOpacity = opacity;
-    document.documentElement.style.setProperty('--note-alpha', String(opacity));
   }
 
   onMount(async () => {
@@ -138,9 +137,19 @@
 </script>
 
 {#if note}
-  <div class="note-window">
+  <div class="note-window" style="opacity: {note.settings.opacity}">
     <DraggableTitlebar label={`note-${noteId}`}>
       <span class="note-title" data-tauri-drag-region>{title || "Untitled"}{contextId ? ` — ${contextId}` : ""}</span>
+      <TitlebarOpacitySlider
+        opacity={note.settings.opacity}
+        on:change={async (e) => {
+          if (!note) return;
+          const next = { ...note.settings, opacity: e.detail };
+          note = { ...note, settings: next };
+          applyOpacity(e.detail);
+          await notesApi.saveSettings(contextId, noteId, next);
+        }}
+      />
       <div class="titlebar-buttons">
         <button
           class="passthrough-dot"
@@ -154,17 +163,6 @@
         <button on:click={handleClose} title="儲存並關閉">✕</button>
       </div>
     </DraggableTitlebar>
-
-    <TitlebarOpacitySlider
-      opacity={note.settings.opacity}
-      on:change={async (e) => {
-        if (!note) return;
-        const next = { ...note.settings, opacity: e.detail };
-        note = { ...note, settings: next };
-        applyOpacity(e.detail);
-        await notesApi.saveSettings(contextId, noteId, next);
-      }}
-    />
 
     <div class="title-row">
       <input
@@ -207,14 +205,14 @@
 
 <style>
   :global(body.note-view) {
-    background: rgba(30, 30, 30, var(--note-alpha, 1)) !important;
+    background: transparent !important;
   }
 
   .note-window {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background: rgba(30, 30, 30, var(--note-alpha, 1));
+    background: rgb(30, 30, 30);
     border: 1px solid var(--border);
   }
   .note-title {

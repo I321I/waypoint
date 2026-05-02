@@ -229,7 +229,7 @@
           {saving ? "儲存中…" : "套用"}
         </button>
       </div>
-      <p class="hint">點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+G</p>
+      <p class="hint">點擊左側框後按下鍵盤組合鍵（Esc 取消）；預設：Ctrl+Shift+Q</p>
       {#if passthroughConflict}
         <p class="conflict">⚠ 與 {passthroughConflict.app} 衝突（{passthroughConflict.description}），可能無法註冊</p>
       {/if}

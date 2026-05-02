@@ -7,7 +7,7 @@
 
   // 顯示當前快捷鍵；設定改完後，下次重新開啟使用說明會載入新值。
   let listHotkey = "Ctrl+Shift+Space";
-  let passthroughHotkey = "Ctrl+Shift+G";
+  let passthroughHotkey = "Ctrl+Shift+Q";
 
   onMount(async () => {
     try {

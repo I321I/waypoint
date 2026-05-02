@@ -73,22 +73,23 @@ describe("筆記內容關閉後仍持久化", () => {
     assert.ok(openRes.ok, `cmd_open_note_window 失敗: ${openRes.error}`);
     await switchToNewWindow(before);
 
-    // 3. 等 tiptap editor mount
+    // 3. 等 tiptap editor mount + 暴露 window.__waypointTiptapEditor
     await browser.waitUntil(
       async () => {
-        const el = await browser.$(".tiptap-editor");
-        return el.isExisting();
+        return browser.execute(() => !!(window).__waypointTiptapEditor);
       },
-      { timeout: 10_000, timeoutMsg: "編輯器未掛載" },
+      { timeout: 10_000, timeoutMsg: "編輯器未掛載 / __waypointTiptapEditor 未暴露" },
     );
 
-    // 4. 在編輯器中輸入文字
-    const editor = await browser.$(".tiptap-editor");
-    await editor.click();
+    // 4. 透過 tiptap commands 寫入內容（避開 WebDriver 對 contenteditable 鍵盤模擬的跨平台不一致）
     const sentinel = "PERSIST-" + Date.now();
-    await browser.keys(sentinel.split(""));
+    await browser.execute((text) => {
+      const ed = (window).__waypointTiptapEditor;
+      ed.commands.insertContent(text);
+    }, sentinel);
 
-    // 5. 等內容寫入 editor DOM（debounce 100ms 後 saveContent 應已 fire）
+    // 5. 等內容寫入 editor DOM
+    const editor = await browser.$(".tiptap-editor");
     await browser.waitUntil(
       async () => {
         const html = await editor.getHTML();

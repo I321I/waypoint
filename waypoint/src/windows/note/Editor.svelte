@@ -56,9 +56,19 @@
     if (content) {
       editor.commands.setContent(content);
     }
+
+    // 暴露 editor 給 e2e 測試使用（瀏覽器 WebDriver 對 contenteditable 的鍵盤模擬不可靠，
+    // 改由測試直接呼叫 editor.commands.insertContent / setContent）。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__waypointTiptapEditor = editor;
   });
 
   onDestroy(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((window as any).__waypointTiptapEditor === editor) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).__waypointTiptapEditor;
+    }
     editor?.destroy();
   });
 

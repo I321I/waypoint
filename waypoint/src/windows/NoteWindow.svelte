@@ -111,8 +111,9 @@
     clearTimeout(saveTimeout);
     if (editorRef) {
       const ed = editorRef.getEditor();
+      // tiptap v3：editor.getMarkdown()（舊版 storage.markdown.getMarkdown 在 v3 是 undefined，會吞掉用戶輸入）
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const md = (ed?.storage as any)?.markdown?.getMarkdown?.() ?? null;
+      const md = (ed as any)?.getMarkdown?.() ?? null;
       if (md !== null) body = md;
     }
     const merged = joinTitleContent(title, body);

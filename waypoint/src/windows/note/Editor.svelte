@@ -47,7 +47,8 @@
         },
       },
       onUpdate({ editor }) {
-        const markdown = (editor.storage as any).markdown?.getMarkdown?.() ?? "";
+        // tiptap v3：API 從 storage.markdown.getMarkdown 改為 editor.getMarkdown()
+        const markdown = (editor as any).getMarkdown?.() ?? "";
         dispatch("update", { markdown });
       },
     });

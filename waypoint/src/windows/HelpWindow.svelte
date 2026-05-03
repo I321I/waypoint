@@ -79,6 +79,18 @@
     </section>
 
     <section>
+      <h2>筆記內容語法</h2>
+      <p>筆記支援 Markdown 語法，包括：</p>
+      <ul>
+        <li><code>#</code> / <code>##</code> / <code>###</code> — 標題</li>
+        <li><code>**bold**</code> — 粗體、<code>*italic*</code> — 斜體、<code>`code`</code> — 程式碼</li>
+        <li><code>- item</code> — 列表、<code>- [ ] item</code> — 待辦清單</li>
+        <li><code>[link](url)</code> — 超連結、<code>![alt](url)</code> — 圖片</li>
+        <li><code>```</code> — 程式碼區塊、<code>|col|col|</code> — 表格</li>
+      </ul>
+    </section>
+
+    <section>
       <h2>資料夾位置</h2>
       <p>所有筆記和設定存放在：<code>~/waypoint/</code>（Windows: <code>C:\Users\&lt;user&gt;\waypoint\</code>）</p>
       <p>複製此資料夾到其他電腦即可使用相同筆記與設定。</p>

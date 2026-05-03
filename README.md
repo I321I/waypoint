@@ -12,7 +12,8 @@
 - **Context 切換**：依當前前景應用程式（process 名或視窗標題）自動切換到該軟體的筆記集合，不同遊戲 / 工作的筆記分開不混
 - **滑鼠穿透模式**（預設 `Ctrl+Shift+Q`）讓筆記變半透明且滑鼠/鍵盤直接穿過去操作下方應用程式 — 邊打 Boss 邊看攻略最舒服
 - **筆記永遠最上層**、可獨立調整透明度（10–100% 滑桿在 titlebar）
-- **Markdown 編輯**：所見即所得（# 自動變 H1、`**bold**` 變粗體、check list、code block、表格）
+- **筆記內容支援 Markdown 語法**（# Heading、**bold**、`code` 等）
+- **所見即所得編輯**：Markdown 即時 render（check list、code block、表格）
 - **Session 還原**：上次開著的筆記、視窗位置、大小都會被記住
 - **跨平台**：Windows、macOS、Linux（x86_64 / aarch64，含 Steam Deck）
 - **資料純檔案**：所有筆記與設定存在 `~/waypoint/`，整個資料夾複製到別台電腦就能無縫接續

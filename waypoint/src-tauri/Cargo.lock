@@ -4870,7 +4870,7 @@ dependencies = [
 
 [[package]]
 name = "waypoint"
-version = "0.1.19"
+version = "0.1.20"
 dependencies = [
  "dirs 5.0.1",
  "objc2-app-kit 0.2.2",

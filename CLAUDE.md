@@ -14,6 +14,34 @@
 
 注意：tag 也要從 master 上打（release.yml 假設 release 內容在 master）。
 
+⚠️ tag 落點的 commit message **不可含 `[skip ci]`**：tag push 觸發的 release.yml 也會被同一個 commit 上的 `[skip ci]` 標記擋掉。若 master 末梢剛好是 `[skip ci]` 的純文件 / CI commit，請先加一個 `git commit --allow-empty -m "chore: trigger release for vX.Y.Z"` 再打 tag。
+
+## Release 內容說明 + README 同步
+
+**規則：每次 `git tag -a vX.Y.Z -m "..."` 都要在 message 中列出本版改動的「項目」，但不要解釋實作細節。**
+
+原因：
+- release.yml 已設定為自動把 tag annotation 抽出當作 GitHub release notes 的「本版修正」區塊（`Build release notes from tag annotation` step）
+- 使用者需要看的是「這版修了什麼 / 加了什麼」，不是「如何修的」（後者用 commit log 與 PR 即可）
+
+格式：bullet list，動詞開頭，描述功能變化或修正項目。**不寫**內部實作（不講「重構某 module」「改用 v3 API」之類）。
+
+範例（好）：
+```
+- 修正開啟筆記時 markdown 沒 render 的 bug（# Heading、**bold** 不生效）
+- 列表筆記刪除確認改成 in-app 對話框（不再是 OS confirm 爆寬）
+- 穿透模式預設快捷鍵改為 Ctrl+Shift+Q
+- 新增視窗透明度滑桿移到 titlebar
+```
+
+範例（不好）：
+```
+- 修改 Editor.svelte 的 setContent 呼叫加上 contentType:'markdown'  ← 太實作層
+- refactor NoteWindow 的 flushPendingSave 路徑                       ← 對使用者無意義
+```
+
+**附加規則：每次發 release 前，依本版改動項目檢查 `README.md` 是否需要更新（功能列表、預設快捷鍵、安裝指引、操作步驟）。** 若有 user-facing 變化沒反映在 README，先補 README 再打 tag。
+
 ## Docker / act 環境變數
 
 **規則：本機（WSL2）執行任何 `docker` 或 `act` 指令前，必須先設定 `DOCKER_HOST`，連到 Windows 端 Docker Desktop 的 TCP daemon。**

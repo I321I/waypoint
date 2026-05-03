@@ -29,6 +29,8 @@
   let unlistenFlush: UnlistenFn | null = null;
   let unlistenDeleted: UnlistenFn | null = null;
   let unlistenConfigChanged: UnlistenFn | null = null;
+  let unlistenClose: (() => void) | null = null;
+  let isClosing = false;
 
   onMount(async () => {
     // 同步加上 class（不等 await），避免閃爍
@@ -71,10 +73,17 @@
       async (event) => {
         if (event.payload.noteId !== noteId) return;
         if ((event.payload.contextId ?? null) !== (contextId ?? null)) return;
+        isClosing = true;
         await emit("note-closed", { noteId, contextId, isGlobal: contextId === null });
         await getCurrentWindow().close();
       }
     ).catch(() => null);
+    // 攔截 OS 關閉（Alt+F4 等）-> 走與 X 按鈕相同的 handleClose 流程
+    unlistenClose = await getCurrentWindow().onCloseRequested(async (e) => {
+      if (isClosing) return; // handleClose 已發起關閉，讓它通過
+      e.preventDefault();
+      await handleClose();
+    });
   });
 
   onDestroy(() => {
@@ -83,6 +92,7 @@
     unlistenRenamedFromList?.();
     unlistenFlush?.();
     unlistenDeleted?.();
+    unlistenClose?.();
   });
 
   async function handleDotClick() {
@@ -134,7 +144,8 @@
   async function handleClose() {
     await flushPendingSave();
     await emit("note-closed", { noteId, contextId, isGlobal: contextId === null });
-    await windowsApi.closeNote(noteId);
+    isClosing = true;
+    await getCurrentWindow().close();
   }
 
   async function handleMaximize() {

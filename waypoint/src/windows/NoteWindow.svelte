@@ -7,6 +7,7 @@
   import SettingsPanel from "./note/SettingsPanel.svelte";
   import TitlebarOpacitySlider from "./note/TitlebarOpacitySlider.svelte";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
+  import { getCurrentWindow } from "@tauri-apps/api/window";
   import { notes as notesApi, passthrough as passthroughApi, windows as windowsApi } from "../lib/api";
   import type { Note, NoteSettings } from "../lib/types";
   import { parseTitleContent, joinTitleContent } from "../lib/noteFormat";
@@ -26,6 +27,7 @@
   let unlistenPassthrough: UnlistenFn | null = null;
   let unlistenRenamedFromList: UnlistenFn | null = null;
   let unlistenFlush: UnlistenFn | null = null;
+  let unlistenDeleted: UnlistenFn | null = null;
   void windowOpacity;
 
   // 套用視窗透明度：對 .note-window 套 CSS opacity，整個視窗（含 titlebar/編輯區/狀態列）一起變透明
@@ -65,12 +67,23 @@
     unlistenFlush = await listen("waypoint://flush-and-save-now", async () => {
       await flushPendingSave();
     }).catch(() => null);
+    // 筆記被刪除時（從列表或其他視窗）-> 強制關閉，不 flush/saveContent（檔案已不存在）
+    unlistenDeleted = await listen<{ noteId: string; contextId: string | null }>(
+      "waypoint://note-deleted",
+      async (event) => {
+        if (event.payload.noteId !== noteId) return;
+        if ((event.payload.contextId ?? null) !== (contextId ?? null)) return;
+        await emit("note-closed", { noteId, contextId, isGlobal: contextId === null });
+        await getCurrentWindow().close();
+      }
+    ).catch(() => null);
   });
 
   onDestroy(() => {
     unlistenPassthrough?.();
     unlistenRenamedFromList?.();
     unlistenFlush?.();
+    unlistenDeleted?.();
   });
 
   async function handleDotClick() {

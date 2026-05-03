@@ -21,6 +21,9 @@
   // 工作列圖示
   let showInTaskbar = true;
 
+  // 透明時文字也透明
+  let transparentIncludesText = true;
+
   // 穿透 hotkey 註冊狀態（false 代表開機時被 OS / 其他 app 搶走）
   let passthroughHotkeyRegistered = true;
 
@@ -84,6 +87,7 @@
     passthroughHotkeyInput = passthroughHotkey;
     showInTaskbar = cfg.showInTaskbar ?? true;
     passthroughHotkeyRegistered = cfg.passthroughHotkeyRegistered ?? true;
+    transparentIncludesText = cfg.transparentIncludesText ?? true;
   });
 
   async function saveHotkey() {
@@ -143,6 +147,16 @@
       await emit("waypoint://show-in-taskbar-changed", {});
     } catch (e) {
       message = `設定失敗：${e}`;
+    }
+  }
+
+  async function toggleTransparentText(e: Event) {
+    transparentIncludesText = (e.target as HTMLInputElement).checked;
+    try {
+      await configApi.setTransparentIncludesText(transparentIncludesText);
+      await emit("waypoint://config-changed");
+    } catch (err) {
+      message = `設定失敗：${err}`;
     }
   }
 
@@ -250,6 +264,24 @@
           />
           <span class="toggle-label">
             {showInTaskbar ? "已啟用" : "已停用"}
+          </span>
+        </label>
+      </div>
+    </section>
+
+    <section>
+      <h2>穿透模式文字透明度</h2>
+      <p class="desc">穿透模式時筆記文字是否也跟著透明</p>
+      <div class="row">
+        <label class="toggle">
+          <input
+            type="checkbox"
+            data-testid="transparent-includes-text"
+            bind:checked={transparentIncludesText}
+            on:change={toggleTransparentText}
+          />
+          <span class="toggle-label">
+            {transparentIncludesText ? "文字也透明" : "文字保持清楚可讀"}
           </span>
         </label>
       </div>

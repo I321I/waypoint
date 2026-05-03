@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Note } from "../../lib/types";
   import NoteItem from "./NoteItem.svelte";
-  import ConfirmDialog from "./ConfirmDialog.svelte";
+  import ConfirmDialog from "../ConfirmDialog.svelte";
   import { context as contextApi, notes as notesApi } from "../../lib/api";
   import { createEventDispatcher } from "svelte";
 

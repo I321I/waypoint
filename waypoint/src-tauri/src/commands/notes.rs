@@ -1,5 +1,6 @@
 use crate::error::WaypointError;
 use crate::storage::notes::{self, Note, NoteSettings};
+use tauri::{AppHandle, Emitter};
 
 #[tauri::command]
 pub fn list_notes(context_id: Option<String>) -> Result<Vec<Note>, WaypointError> {
@@ -31,8 +32,17 @@ pub fn save_note_settings(
 }
 
 #[tauri::command]
-pub fn delete_note(context_id: Option<String>, note_id: String) -> Result<(), WaypointError> {
-    notes::delete_note(context_id.as_deref(), &note_id)
+pub async fn delete_note(
+    app: AppHandle,
+    context_id: Option<String>,
+    note_id: String,
+) -> Result<(), WaypointError> {
+    notes::delete_note(context_id.as_deref(), &note_id)?;
+    let _ = app.emit("waypoint://note-deleted", serde_json::json!({
+        "noteId": note_id,
+        "contextId": context_id,
+    }));
+    Ok(())
 }
 
 #[tauri::command]

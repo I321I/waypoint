@@ -27,6 +27,39 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Build release notes from tag annotation
+        id: notes
+        shell: bash
+        run: |
+          git fetch --tags --force origin >/dev/null 2>&1 || true
+          msg=$(git for-each-ref --format='%(contents:body)' "refs/tags/${{ github.ref_name }}" 2>/dev/null || true)
+          if [ -z "$msg" ]; then
+            msg=$(git tag -l --format='%(contents)' "${{ github.ref_name }}")
+          fi
+          if [ -z "$msg" ]; then
+            msg="(此版本沒有附 tag 註解)"
+          fi
+          {
+            echo "body<<WAYPOINT_EOF"
+            echo "## 本版修正"
+            echo ""
+            echo "$msg"
+            echo ""
+            echo "---"
+            echo ""
+            echo "## 安裝方式"
+            echo "- **Windows**：下載 \`.msi\` 或 \`-setup.exe\` 安裝"
+            echo "- **Steam Deck（Flatpak，推薦）**：下載 \`_x86_64.flatpak\`，Desktop Mode 執行 \`flatpak install --user ./io.github.i321i.waypoint_x86_64.flatpak\`"
+            echo "- **Linux x86_64（AppImage）**：下載 \`_amd64.AppImage\`，賦予執行權限後執行"
+            echo "- **Linux aarch64（Flatpak）**：下載 \`_aarch64.flatpak\`，執行 \`flatpak install --user ./io.github.i321i.waypoint_aarch64.flatpak\`"
+            echo "- **Linux aarch64（AppImage）**：下載 \`_aarch64.AppImage\`，賦予執行權限後執行"
+            echo "- **macOS**：下載 \`.dmg\` 安裝"
+            echo "WAYPOINT_EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -66,14 +99,7 @@ jobs:
           projectPath: waypoint
           tagName: ${{ github.ref_name }}
           releaseName: 'Waypoint ${{ github.ref_name }}'
-          releaseBody: |
-            ## 安裝方式
-            - **Windows**：下載 `.msi` 檔案安裝
-            - **Steam Deck（Flatpak，推薦）**：下載 `_x86_64.flatpak`，在 Desktop Mode 執行 `flatpak install --user ./io.github.i321i.waypoint_x86_64.flatpak`
-            - **Linux x86_64（AppImage）**：下載 `_amd64.AppImage`，賦予執行權限後執行
-            - **Linux aarch64（Flatpak）**：下載 `_aarch64.flatpak`，執行 `flatpak install --user ./io.github.i321i.waypoint_aarch64.flatpak`
-            - **Linux aarch64（AppImage）**：下載 `_aarch64.AppImage`，賦予執行權限後執行
-            - **macOS**：下載 `.dmg` 檔案安裝
+          releaseBody: ${{ steps.notes.outputs.body }}
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}

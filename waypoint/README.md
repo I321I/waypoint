@@ -1,7 +1,5 @@
-# Tauri + SvelteKit + TypeScript
+# Waypoint — 應用程式
 
-This template should help get you started developing with Tauri, SvelteKit and TypeScript in Vite.
+主要 README 在 repo 根目錄：[../README.md](../README.md)
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
+此目錄為 Tauri + SvelteKit + TypeScript 應用程式專案。

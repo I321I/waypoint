@@ -14,6 +14,7 @@
   let unlistenCollapse: (() => void) | null = null;
   let unlistenShown: (() => void) | null = null;
   let unlistenTitleChanged: (() => void) | null = null;
+  let unlistenDeleted: (() => void) | null = null;
 
   async function loadContextAndSession() {
     currentContextId = await contextApi.getActive();
@@ -80,6 +81,19 @@
     unlistenTitleChanged = await listen("waypoint://note-title-changed", async () => {
       await reloadLists();
     });
+
+    // 筆記刪除 -> 從 openIds 移除（避免 collapseAll 把幽靈 id 寫回 session）並重新載入清單
+    unlistenDeleted = await listen<{ noteId: string; contextId: string | null }>(
+      "waypoint://note-deleted",
+      async (event) => {
+        if (event.payload.contextId === null) {
+          openGlobalNoteIds = openGlobalNoteIds.filter(id => id !== event.payload.noteId);
+        } else {
+          openContextNoteIds = openContextNoteIds.filter(id => id !== event.payload.noteId);
+        }
+        await reloadLists();
+      }
+    );
   });
 
   onDestroy(() => {
@@ -87,6 +101,7 @@
     unlistenCollapse?.();
     unlistenShown?.();
     unlistenTitleChanged?.();
+    unlistenDeleted?.();
   });
 
   async function handleCollapseAll() {

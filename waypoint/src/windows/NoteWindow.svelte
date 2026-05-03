@@ -155,7 +155,7 @@
     style="--note-bg-alpha: {note.settings.opacity}"
   >
     <DraggableTitlebar label={`note-${noteId}`}>
-      <span class="note-title" data-tauri-drag-region>{title || "Untitled"}{contextId ? ` — ${contextId}` : ""}</span>
+      <span class="note-title" data-tauri-drag-region>{(title || "Untitled") + "-" + (contextId ?? "Global")}</span>
       <TitlebarOpacitySlider
         opacity={note.settings.opacity}
         on:change={async (e) => {
@@ -211,10 +211,6 @@
       {/if}
     </div>
 
-    <div class="statusbar">
-      <span>{contextId ?? "Global"}</span>
-      <span>Markdown</span>
-    </div>
   </div>
 {/if}
 
@@ -270,12 +266,4 @@
   }
   .title-input:focus { outline: none; border-bottom: 1px solid var(--accent); }
   .editor-area { display: flex; flex: 1; overflow: hidden; }
-  .statusbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 2px 10px;
-    background: var(--accent);
-    color: white;
-    font-size: 11px;
-  }
 </style>

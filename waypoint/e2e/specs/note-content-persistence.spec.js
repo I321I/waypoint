@@ -131,8 +131,10 @@ describe("筆記內容關閉後仍持久化", () => {
     assert.ok(createRes.ok, `create_note 失敗: ${createRes.error}`);
     const noteId = createRes.value.id;
 
-    // 直接寫 markdown 到 disk（避開 Editor 路徑，模擬 saved file）
-    const mdContent = "# Heading\n\n**bold** text";
+    // 直接寫 markdown 到 disk（避開 Editor 路徑，模擬 saved file）。
+    // 注意：parseTitleContent 會把開頭的 "# title" 行抽出來當筆記標題，
+    // 所以驗證 editor 內 markdown render 必須用「不以 # 開頭」的第一行。
+    const mdContent = "intro paragraph\n\n## Sub heading\n\n**bold** *italic* text";
     const saveRes = await invokeCmd("save_content", {
       contextId: null,
       noteId,
@@ -155,19 +157,23 @@ describe("筆記內容關閉後仍持久化", () => {
       { timeout: 10_000, timeoutMsg: "編輯器未掛載" },
     );
 
-    // 4. editor 內應該有 <h1> 與 <strong> 元素，而不是純文字 # 與 **
+    // 4. editor 內應該有 <h2>、<strong>、<em> 元素，而不是原始 ## ** *
     const editor = await browser.$(".tiptap-editor");
     const html = await editor.getHTML();
     assert.ok(
-      /<h1[^>]*>Heading<\/h1>/i.test(html),
-      `markdown 沒被 render — 找不到 <h1>Heading</h1>，實際 HTML：${html}`,
+      /<h2[^>]*>Sub heading<\/h2>/i.test(html),
+      `markdown 沒被 render — 找不到 <h2>Sub heading</h2>，實際 HTML：${html}`,
     );
     assert.ok(
       /<strong>bold<\/strong>/i.test(html),
       `markdown 沒被 render — 找不到 <strong>bold</strong>，實際 HTML：${html}`,
     );
     assert.ok(
-      !html.includes("# Heading"),
+      /<em>italic<\/em>/i.test(html),
+      `markdown 沒被 render — 找不到 <em>italic</em>，實際 HTML：${html}`,
+    );
+    assert.ok(
+      !html.includes("## Sub heading"),
       `markdown 原貌仍出現在 HTML（應已 render 掉），實際：${html}`,
     );
   });

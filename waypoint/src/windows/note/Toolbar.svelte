@@ -64,7 +64,7 @@
     align-items: center;
     gap: 2px;
     padding: 3px 8px;
-    background: var(--bg-secondary);
+    background: transparent;
     border-bottom: 1px solid var(--border);
     min-height: 28px;
   }

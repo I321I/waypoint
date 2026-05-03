@@ -17,6 +17,8 @@ async function mockTauriWithNote(page: Page) {
             settings: { fontSize: 14, opacity: 1, hotkey: null, windowBounds: null, passthrough: false },
           });
         }
+        if (cmd === "get_transparent_includes_text") return Promise.resolve(true);
+        if (cmd === "plugin:event|listen") return Promise.resolve(0);
         return Promise.resolve(null);
       },
       transformCallback: () => 0,

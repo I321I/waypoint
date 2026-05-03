@@ -35,7 +35,7 @@
 <style>
   .settings-panel {
     width: 200px;
-    background: var(--bg-secondary);
+    background: transparent;
     border-left: 1px solid var(--border);
     padding: 12px;
     display: flex;

@@ -22,7 +22,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 5px 10px;
-    background: var(--bg-tertiary);
+    background: transparent;
     border-bottom: 1px solid var(--border);
     min-height: 30px;
     gap: 8px;

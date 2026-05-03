@@ -8,7 +8,7 @@
   import TitlebarOpacitySlider from "./note/TitlebarOpacitySlider.svelte";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
   import { getCurrentWindow } from "@tauri-apps/api/window";
-  import { notes as notesApi, passthrough as passthroughApi, windows as windowsApi } from "../lib/api";
+  import { notes as notesApi, passthrough as passthroughApi, windows as windowsApi, config as configApi } from "../lib/api";
   import type { Note, NoteSettings } from "../lib/types";
   import { parseTitleContent, joinTitleContent } from "../lib/noteFormat";
 
@@ -22,31 +22,29 @@
   let settingsOpen = false;
   let editorRef: Editor;
   let saveTimeout: ReturnType<typeof setTimeout>;
-  let windowOpacity = 1;
   let passthrough = false;
+  let transparentIncludesText = true;
   let unlistenPassthrough: UnlistenFn | null = null;
   let unlistenRenamedFromList: UnlistenFn | null = null;
   let unlistenFlush: UnlistenFn | null = null;
   let unlistenDeleted: UnlistenFn | null = null;
-  void windowOpacity;
-
-  // 套用視窗透明度：對 .note-window 套 CSS opacity，整個視窗（含 titlebar/編輯區/狀態列）一起變透明
-  function applyOpacity(opacity: number) {
-    windowOpacity = opacity;
-  }
+  let unlistenConfigChanged: UnlistenFn | null = null;
 
   onMount(async () => {
     // 同步加上 class（不等 await），避免閃爍
     document.body.classList.add('note-view');
     note = await notesApi.read(contextId, noteId);
     if (note) {
-      applyOpacity(note.settings.opacity);
       passthrough = note.settings.passthrough ?? false;
       const parsed = parseTitleContent(note.content);
       title = parsed.title || note.title || "";
       body = parsed.body;
       lastEmittedTitle = title;
     }
+    transparentIncludesText = await configApi.getTransparentIncludesText().catch(() => true);
+    unlistenConfigChanged = await listen("waypoint://config-changed", async () => {
+      transparentIncludesText = await configApi.getTransparentIncludesText().catch(() => true);
+    }).catch(() => null);
     unlistenPassthrough = await listen<[string, boolean]>("waypoint://passthrough-changed", (event) => {
       const [label, on] = event.payload;
       if (label === `note-${noteId}`) {
@@ -80,6 +78,7 @@
   });
 
   onDestroy(() => {
+    unlistenConfigChanged?.();
     unlistenPassthrough?.();
     unlistenRenamedFromList?.();
     unlistenFlush?.();
@@ -117,7 +116,6 @@
     if (!note) return;
     note = { ...note, settings: e.detail };
     await notesApi.saveSettings(contextId, noteId, e.detail);
-    applyOpacity(e.detail.opacity);
   }
 
   async function flushPendingSave() {
@@ -151,7 +149,11 @@
 </script>
 
 {#if note}
-  <div class="note-window" style="opacity: {note.settings.opacity}">
+  <div
+    class="note-window"
+    class:translucent-text={transparentIncludesText}
+    style="--note-bg-alpha: {note.settings.opacity}"
+  >
     <DraggableTitlebar label={`note-${noteId}`}>
       <span class="note-title" data-tauri-drag-region>{title || "Untitled"}{contextId ? ` — ${contextId}` : ""}</span>
       <TitlebarOpacitySlider
@@ -160,7 +162,6 @@
           if (!note) return;
           const next = { ...note.settings, opacity: e.detail };
           note = { ...note, settings: next };
-          applyOpacity(e.detail);
           await notesApi.saveSettings(contextId, noteId, next);
         }}
       />
@@ -226,8 +227,11 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background: rgb(30, 30, 30);
+    background-color: rgba(30, 30, 30, var(--note-bg-alpha, 1));
     border: 1px solid var(--border);
+  }
+  .note-window.translucent-text {
+    opacity: var(--note-bg-alpha, 1);
   }
   .note-title {
     font-size: 12px;
@@ -252,7 +256,7 @@
   .dot-off { background: #ffb454; box-shadow: 0 0 6px #ffb454; }
   .title-row {
     padding: 8px 12px 4px;
-    background: var(--bg-primary);
+    background: transparent;
     border-bottom: 1px solid var(--border);
   }
   .title-input {

@@ -28,6 +28,7 @@ async function setupMock(page: Page, extraInvoke?: (cmd: string, args: unknown) 
             settings: { fontSize: 14, opacity: 1, hotkey: null, windowBounds: null, passthrough: false },
           });
         }
+        if (cmd === 'get_transparent_includes_text') return Promise.resolve(true);
         if (cmd === 'save_content') {
           (window as any).__saveCount = ((window as any).__saveCount ?? 0) + 1;
           return Promise.resolve();

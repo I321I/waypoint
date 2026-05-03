@@ -53,6 +53,9 @@ export const config = {
   setAutostart: (enabled: boolean) => invoke<void>("set_autostart", { enabled }),
   setPassthroughHotkey: (hotkey: string) => invoke<void>("cmd_set_passthrough_hotkey", { hotkey }),
   setShowInTaskbar: (show: boolean) => invoke<void>("cmd_set_show_in_taskbar", { show }),
+  getTransparentIncludesText: () => invoke<boolean>("get_transparent_includes_text"),
+  setTransparentIncludesText: (value: boolean) =>
+    invoke<void>("set_transparent_includes_text", { value }),
 };
 
 export const passthrough = {

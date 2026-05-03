@@ -33,6 +33,7 @@ export interface AppConfig {
   contexts: Record<string, { matchBy: "process" | "title" }>;
   passthroughHotkey: string;
   showInTaskbar: boolean;
+  transparentIncludesText: boolean;
   passthroughHotkeyRegistered?: boolean;
 }
 

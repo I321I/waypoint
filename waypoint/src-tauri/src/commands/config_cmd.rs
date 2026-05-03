@@ -13,6 +13,7 @@ pub struct AppConfigDto {
     pub contexts: HashMap<String, ContextConfig>,
     pub passthrough_hotkey: String,
     pub show_in_taskbar: bool,
+    pub transparent_includes_text: bool,
     #[serde(rename = "passthroughHotkeyRegistered")]
     pub passthrough_hotkey_registered: bool,
 }
@@ -30,6 +31,7 @@ pub fn get_app_config(app: AppHandle) -> Result<AppConfigDto, WaypointError> {
         contexts: cfg.contexts,
         passthrough_hotkey: cfg.passthrough_hotkey,
         show_in_taskbar: cfg.show_in_taskbar,
+        transparent_includes_text: cfg.transparent_includes_text,
         passthrough_hotkey_registered: registered,
     })
 }
@@ -61,6 +63,19 @@ pub fn cmd_set_show_in_taskbar(show: bool) -> Result<(), String> {
     let mut config = app_config::load().map_err(|e| e.to_string())?;
     config.show_in_taskbar = show;
     app_config::save(&config).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn get_transparent_includes_text() -> Result<bool, String> {
+    let cfg = crate::storage::app_config::load().map_err(|e| e.to_string())?;
+    Ok(cfg.transparent_includes_text)
+}
+
+#[tauri::command]
+pub fn set_transparent_includes_text(value: bool) -> Result<(), String> {
+    let mut cfg = crate::storage::app_config::load().map_err(|e| e.to_string())?;
+    cfg.transparent_includes_text = value;
+    crate::storage::app_config::save(&cfg).map_err(|e| e.to_string())
 }
 
 #[tauri::command]

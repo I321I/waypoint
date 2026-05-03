@@ -29,6 +29,8 @@ pub struct AppConfig {
     pub passthrough_hotkey: String,
     #[serde(default = "default_show_in_taskbar")]
     pub show_in_taskbar: bool,
+    #[serde(default = "default_transparent_includes_text")]
+    pub transparent_includes_text: bool,
 }
 
 fn default_hotkey() -> String {
@@ -43,6 +45,10 @@ fn default_show_in_taskbar() -> bool {
     true
 }
 
+fn default_transparent_includes_text() -> bool {
+    true
+}
+
 impl Default for AppConfig {
     fn default() -> Self {
         AppConfig {
@@ -51,6 +57,7 @@ impl Default for AppConfig {
             contexts: HashMap::new(),
             passthrough_hotkey: default_passthrough_hotkey(),
             show_in_taskbar: default_show_in_taskbar(),
+            transparent_includes_text: default_transparent_includes_text(),
         }
     }
 }
@@ -119,6 +126,28 @@ mod tests {
         let json = r#"{"hotkey":"Ctrl+Shift+Space"}"#;
         let cfg: AppConfig = serde_json::from_str(json).unwrap();
         assert!(cfg.show_in_taskbar);
+    }
+
+    #[test]
+    fn transparent_includes_text_defaults_true() {
+        let c = AppConfig::default();
+        assert!(c.transparent_includes_text);
+    }
+
+    #[test]
+    fn transparent_includes_text_round_trip() {
+        let mut c = AppConfig::default();
+        c.transparent_includes_text = false;
+        let s = serde_json::to_string(&c).unwrap();
+        let back: AppConfig = serde_json::from_str(&s).unwrap();
+        assert!(!back.transparent_includes_text);
+    }
+
+    #[test]
+    fn transparent_includes_text_missing_in_json_defaults_true() {
+        let json = r#"{"hotkey":"Ctrl+Shift+Space","contextAliases":{},"contexts":{},"passthroughHotkey":"Ctrl+Shift+Q","showInTaskbar":true}"#;
+        let c: AppConfig = serde_json::from_str(json).unwrap();
+        assert!(c.transparent_includes_text);
     }
 
     #[test]

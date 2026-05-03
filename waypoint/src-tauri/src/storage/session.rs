@@ -17,7 +17,10 @@ pub fn load_session(context_id: &str) -> Result<Session, WaypointError> {
         return Ok(Session::default());
     }
     let content = std::fs::read_to_string(&path)?;
-    Ok(serde_json::from_str(&content)?)
+    let mut sess: Session = serde_json::from_str(&content)?;
+    sess.open_context_notes.retain(|id| crate::storage::notes::note_exists(Some(context_id), id));
+    sess.open_global_notes.retain(|id| crate::storage::notes::note_exists(None, id));
+    Ok(sess)
 }
 
 pub fn save_session(context_id: &str, session: &Session) -> Result<(), WaypointError> {
@@ -62,14 +65,35 @@ mod tests {
     #[test]
     fn save_and_reload_session() {
         let (_dir, _guard) = setup();
+        use crate::storage::notes;
+        let n1 = notes::create_note(Some("steam"), "note-1").unwrap();
+        let n2 = notes::create_note(Some("steam"), "note-2").unwrap();
+        let g1 = notes::create_note(None, "global-1").unwrap();
         let session = Session {
-            open_context_notes: vec!["note-1".to_string(), "note-2".to_string()],
-            open_global_notes: vec!["global-1".to_string()],
+            open_context_notes: vec![n1.id.clone(), n2.id.clone()],
+            open_global_notes: vec![g1.id.clone()],
         };
         save_session("steam", &session).unwrap();
         let loaded = load_session("steam").unwrap();
-        assert_eq!(loaded.open_context_notes, vec!["note-1", "note-2"]);
-        assert_eq!(loaded.open_global_notes, vec!["global-1"]);
+        assert_eq!(loaded.open_context_notes, vec![n1.id, n2.id]);
+        assert_eq!(loaded.open_global_notes, vec![g1.id]);
+    }
+
+    #[test]
+    fn load_session_filters_missing_notes() {
+        let (_dir, _guard) = setup();
+        use crate::storage::notes;
+        let note = notes::create_note(Some("ctx"), "alive").unwrap();
+        let alive_id = note.id.clone();
+        let s = Session {
+            open_context_notes: vec![alive_id.clone(), "ghost".into()],
+            open_global_notes: vec!["ghost-global".into()],
+        };
+        save_session("ctx", &s).unwrap();
+
+        let loaded = load_session("ctx").unwrap();
+        assert_eq!(loaded.open_context_notes, vec![alive_id]);
+        assert!(loaded.open_global_notes.is_empty());
     }
 
     #[test]

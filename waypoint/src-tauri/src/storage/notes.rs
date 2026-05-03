@@ -52,6 +52,10 @@ pub struct Note {
     pub settings: NoteSettings,
 }
 
+pub fn note_exists(context_id: Option<&str>, note_id: &str) -> bool {
+    note_dir(context_id, note_id).exists()
+}
+
 pub fn create_note(context_id: Option<&str>, title: &str) -> Result<Note, WaypointError> {
     let id = Uuid::new_v4().to_string();
     let note = Note {

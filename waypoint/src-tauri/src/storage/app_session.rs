@@ -46,7 +46,8 @@ pub fn take() -> Option<AppSession> {
         return None;
     }
     let content = std::fs::read_to_string(&path).ok()?;
-    let sess: AppSession = serde_json::from_str(&content).ok()?;
+    let mut sess: AppSession = serde_json::from_str(&content).ok()?;
+    sess.open_notes.retain(|r| crate::storage::notes::note_exists(r.context_id.as_deref(), &r.note_id));
     let _ = std::fs::remove_file(&path);
     Some(sess)
 }
@@ -67,10 +68,13 @@ mod tests {
     #[test]
     fn save_then_take_roundtrip() {
         let (_dir, _guard) = setup();
+        use crate::storage::notes;
+        let note_a = notes::create_note(None, "a").unwrap();
+        let note_b = notes::create_note(Some("steam"), "b").unwrap();
         let s = AppSession {
             open_notes: vec![
-                OpenNoteRef { note_id: "a".into(), context_id: None },
-                OpenNoteRef { note_id: "b".into(), context_id: Some("steam".into()) },
+                OpenNoteRef { note_id: note_a.id.clone(), context_id: None },
+                OpenNoteRef { note_id: note_b.id.clone(), context_id: Some("steam".into()) },
             ],
             list_open: true,
         };
@@ -79,6 +83,25 @@ mod tests {
         assert_eq!(loaded.open_notes.len(), 2);
         assert_eq!(loaded.open_notes[1].context_id.as_deref(), Some("steam"));
         assert!(loaded.list_open);
+    }
+
+    #[test]
+    fn take_filters_missing_notes() {
+        let (_dir, _guard) = setup();
+        use crate::storage::notes;
+        let n = notes::create_note(None, "alive").unwrap();
+        let s = AppSession {
+            open_notes: vec![
+                OpenNoteRef { note_id: n.id.clone(), context_id: None },
+                OpenNoteRef { note_id: "ghost".into(), context_id: None },
+            ],
+            list_open: false,
+        };
+        save(&s).unwrap();
+
+        let loaded = take().unwrap();
+        assert_eq!(loaded.open_notes.len(), 1);
+        assert_eq!(loaded.open_notes[0].note_id, n.id);
     }
 
     #[test]

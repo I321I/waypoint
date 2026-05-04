@@ -30,7 +30,6 @@
   let unlistenDeleted: UnlistenFn | null = null;
   let unlistenConfigChanged: UnlistenFn | null = null;
   let unlistenClose: (() => void) | null = null;
-  let isProgrammaticClose = false;
 
   onMount(async () => {
     // 同步加上 class（不等 await），避免閃爍
@@ -73,16 +72,14 @@
       async (event) => {
         if (event.payload.noteId !== noteId) return;
         if ((event.payload.contextId ?? null) !== (contextId ?? null)) return;
-        isProgrammaticClose = true;
         await emit("note-closed", { noteId, contextId, isGlobal: contextId === null });
-        await getCurrentWindow().close();
+        await windowsApi.closeNote(noteId);
       }
     ).catch(() => null);
-    // 攔截 OS 關閉（Alt+F4 等）-> 走與 X 按鈕相同的 handleClose 流程
-    unlistenClose = await getCurrentWindow().onCloseRequested(async (e) => {
-      if (isProgrammaticClose) return; // 程式化 close 已發起，讓預設關閉通過（不 preventDefault）
-      e.preventDefault();
-      await handleClose();
+    // OS 關閉（Alt+F4）-> 不擋 close，只 fire-and-forget emit note-closed 做 session 記帳
+    // 不 preventDefault：webview2 + tauri v2 下用 preventDefault + async handleClose 會卡住視窗
+    unlistenClose = await getCurrentWindow().onCloseRequested(() => {
+      void emit("note-closed", { noteId, contextId, isGlobal: contextId === null });
     });
   });
 
@@ -142,11 +139,9 @@
   }
 
   async function handleClose() {
-    if (isProgrammaticClose) return; // 重入防護
-    isProgrammaticClose = true;
     await flushPendingSave();
     await emit("note-closed", { noteId, contextId, isGlobal: contextId === null });
-    await getCurrentWindow().close();
+    await windowsApi.closeNote(noteId);
   }
 
   async function handleMaximize() {

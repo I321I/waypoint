@@ -126,6 +126,14 @@ pub fn collapse_all_waypoint_windows(app: &AppHandle) {
 
 pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>) -> tauri::Result<()> {
     let label = format!("note-{}", note_id);
+    // 記錄 noteId→contextId，給 on_window_event 在 close-requested 時用
+    if let Ok(mut map) = app
+        .state::<crate::state::AppState>()
+        .open_notes_context
+        .lock()
+    {
+        map.insert(note_id.to_string(), context_id.map(|s| s.to_string()));
+    }
     if let Some(win) = app.get_webview_window(&label) {
         win.show()?;
         win.set_focus()?;

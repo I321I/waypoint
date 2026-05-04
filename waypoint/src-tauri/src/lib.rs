@@ -76,6 +76,30 @@ pub fn run() {
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .manage(AppState::default())
+        .on_window_event(|window, event| {
+            // 筆記視窗的 close-requested（含 Alt+F4）-> emit note-closed 給 list 做 session 記帳
+            if let tauri::WindowEvent::CloseRequested { .. } = event {
+                let label = window.label().to_string();
+                if let Some(note_id) = label.strip_prefix("note-") {
+                    let app = window.app_handle();
+                    let context_id = {
+                        let state = app.state::<crate::state::AppState>();
+                        state
+                            .open_notes_context
+                            .lock()
+                            .ok()
+                            .and_then(|mut m| m.remove(note_id))
+                            .flatten()
+                    };
+                    let is_global = context_id.is_none();
+                    let _ = tauri::Emitter::emit(app, "note-closed", serde_json::json!({
+                        "noteId": note_id,
+                        "contextId": context_id,
+                        "isGlobal": is_global,
+                    }));
+                }
+            }
+        })
         .invoke_handler(tauri::generate_handler![
             commands::notes::list_notes,
             commands::notes::create_note,

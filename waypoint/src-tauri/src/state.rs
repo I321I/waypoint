@@ -10,6 +10,8 @@ pub struct AppState {
     pub list_window_open: Mutex<bool>,
     pub passthrough_state: Mutex<HashMap<String, bool>>,
     pub passthrough_hotkey_registered: AtomicBool,
+    /// 開啟中的筆記視窗：noteId -> contextId（None=global）。close-requested 時用以 emit 正確 isGlobal。
+    pub open_notes_context: Mutex<HashMap<String, Option<String>>>,
 }
 
 impl Default for AppState {
@@ -20,6 +22,7 @@ impl Default for AppState {
             list_window_open: Mutex::new(false),
             passthrough_state: Mutex::new(HashMap::new()),
             passthrough_hotkey_registered: AtomicBool::new(true),
+            open_notes_context: Mutex::new(HashMap::new()),
         }
     }
 }

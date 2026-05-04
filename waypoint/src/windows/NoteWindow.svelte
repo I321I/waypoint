@@ -7,7 +7,6 @@
   import SettingsPanel from "./note/SettingsPanel.svelte";
   import TitlebarOpacitySlider from "./note/TitlebarOpacitySlider.svelte";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
-  import { getCurrentWindow } from "@tauri-apps/api/window";
   import { notes as notesApi, passthrough as passthroughApi, windows as windowsApi, config as configApi } from "../lib/api";
   import type { Note, NoteSettings } from "../lib/types";
   import { parseTitleContent, joinTitleContent } from "../lib/noteFormat";
@@ -29,7 +28,6 @@
   let unlistenFlush: UnlistenFn | null = null;
   let unlistenDeleted: UnlistenFn | null = null;
   let unlistenConfigChanged: UnlistenFn | null = null;
-  let unlistenClose: (() => void) | null = null;
 
   onMount(async () => {
     // 同步加上 class（不等 await），避免閃爍
@@ -76,11 +74,8 @@
         await windowsApi.closeNote(noteId);
       }
     ).catch(() => null);
-    // OS 關閉（Alt+F4）-> 不擋 close，只 fire-and-forget emit note-closed 做 session 記帳
-    // 不 preventDefault：webview2 + tauri v2 下用 preventDefault + async handleClose 會卡住視窗
-    unlistenClose = await getCurrentWindow().onCloseRequested(() => {
-      void emit("note-closed", { noteId, contextId, isGlobal: contextId === null });
-    });
+    // 不註冊 onCloseRequested：webview2 + tauri v2 下任何 JS 端攔截都會讓 close 不執行。
+    // Alt+F4 的 session 記帳改由 Rust on_window_event 處理（見 lib.rs）。
   });
 
   onDestroy(() => {
@@ -89,7 +84,6 @@
     unlistenRenamedFromList?.();
     unlistenFlush?.();
     unlistenDeleted?.();
-    unlistenClose?.();
   });
 
   async function handleDotClick() {

@@ -73,9 +73,9 @@ describe("Alt+F4 關筆記後 list 不自動恢復", () => {
     // 模擬 Alt+F4：在筆記 webview 觸發 close-requested。
     // NoteWindow.svelte 攔截 close-requested 並呼叫 handleClose（emit note-closed + close window）。
     await browser.executeAsync((done) => {
-      // 透過 Tauri window API：getCurrentWindow().close() 會觸發 close-requested
-      import("@tauri-apps/api/window")
-        .then(({ getCurrentWindow }) => getCurrentWindow().close())
+      // 直接使用 Tauri internals invoke，避免 bare specifier 在 webview 無法解析
+      window.__TAURI_INTERNALS__
+        .invoke("plugin:window|close", {})
         .then(() => done(true))
         .catch((e) => done(String(e)));
     });
@@ -92,8 +92,9 @@ describe("Alt+F4 關筆記後 list 不自動恢復", () => {
 
     // 模擬再次叫出列表的場景：emit waypoint://list-shown，list 會 reloadContextAndSession
     await browser.executeAsync((done) => {
-      import("@tauri-apps/api/event")
-        .then(({ emit }) => emit("waypoint://list-shown"))
+      // 直接使用 Tauri internals invoke，避免 bare specifier 在 webview 無法解析
+      window.__TAURI_INTERNALS__
+        .invoke("plugin:event|emit", { event: "waypoint://list-shown", payload: null })
         .then(() => done(true))
         .catch((e) => done(String(e)));
     });

@@ -1,0 +1,9 @@
+total 376
+drwxr-xr-x 1 runneradmin 197121      0 May  4 05:40 .
+drwxr-xr-x 1 runneradmin 197121      0 May  4 05:40 ..
+-rw-r--r-- 1 runneradmin 197121   2371 May  4 05:40 01-tauri-driver.log
+-rw-r--r-- 1 runneradmin 197121   1269 May  4 05:40 02-npm-install.log
+-rw-r--r-- 1 runneradmin 197121  28034 May  4 05:40 03-build-frontend.log
+-rw-r--r-- 1 runneradmin 197121   1382 May  4 05:40 04-tauri-build.log
+-rw-r--r-- 1 runneradmin 197121      0 May  4 05:40 _INDEX.txt
+-rw-r--r-- 1 runneradmin 197121 334982 May  4 05:40 wdio-full.log

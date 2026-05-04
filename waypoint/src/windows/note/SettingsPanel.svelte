@@ -1,17 +1,25 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import type { NoteSettings } from "../../lib/types";
+  import { notes as notesApi } from "../../lib/api";
+  import ConfirmDialog from "../ConfirmDialog.svelte";
 
   export let settings: NoteSettings;
-  // R4：noteId/contextId 由 NoteWindow 傳入但目前面板不使用，保留 prop 以維持外部 API。
   export let noteId: string;
   export let contextId: string | null;
-  void noteId; void contextId;
   const dispatch = createEventDispatcher<{ change: NoteSettings }>();
+
+  let confirmingDelete = false;
 
   function update(patch: Partial<NoteSettings>) {
     settings = { ...settings, ...patch };
     dispatch("change", settings);
+  }
+
+  async function doDelete() {
+    confirmingDelete = false;
+    await notesApi.delete(contextId, noteId);
+    // backend emits waypoint://note-deleted → NoteWindow self-closes
   }
 </script>
 
@@ -30,7 +38,26 @@
     </div>
   </div>
 
+  <div class="danger-zone">
+    <button
+      class="danger-btn"
+      data-testid="delete-this-note"
+      on:click={() => confirmingDelete = true}
+    >
+      刪除此筆記
+    </button>
+  </div>
 </div>
+
+{#if confirmingDelete}
+  <ConfirmDialog
+    message="確定要刪除這份筆記？此操作無法復原。"
+    confirmText="刪除"
+    cancelText="取消"
+    onConfirm={doDelete}
+    onCancel={() => confirmingDelete = false}
+  />
+{/if}
 
 <style>
   .settings-panel {
@@ -48,4 +75,23 @@
   .number-input { display: flex; align-items: center; gap: 4px; }
   .number-input input { width: 48px; text-align: center; }
   .number-input button { padding: 2px 7px; }
+
+  .danger-zone {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .danger-btn {
+    width: 100%;
+    padding: 8px;
+    background: var(--accent-danger, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .danger-btn:hover {
+    background: #a83020;
+  }
 </style>

@@ -70,15 +70,10 @@ describe("Alt+F4 關筆記後 list 不自動恢復", () => {
     assert.equal(openRes.ok, true, openRes.error);
     await switchToNewWindow(before);
 
-    // 模擬 Alt+F4：在筆記 webview 觸發 close-requested。
-    // NoteWindow.svelte 攔截 close-requested 並呼叫 handleClose（emit note-closed + close window）。
-    await browser.executeAsync((done) => {
-      // 直接使用 Tauri internals invoke，避免 bare specifier 在 webview 無法解析
-      window.__TAURI_INTERNALS__
-        .invoke("plugin:window|close", {})
-        .then(() => done(true))
-        .catch((e) => done(String(e)));
-    });
+    // 模擬 Alt+F4：用 Rust 端 cmd_close_note_window 觸發 win.close()，等同 OS 關閉。
+    // 不用 plugin:window|close（webview2 capability 可能擋）。
+    const closeRes = await invokeCmd("cmd_close_note_window", { noteId: note.id });
+    assert.equal(closeRes.ok, true, closeRes.error);
 
     await browser.waitUntil(
       async () => (await browser.getWindowHandles()).length === before.length,

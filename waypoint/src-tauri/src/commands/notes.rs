@@ -1,6 +1,6 @@
 use crate::error::WaypointError;
 use crate::storage::notes::{self, Note, NoteSettings};
-use tauri::{AppHandle, Emitter};
+use tauri::{AppHandle, Emitter, Manager};
 
 #[tauri::command]
 pub fn list_notes(context_id: Option<String>) -> Result<Vec<Note>, WaypointError> {
@@ -38,6 +38,11 @@ pub async fn delete_note(
     note_id: String,
 ) -> Result<(), WaypointError> {
     notes::delete_note(context_id.as_deref(), &note_id)?;
+    // Rust 權威關窗：避免依賴 JS listener registration 時序
+    let label = format!("note-{}", note_id);
+    if let Some(win) = app.get_webview_window(&label) {
+        let _ = win.close();
+    }
     let _ = app.emit("waypoint://note-deleted", serde_json::json!({
         "noteId": note_id,
         "contextId": context_id,

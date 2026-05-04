@@ -1,0 +1,30 @@
+        Info Looking up installed tauri packages to check mismatched versions...
+        Warn The bundle identifier "com.waypoint.app" set in `"tauri.conf.json" identifier` ends with `.app`. This is not recommended because it conflicts with the application bundle extension on macOS.
+   Compiling waypoint v0.1.21 (D:\a\waypoint\waypoint\waypoint\src-tauri)
+warning: variant `ContextNotFound` is never constructed
+  --> src\error.rs:13:5
+   |
+ 5 | pub enum WaypointError {
+   |          ------------- variant in this enum
+...
+13 |     ContextNotFound(String),
+   |     ^^^^^^^^^^^^^^^
+   |
+   = note: `WaypointError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `autostart_path` is never used
+  --> src\storage\autostart.rs:10:4
+   |
+10 | fn autostart_path() -> Option<PathBuf> {
+   |    ^^^^^^^^^^^^^^
+
+warning: function `clear_session` is never used
+  --> src\storage\session.rs:36:8
+   |
+36 | pub fn clear_session(context_id: &str) -> Result<(), WaypointError> {
+   |        ^^^^^^^^^^^^^
+
+warning: `waypoint` (lib) generated 3 warnings
+    Finished `release` profile [optimized] target(s) in 1m 31s
+       Built application at: D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe

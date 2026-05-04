@@ -109,7 +109,9 @@ describe("刪除筆記同步生命週期", () => {
     assert.equal(openRes.ok, true, openRes.error);
     await switchToNewWindow(before);
 
-    // 直接走 backend delete_note（與 SettingsPanel 的「刪除此筆記」呼叫等效）
+    // 切回列表呼叫 delete_note：等同 SettingsPanel 的「刪除此筆記」
+    // （若從即將被關掉的筆記視窗呼叫，invoke callback 會因視窗死掉拿不到結果）
+    await switchToListWindow();
     const delRes = await invokeCmd("delete_note", {
       contextId: null,
       noteId: note.id,
@@ -121,7 +123,6 @@ describe("刪除筆記同步生命週期", () => {
       { timeout: 5_000, timeoutMsg: "從筆記內刪除後筆記視窗未關閉" },
     );
 
-    await switchToListWindow();
     const listRes = await invokeCmd("list_notes", { contextId: null });
     assert.equal(listRes.ok, true, listRes.error);
     const ids = listRes.value.map((n) => n.id);

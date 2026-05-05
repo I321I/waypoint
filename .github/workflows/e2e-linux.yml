@@ -31,6 +31,7 @@ jobs:
             librsvg2-dev \
             patchelf \
             xvfb \
+            xdotool \
             webkit2gtk-driver \
             libwebkit2gtk-4.0-dev || true
           # webkit2gtk-driver (4.0) 可能已退場；若不存在試 apt 搜尋

@@ -34,6 +34,9 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
             .keys()
             .any(|label| label.starts_with("note-"));
         let action = determine_action(list_open, any_note_open);
+        // E2E 從 log 觀察 hotkey 是否真的被 OS 派送進來。Steam Deck 上若這行不出現，
+        // 代表 register 雖成功但 GTK accelerator 沒收到 KeyPress（環境層問題）。
+        crate::write_log_line(&format!("hotkey fired: action={:?} list_open={} any_note={}", action, list_open, any_note_open));
         // OpenAll / OpenList 都要重新以「當前前景視窗」推導 context，
         // 否則列表會一直停留在第一次叫出時的 context（例如 msedge）。
         if matches!(action, HotkeyAction::OpenAll | HotkeyAction::OpenList) {

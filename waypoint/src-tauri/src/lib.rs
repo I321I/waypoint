@@ -31,7 +31,7 @@ fn waypoint_log_path() -> Option<std::path::PathBuf> {
     resolve_log_path(xdg.as_deref(), home.as_deref())
 }
 
-fn write_log_line(msg: &str) {
+pub(crate) fn write_log_line(msg: &str) {
     if let Some(p) = waypoint_log_path() {
         if let Some(dir) = p.parent() {
             let _ = std::fs::create_dir_all(dir);
@@ -150,11 +150,10 @@ pub fn run() {
         .setup(|app| {
             // 兩個初始化都用容錯方式：即使 tray 失敗（如 Steam Deck 無 StatusNotifier），
             // 至少 hotkey 仍可能工作；反之亦然。失敗原因寫入 log 檔供回報。
-            if let Err(e) = tray::setup_tray(app) {
-                write_log_line(&format!("setup_tray failed: {e}"));
-            } else {
-                write_log_line("setup_tray ok");
-            }
+            let tray_ok = match tray::setup_tray(app) {
+                Ok(()) => { write_log_line("setup_tray ok"); true }
+                Err(e) => { write_log_line(&format!("setup_tray failed: {e}")); false }
+            };
             let config = storage::app_config::load().unwrap_or_default();
             match hotkey::register_hotkey(app.handle(), &config.hotkey) {
                 Ok(()) => write_log_line(&format!("register_hotkey ok: {}", &config.hotkey)),
@@ -189,6 +188,15 @@ pub fn run() {
                 }
                 if snapshot.list_open {
                     let _ = hotkey::open_list_window(app.handle());
+                }
+            }
+            // Tray 失敗（例如 Steam Deck 無 StatusNotifier）時，自動開列表視窗作為入口，
+            // 否則 process 啟動了卻完全沒有任何視覺入口，使用者只能 kill -9。
+            // 注意：app_session 還原時若已開過列表，open_list_window 會走 reuse 分支，不會重複建窗。
+            if !tray_ok {
+                write_log_line("tray fallback: opening list window (no tray available)");
+                if let Err(e) = hotkey::open_list_window(app.handle()) {
+                    write_log_line(&format!("tray fallback open_list_window failed: {e}"));
                 }
             }
             if std::env::var("WAYPOINT_E2E").is_ok() {

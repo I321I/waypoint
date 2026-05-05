@@ -3,13 +3,12 @@
   import { emit, listen } from "@tauri-apps/api/event";
   import type { UnlistenFn } from "@tauri-apps/api/event";
   import Editor from "./note/Editor.svelte";
-  import Toolbar from "./note/Toolbar.svelte";
-  import SettingsPanel from "./note/SettingsPanel.svelte";
+  import ContextMenu from "./note/ContextMenu.svelte";
   import TitlebarOpacitySlider from "./note/TitlebarOpacitySlider.svelte";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
   import GlobeIcon from "./icons/GlobeIcon.svelte";
   import { notes as notesApi, passthrough as passthroughApi, windows as windowsApi, config as configApi } from "../lib/api";
-  import type { Note, NoteSettings } from "../lib/types";
+  import type { Note } from "../lib/types";
   import { parseTitleContent, joinTitleContent } from "../lib/noteFormat";
 
   export let noteId: string;
@@ -19,8 +18,10 @@
   let title: string = "";
   let body: string = "";
   let lastEmittedTitle: string = "";
-  let settingsOpen = false;
   let editorRef: Editor;
+  let menuOpen = false;
+  let menuX = 0;
+  let menuY = 0;
   let saveTimeout: ReturnType<typeof setTimeout>;
   let passthrough = false;
   let transparentIncludesText = true;
@@ -114,10 +115,10 @@
     scheduleSave();
   }
 
-  async function handleSettingsChange(e: CustomEvent<NoteSettings>) {
-    if (!note) return;
-    note = { ...note, settings: e.detail };
-    await notesApi.saveSettings(contextId, noteId, e.detail);
+  function handleContextMenu(e: MouseEvent) {
+    menuX = e.clientX;
+    menuY = e.clientY;
+    menuOpen = true;
   }
 
   async function flushPendingSave() {
@@ -194,24 +195,28 @@
       />
     </div>
 
-    <Toolbar
-      editor={editorRef?.getEditor()}
-      onOpenSettings={() => settingsOpen = !settingsOpen}
-    />
-
-    <div class="editor-area">
+    <div class="editor-area" on:contextmenu|preventDefault={handleContextMenu}>
       <Editor
         bind:this={editorRef}
         content={body}
         fontSize={note.settings.fontSize}
         on:update={handleContentUpdate}
       />
-      {#if settingsOpen}
-        <SettingsPanel
-          settings={note.settings}
+      {#if menuOpen}
+        <ContextMenu
+          editor={editorRef?.getEditor() ?? null}
+          fontSize={note.settings.fontSize}
           {noteId}
           {contextId}
-          on:change={handleSettingsChange}
+          x={menuX}
+          y={menuY}
+          on:close={() => menuOpen = false}
+          on:font-size-change={async (e) => {
+            if (!note) return;
+            const next = { ...note.settings, fontSize: e.detail };
+            note = { ...note, settings: next };
+            await notesApi.saveSettings(contextId, noteId, next);
+          }}
         />
       {/if}
     </div>
@@ -271,4 +276,6 @@
   }
   .title-input:focus { outline: none; border-bottom: 1px solid var(--accent); }
   .editor-area { display: flex; flex: 1; overflow: hidden; }
+  .note-window :global(.editor-wrap) { scrollbar-width: none; }
+  .note-window :global(.editor-wrap)::-webkit-scrollbar { width: 0; height: 0; display: none; }
 </style>

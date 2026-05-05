@@ -33,9 +33,13 @@ async function switchToNewWindow(previousHandles) {
   await browser.switchToWindow(newHandle);
 }
 
+// 列表 handle 由 before() 抓住一次。不能用 handles[0]：WebDriver 不保證順序，
+// 切到 note 後再呼叫 cmd_close_note_window 會把當前 webview 關掉，executeAsync
+// 拿不到結果（act 容器內可重現）。
+let listHandle;
+
 async function switchToListWindow() {
-  const handles = await browser.getWindowHandles();
-  await browser.switchToWindow(handles[0]);
+  await browser.switchToWindow(listHandle);
 }
 
 describe("Alt+F4 關筆記後 list 不自動恢復", () => {
@@ -51,6 +55,8 @@ describe("Alt+F4 關筆記後 list 不自動恢復", () => {
       { timeout: 20_000, timeoutMsg: "列表視窗未載入" },
     );
     await waitTauriReady();
+    const handles = await browser.getWindowHandles();
+    listHandle = handles[0];
   });
 
   it("Alt+F4 等同的視窗關閉後，重開列表不會再自動拉起該筆記", async () => {
@@ -72,6 +78,8 @@ describe("Alt+F4 關筆記後 list 不自動恢復", () => {
 
     // 模擬 Alt+F4：用 Rust 端 cmd_close_note_window 觸發 win.close()，等同 OS 關閉。
     // 不用 plugin:window|close（webview2 capability 可能擋）。
+    // 從 list webview 呼叫，避免從即將被關掉的 note webview 呼叫導致 executeAsync 卡死。
+    await switchToListWindow();
     const closeRes = await invokeCmd("cmd_close_note_window", { noteId: note.id });
     assert.equal(closeRes.ok, true, closeRes.error);
 

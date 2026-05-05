@@ -7,6 +7,7 @@
   import SettingsPanel from "./note/SettingsPanel.svelte";
   import TitlebarOpacitySlider from "./note/TitlebarOpacitySlider.svelte";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
+  import GlobeIcon from "./icons/GlobeIcon.svelte";
   import { notes as notesApi, passthrough as passthroughApi, windows as windowsApi, config as configApi } from "../lib/api";
   import type { Note, NoteSettings } from "../lib/types";
   import { parseTitleContent, joinTitleContent } from "../lib/noteFormat";
@@ -156,7 +157,10 @@
     style="--note-bg-alpha: {note.settings.opacity}"
   >
     <DraggableTitlebar label={`note-${noteId}`}>
-      <span class="note-title" data-tauri-drag-region>{(title || "Untitled") + "-" + (contextId ?? "Global")}</span>
+      <span class="note-title" data-tauri-drag-region>
+        {title || "Untitled"}
+        {#if contextId === null}<GlobeIcon size={12} />{/if}
+      </span>
       <TitlebarOpacitySlider
         opacity={note.settings.opacity}
         on:change={async (e) => {

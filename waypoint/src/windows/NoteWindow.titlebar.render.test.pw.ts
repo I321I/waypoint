@@ -18,18 +18,23 @@ async function mockNote(page: Page, contextId: string | null, title: string) {
   }, { ctx: contextId, t: title });
 }
 
-test('全域筆記 titlebar 顯示 {title}-Global', async ({ page }) => {
+test('全域筆記 titlebar 顯示標題 + GlobeIcon', async ({ page }) => {
   await mockNote(page, null, '1122');
   await page.goto('http://localhost:4173/#view=note&noteId=x');
   await page.waitForLoadState('networkidle');
-  await expect(page.locator('.note-title')).toHaveText('1122-Global');
+  const title = page.locator('.note-title');
+  await expect(title).toContainText('1122');
+  await expect(title.locator('svg[data-globe-icon]')).toBeVisible();
 });
 
-test('區域筆記 titlebar 顯示 {title}-{contextId}', async ({ page }) => {
+test('區域筆記 titlebar 只顯示標題，無 GlobeIcon、無 dash', async ({ page }) => {
   await mockNote(page, 'edge', '我是誰');
   await page.goto('http://localhost:4173/#view=note&noteId=x&contextId=edge');
   await page.waitForLoadState('networkidle');
-  await expect(page.locator('.note-title')).toHaveText('我是誰-edge');
+  const title = page.locator('.note-title');
+  const text = (await title.textContent())?.trim() ?? '';
+  expect(text).toBe('我是誰');
+  await expect(title.locator('svg[data-globe-icon]')).toHaveCount(0);
 });
 
 test('NoteWindow 不再顯示 .statusbar', async ({ page }) => {

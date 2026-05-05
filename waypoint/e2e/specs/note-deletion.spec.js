@@ -33,9 +33,14 @@ async function switchToNewWindow(previousHandles) {
   await browser.switchToWindow(newHandle);
 }
 
+// 列表 handle 由 before() 抓住一次，後續穩定使用。
+// 不能用 handles[0]：WebDriver 不保證順序，act 容器內 tauri-driver 回傳順序
+// 與本機可能不同，導致切到 note 視窗後呼叫 delete_note → 視窗被 Rust 關掉
+// → executeAsync callback "no such window"。
+let listHandle;
+
 async function switchToListWindow() {
-  const handles = await browser.getWindowHandles();
-  await browser.switchToWindow(handles[0]);
+  await browser.switchToWindow(listHandle);
 }
 
 describe("刪除筆記同步生命週期", () => {
@@ -51,6 +56,9 @@ describe("刪除筆記同步生命週期", () => {
       { timeout: 20_000, timeoutMsg: "列表視窗未載入" },
     );
     await waitTauriReady();
+    // 此時只有列表視窗存在（WAYPOINT_E2E 自動開啟），記住它的 handle
+    const handles = await browser.getWindowHandles();
+    listHandle = handles[0];
   });
 
   it("從列表刪除筆記 → 已開啟的筆記視窗自動關閉", async () => {

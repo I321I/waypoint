@@ -53,7 +53,12 @@ describe("穿透模式 chrome 隱藏", () => {
     await invokeCmd("cmd_open_note_window", { noteId, contextId: null });
     await switchToNewWindow(before);
 
-    // 在 note webview：driving-titlebar 一開始可見
+    // 等 note webview svelte mount 完
+    await browser.waitUntil(
+      async () => (await browser.execute(() => !!document.querySelector('.note-window'))),
+      { timeout: 10_000, timeoutMsg: "note-window 未掛載" },
+    );
+
     let titlebarCount = await browser.execute(
       () => document.querySelectorAll('.draggable-titlebar').length,
     );

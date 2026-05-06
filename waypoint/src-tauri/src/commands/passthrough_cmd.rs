@@ -57,6 +57,20 @@ pub fn cmd_toggle_passthrough_global(app: AppHandle) -> Result<(), String> {
         labels.iter().map(|l| *map.get(l).unwrap_or(&false)).collect()
     };
     let target = target_state(&states);
+    let state = app.state::<crate::state::AppState>();
+    if target {
+        // going on：snapshot 當下 list_open，廣播給 list 自我 hide
+        let list_open = *state.list_window_open.lock().unwrap();
+        state.pre_passthrough_list_open.store(list_open, std::sync::atomic::Ordering::SeqCst);
+        let _ = app.emit("waypoint://passthrough-globally-on", ());
+    } else {
+        // going off：依 snapshot 還原 list（直接 Rust 端開回，不依賴前端）
+        let should_show = state.pre_passthrough_list_open.load(std::sync::atomic::Ordering::SeqCst);
+        if should_show {
+            let _ = crate::hotkey::open_list_window(&app);
+        }
+        let _ = app.emit("waypoint://passthrough-globally-off", should_show);
+    }
     for l in labels {
         cmd_set_passthrough(app.clone(), l, target)?;
     }

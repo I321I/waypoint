@@ -15,6 +15,7 @@
   let unlistenShown: (() => void) | null = null;
   let unlistenTitleChanged: (() => void) | null = null;
   let unlistenDeleted: (() => void) | null = null;
+  let unlistenPassthroughOn: (() => void) | null = null;
 
   async function loadContextAndSession() {
     currentContextId = await contextApi.getActive();
@@ -94,6 +95,11 @@
         await reloadLists();
       }
     );
+
+    // 穿透模式開啟 -> 自我 hide（離開穿透時 Rust 端會重新 open list）
+    unlistenPassthroughOn = await listen("waypoint://passthrough-globally-on", async () => {
+      await windowsApi.hideWindow("list");
+    });
   });
 
   onDestroy(() => {
@@ -102,6 +108,7 @@
     unlistenShown?.();
     unlistenTitleChanged?.();
     unlistenDeleted?.();
+    unlistenPassthroughOn?.();
   });
 
   async function handleCollapseAll() {

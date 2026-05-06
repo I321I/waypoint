@@ -193,33 +193,35 @@
     class:translucent-text={transparentIncludesText}
     style="--note-bg-alpha: {note.settings.opacity}"
   >
-    <DraggableTitlebar label={`note-${noteId}`}>
-      <span class="note-title" data-tauri-drag-region>
-        {title || "Untitled"}
-        {#if contextId === null}<GlobeIcon size={12} />{/if}
-      </span>
-      <TitlebarOpacitySlider
-        opacity={note.settings.opacity}
-        on:change={async (e) => {
-          if (!note) return;
-          const next = { ...note.settings, opacity: e.detail };
-          note = { ...note, settings: next };
-          await notesApi.saveSettings(contextId, noteId, next);
-        }}
-      />
-      <div class="titlebar-buttons">
-        <button
-          class="passthrough-dot"
-          class:dot-on={!passthrough}
-          class:dot-off={passthrough}
-          on:click={handleDotClick}
-          title={passthrough ? '穿透中（按快捷鍵或 tray 關閉）' : '可互動 — 點此啟用穿透'}
-        ></button>
-        <button on:click={handleCollapseAll} title="收起全部並儲存">⇊</button>
-        <button on:click={handleMaximize} title="最大化／還原">▢</button>
-        <button on:click={handleClose} title="儲存並關閉">✕</button>
-      </div>
-    </DraggableTitlebar>
+    {#if !passthrough}
+      <DraggableTitlebar label={`note-${noteId}`}>
+        <span class="note-title" data-tauri-drag-region>
+          {title || "Untitled"}
+          {#if contextId === null}<GlobeIcon size={12} />{/if}
+        </span>
+        <TitlebarOpacitySlider
+          opacity={note.settings.opacity}
+          on:change={async (e) => {
+            if (!note) return;
+            const next = { ...note.settings, opacity: e.detail };
+            note = { ...note, settings: next };
+            await notesApi.saveSettings(contextId, noteId, next);
+          }}
+        />
+        <div class="titlebar-buttons">
+          <button
+            class="passthrough-dot"
+            class:dot-on={!passthrough}
+            class:dot-off={passthrough}
+            on:click={handleDotClick}
+            title={passthrough ? '穿透中（按快捷鍵或 tray 關閉）' : '可互動 — 點此啟用穿透'}
+          ></button>
+          <button on:click={handleCollapseAll} title="收起全部並儲存">⇊</button>
+          <button on:click={handleMaximize} title="最大化／還原">▢</button>
+          <button on:click={handleClose} title="儲存並關閉">✕</button>
+        </div>
+      </DraggableTitlebar>
+    {/if}
 
     <div class="title-row">
       <input

@@ -58,7 +58,7 @@ describe("筆記視窗幾何即時記憶", () => {
     assert.equal(opened.ok, true, opened.error);
     await switchToNewWindow(before);
 
-    // 從 list 設位置（避開從 note webview 操作）
+    // 從 list 設位置
     await switchToList();
     const setPos = await invokeCmd("cmd_set_window_position", { label: `note-${noteId}`, x: 150, y: 220 });
     assert.equal(setPos.ok, true, setPos.error);
@@ -66,11 +66,28 @@ describe("筆記視窗幾何即時記憶", () => {
     // 等 debounce 500ms + io
     await browser.pause(900);
 
-    // 從 list 關掉視窗
+    // 立即讀回 OS 端位置（驗證 set_position 確實生效）
+    const posAfterSet = await invokeCmd("cmd_get_window_position", { label: `note-${noteId}` });
+    assert.equal(posAfterSet.ok, true, posAfterSet.error);
+
+    // 關掉視窗
     await invokeCmd("cmd_close_note_window", { noteId });
     await browser.waitUntil(
       async () => (await browser.getWindowHandles()).length === before.length,
       { timeout: 5_000 },
+    );
+
+    // 直接讀 settings.json 確認 windowBounds 已寫入
+    const readBack = await invokeCmd("read_note", { contextId: null, noteId });
+    assert.equal(readBack.ok, true, readBack.error);
+    const wb = readBack.value?.settings?.windowBounds;
+    assert.ok(
+      wb !== null && wb !== undefined,
+      `settings.windowBounds 為 null/undefined。posAfterSet=${JSON.stringify(posAfterSet.value)}, settings=${JSON.stringify(readBack.value?.settings)}`
+    );
+    assert.ok(
+      Math.abs(wb.x - posAfterSet.value[0]) <= 5,
+      `windowBounds.x ${wb.x} 應接近 cmd_get_window_position ${posAfterSet.value[0]}`
     );
 
     // 重開
@@ -83,9 +100,8 @@ describe("筆記視窗幾何即時記憶", () => {
     const pos = await invokeCmd("cmd_get_window_position", { label: `note-${noteId}` });
     assert.equal(pos.ok, true, pos.error);
     const [x, y] = pos.value;
-    // 容忍 WM 加 deco/offset 的小誤差（WebKitGTK xvfb 有 ±1 offset）
-    assert.ok(Math.abs(x - 150) <= 5, `重開後 x 預期 ~150，實際 ${x}`);
-    assert.ok(Math.abs(y - 220) <= 5, `重開後 y 預期 ~220，實際 ${y}`);
+    assert.ok(Math.abs(x - wb.x) <= 5, `重開後 x ${x} 應接近 saved ${wb.x}`);
+    assert.ok(Math.abs(y - wb.y) <= 5, `重開後 y ${y} 應接近 saved ${wb.y}`);
 
     // cleanup
     await invokeCmd("cmd_close_note_window", { noteId });

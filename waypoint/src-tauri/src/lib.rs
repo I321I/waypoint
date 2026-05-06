@@ -82,6 +82,8 @@ pub fn run() {
                 let label = window.label().to_string();
                 if let Some(note_id) = label.strip_prefix("note-") {
                     let app = window.app_handle();
+                    // Alt+F4 / WM close path：Rust 端直接保存幾何，避免依賴 JS event 時序
+                    crate::hotkey::save_geometry_for_label(app, &label);
                     let context_id = {
                         let state = app.state::<crate::state::AppState>();
                         state

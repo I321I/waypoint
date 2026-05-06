@@ -184,14 +184,36 @@ pub fn cmd_collapse_all(app: AppHandle) {
 pub fn cmd_close_note_window(app: AppHandle, note_id: String) -> Result<(), String> {
     let label = format!("note-{}", note_id);
     if let Some(win) = app.get_webview_window(&label) {
-        // 關窗前 emit flush 給筆記 JS（含 geometry debounce 中的寫入），
-        // 留 150ms 讓 saveSettings io 完成。NoteWindow.svelte listens on
-        // waypoint://flush-and-save-now → flushPendingSave → saveGeometry。
-        let _ = app.emit_to(&label, "waypoint://flush-and-save-now", ());
-        std::thread::sleep(std::time::Duration::from_millis(150));
+        // 關窗前 Rust 端直接讀 OS 位置/大小寫進 settings.window_bounds。
+        // 不依賴 JS event 時序（onMoved 對 programmatic set_position 不一定 fire；
+        // emit_to + flushPendingSave 也有 async timing 問題）。
+        save_geometry_to_settings(&win, &note_id);
         win.close().map_err(|e| e.to_string())?;
     }
     Ok(())
+}
+
+fn save_geometry_to_settings(win: &tauri::WebviewWindow, note_id: &str) {
+    let pos = match win.outer_position() { Ok(p) => p, Err(_) => return };
+    let size = match win.outer_size() { Ok(s) => s, Err(_) => return };
+    let url = win.url().map(|u| u.to_string()).unwrap_or_default();
+    let ctx = crate::commands::passthrough_cmd::parse_context_id_from_url(&url);
+    if let Ok(mut note) = crate::storage::notes::read_note(ctx.as_deref(), note_id) {
+        note.settings.window_bounds = Some(crate::storage::notes::WindowBounds {
+            x: pos.x,
+            y: pos.y,
+            width: size.width,
+            height: size.height,
+        });
+        let _ = crate::storage::notes::save_settings(ctx.as_deref(), note_id, &note.settings);
+    }
+}
+
+/// 公開給 lib.rs 的 on_window_event 在 CloseRequested 時呼叫，覆蓋 Alt+F4 / WM close 路徑。
+pub fn save_geometry_for_label(app: &AppHandle, label: &str) {
+    let Some(note_id) = label.strip_prefix("note-") else { return };
+    let Some(win) = app.get_webview_window(label) else { return };
+    save_geometry_to_settings(&win, note_id);
 }
 
 /// 用 label 關閉視窗（close）——前端不依賴 getCurrentWindow()

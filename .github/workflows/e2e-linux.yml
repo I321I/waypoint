@@ -32,6 +32,9 @@ jobs:
             patchelf \
             xvfb \
             xdotool \
+            openbox \
+            xterm \
+            x11-utils \
             webkit2gtk-driver \
             libwebkit2gtk-4.0-dev || true
           # webkit2gtk-driver (4.0) 可能已退場；若不存在試 apt 搜尋
@@ -86,13 +89,21 @@ jobs:
         working-directory: waypoint
         run: npx tauri build --no-bundle
 
-      - name: Run E2E (via xvfb)
+      - name: Run E2E (via xvfb + openbox)
         working-directory: waypoint
         env:
           WAYPOINT_BINARY: ${{ github.workspace }}/waypoint/src-tauri/target/release/waypoint
+        # 啟動 openbox（minimal EWMH WM）讓 _NET_ACTIVE_WINDOW 真的會跟著焦點變化，
+        # 才有辦法測 foreground_watcher（auto-context-switch）。
+        # openbox 在背景跑，npm run test:e2e 退出後 bash -c 結束、xvfb-run 收掉整 session。
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" \
-            npm run test:e2e
+            bash -c '
+              openbox &
+              sleep 1
+              echo "openbox PID=$! DISPLAY=$DISPLAY"
+              npm run test:e2e
+            '
 
       - name: Upload logs on failure
         if: failure()

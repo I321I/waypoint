@@ -13,11 +13,31 @@
 //! 輪詢都 flood 事件。
 
 use crate::context::derive_context_id;
-use crate::context::detector::get_focused_window;
-use crate::storage::app_config;
+use crate::context::detector::{get_focused_window, FocusedWindowInfo};
+use crate::storage::app_config::{self, AppConfig};
 use std::thread;
 use std::time::Duration;
 use tauri::{AppHandle, Emitter, Manager};
+
+/// 判斷 watcher 從 detector 拿到的一個 info，是否應該觸發 active-context-changed
+/// emit。回傳新 ctx_id（要 emit 就 Some；自家視窗 / 空 process_name / ctx 沒變 = None）。
+/// 抽成 pure function 才能不啟 Tauri runtime 做 unit test。
+pub(crate) fn decide_event(
+    info: &FocusedWindowInfo,
+    self_pid: u32,
+    self_proc: &str,
+    current_ctx: Option<&str>,
+    config: &AppConfig,
+) -> Option<String> {
+    if info.process_name.is_empty() { return None; }
+    if info.pid == Some(self_pid) || is_self(self_proc, &info.process_name) {
+        return None;
+    }
+    let ctx_id = derive_context_id(info, config);
+    if ctx_id.is_empty() { return None; }
+    if current_ctx == Some(ctx_id.as_str()) { return None; }
+    Some(ctx_id)
+}
 
 /// 啟動前景視窗監聽 thread。lib.rs setup() 呼叫一次。
 pub fn start(app: AppHandle) {
@@ -140,5 +160,55 @@ mod tests {
     #[test]
     fn is_self_handles_empty() {
         assert!(!is_self("waypoint", ""));
+    }
+
+    fn info(proc: &str, pid: Option<u32>) -> FocusedWindowInfo {
+        FocusedWindowInfo {
+            process_name: proc.to_string(),
+            window_title: format!("{} window", proc),
+            pid,
+        }
+    }
+
+    #[test]
+    fn decide_event_emits_for_external_app() {
+        let cfg = AppConfig::default();
+        let r = decide_event(&info("firefox", Some(1234)), 999, "waypoint", None, &cfg);
+        assert_eq!(r.as_deref(), Some("firefox"));
+    }
+
+    #[test]
+    fn decide_event_filters_self_by_pid() {
+        let cfg = AppConfig::default();
+        let r = decide_event(&info("Waypoint.AppImage", Some(999)), 999, "waypoint", None, &cfg);
+        assert!(r.is_none(), "PID 等於 self_pid 必須過濾，process_name 不一致也無妨（修 AppImage/Flatpak 場景）");
+    }
+
+    #[test]
+    fn decide_event_filters_self_by_name_when_pid_missing() {
+        let cfg = AppConfig::default();
+        let r = decide_event(&info("waypoint", None), 999, "waypoint", None, &cfg);
+        assert!(r.is_none());
+    }
+
+    #[test]
+    fn decide_event_skip_empty_process_name() {
+        let cfg = AppConfig::default();
+        let r = decide_event(&info("", Some(1234)), 999, "waypoint", None, &cfg);
+        assert!(r.is_none(), "process_name 空字串時不應 emit 空 ctx");
+    }
+
+    #[test]
+    fn decide_event_skip_when_ctx_unchanged() {
+        let cfg = AppConfig::default();
+        let r = decide_event(&info("firefox", Some(1234)), 999, "waypoint", Some("firefox"), &cfg);
+        assert!(r.is_none(), "active ctx 已是 firefox 時不該重複 emit");
+    }
+
+    #[test]
+    fn decide_event_emits_when_ctx_changes() {
+        let cfg = AppConfig::default();
+        let r = decide_event(&info("chrome", Some(1234)), 999, "waypoint", Some("firefox"), &cfg);
+        assert_eq!(r.as_deref(), Some("chrome"));
     }
 }

@@ -2,8 +2,16 @@ use crate::context::derive_context_id;
 use crate::context::detector::get_focused_window;
 use crate::state::AppState;
 use crate::storage::app_config;
+use std::sync::{Mutex, OnceLock};
 use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder, WebviewUrl};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
+
+/// 序列化主 hotkey 的 callback：拿不到鎖 = inflight，drop 該次按鍵。
+/// 解決連按兩次出現的 race（兩個 callback 都讀到 list_open=true 都跑 CollapseAll）。
+fn hotkey_inflight() -> &'static Mutex<()> {
+    static M: OnceLock<Mutex<()>> = OnceLock::new();
+    M.get_or_init(|| Mutex::new(()))
+}
 
 #[derive(Debug, PartialEq)]
 pub enum HotkeyAction {
@@ -27,6 +35,13 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
         if event.state != ShortcutState::Pressed {
             return;
         }
+        let _guard = match hotkey_inflight().try_lock() {
+            Ok(g) => g,
+            Err(_) => {
+                crate::write_log_line("hotkey dropped: inflight");
+                return;
+            }
+        };
         let window_info = get_focused_window();
         let state = app.state::<AppState>();
         let list_open = *state.list_window_open.lock().unwrap();

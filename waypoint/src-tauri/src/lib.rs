@@ -1,6 +1,7 @@
 mod commands;
 mod context;
 mod error;
+mod foreground_watcher;
 mod hotkey;
 mod state;
 mod storage;
@@ -192,6 +193,9 @@ pub fn run() {
                     let _ = hotkey::open_list_window(app.handle());
                 }
             }
+            // 啟動前景視窗監聽，OS 前景變化時自動切換 active context（item 8）
+            foreground_watcher::start(app.handle().clone());
+
             // Tray 失敗（例如 Steam Deck 無 StatusNotifier）時，自動開列表視窗作為入口，
             // 否則 process 啟動了卻完全沒有任何視覺入口，使用者只能 kill -9。
             // 注意：app_session 還原時若已開過列表，open_list_window 會走 reuse 分支，不會重複建窗。

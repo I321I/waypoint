@@ -4,6 +4,10 @@
 pub struct FocusedWindowInfo {
     pub process_name: String,
     pub window_title: String,
+    /// 對方視窗的 process id（取得失敗 = None）。foreground_watcher
+    /// 用此比對 std::process::id() 以「精確」識別自家視窗，避免 AppImage /
+    /// Flatpak 環境下 process_name 不是 "waypoint" 而導致誤判。
+    pub pid: Option<u32>,
 }
 
 #[cfg(target_os = "windows")]
@@ -45,7 +49,7 @@ pub fn get_focused_window() -> Option<FocusedWindowInfo> {
             .map(|n| n.to_string_lossy().to_string())
             .unwrap_or(full_path);
 
-        Some(FocusedWindowInfo { process_name, window_title })
+        Some(FocusedWindowInfo { process_name, window_title, pid: Some(pid) })
     }
 }
 
@@ -60,9 +64,12 @@ pub fn get_focused_window() -> Option<FocusedWindowInfo> {
         .map(|s| s.to_string())
         .unwrap_or_default();
 
+    let pid = unsafe { app.processIdentifier() } as u32;
+
     Some(FocusedWindowInfo {
         process_name: process_name.clone(),
         window_title: process_name,
+        pid: Some(pid),
     })
 }
 
@@ -94,7 +101,7 @@ pub fn get_focused_window() -> Option<FocusedWindowInfo> {
         .map(|s| s.trim().to_string())
         .unwrap_or_default();
 
-    Some(FocusedWindowInfo { process_name, window_title })
+    Some(FocusedWindowInfo { process_name, window_title, pid: Some(pid) })
 }
 
 #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]

@@ -22,10 +22,11 @@ use tauri::{AppHandle, Emitter, Manager};
 /// 啟動前景視窗監聽 thread。lib.rs setup() 呼叫一次。
 pub fn start(app: AppHandle) {
     let self_proc = current_process_name();
+    let self_pid = std::process::id();
     crate::write_log_line(&format!(
-        "foreground_watcher started; self process_name={self_proc}"
+        "foreground_watcher started; self_pid={self_pid} self_proc={self_proc}"
     ));
-    thread::spawn(move || run(app, self_proc));
+    thread::spawn(move || run(app, self_proc, self_pid));
 }
 
 fn current_process_name() -> String {
@@ -47,39 +48,74 @@ fn is_self(self_name: &str, other: &str) -> bool {
     stem(self_name) == stem(other)
 }
 
-fn run(app: AppHandle, self_proc: String) {
-    let mut last_ctx: Option<String> = None;
+fn run(app: AppHandle, self_proc: String, self_pid: u32) {
+    crate::write_log_line(&format!(
+        "foreground_watcher run loop started; self_proc={self_proc}"
+    ));
+    let mut last_logged_proc: Option<String> = None;
+    let mut none_count: u32 = 0;
     loop {
         thread::sleep(Duration::from_millis(200));
         let info = match get_focused_window() {
             Some(i) => i,
-            None => continue,
+            None => {
+                none_count = none_count.saturating_add(1);
+                if none_count == 1 || none_count == 50 || none_count % 250 == 0 {
+                    crate::write_log_line(&format!(
+                        "foreground_watcher: get_focused_window returned None (count={none_count})"
+                    ));
+                }
+                continue;
+            }
         };
-        if is_self(&self_proc, &info.process_name) {
-            // 自家視窗，不換 context（保留先前狀態）
+        none_count = 0;
+        // process_name 為空 = detector 抓不到 PID 對應 process 名（Linux _NET_WM_PID 缺、
+        // /proc/<pid>/comm 讀不到等）。略過避免把 active_context 設成 ""。
+        if info.process_name.is_empty() {
+            crate::write_log_line(&format!(
+                "foreground_watcher: empty process_name (title={:?}); skip",
+                info.window_title
+            ));
             continue;
+        }
+        // 自家視窗識別優先用 PID 精確比對；fallback 用 process_name（涵蓋
+        // detector 抓不到 PID 的場景，例如 Linux _NET_WM_PID 缺失）。
+        // AppImage / Flatpak 環境下 process_name 不見得是 "waypoint"，PID 比對
+        // 才是權威。
+        if info.pid == Some(self_pid) || is_self(&self_proc, &info.process_name) {
+            continue;
+        }
+        // 觀察用：每次 process_name 變化都 log（限同一 proc 不重複 log）
+        if last_logged_proc.as_deref() != Some(&info.process_name) {
+            crate::write_log_line(&format!(
+                "foreground_watcher: foreground proc={} title={:?}",
+                info.process_name, info.window_title
+            ));
+            last_logged_proc = Some(info.process_name.clone());
         }
         let config = app_config::load().unwrap_or_default();
         let ctx_id = derive_context_id(&info, &config);
+        if ctx_id.is_empty() {
+            continue;
+        }
 
         let state = app.state::<crate::state::AppState>();
         let changed = {
             let mut active = state.active_context_id.lock().unwrap();
-            let old = active.clone();
-            if old.as_deref() == Some(&ctx_id) {
+            if active.as_deref() == Some(&ctx_id) {
                 false
             } else {
                 *active = Some(ctx_id.clone());
                 *state.active_window_info.lock().unwrap() = Some(info.clone());
-                last_ctx = Some(ctx_id.clone());
-                let _ = old;
                 true
             }
         };
         if changed {
+            crate::write_log_line(&format!(
+                "active-context-changed: emit ctx_id={ctx_id}"
+            ));
             let _ = app.emit("waypoint://active-context-changed", &ctx_id);
         }
-        let _ = last_ctx;
     }
 }
 

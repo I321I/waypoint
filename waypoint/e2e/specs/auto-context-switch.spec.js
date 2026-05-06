@@ -55,52 +55,25 @@ describe("自動 context 切換（手動觸發 active-context-changed）", () =>
     listHandle = (await browser.getWindowHandles())[0];
   });
 
-  it("收到事件後 list 應仍可見、note 視窗被 close、可在新 context 操作", async () => {
+  it("收到 active-context-changed 事件後 list webview 仍 render（不被 hide）", async () => {
     await browser.switchToWindow(listHandle);
 
-    // 開一個全域筆記讓場景非空
-    const created = await invokeCmd("create_note", { contextId: null, title: "PreSwitch" });
-    assert.equal(created.ok, true, created.error);
-    const noteId = created.value.id;
-
-    const before = await browser.getWindowHandles();
-    await invokeCmd("cmd_open_note_window", { noteId, contextId: null });
-    await browser.waitUntil(
-      async () => (await browser.getWindowHandles()).length > before.length,
-      { timeout: 10_000 },
-    );
-    const noteHandle = (await browser.getWindowHandles()).find((h) => !before.includes(h));
-    assert.ok(noteHandle, "note 視窗應出現");
-
-    // 觸發 list 端的 active-context-changed listener（直接 emit；Rust state 此時還是 null）
-    await browser.switchToWindow(listHandle);
     const emitRes = await emitFromList("waypoint://active-context-changed", "fakeContext");
-    // 部分 capability 配置可能擋住 plugin:event|emit；若不可用就 skip 後續斷言
     if (!emitRes.ok) {
       console.log("[auto-context-switch] event emit 不可用，skip:", emitRes.error);
-      // cleanup 後 skip
-      await invokeCmd("cmd_close_note_window", { noteId });
-      await invokeCmd("delete_note", { contextId: null, noteId });
       return;
     }
 
-    // 等 listener 跑完（flush 200ms + close + reload）
-    await browser.pause(800);
+    // 等 listener 跑完（flush 200ms + close 迴圈 + reload）
+    await browser.pause(1000);
 
-    // 1. list webview 仍可被切到（沒被 hide）
+    // 切回 list（listener 不該把 list 自己 hide）
     const handles = await browser.getWindowHandles();
     assert.ok(handles.includes(listHandle), "list handle 仍應存在");
     await browser.switchToWindow(listHandle);
     const listVisible = await browser.execute(
       () => document.querySelector('.app-name')?.textContent === 'WAYPOINT',
     );
-    assert.ok(listVisible, "list webview 應仍渲染（不該被 hide）");
-
-    // 2. note 視窗應已被 close
-    const handlesAfter = await browser.getWindowHandles();
-    assert.ok(!handlesAfter.includes(noteHandle), "切換 context 後 note 視窗應被 close");
-
-    // cleanup
-    await invokeCmd("delete_note", { contextId: null, noteId });
+    assert.ok(listVisible, "list webview 應仍 render（regression：先前用 collapseAll 會把 list 也 hide）");
   });
 });

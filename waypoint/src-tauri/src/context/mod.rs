@@ -33,6 +33,7 @@ mod tests {
         FocusedWindowInfo {
             process_name: process.to_string(),
             window_title: title.to_string(),
+            pid: None,
         }
     }
 

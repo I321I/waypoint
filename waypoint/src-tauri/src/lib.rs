@@ -222,9 +222,23 @@ pub fn run() {
         let _ = hotkey::open_list_window(app);
     }));
 
+    // 攔截 ExitRequested：tauri 預設「最後一個視窗關閉就退出」，但 Waypoint
+    // 是常駐背景應用程式（靠 tray / hotkey 重新叫出 list）。沒攔截會在使用者
+    // 把 list ✕ 掉後整個 process 退出，下次按 hotkey 沒反應。
+    // 真正的退出走 cmd_exit_app / cmd_exit_app_with_flush（呼叫 app.exit(0)）。
     builder
-        .run(tauri::generate_context!())
-        .expect("error while running Waypoint");
+        .build(tauri::generate_context!())
+        .expect("error while building Waypoint")
+        .run(|_app, event| {
+            if let tauri::RunEvent::ExitRequested { api, code, .. } = event {
+                if code.is_none() {
+                    // code=None 表示「最後 window 關閉觸發」；阻止退出
+                    api.prevent_exit();
+                    write_log_line("ExitRequested (no code): preventing exit, app stays alive in background");
+                }
+                // code=Some(_) 表示 app.exit(n) 顯式呼叫；不攔截
+            }
+        });
 }
 
 #[cfg(test)]

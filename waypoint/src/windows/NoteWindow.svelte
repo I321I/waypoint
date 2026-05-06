@@ -34,6 +34,7 @@
   let unlistenMove: UnlistenFn | null = null;
   let unlistenResize: UnlistenFn | null = null;
   let geometrySaveTimer: ReturnType<typeof setTimeout> | null = null;
+  let saveGeometry: () => Promise<void> = async () => {};
 
   onMount(async () => {
     // 同步加上 class（不等 await），避免閃爍
@@ -85,7 +86,7 @@
 
     // 幾何即時記憶：debounce 500ms 後寫 settings.windowBounds（item 7）
     const win = getCurrentWindow();
-    const saveGeometry = async () => {
+    saveGeometry = async () => {
       if (!note) return;
       try {
         const pos = await win.outerPosition();
@@ -161,6 +162,12 @@
     }
     const merged = joinTitleContent(title, body);
     await notesApi.saveContent(contextId, noteId, merged);
+    // 一併 flush 幾何（debounce 中也立刻寫）
+    if (geometrySaveTimer) {
+      clearTimeout(geometrySaveTimer);
+      geometrySaveTimer = null;
+    }
+    await saveGeometry();
   }
 
   async function handleClose() {

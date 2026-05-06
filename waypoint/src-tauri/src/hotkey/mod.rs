@@ -184,6 +184,11 @@ pub fn cmd_collapse_all(app: AppHandle) {
 pub fn cmd_close_note_window(app: AppHandle, note_id: String) -> Result<(), String> {
     let label = format!("note-{}", note_id);
     if let Some(win) = app.get_webview_window(&label) {
+        // 關窗前 emit flush 給筆記 JS（含 geometry debounce 中的寫入），
+        // 留 150ms 讓 saveSettings io 完成。NoteWindow.svelte listens on
+        // waypoint://flush-and-save-now → flushPendingSave → saveGeometry。
+        let _ = app.emit_to(&label, "waypoint://flush-and-save-now", ());
+        std::thread::sleep(std::time::Duration::from_millis(150));
         win.close().map_err(|e| e.to_string())?;
     }
     Ok(())

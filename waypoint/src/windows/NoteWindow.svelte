@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from "svelte";
   import { emit, listen } from "@tauri-apps/api/event";
   import type { UnlistenFn } from "@tauri-apps/api/event";
+  import { getCurrentWindow } from "@tauri-apps/api/window";
   import Editor from "./note/Editor.svelte";
   import ContextMenu from "./note/ContextMenu.svelte";
   import TitlebarOpacitySlider from "./note/TitlebarOpacitySlider.svelte";
@@ -30,6 +31,9 @@
   let unlistenFlush: UnlistenFn | null = null;
   let unlistenDeleted: UnlistenFn | null = null;
   let unlistenConfigChanged: UnlistenFn | null = null;
+  let unlistenMove: UnlistenFn | null = null;
+  let unlistenResize: UnlistenFn | null = null;
+  let geometrySaveTimer: ReturnType<typeof setTimeout> | null = null;
 
   onMount(async () => {
     // 同步加上 class（不等 await），避免閃爍
@@ -78,6 +82,28 @@
     ).catch(() => null);
     // 不註冊 onCloseRequested：webview2 + tauri v2 下任何 JS 端攔截都會讓 close 不執行。
     // Alt+F4 的 session 記帳改由 Rust on_window_event 處理（見 lib.rs）。
+
+    // 幾何即時記憶：debounce 500ms 後寫 settings.windowBounds（item 7）
+    const win = getCurrentWindow();
+    const saveGeometry = async () => {
+      if (!note) return;
+      try {
+        const pos = await win.outerPosition();
+        const size = await win.outerSize();
+        const bounds = { x: pos.x, y: pos.y, width: size.width, height: size.height };
+        const next = { ...note.settings, windowBounds: bounds };
+        note = { ...note, settings: next };
+        await notesApi.saveSettings(contextId, noteId, next);
+      } catch {
+        /* 視窗剛關掉等情境，吞 */
+      }
+    };
+    const scheduleGeometrySave = () => {
+      if (geometrySaveTimer) clearTimeout(geometrySaveTimer);
+      geometrySaveTimer = setTimeout(saveGeometry, 500);
+    };
+    unlistenMove = await win.onMoved(scheduleGeometrySave).catch(() => null);
+    unlistenResize = await win.onResized(scheduleGeometrySave).catch(() => null);
   });
 
   onDestroy(() => {
@@ -86,6 +112,9 @@
     unlistenRenamedFromList?.();
     unlistenFlush?.();
     unlistenDeleted?.();
+    unlistenMove?.();
+    unlistenResize?.();
+    if (geometrySaveTimer) clearTimeout(geometrySaveTimer);
   });
 
   async function handleDotClick() {

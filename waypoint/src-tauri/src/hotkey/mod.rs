@@ -144,7 +144,7 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
     }
     let ctx_param = context_id.map(|c| format!("&contextId={}", c)).unwrap_or_default();
     let url = format!("/#view=note&noteId={}{}", note_id, ctx_param);
-    WebviewWindowBuilder::new(app, &label, WebviewUrl::App(url.into()))
+    let mut builder = WebviewWindowBuilder::new(app, &label, WebviewUrl::App(url.into()))
         .title("Waypoint Note")
         .inner_size(420.0, 600.0)
         .min_inner_size(300.0, 200.0)
@@ -152,8 +152,18 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .decorations(false)
         .always_on_top(true)
         .skip_taskbar(true)
-        .transparent(true)
-        .build()?;
+        .transparent(true);
+
+    // 套用 settings.window_bounds（item 7：每次 move/resize 即時記憶）
+    if let Ok(note) = crate::storage::notes::read_note(context_id, note_id) {
+        if let Some(b) = note.settings.window_bounds {
+            builder = builder
+                .position(b.x as f64, b.y as f64)
+                .inner_size(b.width as f64, b.height as f64);
+        }
+    }
+
+    builder.build()?;
     crate::taskbar::refresh_taskbar_visibility(app);
     Ok(())
 }

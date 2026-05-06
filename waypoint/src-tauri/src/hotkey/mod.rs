@@ -2,16 +2,21 @@ use crate::context::derive_context_id;
 use crate::context::detector::get_focused_window;
 use crate::state::AppState;
 use crate::storage::app_config;
+use std::sync::atomic::{AtomicU8, Ordering};
 use std::sync::{Mutex, OnceLock};
 use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder, WebviewUrl};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
 
-/// 序列化主 hotkey 的 callback：拿不到鎖 = inflight，drop 該次按鍵。
-/// 解決連按兩次出現的 race（兩個 callback 都讀到 list_open=true 都跑 CollapseAll）。
+/// 序列化主 hotkey callback：拿不到鎖 = inflight，把 pending counter +1。
+/// 當前 cycle 結束時逐次消耗 counter 再跑同樣次數的 cycle，實現
+/// 「連按 N 次 = 跑 N 次 toggle」（cap=8 避免 key-repeat runaway）。
 fn hotkey_inflight() -> &'static Mutex<()> {
     static M: OnceLock<Mutex<()>> = OnceLock::new();
     M.get_or_init(|| Mutex::new(()))
 }
+
+static HOTKEY_PENDING: AtomicU8 = AtomicU8::new(0);
+const HOTKEY_PENDING_CAP: u8 = 8;
 
 #[derive(Debug, PartialEq)]
 pub enum HotkeyAction {
@@ -38,10 +43,35 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
         let _guard = match hotkey_inflight().try_lock() {
             Ok(g) => g,
             Err(_) => {
-                crate::write_log_line("hotkey dropped: inflight");
+                // inflight：累加 pending（cap 防 key-repeat runaway）
+                let _ = HOTKEY_PENDING.fetch_update(Ordering::SeqCst, Ordering::SeqCst, |v| {
+                    if v < HOTKEY_PENDING_CAP { Some(v + 1) } else { None }
+                });
+                crate::write_log_line(&format!(
+                    "hotkey queued: inflight, pending={}",
+                    HOTKEY_PENDING.load(Ordering::SeqCst)
+                ));
                 return;
             }
         };
+        run_hotkey_cycle(app);
+        // 逐次消耗 pending counter
+        loop {
+            let prev = HOTKEY_PENDING.load(Ordering::SeqCst);
+            if prev == 0 { break; }
+            if HOTKEY_PENDING
+                .compare_exchange(prev, prev - 1, Ordering::SeqCst, Ordering::SeqCst)
+                .is_ok()
+            {
+                crate::write_log_line(&format!("hotkey replay: pending was {}", prev));
+                run_hotkey_cycle(app);
+            }
+        }
+    })?;
+    Ok(())
+}
+
+fn run_hotkey_cycle(app: &AppHandle) {
         let window_info = get_focused_window();
         let state = app.state::<AppState>();
         let list_open = *state.list_window_open.lock().unwrap();
@@ -49,8 +79,6 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
             .keys()
             .any(|label| label.starts_with("note-"));
         let action = determine_action(list_open, any_note_open);
-        // E2E 從 log 觀察 hotkey 是否真的被 OS 派送進來。Steam Deck 上若這行不出現，
-        // 代表 register 雖成功但 GTK accelerator 沒收到 KeyPress（環境層問題）。
         crate::write_log_line(&format!("hotkey fired: action={:?} list_open={} any_note={}", action, list_open, any_note_open));
         // OpenAll / OpenList 都要重新以「當前前景視窗」推導 context，
         // 否則列表會一直停留在第一次叫出時的 context（例如 msedge）。
@@ -86,8 +114,6 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
                 });
             }
         }
-    })?;
-    Ok(())
 }
 
 pub fn register_passthrough_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std::error::Error>> {

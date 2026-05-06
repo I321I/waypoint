@@ -103,19 +103,23 @@
     });
 
     // OS 前景視窗變化 -> 切換 list 顯示的 context（item 8）
+    // 不能用 collapseAll：那會把 list 也 hide。
+    // 改成：flush + save session + 逐個 close note 視窗（list 保持可見）+ reload 新 context
     unlistenContextChanged = await listen<string>("waypoint://active-context-changed", async () => {
-      // 1. 廣播 flush 給目前所有筆記，等寫入完成
       await emit("waypoint://flush-and-save-now");
       await new Promise((r) => setTimeout(r, 200));
-      // 2. 把目前 context 的 session 存起來、收起所有筆記視窗
       if (currentContextId) {
         await sessionApi.save(currentContextId, {
           openContextNotes: openContextNoteIds,
           openGlobalNotes: openGlobalNoteIds,
         });
       }
-      await windowsApi.collapseAll();
-      // 3. 重新讀新 context（getActive 會回傳剛被 Rust 寫入的 ctx）+ session
+      const notesToClose = [...openContextNoteIds, ...openGlobalNoteIds];
+      for (const nId of notesToClose) {
+        await windowsApi.closeNote(nId).catch(() => {});
+      }
+      openContextNoteIds = [];
+      openGlobalNoteIds = [];
       await loadContextAndSession();
     });
   });

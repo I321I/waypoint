@@ -74,8 +74,14 @@ fn run(app: AppHandle, self_proc: String, self_pid: u32) {
     ));
     let mut last_logged_proc: Option<String> = None;
     let mut none_count: u32 = 0;
+    let mut iter_count: u32 = 0;
+    // 心跳：每 25 次（200ms × 25 = 5s）log 一次當下偵測到的 proc，
+    // 即使沒變化也讓使用者能看到 watcher 還活著、它看到什麼。沒這個的話
+    // 「context 沒切換」很難分辨是 watcher 死了 / detector 拿到同一個值 / listener 失效。
+    const HEARTBEAT_EVERY: u32 = 25;
     loop {
         thread::sleep(Duration::from_millis(200));
+        iter_count = iter_count.saturating_add(1);
         let info = match get_focused_window() {
             Some(i) => i,
             None => {
@@ -106,10 +112,15 @@ fn run(app: AppHandle, self_proc: String, self_pid: u32) {
             continue;
         }
         // 觀察用：每次 process_name 變化都 log（限同一 proc 不重複 log）
-        if last_logged_proc.as_deref() != Some(&info.process_name) {
+        let proc_changed = last_logged_proc.as_deref() != Some(&info.process_name);
+        let heartbeat = iter_count % HEARTBEAT_EVERY == 0;
+        if proc_changed || heartbeat {
             crate::write_log_line(&format!(
-                "foreground_watcher: foreground proc={} title={:?}",
-                info.process_name, info.window_title
+                "foreground_watcher: {} proc={} pid={:?} title={:?}",
+                if proc_changed { "CHANGE" } else { "heartbeat" },
+                info.process_name,
+                info.pid,
+                info.window_title,
             ));
             last_logged_proc = Some(info.process_name.clone());
         }

@@ -12,24 +12,30 @@ use state::AppState;
 use tauri::Listener;
 use tauri::Manager;
 
-/// 寫 panic / 重大錯誤訊息到 log 檔，Steam Deck 等無 console 環境下方便使用者回報。
+/// 寫 panic / 重大錯誤訊息到 log 檔，Steam Deck / Windows 等無 console 環境下方便使用者回報。
 ///
-/// 位置優先序：
-/// 1. `$XDG_STATE_HOME/waypoint/error.log`
-/// 2. `$HOME/.local/state/waypoint/error.log`
-/// 3. `$HOME/waypoint/error.log`（最後 fallback，跟資料夾同位置）
-fn resolve_log_path(xdg_state: Option<&std::ffi::OsStr>, home: Option<&std::ffi::OsStr>) -> Option<std::path::PathBuf> {
-    let base = xdg_state
+/// 跨平台用 `dirs::data_local_dir()`（已涵蓋 Windows `%LOCALAPPDATA%`、macOS
+/// `~/Library/Application Support`、Linux `$XDG_DATA_HOME`/`~/.local/share`、
+/// Flatpak sandbox 內的對應 home）。Windows 用 HOME 找不到的 v0.2.x 老 bug 因此修掉。
+fn resolve_log_path(
+    data_local: Option<&std::path::Path>,
+    xdg_state: Option<&std::ffi::OsStr>,
+    home: Option<&std::ffi::OsStr>,
+) -> Option<std::path::PathBuf> {
+    // 優先序：dirs::data_local_dir → XDG_STATE_HOME（Linux 慣例）→ HOME/.local/state → HOME
+    let base = data_local
         .map(std::path::PathBuf::from)
+        .or_else(|| xdg_state.map(std::path::PathBuf::from))
         .or_else(|| home.map(|h| std::path::PathBuf::from(h).join(".local/state")))
         .or_else(|| home.map(std::path::PathBuf::from))?;
     Some(base.join("waypoint").join("error.log"))
 }
 
 fn waypoint_log_path() -> Option<std::path::PathBuf> {
+    let data_local = dirs::data_local_dir();
     let xdg = std::env::var_os("XDG_STATE_HOME");
     let home = std::env::var_os("HOME");
-    resolve_log_path(xdg.as_deref(), home.as_deref())
+    resolve_log_path(data_local.as_deref(), xdg.as_deref(), home.as_deref())
 }
 
 pub(crate) fn write_log_line(msg: &str) {
@@ -249,18 +255,32 @@ mod tests {
 
     #[test]
     fn log_path_prefers_xdg_state_home() {
-        let p = resolve_log_path(Some(OsStr::new("/tmp/xdg")), Some(OsStr::new("/tmp/home"))).unwrap();
+        let p = resolve_log_path(None, Some(OsStr::new("/tmp/xdg")), Some(OsStr::new("/tmp/home"))).unwrap();
         assert_eq!(p, std::path::PathBuf::from("/tmp/xdg/waypoint/error.log"));
     }
 
     #[test]
     fn log_path_falls_back_to_home_local_state() {
-        let p = resolve_log_path(None, Some(OsStr::new("/tmp/home"))).unwrap();
+        let p = resolve_log_path(None, None, Some(OsStr::new("/tmp/home"))).unwrap();
         assert_eq!(p, std::path::PathBuf::from("/tmp/home/.local/state/waypoint/error.log"));
     }
 
     #[test]
     fn log_path_returns_none_without_env() {
-        assert!(resolve_log_path(None, None).is_none());
+        assert!(resolve_log_path(None, None, None).is_none());
+    }
+
+    #[test]
+    fn log_path_uses_data_local_first() {
+        let dl = std::path::PathBuf::from("/AppData/Local");
+        let p = resolve_log_path(Some(&dl), Some(OsStr::new("/tmp/xdg")), Some(OsStr::new("/tmp/home"))).unwrap();
+        assert_eq!(p, std::path::PathBuf::from("/AppData/Local/waypoint/error.log"));
+    }
+
+    #[test]
+    fn log_path_works_with_only_data_local() {
+        let dl = std::path::PathBuf::from("/AppData/Local");
+        let p = resolve_log_path(Some(&dl), None, None).unwrap();
+        assert_eq!(p, std::path::PathBuf::from("/AppData/Local/waypoint/error.log"));
     }
 }

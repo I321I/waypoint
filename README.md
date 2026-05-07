@@ -4,8 +4,6 @@
 
 [![Latest release](https://img.shields.io/github/v/release/I321I/waypoint)](https://github.com/I321I/waypoint/releases/latest)
 
-![Waypoint](docs/screenshot.png)
-
 ## 特色
 
 - **全域快捷鍵**（預設 `Ctrl+Shift+Space`）一鍵叫出列表 / 收起全部，連按多次行為一致

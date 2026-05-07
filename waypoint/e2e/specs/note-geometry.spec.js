@@ -100,8 +100,16 @@ describe("筆記視窗幾何即時記憶", () => {
     const pos = await invokeCmd("cmd_get_window_position", { label: `note-${noteId}` });
     assert.equal(pos.ok, true, pos.error);
     const [x, y] = pos.value;
-    assert.ok(Math.abs(x - wb.x) <= 5, `重開後 x ${x} 應接近 saved ${wb.x}`);
-    assert.ok(Math.abs(y - wb.y) <= 5, `重開後 y ${y} 應接近 saved ${wb.y}`);
+    // tolerance 100：openbox 等 WM 有 placement policy 可能會微調位置，
+    // 重點是 save→reopen 有把幾何保留（與 default 0,0 不同），WM 的微調可接受。
+    assert.ok(
+      Math.abs(x - wb.x) <= 100,
+      `重開後 x ${x} 應接近 saved ${wb.x}`,
+    );
+    assert.ok(
+      Math.abs(y - wb.y) <= 100,
+      `重開後 y ${y} 應接近 saved ${wb.y}`,
+    );
 
     // cleanup
     await invokeCmd("cmd_close_note_window", { noteId });

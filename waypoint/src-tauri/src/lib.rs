@@ -157,11 +157,22 @@ pub fn run() {
             commands::config_cmd::set_transparent_includes_text,
         ])
         .setup(|app| {
-            // 兩個初始化都用容錯方式：即使 tray 失敗（如 Steam Deck 無 StatusNotifier），
-            // 至少 hotkey 仍可能工作；反之亦然。失敗原因寫入 log 檔供回報。
-            let tray_ok = match tray::setup_tray(app) {
-                Ok(()) => { write_log_line("setup_tray ok"); true }
-                Err(e) => { write_log_line(&format!("setup_tray failed: {e}")); false }
+            // 兩個初始化都用容錯方式：即使 tray 失敗（如 Steam Deck 無 StatusNotifier
+            // 或 Flatpak runtime 缺 libayatana-appindicator3.so），至少 hotkey 仍可能
+            // 工作；反之亦然。失敗原因寫入 log 檔供回報。
+            //
+            // catch_unwind 必要：libappindicator-sys 在 dlopen 失敗時是直接 panic!()
+            // 而非回 Err，沒有 catch_unwind 整個 process 會死，連 fallback 開列表都來不及。
+            let tray_ok = match std::panic::catch_unwind(
+                std::panic::AssertUnwindSafe(|| tray::setup_tray(app))
+            ) {
+                Ok(Ok(())) => { write_log_line("setup_tray ok"); true }
+                Ok(Err(e)) => { write_log_line(&format!("setup_tray failed: {e}")); false }
+                Err(_) => {
+                    // panic 已被 panic_hook 寫入 log（含 backtrace），這裡只記事件
+                    write_log_line("setup_tray panicked (likely missing libappindicator); falling back");
+                    false
+                }
             };
             let config = storage::app_config::load().unwrap_or_default();
             match hotkey::register_hotkey(app.handle(), &config.hotkey) {

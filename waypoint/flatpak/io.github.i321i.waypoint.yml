@@ -1,7 +1,10 @@
 app-id: io.github.i321i.waypoint
-runtime: org.freedesktop.Platform
-runtime-version: '24.08'
-sdk: org.freedesktop.Sdk
+# org.gnome.Platform 46 含 libwebkit2gtk-4.1（Tauri v2 + wry 0.54 link 到此版本）。
+# org.freedesktop.Platform 24.08 不含 4.1，runtime 載 binary 時直接 dlopen 失敗，
+# Steam Deck v0.2.x flatpak 全部跑不起來就是這原因。
+runtime: org.gnome.Platform
+runtime-version: '46'
+sdk: org.gnome.Sdk
 command: waypoint
 
 finish-args:

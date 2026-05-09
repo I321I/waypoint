@@ -80,16 +80,10 @@ fn run_hotkey_cycle(app: &AppHandle) {
             .any(|label| label.starts_with("note-"));
         let action = determine_action(list_open, any_note_open);
         crate::write_log_line(&format!("hotkey fired: action={:?} list_open={} any_note={}", action, list_open, any_note_open));
-        // OpenAll / OpenList 都要重新以「當前前景視窗」推導 context，
-        // 否則列表會一直停留在第一次叫出時的 context（例如 msedge）。
-        if matches!(action, HotkeyAction::OpenAll | HotkeyAction::OpenList) {
-            if let Some(info) = window_info.clone() {
-                let config = app_config::load().unwrap_or_default();
-                let ctx_id = derive_context_id(&info, &config);
-                *state.active_context_id.lock().unwrap() = Some(ctx_id);
-                *state.active_window_info.lock().unwrap() = Some(info);
-            }
-        }
+        // 注意：active_context_id 由 foreground_watcher 持續維護，hotkey path 不再
+        // 自行覆寫（v0.2.x 的舊邏輯會在「按 hotkey 時 waypoint 自家視窗剛好前景」
+        // 場景下污染 state 變成 ctx="waypoint"，閃一下才被 watcher 修回）。
+        let _ = window_info;
         match action {
             HotkeyAction::OpenAll => {
                 let _ = open_list_window(app);

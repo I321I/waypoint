@@ -104,23 +104,47 @@
 
     // OS 前景視窗變化 -> 切換 list 顯示的 context（item 8）
     // 不能用 collapseAll：那會把 list 也 hide。
-    // 改成：flush + save session + 逐個 close note 視窗（list 保持可見）+ reload 新 context
-    unlistenContextChanged = await listen<string>("waypoint://active-context-changed", async () => {
-      await emit("waypoint://flush-and-save-now");
-      await new Promise((r) => setTimeout(r, 200));
-      if (currentContextId) {
-        await sessionApi.save(currentContextId, {
-          openContextNotes: openContextNoteIds,
-          openGlobalNotes: openGlobalNoteIds,
-        });
+    // 序列化：同時間只跑一個 switching 流程；事件密集時新事件記在 pendingCtx，
+    // 等當前流程跑完再處理（消費最新值，避免堆積）。否則多個 listener 並發跑
+    // close+reload 會互相覆蓋導致 UI 卡在錯誤的 context。
+    let switching = false;
+    let pendingCtx: string | null = null;
+
+    async function performContextSwitch() {
+      switching = true;
+      try {
+        while (true) {
+          await emit("waypoint://flush-and-save-now");
+          await new Promise((r) => setTimeout(r, 200));
+          if (currentContextId) {
+            await sessionApi.save(currentContextId, {
+              openContextNotes: openContextNoteIds,
+              openGlobalNotes: openGlobalNoteIds,
+            });
+          }
+          const notesToClose = [...openContextNoteIds, ...openGlobalNoteIds];
+          for (const nId of notesToClose) {
+            await windowsApi.closeNote(nId).catch(() => {});
+          }
+          openContextNoteIds = [];
+          openGlobalNoteIds = [];
+          await loadContextAndSession();
+          // 如果途中有新事件進來，再跑一次（最後一個 pending 才反映最新狀態）
+          if (pendingCtx === null) break;
+          pendingCtx = null;
+        }
+      } finally {
+        switching = false;
       }
-      const notesToClose = [...openContextNoteIds, ...openGlobalNoteIds];
-      for (const nId of notesToClose) {
-        await windowsApi.closeNote(nId).catch(() => {});
+    }
+
+    unlistenContextChanged = await listen<string>("waypoint://active-context-changed", async (event) => {
+      if (switching) {
+        pendingCtx = event.payload;
+        return;
       }
-      openContextNoteIds = [];
-      openGlobalNoteIds = [];
-      await loadContextAndSession();
+      pendingCtx = null;
+      await performContextSwitch();
     });
   });
 

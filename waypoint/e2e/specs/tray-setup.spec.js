@@ -1,30 +1,7 @@
 // 驗證啟動時 tray 行為：要嘛 setup_tray ok，要嘛失敗時自動 fallback 開列表視窗。
 // Steam Deck 環境（無 StatusNotifier）必須走 fallback，使用者才有可視入口。
 import assert from "node:assert/strict";
-import fs from "node:fs";
-import path from "node:path";
-import os from "node:os";
-
-function logCandidates() {
-  const home = os.homedir();
-  const xdg = process.env.XDG_STATE_HOME;
-  const list = [];
-  if (xdg) list.push(path.join(xdg, "waypoint", "error.log"));
-  if (home) list.push(path.join(home, ".local/state/waypoint/error.log"));
-  if (home) list.push(path.join(home, "waypoint", "error.log"));
-  return list;
-}
-
-function readLog() {
-  for (const p of logCandidates()) {
-    try {
-      return fs.readFileSync(p, "utf8");
-    } catch {
-      /* keep trying */
-    }
-  }
-  return null;
-}
+import { readLog, logCandidates } from "../log-path.js";
 
 describe("tray setup", () => {
   it("log 顯示 setup_tray 結果（成功或 fallback 開列表）", async () => {

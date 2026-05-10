@@ -155,6 +155,7 @@ pub fn run() {
             commands::config_cmd::cmd_set_show_in_taskbar,
             commands::config_cmd::get_transparent_includes_text,
             commands::config_cmd::set_transparent_includes_text,
+            commands::diag::cmd_log_diag,
         ])
         .setup(|app| {
             // 兩個初始化都用容錯方式：即使 tray 失敗（如 Steam Deck 無 StatusNotifier

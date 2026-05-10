@@ -93,3 +93,9 @@ export const windows = {
   /** 快照目前開啟視窗 → 重新啟動 binary → 退出目前 process */
   restartApp: () => invoke<void>("cmd_restart_app"),
 };
+
+/** 前端寫 diag log（Rust 收到後寫進同一份 error.log），方便實機 debug */
+export const diag = {
+  log: (scope: string, msg: string) =>
+    invoke<void>("cmd_log_diag", { scope, msg }).catch(() => {}),
+};

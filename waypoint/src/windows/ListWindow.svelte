@@ -4,7 +4,7 @@
   import GlobalSection from "./list/GlobalSection.svelte";
   import ContextSection from "./list/ContextSection.svelte";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";
-  import { notes as notesApi, context as contextApi, session as sessionApi, windows as windowsApi } from "../lib/api";
+  import { notes as notesApi, context as contextApi, session as sessionApi, windows as windowsApi, diag as diagApi } from "../lib/api";
   import { globalNotes, contextNotes, activeContextId } from "../lib/stores";
 
   let currentContextId: string | null = null;
@@ -129,6 +129,7 @@
           openContextNoteIds = [];
           openGlobalNoteIds = [];
           await loadContextAndSession();
+          diagApi.log("list", `performContextSwitch done currentCtx=${currentContextId} contextNotes=${$contextNotes.length} globalNotes=${$globalNotes.length}`).catch(() => {});
           // 如果途中有新事件進來，再跑一次（最後一個 pending 才反映最新狀態）
           if (pendingCtx === null) break;
           pendingCtx = null;
@@ -139,6 +140,7 @@
     }
 
     unlistenContextChanged = await listen<string>("waypoint://active-context-changed", async (event) => {
+      diagApi.log("list", `received active-context-changed payload=${event.payload} switching=${switching} currentCtx=${currentContextId}`).catch(() => {});
       if (switching) {
         pendingCtx = event.payload;
         return;

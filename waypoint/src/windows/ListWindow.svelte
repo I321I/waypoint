@@ -29,19 +29,19 @@
     globalNotes.set(globals);
     contextNotes.set(contexts);
 
+    // detector 失敗時 currentContextId=null，仍要記錄/還原全域筆記。
+    // 用 "_global_only_" 這個 session key 專存全域筆記列表（reserved 不會跟真實 context 撞）。
+    const sessionKey = currentContextId ?? "_global_only_";
+    const sess = await sessionApi.load(sessionKey);
+    openContextNoteIds = currentContextId ? sess.openContextNotes : [];
+    openGlobalNoteIds = sess.openGlobalNotes;
     if (currentContextId) {
-      const sess = await sessionApi.load(currentContextId);
-      openContextNoteIds = sess.openContextNotes;
-      openGlobalNoteIds = sess.openGlobalNotes;
       for (const nId of sess.openContextNotes) {
         await windowsApi.openNote(nId, currentContextId);
       }
-      for (const nId of sess.openGlobalNotes) {
-        await windowsApi.openNote(nId, null);
-      }
-    } else {
-      openContextNoteIds = [];
-      openGlobalNoteIds = [];
+    }
+    for (const nId of sess.openGlobalNotes) {
+      await windowsApi.openNote(nId, null);
     }
   }
 
@@ -116,12 +116,10 @@
         while (true) {
           await emit("waypoint://flush-and-save-now");
           await new Promise((r) => setTimeout(r, 200));
-          if (currentContextId) {
-            await sessionApi.save(currentContextId, {
-              openContextNotes: openContextNoteIds,
-              openGlobalNotes: openGlobalNoteIds,
-            });
-          }
+          await sessionApi.save(currentContextId ?? "_global_only_", {
+            openContextNotes: currentContextId ? openContextNoteIds : [],
+            openGlobalNotes: openGlobalNoteIds,
+          });
           const notesToClose = [...openContextNoteIds, ...openGlobalNoteIds];
           for (const nId of notesToClose) {
             await windowsApi.closeNote(nId).catch(() => {});
@@ -161,12 +159,10 @@
   });
 
   async function handleCollapseAll() {
-    if (currentContextId) {
-      await sessionApi.save(currentContextId, {
-        openContextNotes: openContextNoteIds,
-        openGlobalNotes: openGlobalNoteIds,
-      });
-    }
+    await sessionApi.save(currentContextId ?? "_global_only_", {
+      openContextNotes: currentContextId ? openContextNoteIds : [],
+      openGlobalNotes: openGlobalNoteIds,
+    });
     await windowsApi.collapseAll();
   }
 

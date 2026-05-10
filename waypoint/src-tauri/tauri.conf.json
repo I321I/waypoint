@@ -1,6 +1,6 @@
 {
   "productName": "Waypoint",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "identifier": "com.waypoint.app",
   "build": {
     "frontendDist": "../dist",

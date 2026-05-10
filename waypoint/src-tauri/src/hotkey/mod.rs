@@ -26,10 +26,11 @@ pub enum HotkeyAction {
 }
 
 pub fn determine_action(list_open: bool, any_note_open: bool) -> HotkeyAction {
-    if list_open {
+    // 純 toggle：任何 waypoint 視窗（list 或 note）可見就 collapse，全收起才 open。
+    // 舊邏輯「list 已關但 note 開 → 只開 list」造成「note 開著按 hotkey 不收起反而多開列表」
+    // （v0.2.7 user 回報），改為純 toggle 比較直覺。
+    if list_open || any_note_open {
         HotkeyAction::CollapseAll
-    } else if any_note_open {
-        HotkeyAction::OpenList
     } else {
         HotkeyAction::OpenAll
     }
@@ -130,6 +131,9 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
     if let Some(win) = app.get_webview_window("list") {
         win.unminimize().ok();
         win.show()?;
+        // raise 到最上：KDE/GNOME focus stealing prevention 會擋一般 set_focus，
+        // 用 set_always_on_top toggle + set_focus 強制 raise（toggle off 確保下次能再 raise）。
+        let _ = win.set_always_on_top(true);
         win.set_focus()?;
         *state.list_window_open.lock().unwrap() = true;
         // 通知前端重新載入 context / session（再叫出時也會套用新 context）
@@ -417,8 +421,9 @@ mod tests {
     }
 
     #[test]
-    fn notes_open_no_list_triggers_open_list() {
-        assert_eq!(determine_action(false, true), HotkeyAction::OpenList);
+    fn notes_open_triggers_collapse_all() {
+        // 純 toggle：note 開著按 hotkey 應該 collapse，不是開列表
+        assert_eq!(determine_action(false, true), HotkeyAction::CollapseAll);
     }
 
     #[test]

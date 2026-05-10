@@ -9,6 +9,8 @@ jobs:
   release:
     permissions:
       contents: write
+      # gh run view --log 需要 actions:read 才能讀同 run 的 log（給 push-log-on-failure step 用）
+      actions: read
     strategy:
       fail-fast: false
       matrix:
@@ -150,3 +152,40 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           files: io.github.i321i.waypoint_aarch64.flatpak
+
+      # 失敗時用 gh CLI（已 auth via runner GITHUB_TOKEN）拉自己 job 的失敗 log，
+      # 推到 ci-logs/<sha>-release-<platform>-<attempt> 孤兒分支供本機免 token 拉取。
+      # 起因：mac/aarch64 build 從 v0.2.1 起連續失敗 5 次，沒人 debug 因為 GitHub API
+      # logs endpoint 對公開 repo 也要 token。
+      - name: Push logs to ci-logs branch on failure
+        if: failure()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          PLATFORM_TAG=$(echo "${{ matrix.platform }}-${{ matrix.args }}" | tr -c 'A-Za-z0-9.-' '_' | cut -c1-60)
+          BR="ci-logs/${{ github.sha }}-release-${PLATFORM_TAG}-${{ github.run_attempt }}"
+          mkdir -p logs
+          # gh CLI 在 ubuntu/macos/windows runner 都預裝，用 GH_TOKEN 認證
+          gh run view ${{ github.run_id }} --log-failed > logs/failed-step.log 2>&1 || \
+            gh run view ${{ github.run_id }} --log > logs/all-steps.log 2>&1 || true
+          {
+            echo "platform=${{ matrix.platform }}"
+            echo "args=${{ matrix.args }}"
+            echo "runner_os=$(uname -a 2>/dev/null || cmd /c ver 2>/dev/null || echo unknown)"
+            echo "rustc=$(rustc --version 2>/dev/null || echo missing)"
+            echo "cargo=$(cargo --version 2>/dev/null || echo missing)"
+            echo "github.sha=${{ github.sha }}"
+            echo "github.run_id=${{ github.run_id }}"
+            echo "github.run_attempt=${{ github.run_attempt }}"
+          } > logs/_meta.txt
+          ls -la logs/ > logs/_INDEX.txt 2>&1 || true
+          git config user.email "ci-bot@waypoint"
+          git config user.name "ci-bot"
+          git checkout --orphan "$BR"
+          git rm -rf . >/dev/null 2>&1 || true
+          git add -A logs/
+          git commit -m "ci log release ${{ github.sha }} ${PLATFORM_TAG} attempt ${{ github.run_attempt }}" --allow-empty
+          git push origin "$BR" --force

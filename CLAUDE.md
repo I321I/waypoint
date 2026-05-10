@@ -10,7 +10,16 @@
 1. 平常 commit / push 到 `dev/main`（不開 PR）→ **不會**觸發 e2e-windows
 2. 階段完成、想驗 Windows 行為時 → `git checkout master && git merge --ff-only dev/main && git push origin master` → 觸發 e2e-windows
 3. 純文件 / CI 設定 commit 若不影響邏輯，可用 `[skip ci]` 訊息（即使在 master 也不跑）
-4. 發 tag 前：master 末梢 e2e-windows 綠 + 本機 `act -j e2e-linux` 綠 → `git tag vX.Y.Z && git push --tags`
+4. 發 tag 前必須**全部綠燈**（缺一不可）：
+   - 本機 `act -j e2e-linux` 綠
+   - GitHub `e2e-linux` 綠（如有觸發；目前 workflow_dispatch only，act 已涵蓋）
+   - GitHub `e2e-windows` 綠
+   - GitHub `e2e-mac` 綠
+   - **上一次 release.yml run 必須成功**：包括 ubuntu-22.04 / ubuntu-22.04-arm / windows-latest / macos-latest 所有 matrix job 都 conclusion=success（不能只看主 conclusion，要看每個 job）
+
+   全綠才 `git tag vX.Y.Z && git push --tags`。
+
+   **歷史教訓：v0.2.1～v0.2.5 連續 5 次 release，mac-universal 與 ubuntu-22.04-arm matrix job 都失敗都沒人發現（只看 e2e-windows 就 tag），導致這些平台從 v0.2.0 之後就沒有可用的 binary。**
 
 注意：tag 也要從 master 上打（release.yml 假設 release 內容在 master）。
 
@@ -207,9 +216,44 @@ cd /data/games-note-AIgen/waypoint && npm run test:render
 5. 執行 git commit（帶所有 test 檔案一起 commit）
 6. 修正好就發布
 
-## 每次發 release 前必須 E2E 綠燈（Windows WebView2）
+## 每次發 release 前必須**所有平台**綠燈
 
-**規則：任何修改推上 master 後，`.github/workflows/e2e-windows.yml` 必須綠燈才能發 release tag。**
+**規則：任何修改推上 master 後，下列**全部**必須綠燈才能 `git tag`：**
+
+1. **本機 act**：`act -j e2e-linux` 跑通
+2. **GitHub e2e-windows**（workflow id 262677203）：conclusion=success
+3. **GitHub e2e-mac**（workflow id 263416028）：conclusion=success
+4. **上一次 release.yml run 每個 matrix job 都成功**（workflow id 259644278）：
+   - `release (ubuntu-22.04)` ✅
+   - `release (ubuntu-22.04-arm, --target aarch64-unknown-linux-gnu)` ✅
+   - `release (windows-latest)` ✅
+   - `release (macos-latest, --target universal-apple-darwin)` ✅
+
+**判讀「上一次 release.yml run」**：
+```bash
+RUN_ID=$(curl -s "https://api.github.com/repos/I321I/waypoint/actions/workflows/259644278/runs?per_page=1" \
+  | python3 -c "import json,sys;print(json.load(sys.stdin)['workflow_runs'][0]['id'])")
+curl -s "https://api.github.com/repos/I321I/waypoint/actions/runs/$RUN_ID/jobs" \
+  | python3 -c "import json,sys; [print(f\"{j['name']}: {j['conclusion']}\") for j in json.load(sys.stdin)['jobs']]"
+```
+
+每行 conclusion 都必須是 `success`。任一 `failure` / `cancelled` 都不可 tag 新版本，**先修好那個 platform 的 build**。
+
+**歷史教訓**：v0.2.1～v0.2.5 連續 5 次 release，mac-universal 與 ubuntu-22.04-arm matrix job 都失敗，但因為只看 e2e-windows 就 tag，**這些平台從 v0.2.0 之後沒有可用 binary**。新規則防止重蹈覆轍。
+
+### 失敗時拉 log
+
+release.yml 已加 ci-logs push（commit b2e98a8）：失敗 job 會把自己的 log 推到 `ci-logs/<sha>-release-<platform-tag>-<attempt>` 孤兒分支。
+
+```bash
+# 列出最近 release 失敗的 ci-logs 分支
+git ls-remote origin "refs/heads/ci-logs/*-release-*"
+# 拉某個 platform 的 log
+git fetch origin "ci-logs/<sha>-release-macos-latest_..._-1:fix-release"
+git show fix-release:logs/failed-step.log | head -100
+```
+
+### 既有 e2e-windows 規則（保留）
 
 ### E2E Test（WebdriverIO + tauri-driver）
 

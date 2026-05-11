@@ -76,9 +76,11 @@ fn run_hotkey_cycle(app: &AppHandle) {
         let window_info = get_focused_window();
         let state = app.state::<AppState>();
         let list_open = *state.list_window_open.lock().unwrap();
+        // 注意：collapse 只 .hide() 不 close，hidden window 仍會留在 webview_windows 裡。
+        // 必須以 is_visible() 判定，否則第二次按 hotkey 會持續判定 any_note=true → 一直 collapse，無法復原。
         let any_note_open = app.webview_windows()
-            .keys()
-            .any(|label| label.starts_with("note-"));
+            .iter()
+            .any(|(label, win)| label.starts_with("note-") && win.is_visible().unwrap_or(false));
         let action = determine_action(list_open, any_note_open);
         crate::write_log_line(&format!("hotkey fired: action={:?} list_open={} any_note={}", action, list_open, any_note_open));
         // 注意：active_context_id 由 foreground_watcher 持續維護，hotkey path 不再
@@ -456,6 +458,21 @@ mod tests {
         assert!(
             body.contains(concat!(".trans", "parent(true)")),
             "open_note_window must call .transparent(true) for R5"
+        );
+    }
+
+    /// Regression：any_note_open 必須以 is_visible() 過濾，
+    /// 否則 collapse 後 hidden 的 note window 仍算數，
+    /// 第二次按 hotkey 永遠走 CollapseAll，無法復原（v0.2.7 user 回報）。
+    #[test]
+    fn any_note_open_must_check_visibility() {
+        let src = include_str!("mod.rs");
+        let start = src.find("fn run_hotkey_cycle").expect("run_hotkey_cycle must exist");
+        let end = src[start..].find("\n}\n").map(|i| start + i).unwrap_or(src.len());
+        let body = &src[start..end];
+        assert!(
+            body.contains("any_note_open") && body.contains("is_visible"),
+            "run_hotkey_cycle 必須以 is_visible() 過濾 any_note_open，不可只看 webview_windows().keys()"
         );
     }
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { listen } from "@tauri-apps/api/event";
+  import { listen, emit } from "@tauri-apps/api/event";
   import GlobalSection from "./list/GlobalSection.svelte";
   import ContextSection from "./list/ContextSection.svelte";
   import DraggableTitlebar from "./DraggableTitlebar.svelte";

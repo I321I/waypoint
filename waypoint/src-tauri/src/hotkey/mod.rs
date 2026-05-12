@@ -2,8 +2,9 @@ use crate::context::derive_context_id;
 use crate::context::detector::get_focused_window;
 use crate::state::AppState;
 use crate::storage::app_config;
-use std::sync::atomic::{AtomicU8, Ordering};
+use std::sync::atomic::{AtomicU64, AtomicU8, Ordering};
 use std::sync::{Mutex, OnceLock};
+use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder, WebviewUrl};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
 
@@ -17,6 +18,20 @@ fn hotkey_inflight() -> &'static Mutex<()> {
 
 static HOTKEY_PENDING: AtomicU8 = AtomicU8::new(0);
 const HOTKEY_PENDING_CAP: u8 = 8;
+
+/// Debounce：同一個物理按壓被 OS auto-repeat 連射成 20+ 次 callback，
+/// 必須以 timestamp 過濾。實測 keyboard repeat rate ≈ 30Hz (33ms 間隔)，
+/// 設 250ms 足以吃掉一次 hold，又不影響使用者連續快速兩次有意按壓。
+/// 並把 frontend handleCollapseAll 的 async IPC + hide 完成時間也包進來。
+static LAST_FIRE_MS: AtomicU64 = AtomicU64::new(0);
+const HOTKEY_DEBOUNCE_MS: u64 = 250;
+
+fn now_ms() -> u64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_millis() as u64)
+        .unwrap_or(0)
+}
 
 #[derive(Debug, PartialEq)]
 pub enum HotkeyAction {
@@ -41,6 +56,19 @@ pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std:
         if event.state != ShortcutState::Pressed {
             return;
         }
+        // Debounce key-repeat：250ms 內的 callback 直接丟棄，不進 inflight、不累 pending。
+        // 不這樣做的話一個 hold/repeat 會被當成 20+ 次 toggle，最終狀態取決於奇偶數，
+        // 使用者體感「按了沒反應」或「自己跳回去」（v0.2.7 user 回報）。
+        let now = now_ms();
+        let last = LAST_FIRE_MS.load(Ordering::SeqCst);
+        if now.saturating_sub(last) < HOTKEY_DEBOUNCE_MS {
+            crate::write_log_line(&format!(
+                "hotkey debounced: now={} last={} dt={}ms",
+                now, last, now - last
+            ));
+            return;
+        }
+        LAST_FIRE_MS.store(now, Ordering::SeqCst);
         let _guard = match hotkey_inflight().try_lock() {
             Ok(g) => g,
             Err(_) => {

@@ -1,0 +1,71 @@
+name: Capture Release Failure Logs
+
+# 失敗 log fail-safe v2：
+# 原 release.yml 內嵌的 ci-logs 步驟在自己 run 還沒完成時跑，
+# `gh run view --log` 會回「still in progress」抓不到內容。
+# 改用 workflow_run trigger 在 release.yml 完成之後（不論成敗）才跑，
+# 確保 logs API 可用。失敗 job 的 log 推到 ci-logs/<sha>-release-<platform>-<attempt>。
+
+on:
+  workflow_run:
+    workflows: ["Release"]
+    types: [completed]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  capture:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master (for git push base)
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 1
+
+      - name: Capture failed job logs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -e
+          mkdir -p ci-logs-tmp
+          # 列出該 run 所有 job，挑 conclusion=failure 的
+          gh api "repos/${{ github.repository }}/actions/runs/$RUN_ID/jobs?per_page=100" \
+            --jq '.jobs[] | select(.conclusion=="failure") | [.id, .name] | @tsv' \
+            > failed-jobs.tsv
+          cat failed-jobs.tsv
+          while IFS=$'\t' read -r JOB_ID JOB_NAME; do
+            [ -z "$JOB_ID" ] && continue
+            SAFE=$(echo "$JOB_NAME" | tr -c 'A-Za-z0-9.-' '_' | cut -c1-80)
+            BR="ci-logs/${HEAD_SHA}-release-${SAFE}-${RUN_ATTEMPT}"
+            DIR="ci-logs-tmp/$SAFE"
+            mkdir -p "$DIR"
+            # job logs 在 run 完成後就能拉
+            gh api "repos/${{ github.repository }}/actions/jobs/$JOB_ID/logs" \
+              > "$DIR/job.log" 2>&1 || echo "(failed to fetch job log)" > "$DIR/job.log"
+            {
+              echo "job_id=$JOB_ID"
+              echo "job_name=$JOB_NAME"
+              echo "head_sha=$HEAD_SHA"
+              echo "run_id=$RUN_ID"
+              echo "run_attempt=$RUN_ATTEMPT"
+              echo "size=$(wc -c < "$DIR/job.log")"
+            } > "$DIR/_meta.txt"
+            # 推到孤兒分支
+            (
+              cd "$DIR"
+              git init -q -b "$BR"
+              git config user.email "ci-bot@waypoint"
+              git config user.name "ci-bot"
+              git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+              git add -A
+              git commit -q -m "ci log release $HEAD_SHA $SAFE attempt $RUN_ATTEMPT"
+              git push -f origin "HEAD:refs/heads/$BR"
+            )
+          done < failed-jobs.tsv

@@ -64,12 +64,13 @@ pub fn get_focused_window() -> Option<FocusedWindowInfo> {
         .map(|s| s.to_string())
         .unwrap_or_default();
 
-    let pid = unsafe { app.processIdentifier() } as u32;
-
+    // pid 不取：objc2-app-kit 0.2 的 NSRunningApplication.processIdentifier 在沒有 libc
+    // feature 時不暴露（v0.2.1 起連續失敗 5 個 mac release 都栽在這）。
+    // foreground_watcher::is_self 會用 process_name 比對自家視窗 fallback，效果一樣。
     Some(FocusedWindowInfo {
         process_name: process_name.clone(),
         window_title: process_name,
-        pid: Some(pid),
+        pid: None,
     })
 }
 

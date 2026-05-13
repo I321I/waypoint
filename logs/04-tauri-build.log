@@ -1,0 +1,67 @@
+        Info Looking up installed tauri packages to check mismatched versions...
+        Warn The bundle identifier "com.waypoint.app" set in `"tauri.conf.json" identifier` ends with `.app`. This is not recommended because it conflicts with the application bundle extension on macOS.
+   Compiling waypoint v0.2.10 (D:\a\waypoint\waypoint\waypoint\src-tauri)
+warning: unused import: `crate::context::derive_context_id`
+ --> src\hotkey\mod.rs:1:5
+  |
+1 | use crate::context::derive_context_id;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `crate::storage::app_config`
+ --> src\hotkey\mod.rs:4:5
+  |
+4 | use crate::storage::app_config;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Path`
+ --> src\storage\autostart.rs:1:17
+  |
+1 | use std::path::{Path, PathBuf};
+  |                 ^^^^
+
+warning: variant `ContextNotFound` is never constructed
+  --> src\error.rs:13:5
+   |
+ 5 | pub enum WaypointError {
+   |          ------------- variant in this enum
+...
+13 |     ContextNotFound(String),
+   |     ^^^^^^^^^^^^^^^
+   |
+   = note: `WaypointError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `decide_event` is never used
+  --> src\foreground_watcher.rs:25:15
+   |
+25 | pub(crate) fn decide_event(
+   |               ^^^^^^^^^^^^
+
+warning: variant `OpenList` is never constructed
+  --> src\hotkey\mod.rs:39:5
+   |
+37 | pub enum HotkeyAction {
+   |          ------------ variant in this enum
+38 |     OpenAll,
+39 |     OpenList,
+   |     ^^^^^^^^
+   |
+   = note: `HotkeyAction` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `autostart_path` is never used
+  --> src\storage\autostart.rs:10:4
+   |
+10 | fn autostart_path() -> Option<PathBuf> {
+   |    ^^^^^^^^^^^^^^
+
+warning: function `clear_session` is never used
+  --> src\storage\session.rs:36:8
+   |
+36 | pub fn clear_session(context_id: &str) -> Result<(), WaypointError> {
+   |        ^^^^^^^^^^^^^
+
+warning: `waypoint` (lib) generated 8 warnings (run `cargo fix --lib -p waypoint` to apply 3 suggestions)
+    Finished `release` profile [optimized] target(s) in 1m 22s
+       Built application at: D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe

@@ -36,6 +36,10 @@ modules:
         url: https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz
         sha256: b9cc4a2acd74509435892823607d966d424bd9ad5d0b00938f27240a1bfa878a
     build-options:
+      # libdbusmenu 用過時 glib macro 觸發 -Werror（v0.2.10 ubuntu matrix 卡這）。
+      # 關掉 -Werror，warning 不阻擋 build。
+      cflags: -Wno-error
+      cxxflags: -Wno-error
       env:
         HAVE_VALGRIND_FALSE: '#'
         HAVE_VALGRIND_TRUE: ''
@@ -47,7 +51,7 @@ modules:
       - >-
         ./configure --prefix=/app --with-gtk=3 --disable-dumper --disable-static
         --disable-tests --disable-gtk-doc --disable-introspection --disable-vala
-      - make -j$(nproc)
+      - make -j$(nproc) CFLAGS="-Wno-error -Wno-deprecated-declarations"
       - make install
 
   - name: libayatana-common

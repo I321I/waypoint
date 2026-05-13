@@ -27,23 +27,28 @@ modules:
   # tray-icon (libappindicator-sys) 載不到 .so 會 panic（v0.2.5 起被
   # catch_unwind 吞掉但失去小圖示）。把整條依賴 build 進 flatpak 才會有 tray。
   - name: libdbusmenu-gtk3
-    buildsystem: autotools
-    config-opts:
-      - --with-gtk=3
-      - --disable-dumper
-      - --disable-static
-      - --disable-tests
-      - --disable-gtk-doc
-      - --disable-introspection
-      - --disable-vala
-    build-options:
-      env:
-        HAVE_VALGRIND_FALSE: '#'
-        HAVE_VALGRIND_TRUE: ''
+    # libdbusmenu 16.04.0 的 configure.ac 用過時 IT_PROG_INTLTOOL macro，
+    # 跟 GNOME Sdk//46 內附的新版 intltool 不相容（v0.2.9 ubuntu matrix 卡這）。
+    # 改 simple buildsystem：先把 IT_PROG_INTLTOOL 段拿掉再 autoreconf 重建。
+    buildsystem: simple
     sources:
       - type: archive
         url: https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz
         sha256: b9cc4a2acd74509435892823607d966d424bd9ad5d0b00938f27240a1bfa878a
+    build-options:
+      env:
+        HAVE_VALGRIND_FALSE: '#'
+        HAVE_VALGRIND_TRUE: ''
+    build-commands:
+      - sed -i 's|IT_PROG_INTLTOOL.*||' configure.ac
+      - sed -i '/po-libdbusmenu/d' configure.ac
+      - sed -i '/po-libdbusmenu/d' Makefile.am || true
+      - autoreconf -fi
+      - >-
+        ./configure --prefix=/app --with-gtk=3 --disable-dumper --disable-static
+        --disable-tests --disable-gtk-doc --disable-introspection --disable-vala
+      - make -j$(nproc)
+      - make install
 
   - name: libayatana-common
     buildsystem: cmake-ninja

@@ -45,11 +45,18 @@ modules:
         url: https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz
         sha256: b9cc4a2acd74509435892823607d966d424bd9ad5d0b00938f27240a1bf8e16d
 
-  - name: libayatana-ido
+  - name: libayatana-common
     buildsystem: cmake-ninja
     sources:
       - type: git
-        url: https://github.com/AyatanaIndicators/libayatana-ido.git
+        url: https://github.com/AyatanaIndicators/libayatana-common.git
+        tag: 0.9.11
+
+  - name: ayatana-ido
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/AyatanaIndicators/ayatana-ido.git
         tag: 0.10.4
 
   - name: libayatana-indicator

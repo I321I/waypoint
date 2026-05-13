@@ -23,6 +23,52 @@ finish-args:
   - --device=dri
 
 modules:
+  # libayatana-appindicator chain：org.gnome.Platform/46 不含這 lib，
+  # tray-icon (libappindicator-sys) 載不到 .so 會 panic（v0.2.5 起被
+  # catch_unwind 吞掉但失去小圖示）。把整條依賴 build 進 flatpak 才會有 tray。
+  - name: libdbusmenu-gtk3
+    buildsystem: autotools
+    config-opts:
+      - --with-gtk=3
+      - --disable-dumper
+      - --disable-static
+      - --disable-tests
+      - --disable-gtk-doc
+      - --disable-introspection
+      - --disable-vala
+    build-options:
+      env:
+        HAVE_VALGRIND_FALSE: '#'
+        HAVE_VALGRIND_TRUE: ''
+    sources:
+      - type: archive
+        url: https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz
+        sha256: b9cc4a2acd74509435892823607d966d424bd9ad5d0b00938f27240a1bf8e16d
+
+  - name: libayatana-ido
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/AyatanaIndicators/libayatana-ido.git
+        tag: 0.10.4
+
+  - name: libayatana-indicator
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/AyatanaIndicators/libayatana-indicator.git
+        tag: 0.9.4
+
+  - name: libayatana-appindicator
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DENABLE_BINDINGS_MONO=NO
+      - -DENABLE_BINDINGS_VALA=NO
+    sources:
+      - type: git
+        url: https://github.com/AyatanaIndicators/libayatana-appindicator.git
+        tag: 0.5.93
+
   - name: waypoint
     buildsystem: simple
     build-commands:

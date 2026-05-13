@@ -302,6 +302,7 @@
     padding: 8px 12px 4px;
     background: transparent;
     border-bottom: 1px solid var(--border);
+    flex-shrink: 0;  /* 防 editor-area flex: 1 把 title-row 擠扁 */
   }
   .title-input {
     width: 100%;
@@ -310,7 +311,13 @@
     color: var(--text-primary);
     font-size: 16px;
     font-weight: 600;
-    padding: 2px 0;
+    padding: 4px 0;
+    /* Linux WebKitGTK 上 input 不認 unitless line-height、預設 box 高 = font-size，
+       導致 baseline 跑出 box 只剩 descender 可見（v0.2.7~0.2.10 user 回報「title 只剩下 1/5」）。
+       顯式 line-height + min-height 強制撐開到正常行高。 */
+    line-height: 1.4;
+    min-height: 28px;
+    box-sizing: content-box;
   }
   .title-input:focus { outline: none; border-bottom: 1px solid var(--accent); }
   .editor-area { display: flex; flex: 1; overflow: hidden; }

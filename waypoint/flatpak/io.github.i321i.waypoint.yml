@@ -51,8 +51,11 @@ modules:
       - sed -i 's|IT_PROG_INTLTOOL.*||g' configure.ac
       - sed -i '/po\/Makefile/d' configure.ac
       - sed -i '/po\/POTFILES/d' configure.ac
-      - sed -i 's|^[[:space:]]*po[[:space:]]*\\\?$||g' Makefile.am || true
-      - sed -i 's|\bpo\b||g' Makefile.am || true
+      # 整行刪：包含「po」且只有 po 跟（可選）反斜線/空白的行。
+      # 避免 v0.2.13 的雷：只 sed 掉 "po" 但留下「空白+\」造成 automake
+      # "blank line following trailing backslash" 錯誤。
+      - sed -i '/^[[:space:]]*po[[:space:]]*\\\{0,1\}[[:space:]]*$/d' Makefile.am || true
+      - sed -i '/^[[:space:]]*po\/Makefile/d' Makefile.am || true
       - rm -rf po/
       - autoreconf -fi </dev/null
       - >-

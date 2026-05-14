@@ -48,14 +48,16 @@ modules:
       # po/Makefile.in 與 po/POTFILES 引用、Makefile.am 的 po SUBDIR、
       # 還有 po/ 子目錄本體。不這樣做，subdir 的 config.status 會回呼 parent
       # 重建 po/Makefile.in 進入無限遞迴（v0.2.12 9 萬+次 config.status 把 90min timeout 吃光）。
-      - sed -i 's|IT_PROG_INTLTOOL.*||g' configure.ac
-      - sed -i '/po\/Makefile/d' configure.ac
-      - sed -i '/po\/POTFILES/d' configure.ac
-      # 整行刪：包含「po」且只有 po 跟（可選）反斜線/空白的行。
-      # 避免 v0.2.13 的雷：只 sed 掉 "po" 但留下「空白+\」造成 automake
-      # "blank line following trailing backslash" 錯誤。
-      - sed -i '/^[[:space:]]*po[[:space:]]*\\\{0,1\}[[:space:]]*$/d' Makefile.am || true
-      - sed -i '/^[[:space:]]*po\/Makefile/d' Makefile.am || true
+      # 改 perl：BRE quantifier escape 太脆弱（v0.2.13/14 sed 沒匹配到，automake 還是炸）。
+      - echo "--- Makefile.am before patch ---"
+      - grep -n . Makefile.am | head -40
+      - perl -i -pe 's/IT_PROG_INTLTOOL.*//g' configure.ac
+      - perl -i -ne 'print unless m{po/Makefile} || m{po/POTFILES}' configure.ac
+      - perl -i -ne 'print unless m{^\s*po\s*\\?\s*$} || m{^\s*po/Makefile}' Makefile.am
+      # 還可能 po 跟其他 SUBDIRS 同行（不換行）：把 po 整段（含前後空白與可選反斜線）替換成單一空白
+      - perl -i -pe 's/(?<=\s)po(?=[\s\\]|$)\s*\\?\s*/ /g' Makefile.am
+      - echo "--- Makefile.am after patch ---"
+      - grep -n . Makefile.am | head -40
       - rm -rf po/
       - autoreconf -fi </dev/null
       - >-

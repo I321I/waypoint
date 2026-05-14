@@ -56,6 +56,9 @@ modules:
       - perl -i -ne 'print unless m{^\s*po\s*\\?\s*$} || m{^\s*po/Makefile}' Makefile.am
       # 還可能 po 跟其他 SUBDIRS 同行（不換行）：把 po 整段（含前後空白與可選反斜線）替換成單一空白
       - perl -i -pe 's/(?<=\s)po(?=[\s\\]|$)\s*\\?\s*/ /g' Makefile.am
+      # 拔掉 dangling backslash：v0.2.15 看 debug 後發現 po 是 SUBDIRS 最後一個 entry，
+      # 刪掉它後前一行 (	docs \) 的 \ 變成接空行，automake 罵 "blank line following trailing backslash"。
+      - perl -i -p0e 's/\\([ \t]*\n[ \t]*\n)/$1/g' Makefile.am
       - echo "--- Makefile.am after patch ---"
       - grep -n . Makefile.am | head -40
       - rm -rf po/

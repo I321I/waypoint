@@ -69,6 +69,18 @@ modules:
       - make -j$(nproc) CFLAGS="-Wno-error -Wno-deprecated-declarations"
       - make install
 
+  - name: extra-cmake-modules
+    # libayatana-common data/CMakeLists.txt 呼叫 find_package(GSettings REQUIRED)
+    # 但 libayatana-common 自己沒附 FindGSettings.cmake（只有 FindGObjectIntrospection / FindVala）。
+    # KDE ECM 提供 FindGSettings.cmake + add_schema() macro，必須先 build 進去。
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_TESTING=OFF
+    sources:
+      - type: git
+        url: https://invent.kde.org/frameworks/extra-cmake-modules.git
+        tag: v6.0.0
+
   - name: libayatana-common
     buildsystem: cmake-ninja
     sources:

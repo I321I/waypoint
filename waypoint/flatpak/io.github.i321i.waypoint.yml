@@ -69,24 +69,20 @@ modules:
       - make -j$(nproc) CFLAGS="-Wno-error -Wno-deprecated-declarations"
       - make install
 
-  - name: extra-cmake-modules
-    # libayatana-common data/CMakeLists.txt 呼叫 find_package(GSettings REQUIRED)
-    # 但 libayatana-common 自己沒附 FindGSettings.cmake（只有 FindGObjectIntrospection / FindVala）。
-    # KDE ECM 提供 FindGSettings.cmake + add_schema() macro，必須先 build 進去。
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DBUILD_TESTING=OFF
-    sources:
-      - type: git
-        url: https://invent.kde.org/frameworks/extra-cmake-modules.git
-        tag: v6.0.0
-
   - name: libayatana-common
+    # libayatana-common data/CMakeLists.txt 呼叫 find_package(GSettings REQUIRED)
+    # + add_schema()，正常由 Debian cmake-extras 提供 FindGSettings.cmake。
+    # flatpak runtime 跟 ECM v6.0.0 都沒有（v0.2.16/17 卡這），自附最小實作
+    # 塞進 source dir 的 cmake/，libayatana-common 主 CMakeLists.txt 已把
+    # ${CMAKE_SOURCE_DIR}/cmake 加進 CMAKE_MODULE_PATH，會自動找到。
     buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/AyatanaIndicators/libayatana-common.git
         tag: 0.9.11
+      - type: file
+        path: FindGSettings.cmake
+        dest: cmake
 
   - name: ayatana-ido
     buildsystem: cmake-ninja

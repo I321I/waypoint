@@ -106,6 +106,9 @@ modules:
     config-opts:
       - -DENABLE_BINDINGS_MONO=NO
       - -DENABLE_BINDINGS_VALA=NO
+      # gtk-doc scangobj 連結時找不到 /app/lib 裡剛裝的 libs（v0.2.19 卡這），
+      # waypoint 也不需要 API 文件，直接關掉
+      - -DENABLE_GTKDOC=NO
     sources:
       - type: git
         url: https://github.com/AyatanaIndicators/libayatana-appindicator.git

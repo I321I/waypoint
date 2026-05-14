@@ -1,0 +1,8 @@
+platform=ubuntu-22.04-arm
+args=--target aarch64-unknown-linux-gnu
+runner_os=Linux runnervm23rtf 6.8.0-1044-azure #50~22.04.1-Ubuntu SMP Wed Dec  3 15:16:03 UTC 2025 aarch64 aarch64 aarch64 GNU/Linux
+rustc=rustc 1.95.0 (59807616e 2026-04-14)
+cargo=cargo 1.95.0 (f2d3ce0bd 2026-03-21)
+github.sha=11a0e0d8c083f4166a53aff21750a25314829a10
+github.run_id=25858337708
+github.run_attempt=1

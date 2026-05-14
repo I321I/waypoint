@@ -14,6 +14,11 @@ pub struct AppState {
     pub pre_passthrough_list_open: AtomicBool,
     /// 開啟中的筆記視窗：noteId -> contextId（None=global）。close-requested 時用以 emit 正確 isGlobal。
     pub open_notes_context: Mutex<HashMap<String, Option<String>>>,
+    /// active_mode：使用者呼叫 Waypoint 後為 true，foreground_watcher 才會發
+    /// active-context-changed event 給前端切換筆記區域。手動收起（hotkey
+    /// CollapseAll / list ✕）後為 false，使用者切換 app 不再觸發筆記跳動。
+    /// 啟動時預設 true（vc 用戶體感「剛開就應該開始追蹤」）。
+    pub active_mode: AtomicBool,
 }
 
 impl Default for AppState {
@@ -26,6 +31,7 @@ impl Default for AppState {
             passthrough_hotkey_registered: AtomicBool::new(true),
             pre_passthrough_list_open: AtomicBool::new(false),
             open_notes_context: Mutex::new(HashMap::new()),
+            active_mode: AtomicBool::new(true),
         }
     }
 }

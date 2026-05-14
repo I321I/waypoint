@@ -83,6 +83,9 @@ modules:
       - type: file
         path: FindGSettings.cmake
         dest: cmake
+      - type: file
+        path: FindIntltool.cmake
+        dest: cmake
 
   - name: ayatana-ido
     buildsystem: cmake-ninja

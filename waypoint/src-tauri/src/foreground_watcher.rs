@@ -131,6 +131,10 @@ fn run(app: AppHandle, self_proc: String, self_pid: u32) {
         }
 
         let state = app.state::<crate::state::AppState>();
+        // active_mode 為 false 時不發 active-context-changed（使用者已收起 Waypoint，
+        // 不想要切視窗時筆記跟著跳）。仍維護 active_context_id 給後續呼叫時取得正確
+        // context，避免使用者按 OpenAll 時叫出舊 context 的筆記。
+        let mode_active = state.active_mode.load(std::sync::atomic::Ordering::SeqCst);
         let changed = {
             let mut active = state.active_context_id.lock().unwrap();
             if active.as_deref() == Some(&ctx_id) {
@@ -141,11 +145,15 @@ fn run(app: AppHandle, self_proc: String, self_pid: u32) {
                 true
             }
         };
-        if changed {
+        if changed && mode_active {
             crate::write_log_line(&format!(
                 "active-context-changed: emit ctx_id={ctx_id}"
             ));
             let _ = app.emit("waypoint://active-context-changed", &ctx_id);
+        } else if changed {
+            crate::write_log_line(&format!(
+                "active-context-changed: SKIP (inactive) ctx_id={ctx_id}"
+            ));
         }
     }
 }

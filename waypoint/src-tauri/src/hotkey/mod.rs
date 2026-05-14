@@ -2,7 +2,7 @@ use crate::context::derive_context_id;
 use crate::context::detector::get_focused_window;
 use crate::state::AppState;
 use crate::storage::app_config;
-use std::sync::atomic::{AtomicU64, AtomicU8, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, AtomicU8, Ordering};
 use std::sync::{Mutex, OnceLock};
 use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder, WebviewUrl};
@@ -19,12 +19,16 @@ fn hotkey_inflight() -> &'static Mutex<()> {
 static HOTKEY_PENDING: AtomicU8 = AtomicU8::new(0);
 const HOTKEY_PENDING_CAP: u8 = 8;
 
-/// Debounce：同一個物理按壓被 OS auto-repeat 連射成 20+ 次 callback，
-/// 必須以 timestamp 過濾。實測 keyboard repeat rate ≈ 30Hz (33ms 間隔)，
-/// 設 250ms 足以吃掉一次 hold，又不影響使用者連續快速兩次有意按壓。
-/// 並把 frontend handleCollapseAll 的 async IPC + hide 完成時間也包進來。
+/// hotkey 按住偵測：一個物理按壓會被 OS auto-repeat 連射多次 Pressed event。
+/// 改用 press/release 配對：HOLDING=true 表示 OS 還在送 hold 期間，後續 Pressed
+/// 一律忽略；收到 Released 才清掉 HOLDING，下次 Pressed 才能 fire。
+/// 這樣連按 N 次（每次都 release）= fire N 次，按住不放 = fire 1 次。
+/// 解 v0.2.18 使用者回報「快速按 hotkey 結果跟奇偶次數對不起來」。
+static HOLDING: AtomicBool = AtomicBool::new(false);
+/// 安全網：如果 OS 沒送 Released event（某些平台/環境），HOLDING 永遠 true 會卡住。
+/// 同時保留 timestamp，>500ms 沒新 Pressed 就強制清 HOLDING。
 static LAST_FIRE_MS: AtomicU64 = AtomicU64::new(0);
-const HOTKEY_DEBOUNCE_MS: u64 = 250;
+const HOLDING_TIMEOUT_MS: u64 = 500;
 
 fn now_ms() -> u64 {
     SystemTime::now()
@@ -53,21 +57,28 @@ pub fn determine_action(list_open: bool, any_note_open: bool) -> HotkeyAction {
 
 pub fn register_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std::error::Error>> {
     app.global_shortcut().on_shortcut(hotkey, move |app, _shortcut, event| {
+        // Released event：清 HOLDING，下次 Pressed 才能 fire。
+        if event.state == ShortcutState::Released {
+            HOLDING.store(false, Ordering::SeqCst);
+            return;
+        }
         if event.state != ShortcutState::Pressed {
             return;
         }
-        // Debounce key-repeat：250ms 內的 callback 直接丟棄，不進 inflight、不累 pending。
-        // 不這樣做的話一個 hold/repeat 會被當成 20+ 次 toggle，最終狀態取決於奇偶數，
-        // 使用者體感「按了沒反應」或「自己跳回去」（v0.2.7 user 回報）。
+        // Press/Release 配對 + 超時兜底：
+        // - HOLDING 為 true 表示 OS 還在送 hold 期間的 auto-repeat，忽略。
+        // - HOLDING 為 false 但距離上次 fire 還在 HOLDING_TIMEOUT_MS 內，也視為 hold 延續（OS 沒送 Released 的 fallback）。
         let now = now_ms();
         let last = LAST_FIRE_MS.load(Ordering::SeqCst);
-        if now.saturating_sub(last) < HOTKEY_DEBOUNCE_MS {
+        let still_hot = now.saturating_sub(last) < HOLDING_TIMEOUT_MS;
+        if HOLDING.load(Ordering::SeqCst) && still_hot {
             crate::write_log_line(&format!(
-                "hotkey debounced: now={} last={} dt={}ms",
-                now, last, now - last
+                "hotkey held: dt={}ms from last fire — ignore auto-repeat",
+                now.saturating_sub(last)
             ));
             return;
         }
+        HOLDING.store(true, Ordering::SeqCst);
         LAST_FIRE_MS.store(now, Ordering::SeqCst);
         let _guard = match hotkey_inflight().try_lock() {
             Ok(g) => g,
@@ -117,12 +128,19 @@ fn run_hotkey_cycle(app: &AppHandle) {
         let _ = window_info;
         match action {
             HotkeyAction::OpenAll => {
+                // 使用者明確呼叫 Waypoint：開啟 active_mode，foreground_watcher
+                // 開始隨切換 app 換 context。
+                state.active_mode.store(true, Ordering::SeqCst);
                 let _ = open_list_window(app);
             }
             HotkeyAction::OpenList => {
+                state.active_mode.store(true, Ordering::SeqCst);
                 let _ = open_list_window(app);
             }
             HotkeyAction::CollapseAll => {
+                // 使用者明確收起：關閉 active_mode，後續切視窗不會再切 context。
+                // 下次叫出時會用當下視窗的 ctx_id 載入對應筆記。
+                state.active_mode.store(false, Ordering::SeqCst);
                 // Emit event so frontend can save session before collapsing
                 let _ = app.emit("waypoint://collapse-all-requested", ());
                 // Also collapse after a brief delay to handle case
@@ -158,6 +176,8 @@ pub fn reregister_passthrough_hotkey(app: &AppHandle, old_hotkey: &str, new_hotk
 
 pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
     let state = app.state::<AppState>();
+    // tray click、cmd_open_list、初始啟動都會走這裡 → 啟動 active_mode。
+    state.active_mode.store(true, Ordering::SeqCst);
     if let Some(win) = app.get_webview_window("list") {
         win.unminimize().ok();
         win.show()?;
@@ -193,6 +213,9 @@ pub fn collapse_all_waypoint_windows(app: &AppHandle) {
     }
     let state = app.state::<AppState>();
     *state.list_window_open.lock().unwrap() = false;
+    // 程式化 collapse（cmd_collapse_all、列表 ✕ 鈕、tray "collapse" item）也算
+    // 使用者明確要收起 → 關閉 active_mode 停止 context 跟隨切換。
+    state.active_mode.store(false, Ordering::SeqCst);
     crate::taskbar::refresh_taskbar_visibility(app);
 }
 
@@ -302,6 +325,8 @@ pub fn cmd_hide_window(app: AppHandle, label: String) -> Result<(), String> {
         if label == "list" {
             let state = app.state::<crate::state::AppState>();
             *state.list_window_open.lock().unwrap() = false;
+            // 列表 ✕ 鈕（minimize/hide）也算使用者收起 → 關閉 active_mode。
+            state.active_mode.store(false, Ordering::SeqCst);
         }
     }
     Ok(())

@@ -25,6 +25,9 @@ jobs:
             args: '--target universal-apple-darwin'
 
     runs-on: ${{ matrix.platform }}
+    # 不依賴 GitHub 預設 360 min job timeout — flatpak chain 卡住會吃光 6h 才被砍且 conclusion=cancelled
+    # 沒 step-timeout 因此沒 ci-logs（v0.2.11 ubuntu 兩個就栽在這）。90 min 是大 step 上限。
+    timeout-minutes: 90
 
     steps:
       - name: Checkout

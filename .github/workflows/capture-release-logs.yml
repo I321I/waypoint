@@ -17,7 +17,8 @@ permissions:
 
 jobs:
   capture:
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    # 也抓 cancelled：job timeout 或 manual cancel 都看得到 log（v0.2.11 6h timeout 因此沒 log）
+    if: ${{ github.event.workflow_run.conclusion == 'failure' || github.event.workflow_run.conclusion == 'cancelled' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master (for git push base)
@@ -37,7 +38,7 @@ jobs:
           mkdir -p ci-logs-tmp
           # 列出該 run 所有 job，挑 conclusion=failure 的
           gh api "repos/${{ github.repository }}/actions/runs/$RUN_ID/jobs?per_page=100" \
-            --jq '.jobs[] | select(.conclusion=="failure") | [.id, .name] | @tsv' \
+            --jq '.jobs[] | select(.conclusion=="failure" or .conclusion=="cancelled") | [.id, .name] | @tsv' \
             > failed-jobs.tsv
           cat failed-jobs.tsv
           while IFS=$'\t' read -r JOB_ID JOB_NAME; do

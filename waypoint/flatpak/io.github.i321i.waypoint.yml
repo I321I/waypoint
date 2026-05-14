@@ -47,7 +47,8 @@ modules:
       - sed -i 's|IT_PROG_INTLTOOL.*||' configure.ac
       - sed -i '/po-libdbusmenu/d' configure.ac
       - sed -i '/po-libdbusmenu/d' Makefile.am || true
-      - autoreconf -fi
+      # </dev/null 防 autoreconf/autopoint 在 CI headless 環境等 stdin 卡死
+      - autoreconf -fi </dev/null
       - >-
         ./configure --prefix=/app --with-gtk=3 --disable-dumper --disable-static
         --disable-tests --disable-gtk-doc --disable-introspection --disable-vala

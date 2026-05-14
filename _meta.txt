@@ -1,0 +1,6 @@
+job_id=75996482475
+job_name=release (ubuntu-22.04-arm, --target aarch64-unknown-linux-gnu)
+head_sha=86ac0ad8a24869285e6cbfdd2619d641ae23bb98
+run_id=25862703399
+run_attempt=1
+size=372492

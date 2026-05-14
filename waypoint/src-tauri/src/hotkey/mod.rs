@@ -127,36 +127,86 @@ fn run_hotkey_cycle(app: &AppHandle) {
         // 場景下污染 state 變成 ctx="waypoint"，閃一下才被 watcher 修回）。
         let _ = window_info;
         match action {
-            HotkeyAction::OpenAll => {
-                // 使用者明確呼叫 Waypoint：開啟 active_mode，foreground_watcher
-                // 開始隨切換 app 換 context。
+            HotkeyAction::OpenAll | HotkeyAction::OpenList => {
+                // 使用者明確呼叫：開啟 list + 還原上次 session 中的 note。
+                // 全部在 Rust 端同步完成，避免 frontend 的 loadContextAndSession async
+                // 跟 handleCollapseAll async 在快速連按 hotkey 時 race，造成 list/note 不同步。
                 state.active_mode.store(true, Ordering::SeqCst);
                 let _ = open_list_window(app);
-            }
-            HotkeyAction::OpenList => {
-                state.active_mode.store(true, Ordering::SeqCst);
-                let _ = open_list_window(app);
+                restore_notes_from_session(app);
             }
             HotkeyAction::CollapseAll => {
-                // 使用者明確收起：關閉 active_mode，後續切視窗不會再切 context。
-                // 下次叫出時會用當下視窗的 ctx_id 載入對應筆記。
-                state.active_mode.store(false, Ordering::SeqCst);
-                // Emit event so frontend can save session before collapsing
+                // 收起前先存 session，再 hide 所有視窗。同樣 Rust sync，不依賴 frontend。
+                save_current_session(app);
+                collapse_all_waypoint_windows(app);
+                // active_mode 由 collapse_all_waypoint_windows 內設 false
+                // 通知 frontend 也跟著存（如有額外狀態）並更新 UI
                 let _ = app.emit("waypoint://collapse-all-requested", ());
-                // Also collapse after a brief delay to handle case
-                // where list window is not mounted (safety fallback)
-                let app2 = app.clone();
-                std::thread::spawn(move || {
-                    std::thread::sleep(std::time::Duration::from_millis(200));
-                    // Only collapse if list window still exists (frontend may have already handled it)
-                    if let Some(list) = app2.get_webview_window("list") {
-                        if list.is_visible().unwrap_or(false) {
-                            collapse_all_waypoint_windows(&app2);
-                        }
-                    }
-                });
             }
         }
+}
+
+/// 收起 + 存 session：用 Rust state.open_notes_context 跟視窗 is_visible() 算出當下開著
+/// 的 note，寫進 current context 的 session.json。避免 frontend 同樣邏輯的 async race。
+fn save_current_session(app: &AppHandle) {
+    let state = app.state::<AppState>();
+    let active_ctx = state.active_context_id.lock().unwrap().clone();
+    let session_key = active_ctx.clone().unwrap_or_else(|| "_global_only_".to_string());
+
+    let mut open_context_notes = Vec::new();
+    let mut open_global_notes = Vec::new();
+    if let Ok(map) = state.open_notes_context.lock() {
+        for (note_id, ctx) in map.iter() {
+            let label = format!("note-{}", note_id);
+            let visible = app
+                .get_webview_window(&label)
+                .and_then(|w| w.is_visible().ok())
+                .unwrap_or(false);
+            if !visible {
+                continue;
+            }
+            match ctx {
+                None => open_global_notes.push(note_id.clone()),
+                Some(c) => {
+                    if active_ctx.as_deref() == Some(c.as_str()) {
+                        open_context_notes.push(note_id.clone());
+                    }
+                }
+            }
+        }
+    }
+    let sess = crate::storage::session::Session {
+        open_context_notes,
+        open_global_notes,
+    };
+    let _ = crate::storage::session::save_session(&session_key, &sess);
+    crate::write_log_line(&format!(
+        "save_current_session: key={} ctx_n={} global_n={}",
+        session_key, sess.open_context_notes.len(), sess.open_global_notes.len()
+    ));
+}
+
+/// 還原上次 session：讀 current context 的 session.json，open_note_window 每個 saved note。
+/// 同樣放 Rust 端避免 frontend race（按下 hotkey 的瞬間，frontend 還沒處理完上次的請求就被
+/// 下個請求蓋掉，會造成 list/note 不同步開關）。
+fn restore_notes_from_session(app: &AppHandle) {
+    let state = app.state::<AppState>();
+    let active_ctx = state.active_context_id.lock().unwrap().clone();
+    let session_key = active_ctx.clone().unwrap_or_else(|| "_global_only_".to_string());
+    if let Ok(sess) = crate::storage::session::load_session(&session_key) {
+        crate::write_log_line(&format!(
+            "restore_notes_from_session: key={} ctx_n={} global_n={}",
+            session_key, sess.open_context_notes.len(), sess.open_global_notes.len()
+        ));
+        if let Some(ctx) = active_ctx.as_deref() {
+            for note_id in &sess.open_context_notes {
+                let _ = open_note_window(app, note_id, Some(ctx));
+            }
+        }
+        for note_id in &sess.open_global_notes {
+            let _ = open_note_window(app, note_id, None);
+        }
+    }
 }
 
 pub fn register_passthrough_hotkey(app: &AppHandle, hotkey: &str) -> Result<(), Box<dyn std::error::Error>> {
@@ -186,6 +236,9 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         let _ = win.set_always_on_top(true);
         win.set_focus()?;
         *state.list_window_open.lock().unwrap() = true;
+        // re-show 路徑也要 refresh_taskbar_visibility：collapse 時被設 skip_taskbar(true)，
+        // re-show 沒重設 → Windows 工作列不顯示 waypoint icon（v0.2.20 user 回報）。
+        crate::taskbar::refresh_taskbar_visibility(app);
         // 通知前端重新載入 context / session（再叫出時也會套用新 context）
         let _ = app.emit("waypoint://list-shown", ());
         return Ok(());
@@ -231,7 +284,12 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
     }
     if let Some(win) = app.get_webview_window(&label) {
         win.show()?;
+        // 同 open_list_window：set_always_on_top toggle 強制 raise，KDE/GNOME 才會把
+        // 筆記視窗帶到最上層（v0.2.20 Linux user 回報 hotkey 開出來的筆記不在最上層）。
+        let _ = win.set_always_on_top(true);
         win.set_focus()?;
+        // re-show 也要 refresh_taskbar_visibility：避免 collapse 後重開 note 工作列消失。
+        crate::taskbar::refresh_taskbar_visibility(app);
         return Ok(());
     }
     let ctx_param = context_id.map(|c| format!("&contextId={}", c)).unwrap_or_default();

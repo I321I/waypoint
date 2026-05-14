@@ -44,10 +44,16 @@ modules:
         HAVE_VALGRIND_FALSE: '#'
         HAVE_VALGRIND_TRUE: ''
     build-commands:
-      - sed -i 's|IT_PROG_INTLTOOL.*||' configure.ac
-      - sed -i '/po-libdbusmenu/d' configure.ac
-      - sed -i '/po-libdbusmenu/d' Makefile.am || true
-      # </dev/null 防 autoreconf/autopoint 在 CI headless 環境等 stdin 卡死
+      # 全方面拿掉 intltool / po：configure.ac 的 IT_PROG_INTLTOOL macro、
+      # po/Makefile.in 與 po/POTFILES 引用、Makefile.am 的 po SUBDIR、
+      # 還有 po/ 子目錄本體。不這樣做，subdir 的 config.status 會回呼 parent
+      # 重建 po/Makefile.in 進入無限遞迴（v0.2.12 9 萬+次 config.status 把 90min timeout 吃光）。
+      - sed -i 's|IT_PROG_INTLTOOL.*||g' configure.ac
+      - sed -i '/po\/Makefile/d' configure.ac
+      - sed -i '/po\/POTFILES/d' configure.ac
+      - sed -i 's|^[[:space:]]*po[[:space:]]*\\\?$||g' Makefile.am || true
+      - sed -i 's|\bpo\b||g' Makefile.am || true
+      - rm -rf po/
       - autoreconf -fi </dev/null
       - >-
         ./configure --prefix=/app --with-gtk=3 --disable-dumper --disable-static

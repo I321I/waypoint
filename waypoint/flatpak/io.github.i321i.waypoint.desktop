@@ -6,3 +6,6 @@ Icon=io.github.i321i.waypoint
 Type=Application
 Categories=Utility;
 StartupNotify=false
+# 讓 KDE/GNOME taskbar 把所有 waypoint 視窗（list + note-*）group 到同一個 entry。
+# 沒設這個的話 Tauri 各視窗的 WM_CLASS instance 不同（list / note-xxx），會被分成多個。
+StartupWMClass=waypoint

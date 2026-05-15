@@ -48,8 +48,25 @@ pub fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
         }
     });
 
+    // Linux/Steam Deck 上 libayatana-appindicator 透過 KSNI / StatusNotifierItem 顯示 tray icon。
+    // Tauri 的 default_window_icon() 是 RGBA bytes，傳給 appindicator 在某些 KDE Plasma 環境
+    // 會出現「圖示透明 / 沒貼上」（v0.2.20 user 回報）。直接讀 flatpak 安裝路徑的 png 比較穩。
+    let tray_icon = {
+        #[cfg(target_os = "linux")]
+        {
+            let path = "/app/share/icons/hicolor/128x128/apps/io.github.i321i.waypoint.png";
+            tauri::image::Image::from_path(path)
+                .ok()
+                .unwrap_or_else(|| app.default_window_icon().unwrap().clone())
+        }
+        #[cfg(not(target_os = "linux"))]
+        {
+            app.default_window_icon().unwrap().clone()
+        }
+    };
+
     TrayIconBuilder::new()
-        .icon(app.default_window_icon().unwrap().clone())
+        .icon(tray_icon)
         .menu(&menu)
         // Windows：左鍵開視窗，右鍵才跑選單
         // Linux/macOS：左鍵保持平台預設（GTK/KDE 通常左鍵顯示選單）

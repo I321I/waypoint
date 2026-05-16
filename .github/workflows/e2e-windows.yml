@@ -62,13 +62,31 @@ jobs:
         shell: pwsh
         run: npx tauri build --no-bundle *>&1 | Tee-Object -FilePath logs/04-tauri-build.log; exit $LASTEXITCODE
 
-      - name: Locate msedgedriver (windows-latest 內建)
+      - name: Download msedgedriver matching installed Edge version
+        # runner 內建的 msedgedriver (C:\SeleniumWebDrivers) 跟 Edge browser 各自更新，
+        # 經常不對版（v0.2.21~v0.2.23 e2e-windows 連續紅，driver 148 / browser 147）。
+        # 改成偵測 Edge 真實版本後從 Microsoft CDN 抓對應 driver。
         shell: pwsh
         run: |
-          $driver = Get-ChildItem -Path "C:\SeleniumWebDrivers" -Recurse -Filter msedgedriver.exe -ErrorAction SilentlyContinue | Select-Object -First 1
-          if (-not $driver) { throw "msedgedriver.exe 找不到" }
+          $edgePath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+          if (-not (Test-Path $edgePath)) {
+            $edgePath = "C:\Program Files\Microsoft\Edge\Application\msedge.exe"
+          }
+          if (-not (Test-Path $edgePath)) { throw "msedge.exe 找不到" }
+          $version = (Get-Item $edgePath).VersionInfo.FileVersion
+          Write-Host "Edge browser version: $version"
+          $url = "https://msedgedriver.azureedge.net/$version/edgedriver_win64.zip"
+          $zip = "$env:TEMP\edgedriver.zip"
+          $dest = "$env:TEMP\edgedriver"
+          Write-Host "Downloading $url"
+          Invoke-WebRequest -Uri $url -OutFile $zip
+          if (Test-Path $dest) { Remove-Item -Recurse -Force $dest }
+          Expand-Archive -Path $zip -DestinationPath $dest -Force
+          $driver = Get-ChildItem -Path $dest -Recurse -Filter msedgedriver.exe | Select-Object -First 1
+          if (-not $driver) { throw "msedgedriver.exe 解壓後找不到" }
           Add-Content $env:GITHUB_PATH $driver.DirectoryName
           Write-Host "msedgedriver at $($driver.FullName)"
+          & $driver.FullName --version
 
       - name: Run E2E tests (capture stdout/stderr)
         working-directory: waypoint

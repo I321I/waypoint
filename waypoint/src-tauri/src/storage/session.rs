@@ -18,8 +18,37 @@ pub fn load_session(context_id: &str) -> Result<Session, WaypointError> {
     }
     let content = std::fs::read_to_string(&path)?;
     let mut sess: Session = serde_json::from_str(&content)?;
-    sess.open_context_notes.retain(|id| crate::storage::notes::note_exists(Some(context_id), id));
-    sess.open_global_notes.retain(|id| crate::storage::notes::note_exists(None, id));
+    let raw_ctx_n = sess.open_context_notes.len();
+    let raw_global_n = sess.open_global_notes.len();
+    // 過濾不存在的 note；log 被砍掉的 id 用來抓 session 資料跟 filesystem 不一致 bug
+    // （v0.2.22 user 回報 save ctx_n=1 但 restore ctx_n=0，filter 把它吃掉了）
+    sess.open_context_notes.retain(|id| {
+        let exists = crate::storage::notes::note_exists(Some(context_id), id);
+        if !exists {
+            crate::write_log_line(&format!(
+                "load_session: filter dropped ctx_note id={} ctx={} (no dir on disk)",
+                id, context_id
+            ));
+        }
+        exists
+    });
+    sess.open_global_notes.retain(|id| {
+        let exists = crate::storage::notes::note_exists(None, id);
+        if !exists {
+            crate::write_log_line(&format!(
+                "load_session: filter dropped global_note id={} (no dir on disk)",
+                id
+            ));
+        }
+        exists
+    });
+    if raw_ctx_n != sess.open_context_notes.len() || raw_global_n != sess.open_global_notes.len() {
+        crate::write_log_line(&format!(
+            "load_session: ctx={} raw=(ctx_n={},global_n={}) filtered=(ctx_n={},global_n={})",
+            context_id, raw_ctx_n, raw_global_n,
+            sess.open_context_notes.len(), sess.open_global_notes.len()
+        ));
+    }
     Ok(sess)
 }
 

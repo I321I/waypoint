@@ -346,14 +346,21 @@ pub fn cmd_close_note_window(app: AppHandle, note_id: String) -> Result<(), Stri
 fn save_geometry_to_settings(win: &tauri::WebviewWindow, note_id: &str) {
     let pos = match win.outer_position() { Ok(p) => p, Err(_) => return };
     let size = match win.outer_size() { Ok(s) => s, Err(_) => return };
+    // Tauri 的 outer_position/outer_size 回傳 physical px，但 WebviewWindowBuilder
+    // 的 .position()/.inner_size() 接的是 logical px。在 1.5×/2× DPI 螢幕（典型
+    // Windows）若直接 save physical → restore 當 logical 用，每次開關視窗會放大
+    // 1.5×/2×、位置也偏（v0.2.22 user 回報）。透過 scale_factor 換算 logical 才正確。
+    let scale = win.scale_factor().unwrap_or(1.0);
+    let logical_pos = pos.to_logical::<f64>(scale);
+    let logical_size = size.to_logical::<f64>(scale);
     let url = win.url().map(|u| u.to_string()).unwrap_or_default();
     let ctx = crate::commands::passthrough_cmd::parse_context_id_from_url(&url);
     if let Ok(mut note) = crate::storage::notes::read_note(ctx.as_deref(), note_id) {
         note.settings.window_bounds = Some(crate::storage::notes::WindowBounds {
-            x: pos.x,
-            y: pos.y,
-            width: size.width,
-            height: size.height,
+            x: logical_pos.x.round() as i32,
+            y: logical_pos.y.round() as i32,
+            width: logical_size.width.round() as u32,
+            height: logical_size.height.round() as u32,
         });
         let _ = crate::storage::notes::save_settings(ctx.as_deref(), note_id, &note.settings);
     }

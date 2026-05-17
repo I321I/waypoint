@@ -88,14 +88,25 @@ jobs:
           $ErrorActionPreference = 'Stop'
           New-Item -ItemType Directory -Force -Path logs | Out-Null
           Start-Transcript -Path "logs\05-msedgedriver-setup.log" -Force
-          $edgePath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-          if (-not (Test-Path $edgePath)) {
-            $edgePath = "C:\Program Files\Microsoft\Edge\Application\msedge.exe"
-          }
-          if (-not (Test-Path $edgePath)) { throw "msedge.exe not found" }
-          $version = (Get-Item $edgePath).VersionInfo.FileVersion
+          # Tauri 的 waypoint binary 用 WebView2 runtime（不是 Edge browser）。
+          # WebView2 跟 Edge browser 各自獨立更新，typically WebView2 落後 browser 1 版。
+          # msedgedriver 要對 WebView2 版本，不是 Edge browser 版本。
+          # WebView2 runtime 安裝在 EdgeWebView\Application\<version>\msedgewebview2.exe，
+          # 資料夾名就是版本。
+          $wv2Base = "C:\Program Files (x86)\Microsoft\EdgeWebView\Application"
+          if (-not (Test-Path $wv2Base)) { $wv2Base = "C:\Program Files\Microsoft\EdgeWebView\Application" }
+          if (-not (Test-Path $wv2Base)) { throw "WebView2 runtime not found" }
+          $wv2Versions = Get-ChildItem -Path $wv2Base -Directory | Where-Object { $_.Name -match '^\d+\.\d+\.\d+\.\d+$' } | Sort-Object { [Version]$_.Name } -Descending
+          if (-not $wv2Versions) { throw "No WebView2 version directory found under $wv2Base" }
+          $version = $wv2Versions[0].Name
           $major = $version.Split('.')[0]
-          Write-Host "Edge browser version: $version (major=$major)"
+          Write-Host "WebView2 runtime version: $version (major=$major)"
+          # 對照：印 Edge browser 版本（可能不同，僅供 debug）
+          $edgePath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+          if (-not (Test-Path $edgePath)) { $edgePath = "C:\Program Files\Microsoft\Edge\Application\msedge.exe" }
+          if (Test-Path $edgePath) {
+            Write-Host "(reference) Edge browser version: $((Get-Item $edgePath).VersionInfo.FileVersion)"
+          }
 
           # 蒐集 candidate URLs（順序 = 嘗試順序）
           $urls = @(
@@ -104,7 +115,10 @@ jobs:
           )
           foreach ($host_url in @('https://msedgedriver.azureedge.net','https://msedgedriver.microsoft.com')) {
             try {
-              $latestVer = (Invoke-WebRequest -Uri "$host_url/LATEST_RELEASE_${major}_WINDOWS" -UseBasicParsing -TimeoutSec 30).Content.Trim() -replace "`0",""
+              $resp = Invoke-WebRequest -Uri "$host_url/LATEST_RELEASE_${major}_WINDOWS" -UseBasicParsing -TimeoutSec 30
+              # PowerShell 7.4 的 Invoke-WebRequest -UseBasicParsing 對 binary 回應 Content 是 byte[]，需要先 decode
+              $content = if ($resp.Content -is [byte[]]) { [System.Text.Encoding]::UTF8.GetString($resp.Content) } else { [string]$resp.Content }
+              $latestVer = $content.Trim() -replace "[^0-9.]",""
               Write-Host "LATEST_RELEASE_${major}_WINDOWS from $host_url => $latestVer"
               $urls += "$host_url/$latestVer/edgedriver_win64.zip"
             } catch {

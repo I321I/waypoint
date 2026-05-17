@@ -62,6 +62,19 @@ jobs:
         shell: pwsh
         run: npx tauri build --no-bundle *>&1 | Tee-Object -FilePath logs/04-tauri-build.log; exit $LASTEXITCODE
 
+      - name: Disable runner's bundled msedgedriver
+        # runner 自帶 C:\SeleniumWebDrivers\MsEdgeDriver\<ver>\msedgedriver.exe 永遠是
+        # 最新版（148+），跟 runner 內裝的 Edge browser（往往落後一個版本）對不起來。
+        # 即使下一步用 GITHUB_PATH prepend 自己抓的 driver，tauri-driver 仍可能掃到舊路徑。
+        # 直接把 runner 的 driver rename 掉，逼之後的 step 用我們下載的版本。
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path "C:\SeleniumWebDrivers" -Recurse -Filter msedgedriver.exe -ErrorAction SilentlyContinue | ForEach-Object {
+            $bak = "$($_.FullName).bak"
+            Move-Item -Force -Path $_.FullName -Destination $bak
+            Write-Host "Renamed $($_.FullName) -> $bak"
+          }
+
       - name: Download msedgedriver matching installed Edge version
         # runner 內建的 msedgedriver (C:\SeleniumWebDrivers) 跟 Edge browser 各自更新，
         # 經常不對版（v0.2.21~v0.2.23 e2e-windows 連續紅，driver 148 / browser 147）。

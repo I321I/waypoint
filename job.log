@@ -1,0 +1,1855 @@
+﻿2026-05-17T17:39:47.9026830Z Current runner version: '2.334.0'
+2026-05-17T17:39:47.9040010Z ##[group]Runner Image Provisioner
+2026-05-17T17:39:47.9040470Z Hosted Compute Agent
+2026-05-17T17:39:47.9040810Z Version: 20260422.526
+2026-05-17T17:39:47.9041190Z Commit: e1a9e573f4d0838b3a7c1b07401aeb29ed3635a9
+2026-05-17T17:39:47.9041610Z Build Date: 2026-04-22T09:31:31Z
+2026-05-17T17:39:47.9042000Z Worker ID: {a2a0a965-7368-4add-9709-02a236d66c57}
+2026-05-17T17:39:47.9042410Z Azure Region: westus
+2026-05-17T17:39:47.9042750Z ##[endgroup]
+2026-05-17T17:39:47.9043500Z ##[group]Operating System
+2026-05-17T17:39:47.9043850Z macOS
+2026-05-17T17:39:47.9044130Z 15.7.4
+2026-05-17T17:39:47.9044400Z 24G517
+2026-05-17T17:39:47.9044680Z ##[endgroup]
+2026-05-17T17:39:47.9044970Z ##[group]Runner Image
+2026-05-17T17:39:47.9045300Z Image: macos-15-arm64
+2026-05-17T17:39:47.9045610Z Version: 20260427.0018.1
+2026-05-17T17:39:47.9046320Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260427.0018/images/macos/macos-15-arm64-Readme.md
+2026-05-17T17:39:47.9047260Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260427.0018
+2026-05-17T17:39:47.9047840Z ##[endgroup]
+2026-05-17T17:39:47.9048490Z ##[group]GITHUB_TOKEN Permissions
+2026-05-17T17:39:47.9049340Z Actions: read
+2026-05-17T17:39:47.9049630Z Contents: write
+2026-05-17T17:39:47.9049930Z Metadata: read
+2026-05-17T17:39:47.9050220Z ##[endgroup]
+2026-05-17T17:39:47.9051370Z Secret source: Actions
+2026-05-17T17:39:47.9051740Z Prepare workflow directory
+2026-05-17T17:39:47.9254010Z Prepare all required actions
+2026-05-17T17:39:47.9280480Z Getting action download info
+2026-05-17T17:39:48.3486500Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-05-17T17:39:48.8512570Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-05-17T17:39:49.0801030Z Download action repository 'dtolnay/rust-toolchain@stable' (SHA:29eef336d9b2848a0b548edc03f92a220660cdb8)
+2026-05-17T17:39:49.4758920Z Download action repository 'tauri-apps/tauri-action@v0' (SHA:84b9d35b5fc46c1e45415bdb6144030364f7ebc5)
+2026-05-17T17:39:50.3331080Z Download action repository 'softprops/action-gh-release@v2' (SHA:3bb12739c298aeb8a4eeaf626c5b8d85266b0e65)
+2026-05-17T17:39:51.1053410Z Complete job name: release (macos-latest, --target universal-apple-darwin)
+2026-05-17T17:39:51.1694130Z ##[group]Run actions/checkout@v4
+2026-05-17T17:39:51.1695030Z with:
+2026-05-17T17:39:51.1695480Z   fetch-depth: 0
+2026-05-17T17:39:51.1695950Z   fetch-tags: true
+2026-05-17T17:39:51.1696450Z   repository: I321I/waypoint
+2026-05-17T17:39:51.1697300Z   token: ***
+2026-05-17T17:39:51.1697760Z   ssh-strict: true
+2026-05-17T17:39:51.1698230Z   ssh-user: git
+2026-05-17T17:39:51.1698720Z   persist-credentials: true
+2026-05-17T17:39:51.1699260Z   clean: true
+2026-05-17T17:39:51.1699760Z   sparse-checkout-cone-mode: true
+2026-05-17T17:39:51.1700330Z   show-progress: true
+2026-05-17T17:39:51.1700830Z   lfs: false
+2026-05-17T17:39:51.1701360Z   submodules: false
+2026-05-17T17:39:51.1701850Z   set-safe-directory: true
+2026-05-17T17:39:51.1702490Z ##[endgroup]
+2026-05-17T17:39:51.4436080Z Syncing repository: I321I/waypoint
+2026-05-17T17:39:51.4437640Z ##[group]Getting Git version info
+2026-05-17T17:39:51.4438380Z Working directory is '/Users/runner/work/waypoint/waypoint'
+2026-05-17T17:39:51.4439540Z [command]/opt/homebrew/bin/git version
+2026-05-17T17:39:51.4957340Z git version 2.54.0
+2026-05-17T17:39:51.4982390Z ##[endgroup]
+2026-05-17T17:39:51.4988370Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/4f032e10-fb10-4e8b-9474-0516035cd6a5/.gitconfig'
+2026-05-17T17:39:51.4995100Z Temporarily overriding HOME='/Users/runner/work/_temp/4f032e10-fb10-4e8b-9474-0516035cd6a5' before making global git config changes
+2026-05-17T17:39:51.4996860Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-17T17:39:51.5002340Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/waypoint/waypoint
+2026-05-17T17:39:51.5090580Z Deleting the contents of '/Users/runner/work/waypoint/waypoint'
+2026-05-17T17:39:51.5093740Z ##[group]Initializing the repository
+2026-05-17T17:39:51.5097490Z [command]/opt/homebrew/bin/git init /Users/runner/work/waypoint/waypoint
+2026-05-17T17:39:51.5297090Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-17T17:39:51.5298460Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-17T17:39:51.5299650Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-17T17:39:51.5300480Z hint: call:
+2026-05-17T17:39:51.5300910Z hint:
+2026-05-17T17:39:51.5301460Z hint: 	git config --global init.defaultBranch <name>
+2026-05-17T17:39:51.5302100Z hint:
+2026-05-17T17:39:51.5302720Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-17T17:39:51.5303760Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-17T17:39:51.5304580Z hint:
+2026-05-17T17:39:51.5305020Z hint: 	git branch -m <name>
+2026-05-17T17:39:51.5305520Z hint:
+2026-05-17T17:39:51.5306190Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-17T17:39:51.5307290Z Initialized empty Git repository in /Users/runner/work/waypoint/waypoint/.git/
+2026-05-17T17:39:51.5309220Z [command]/opt/homebrew/bin/git remote add origin https://github.com/I321I/waypoint
+2026-05-17T17:39:51.5367260Z ##[endgroup]
+2026-05-17T17:39:51.5368140Z ##[group]Disabling automatic garbage collection
+2026-05-17T17:39:51.5369330Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-05-17T17:39:51.5414630Z ##[endgroup]
+2026-05-17T17:39:51.5415400Z ##[group]Setting up auth
+2026-05-17T17:39:51.5418980Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-17T17:39:51.5465050Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-17T17:39:51.6140970Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-17T17:39:51.6187320Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-17T17:39:51.6838070Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-17T17:39:51.6959180Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-17T17:39:51.8136000Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-17T17:39:51.8248790Z ##[endgroup]
+2026-05-17T17:39:51.8249800Z ##[group]Fetching the repository
+2026-05-17T17:39:51.8254420Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-05-17T17:39:53.1987670Z From https://github.com/I321I/waypoint
+2026-05-17T17:39:53.1992790Z  * [new branch]      ci-logs/0cd99b761ba3cdafcc74e8bc29f36aff1655ecb3-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/0cd99b761ba3cdafcc74e8bc29f36aff1655ecb3-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.1996850Z  * [new branch]      ci-logs/0cd99b761ba3cdafcc74e8bc29f36aff1655ecb3-release-release__ubuntu-22.04__-1 -> origin/ci-logs/0cd99b761ba3cdafcc74e8bc29f36aff1655ecb3-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.1998360Z  * [new branch]      ci-logs/0cd99b761ba3cdafcc74e8bc29f36aff1655ecb3-release-ubuntu-22.04-_-1 -> origin/ci-logs/0cd99b761ba3cdafcc74e8bc29f36aff1655ecb3-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.1999910Z  * [new branch]      ci-logs/0cd99b761ba3cdafcc74e8bc29f36aff1655ecb3-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/0cd99b761ba3cdafcc74e8bc29f36aff1655ecb3-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2002160Z  * [new branch]      ci-logs/0ea83e6a7f841707ba993c03ff5856371d712fcf-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/0ea83e6a7f841707ba993c03ff5856371d712fcf-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2003990Z  * [new branch]      ci-logs/0ea83e6a7f841707ba993c03ff5856371d712fcf-release-release__ubuntu-22.04__-1 -> origin/ci-logs/0ea83e6a7f841707ba993c03ff5856371d712fcf-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2005430Z  * [new branch]      ci-logs/0ea83e6a7f841707ba993c03ff5856371d712fcf-release-ubuntu-22.04-_-1 -> origin/ci-logs/0ea83e6a7f841707ba993c03ff5856371d712fcf-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2006790Z  * [new branch]      ci-logs/0ea83e6a7f841707ba993c03ff5856371d712fcf-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/0ea83e6a7f841707ba993c03ff5856371d712fcf-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2008320Z  * [new branch]      ci-logs/11a0e0d8c083f4166a53aff21750a25314829a10-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/11a0e0d8c083f4166a53aff21750a25314829a10-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2009800Z  * [new branch]      ci-logs/11a0e0d8c083f4166a53aff21750a25314829a10-release-release__ubuntu-22.04__-1 -> origin/ci-logs/11a0e0d8c083f4166a53aff21750a25314829a10-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2010900Z  * [new branch]      ci-logs/11a0e0d8c083f4166a53aff21750a25314829a10-release-ubuntu-22.04-_-1 -> origin/ci-logs/11a0e0d8c083f4166a53aff21750a25314829a10-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2012190Z  * [new branch]      ci-logs/11a0e0d8c083f4166a53aff21750a25314829a10-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/11a0e0d8c083f4166a53aff21750a25314829a10-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2013670Z  * [new branch]      ci-logs/12e14d6399d64b6d2b25bb994bdfe708e00ea33c-1 -> origin/ci-logs/12e14d6399d64b6d2b25bb994bdfe708e00ea33c-1
+2026-05-17T17:39:53.2014830Z  * [new branch]      ci-logs/1afe96fe26d7715eb7c72d55ef8b815ea0c48277-1 -> origin/ci-logs/1afe96fe26d7715eb7c72d55ef8b815ea0c48277-1
+2026-05-17T17:39:53.2015570Z  * [new branch]      ci-logs/1d79bef38d2b5c3b56dbf6a2b9ba1aa1a1a3dfb4-1 -> origin/ci-logs/1d79bef38d2b5c3b56dbf6a2b9ba1aa1a1a3dfb4-1
+2026-05-17T17:39:53.2016800Z  * [new branch]      ci-logs/1fbde11e13f571d3fa2d0ac944b7e0bbe7b187f9-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/1fbde11e13f571d3fa2d0ac944b7e0bbe7b187f9-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2018200Z  * [new branch]      ci-logs/1fbde11e13f571d3fa2d0ac944b7e0bbe7b187f9-release-release__ubuntu-22.04__-1 -> origin/ci-logs/1fbde11e13f571d3fa2d0ac944b7e0bbe7b187f9-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2019310Z  * [new branch]      ci-logs/4a221bf0dabc4b2b1532a599c556e4dd00ff8a57-1 -> origin/ci-logs/4a221bf0dabc4b2b1532a599c556e4dd00ff8a57-1
+2026-05-17T17:39:53.2020110Z  * [new branch]      ci-logs/50d40539fc4e4d7154fc1b2b133e87d4be7b2430-1 -> origin/ci-logs/50d40539fc4e4d7154fc1b2b133e87d4be7b2430-1
+2026-05-17T17:39:53.2020910Z  * [new branch]      ci-logs/5812ca2d98f480b11755753a5b4bde3f24367915-1 -> origin/ci-logs/5812ca2d98f480b11755753a5b4bde3f24367915-1
+2026-05-17T17:39:53.2021820Z  * [new branch]      ci-logs/5865c515d7baf6d20f59ddfaa5cd1bf82e2ee169-1 -> origin/ci-logs/5865c515d7baf6d20f59ddfaa5cd1bf82e2ee169-1
+2026-05-17T17:39:53.2022650Z  * [new branch]      ci-logs/6712a35d1f1a4550ef99ee02043cd645cb05ca21-1 -> origin/ci-logs/6712a35d1f1a4550ef99ee02043cd645cb05ca21-1
+2026-05-17T17:39:53.2023680Z  * [new branch]      ci-logs/67ebec16ffda025fc5817ff3c2128a2918f3dc84-1 -> origin/ci-logs/67ebec16ffda025fc5817ff3c2128a2918f3dc84-1
+2026-05-17T17:39:53.2024510Z  * [new branch]      ci-logs/6bc3ee1020a09474ec33b249f3a55697b79b203b-1 -> origin/ci-logs/6bc3ee1020a09474ec33b249f3a55697b79b203b-1
+2026-05-17T17:39:53.2025340Z  * [new branch]      ci-logs/74a41eb8ede83b8668e78ad0dacc0ba0a8d2bd04-1 -> origin/ci-logs/74a41eb8ede83b8668e78ad0dacc0ba0a8d2bd04-1
+2026-05-17T17:39:53.2026650Z  * [new branch]      ci-logs/86ac0ad8a24869285e6cbfdd2619d641ae23bb98-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/86ac0ad8a24869285e6cbfdd2619d641ae23bb98-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2028130Z  * [new branch]      ci-logs/86ac0ad8a24869285e6cbfdd2619d641ae23bb98-release-release__ubuntu-22.04__-1 -> origin/ci-logs/86ac0ad8a24869285e6cbfdd2619d641ae23bb98-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2029340Z  * [new branch]      ci-logs/86ac0ad8a24869285e6cbfdd2619d641ae23bb98-release-ubuntu-22.04-_-1 -> origin/ci-logs/86ac0ad8a24869285e6cbfdd2619d641ae23bb98-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2030970Z  * [new branch]      ci-logs/86ac0ad8a24869285e6cbfdd2619d641ae23bb98-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/86ac0ad8a24869285e6cbfdd2619d641ae23bb98-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2032830Z  * [new branch]      ci-logs/89fa2fcd617aadf52231718870f4e445ed78185e-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/89fa2fcd617aadf52231718870f4e445ed78185e-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2034290Z  * [new branch]      ci-logs/89fa2fcd617aadf52231718870f4e445ed78185e-release-release__ubuntu-22.04__-1 -> origin/ci-logs/89fa2fcd617aadf52231718870f4e445ed78185e-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2035460Z  * [new branch]      ci-logs/89fa2fcd617aadf52231718870f4e445ed78185e-release-ubuntu-22.04-_-1 -> origin/ci-logs/89fa2fcd617aadf52231718870f4e445ed78185e-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2037080Z  * [new branch]      ci-logs/89fa2fcd617aadf52231718870f4e445ed78185e-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/89fa2fcd617aadf52231718870f4e445ed78185e-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2042420Z  * [new branch]      ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-1 -> origin/ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-1
+2026-05-17T17:39:53.2043870Z  * [new branch]      ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2045440Z  * [new branch]      ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-release-release__ubuntu-22.04__-1 -> origin/ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2046690Z  * [new branch]      ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-release-ubuntu-22.04-_-1 -> origin/ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2049880Z  * [new branch]      ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/9784f33913e0d77613f3e9df0085d135aa99251f-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2050980Z  * [new branch]      ci-logs/99744e34481590ca02c81e2ba0cc4846eb7fc5ed-1 -> origin/ci-logs/99744e34481590ca02c81e2ba0cc4846eb7fc5ed-1
+2026-05-17T17:39:53.2062870Z  * [new branch]      ci-logs/a534fc1fa9d522205cff2ce331af532e92a64547-1 -> origin/ci-logs/a534fc1fa9d522205cff2ce331af532e92a64547-1
+2026-05-17T17:39:53.2063630Z  * [new branch]      ci-logs/a9090132afeca6ca4d99299a3db0dad1281f2afb-1 -> origin/ci-logs/a9090132afeca6ca4d99299a3db0dad1281f2afb-1
+2026-05-17T17:39:53.2065320Z  * [new branch]      ci-logs/af39cc74133c72a00db93ac0b3835d3f2ce86eda-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/af39cc74133c72a00db93ac0b3835d3f2ce86eda-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2073310Z  * [new branch]      ci-logs/af39cc74133c72a00db93ac0b3835d3f2ce86eda-release-release__ubuntu-22.04__-1 -> origin/ci-logs/af39cc74133c72a00db93ac0b3835d3f2ce86eda-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2074410Z  * [new branch]      ci-logs/af39cc74133c72a00db93ac0b3835d3f2ce86eda-release-ubuntu-22.04-_-1 -> origin/ci-logs/af39cc74133c72a00db93ac0b3835d3f2ce86eda-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2075650Z  * [new branch]      ci-logs/af39cc74133c72a00db93ac0b3835d3f2ce86eda-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/af39cc74133c72a00db93ac0b3835d3f2ce86eda-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2077250Z  * [new branch]      ci-logs/c124c1b7aec17a277c90163bfaab15210f44015b-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/c124c1b7aec17a277c90163bfaab15210f44015b-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2078550Z  * [new branch]      ci-logs/c124c1b7aec17a277c90163bfaab15210f44015b-release-release__ubuntu-22.04__-1 -> origin/ci-logs/c124c1b7aec17a277c90163bfaab15210f44015b-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2079570Z  * [new branch]      ci-logs/c124c1b7aec17a277c90163bfaab15210f44015b-release-ubuntu-22.04-_-1 -> origin/ci-logs/c124c1b7aec17a277c90163bfaab15210f44015b-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2080790Z  * [new branch]      ci-logs/c124c1b7aec17a277c90163bfaab15210f44015b-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/c124c1b7aec17a277c90163bfaab15210f44015b-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2081910Z  * [new branch]      ci-logs/ce0c731f81a9341095bec2906467be8962e83ad5-1 -> origin/ci-logs/ce0c731f81a9341095bec2906467be8962e83ad5-1
+2026-05-17T17:39:53.2082930Z  * [new branch]      ci-logs/dc5968f25d2cb5b6ee3fac0d32ac7966d16e2e3f-1 -> origin/ci-logs/dc5968f25d2cb5b6ee3fac0d32ac7966d16e2e3f-1
+2026-05-17T17:39:53.2084100Z  * [new branch]      ci-logs/dfb5f52793459e14d7e5316c49e0f47eb2efac04-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/dfb5f52793459e14d7e5316c49e0f47eb2efac04-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2085460Z  * [new branch]      ci-logs/dfb5f52793459e14d7e5316c49e0f47eb2efac04-release-release__ubuntu-22.04__-1 -> origin/ci-logs/dfb5f52793459e14d7e5316c49e0f47eb2efac04-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2086480Z  * [new branch]      ci-logs/dfb5f52793459e14d7e5316c49e0f47eb2efac04-release-ubuntu-22.04-_-1 -> origin/ci-logs/dfb5f52793459e14d7e5316c49e0f47eb2efac04-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2087770Z  * [new branch]      ci-logs/dfb5f52793459e14d7e5316c49e0f47eb2efac04-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/dfb5f52793459e14d7e5316c49e0f47eb2efac04-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2088880Z  * [new branch]      ci-logs/e75036a0c7bb0ebc65ae0da2b73395a0ff0ff65a-1 -> origin/ci-logs/e75036a0c7bb0ebc65ae0da2b73395a0ff0ff65a-1
+2026-05-17T17:39:53.2089680Z  * [new branch]      ci-logs/f29759266ac7f1bdbcdbd3177bdfc601967a42cc-1 -> origin/ci-logs/f29759266ac7f1bdbcdbd3177bdfc601967a42cc-1
+2026-05-17T17:39:53.2090400Z  * [new branch]      ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-1 -> origin/ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-1
+2026-05-17T17:39:53.2091550Z  * [new branch]      ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1 -> origin/ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-release-release__ubuntu-22.04-arm__--target_aarch64-unknown-linux-gnu__-1
+2026-05-17T17:39:53.2095050Z  * [new branch]      ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-release-release__ubuntu-22.04__-1 -> origin/ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-release-release__ubuntu-22.04__-1
+2026-05-17T17:39:53.2096160Z  * [new branch]      ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-release-ubuntu-22.04-_-1 -> origin/ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-release-ubuntu-22.04-_-1
+2026-05-17T17:39:53.2097920Z  * [new branch]      ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1 -> origin/ci-logs/f3b4a0aeb819b7fc2a6f44a01bf765bd2e461eb9-release-ubuntu-22.04-arm---target_aarch64-unknown-linux-gnu_-1
+2026-05-17T17:39:53.2099400Z  * [new branch]      ci-logs/fd452e1aad4fb85d018142b6d3f989bd31f39216-release-macos-latest---target_universal-apple-darwin_-1 -> origin/ci-logs/fd452e1aad4fb85d018142b6d3f989bd31f39216-release-macos-latest---target_universal-apple-darwin_-1
+2026-05-17T17:39:53.2100540Z  * [new branch]      ci-logs/fd69e878e7bd5602f7db3414f304118451fe25e6-1 -> origin/ci-logs/fd69e878e7bd5602f7db3414f304118451fe25e6-1
+2026-05-17T17:39:53.2101090Z  * [new branch]      dev/main             -> origin/dev/main
+2026-05-17T17:39:53.2101500Z  * [new branch]      feature/waypoint-app -> origin/feature/waypoint-app
+2026-05-17T17:39:53.2101850Z  * [new branch]      master               -> origin/master
+2026-05-17T17:39:53.2102140Z  * [new tag]         v0.1.0               -> v0.1.0
+2026-05-17T17:39:53.2102420Z  * [new tag]         v0.1.1               -> v0.1.1
+2026-05-17T17:39:53.2102700Z  * [new tag]         v0.1.10              -> v0.1.10
+2026-05-17T17:39:53.2102970Z  * [new tag]         v0.1.11              -> v0.1.11
+2026-05-17T17:39:53.2103230Z  * [new tag]         v0.1.12              -> v0.1.12
+2026-05-17T17:39:53.2103510Z  * [new tag]         v0.1.13              -> v0.1.13
+2026-05-17T17:39:53.2103780Z  * [new tag]         v0.1.14              -> v0.1.14
+2026-05-17T17:39:53.2104040Z  * [new tag]         v0.1.15              -> v0.1.15
+2026-05-17T17:39:53.2104290Z  * [new tag]         v0.1.16              -> v0.1.16
+2026-05-17T17:39:53.2104910Z  * [new tag]         v0.1.17              -> v0.1.17
+2026-05-17T17:39:53.2105230Z  * [new tag]         v0.1.18              -> v0.1.18
+2026-05-17T17:39:53.2105480Z  * [new tag]         v0.1.19              -> v0.1.19
+2026-05-17T17:39:53.2105740Z  * [new tag]         v0.1.2               -> v0.1.2
+2026-05-17T17:39:53.2105990Z  * [new tag]         v0.1.21              -> v0.1.21
+2026-05-17T17:39:53.2106250Z  * [new tag]         v0.1.22              -> v0.1.22
+2026-05-17T17:39:53.2106510Z  * [new tag]         v0.1.3               -> v0.1.3
+2026-05-17T17:39:53.2106750Z  * [new tag]         v0.1.4               -> v0.1.4
+2026-05-17T17:39:53.2107010Z  * [new tag]         v0.1.5               -> v0.1.5
+2026-05-17T17:39:53.2107270Z  * [new tag]         v0.1.6               -> v0.1.6
+2026-05-17T17:39:53.2107510Z  * [new tag]         v0.1.7               -> v0.1.7
+2026-05-17T17:39:53.2107780Z  * [new tag]         v0.1.8               -> v0.1.8
+2026-05-17T17:39:53.2108030Z  * [new tag]         v0.1.9               -> v0.1.9
+2026-05-17T17:39:53.2108270Z  * [new tag]         v0.2.0               -> v0.2.0
+2026-05-17T17:39:53.2108540Z  * [new tag]         v0.2.1               -> v0.2.1
+2026-05-17T17:39:53.2108790Z  * [new tag]         v0.2.10              -> v0.2.10
+2026-05-17T17:39:53.2109050Z  * [new tag]         v0.2.11              -> v0.2.11
+2026-05-17T17:39:53.2109330Z  * [new tag]         v0.2.12              -> v0.2.12
+2026-05-17T17:39:53.2109640Z  * [new tag]         v0.2.13              -> v0.2.13
+2026-05-17T17:39:53.2109920Z  * [new tag]         v0.2.14              -> v0.2.14
+2026-05-17T17:39:53.2110190Z  * [new tag]         v0.2.15              -> v0.2.15
+2026-05-17T17:39:53.2110660Z  * [new tag]         v0.2.16              -> v0.2.16
+2026-05-17T17:39:53.2110970Z  * [new tag]         v0.2.17              -> v0.2.17
+2026-05-17T17:39:53.2111280Z  * [new tag]         v0.2.18              -> v0.2.18
+2026-05-17T17:39:53.2111540Z  * [new tag]         v0.2.19              -> v0.2.19
+2026-05-17T17:39:53.2111800Z  * [new tag]         v0.2.2               -> v0.2.2
+2026-05-17T17:39:53.2112060Z  * [new tag]         v0.2.20              -> v0.2.20
+2026-05-17T17:39:53.2112340Z  * [new tag]         v0.2.21              -> v0.2.21
+2026-05-17T17:39:53.2112610Z  * [new tag]         v0.2.22              -> v0.2.22
+2026-05-17T17:39:53.2112860Z  * [new tag]         v0.2.23              -> v0.2.23
+2026-05-17T17:39:53.2113590Z  * [new tag]         v0.2.24              -> v0.2.24
+2026-05-17T17:39:53.2114840Z  * [new tag]         v0.2.25              -> v0.2.25
+2026-05-17T17:39:53.2115570Z  * [new tag]         v0.2.26              -> v0.2.26
+2026-05-17T17:39:53.2116410Z  * [new tag]         v0.2.27              -> v0.2.27
+2026-05-17T17:39:53.2117180Z  * [new tag]         v0.2.3               -> v0.2.3
+2026-05-17T17:39:53.2118010Z  * [new tag]         v0.2.4               -> v0.2.4
+2026-05-17T17:39:53.2119890Z  * [new tag]         v0.2.5               -> v0.2.5
+2026-05-17T17:39:53.2120250Z  * [new tag]         v0.2.7               -> v0.2.7
+2026-05-17T17:39:53.2120500Z  * [new tag]         v0.2.8               -> v0.2.8
+2026-05-17T17:39:53.2120760Z  * [new tag]         v0.2.9               -> v0.2.9
+2026-05-17T17:39:53.2674220Z [command]/opt/homebrew/bin/git tag --list v0.2.27
+2026-05-17T17:39:53.2775390Z v0.2.27
+2026-05-17T17:39:53.2789350Z [command]/opt/homebrew/bin/git rev-parse refs/tags/v0.2.27
+2026-05-17T17:39:53.2928150Z c9f214706a752847105511d8b5036a0d08c4bce5
+2026-05-17T17:39:53.2941050Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +0bf40d44d03c80e4450fdb8925a3f7238df4e1d5:refs/tags/v0.2.27
+2026-05-17T17:39:53.3186320Z From https://github.com/I321I/waypoint
+2026-05-17T17:39:53.3187360Z  t [tag update]      0bf40d44d03c80e4450fdb8925a3f7238df4e1d5 -> v0.2.27
+2026-05-17T17:39:53.3327240Z ##[endgroup]
+2026-05-17T17:39:53.3328280Z ##[group]Determining the checkout info
+2026-05-17T17:39:53.3329260Z ##[endgroup]
+2026-05-17T17:39:53.3336800Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-05-17T17:39:53.3440840Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-17T17:39:53.3523920Z ##[group]Checking out the ref
+2026-05-17T17:39:53.3526940Z [command]/opt/homebrew/bin/git checkout --progress --force refs/tags/v0.2.27
+2026-05-17T17:39:53.4019480Z HEAD is now at 0bf40d4 chore: bump v0.2.27
+2026-05-17T17:39:53.4264680Z ##[endgroup]
+2026-05-17T17:39:53.4265610Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-05-17T17:39:53.4265890Z 0bf40d44d03c80e4450fdb8925a3f7238df4e1d5
+2026-05-17T17:39:53.4477280Z ##[group]Run git fetch --tags --force origin >/dev/null 2>&1 || true
+2026-05-17T17:39:53.4477780Z [36;1mgit fetch --tags --force origin >/dev/null 2>&1 || true[0m
+2026-05-17T17:39:53.4478190Z [36;1mmsg=$(git for-each-ref --format='%(contents:body)' "refs/tags/v0.2.27" 2>/dev/null || true)[0m
+2026-05-17T17:39:53.4478550Z [36;1mif [ -z "$msg" ]; then[0m
+2026-05-17T17:39:53.4478790Z [36;1m  msg=$(git tag -l --format='%(contents)' "v0.2.27")[0m
+2026-05-17T17:39:53.4479040Z [36;1mfi[0m
+2026-05-17T17:39:53.4479180Z [36;1mif [ -z "$msg" ]; then[0m
+2026-05-17T17:39:53.4479380Z [36;1m  msg="(此版本沒有附 tag 註解)"[0m
+2026-05-17T17:39:53.4479550Z [36;1mfi[0m
+2026-05-17T17:39:53.4479680Z [36;1m{[0m
+2026-05-17T17:39:53.4479830Z [36;1m  echo "body<<WAYPOINT_EOF"[0m
+2026-05-17T17:39:53.4480030Z [36;1m  echo "## 本版修正"[0m
+2026-05-17T17:39:53.4480190Z [36;1m  echo ""[0m
+2026-05-17T17:39:53.4480350Z [36;1m  echo "$msg"[0m
+2026-05-17T17:39:53.4480510Z [36;1m  echo ""[0m
+2026-05-17T17:39:53.4480690Z [36;1m  echo "---"[0m
+2026-05-17T17:39:53.4480850Z [36;1m  echo ""[0m
+2026-05-17T17:39:53.4481270Z [36;1m  echo "## 安裝方式"[0m
+2026-05-17T17:39:53.4481500Z [36;1m  echo "- **Windows**：下載 \`.msi\` 或 \`-setup.exe\` 安裝"[0m
+2026-05-17T17:39:53.4482060Z [36;1m  echo "- **Steam Deck（Flatpak，推薦）**：下載 \`_x86_64.flatpak\`，Desktop Mode 執行 \`flatpak install --user ./io.github.i321i.waypoint_x86_64.flatpak\`"[0m
+2026-05-17T17:39:53.4482650Z [36;1m  echo "- **Linux x86_64（AppImage）**：下載 \`_amd64.AppImage\`，賦予執行權限後執行"[0m
+2026-05-17T17:39:53.4483190Z [36;1m  echo "- **Linux aarch64（Flatpak）**：下載 \`_aarch64.flatpak\`，執行 \`flatpak install --user ./io.github.i321i.waypoint_aarch64.flatpak\`"[0m
+2026-05-17T17:39:53.4483740Z [36;1m  echo "- **Linux aarch64（AppImage）**：下載 \`_aarch64.AppImage\`，賦予執行權限後執行"[0m
+2026-05-17T17:39:53.4484060Z [36;1m  echo "- **macOS**：下載 \`.dmg\` 安裝"[0m
+2026-05-17T17:39:53.4484290Z [36;1m  echo "WAYPOINT_EOF"[0m
+2026-05-17T17:39:53.4484500Z [36;1m} >> "$GITHUB_OUTPUT"[0m
+2026-05-17T17:39:53.4535680Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:53.4536000Z ##[endgroup]
+2026-05-17T17:39:54.0745280Z ##[group]Run actions/setup-node@v4
+2026-05-17T17:39:54.0745520Z with:
+2026-05-17T17:39:54.0745690Z   node-version: 20
+2026-05-17T17:39:54.0745860Z   always-auth: false
+2026-05-17T17:39:54.0746040Z   check-latest: false
+2026-05-17T17:39:54.0746330Z   token: ***
+2026-05-17T17:39:54.0746490Z ##[endgroup]
+2026-05-17T17:39:54.2436960Z Found in cache @ /Users/runner/hostedtoolcache/node/20.20.2/arm64
+2026-05-17T17:39:54.2441080Z ##[group]Environment details
+2026-05-17T17:39:54.9280280Z node: v20.20.2
+2026-05-17T17:39:54.9280480Z npm: 10.8.2
+2026-05-17T17:39:54.9280620Z yarn: 1.22.22
+2026-05-17T17:39:54.9281120Z ##[endgroup]
+2026-05-17T17:39:54.9449480Z ##[group]Run dtolnay/rust-toolchain@stable
+2026-05-17T17:39:54.9449700Z with:
+2026-05-17T17:39:54.9449860Z   targets: aarch64-apple-darwin,x86_64-apple-darwin
+2026-05-17T17:39:54.9450050Z   toolchain: stable
+2026-05-17T17:39:54.9450170Z ##[endgroup]
+2026-05-17T17:39:54.9509540Z ##[group]Run : parse toolchain version
+2026-05-17T17:39:54.9509810Z [36;1m: parse toolchain version[0m
+2026-05-17T17:39:54.9510000Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-05-17T17:39:54.9510380Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-05-17T17:39:54.9510770Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-05-17T17:39:54.9510980Z [36;1m  exit 1[0m
+2026-05-17T17:39:54.9511220Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-05-17T17:39:54.9511520Z [36;1m  if [[ macOS == macOS ]]; then[0m
+2026-05-17T17:39:54.9511910Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:54.9512270Z [36;1m  else[0m
+2026-05-17T17:39:54.9512550Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:54.9512870Z [36;1m  fi[0m
+2026-05-17T17:39:54.9513070Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-05-17T17:39:54.9513450Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:54.9513770Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-05-17T17:39:54.9514140Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:54.9514480Z [36;1melse[0m
+2026-05-17T17:39:54.9514640Z [36;1m  echo "toolchain=$toolchain" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:54.9514850Z [36;1mfi[0m
+2026-05-17T17:39:54.9549130Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:54.9549360Z env:
+2026-05-17T17:39:54.9549490Z   toolchain: stable
+2026-05-17T17:39:54.9549640Z ##[endgroup]
+2026-05-17T17:39:55.0349870Z ##[group]Run : construct rustup command line
+2026-05-17T17:39:55.0350160Z [36;1m: construct rustup command line[0m
+2026-05-17T17:39:55.0350750Z [36;1mecho "targets=$(for t in ${targets//,/ }; do echo -n ' --target' $t; done)" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:55.0351240Z [36;1mecho "components=$(for c in ${components//,/ }; do echo -n ' --component' $c; done)" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:55.0351630Z [36;1mecho "downgrade=" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:55.0388260Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:55.0388510Z env:
+2026-05-17T17:39:55.0388710Z   targets: aarch64-apple-darwin,x86_64-apple-darwin
+2026-05-17T17:39:55.0388950Z   components: 
+2026-05-17T17:39:55.0389110Z ##[endgroup]
+2026-05-17T17:39:55.0753890Z ##[group]Run : set $CARGO_HOME
+2026-05-17T17:39:55.0754140Z [36;1m: set $CARGO_HOME[0m
+2026-05-17T17:39:55.0754390Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+2026-05-17T17:39:55.0802210Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:55.0802450Z ##[endgroup]
+2026-05-17T17:39:55.1230770Z ##[group]Run : install rustup if needed
+2026-05-17T17:39:55.1231020Z [36;1m: install rustup if needed[0m
+2026-05-17T17:39:55.1231250Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-05-17T17:39:55.1231820Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+2026-05-17T17:39:55.1232380Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+2026-05-17T17:39:55.1232600Z [36;1mfi[0m
+2026-05-17T17:39:55.1269760Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:55.1269990Z env:
+2026-05-17T17:39:55.1270640Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:55.1270830Z ##[endgroup]
+2026-05-17T17:39:55.1561350Z ##[group]Run rustup toolchain install stable --target aarch64-apple-darwin --target x86_64-apple-darwin --profile minimal --no-self-update
+2026-05-17T17:39:55.1562100Z [36;1mrustup toolchain install stable --target aarch64-apple-darwin --target x86_64-apple-darwin --profile minimal --no-self-update[0m
+2026-05-17T17:39:55.1594050Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:55.1594280Z env:
+2026-05-17T17:39:55.1594430Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:55.1594620Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-05-17T17:39:55.1594780Z ##[endgroup]
+2026-05-17T17:39:55.4575100Z info: syncing channel updates for stable-aarch64-apple-darwin
+2026-05-17T17:39:55.6766230Z info: latest update on 2026-04-16 for version 1.95.0 (59807616e 2026-04-14)
+2026-05-17T17:39:55.6876370Z info: component rust-std is up to date
+2026-05-17T17:39:55.6884010Z info: downloading component rust-std
+2026-05-17T17:39:57.9648720Z 
+2026-05-17T17:39:57.9844320Z info: self-update is disabled for this build of rustup
+2026-05-17T17:39:57.9846220Z info: any updates to rustup will need to be fetched with your system package manager
+2026-05-17T17:39:57.9846910Z   stable-aarch64-apple-darwin updated - rustc 1.95.0 (59807616e 2026-04-14) (from rustc 1.95.0 (59807616e 2026-04-14))
+2026-05-17T17:39:57.9847560Z 
+2026-05-17T17:39:57.9951530Z ##[group]Run rustup default stable
+2026-05-17T17:39:57.9951800Z [36;1mrustup default stable[0m
+2026-05-17T17:39:57.9988330Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:57.9988540Z env:
+2026-05-17T17:39:57.9988680Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:57.9988840Z ##[endgroup]
+2026-05-17T17:39:58.0704870Z info: using existing install for stable-aarch64-apple-darwin
+2026-05-17T17:39:58.0712820Z info: default toolchain set to stable-aarch64-apple-darwin
+2026-05-17T17:39:58.0713060Z 
+2026-05-17T17:39:58.0908450Z   stable-aarch64-apple-darwin unchanged - rustc 1.95.0 (59807616e 2026-04-14)
+2026-05-17T17:39:58.0909220Z 
+2026-05-17T17:39:58.0931800Z ##[group]Run : create cachekey
+2026-05-17T17:39:58.0932040Z [36;1m: create cachekey[0m
+2026-05-17T17:39:58.0947240Z [36;1mDATE=$(rustc +stable --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-05-17T17:39:58.0948500Z [36;1mHASH=$(rustc +stable --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-05-17T17:39:58.0948900Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-05-17T17:39:58.0984170Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:58.0984400Z env:
+2026-05-17T17:39:58.0984540Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:58.0984720Z ##[endgroup]
+2026-05-17T17:39:58.2134760Z ##[group]Run : disable incremental compilation
+2026-05-17T17:39:58.2135070Z [36;1m: disable incremental compilation[0m
+2026-05-17T17:39:58.2135330Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-05-17T17:39:58.2135660Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-05-17T17:39:58.2135920Z [36;1mfi[0m
+2026-05-17T17:39:58.2170610Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:58.2170860Z env:
+2026-05-17T17:39:58.2171080Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:58.2171340Z ##[endgroup]
+2026-05-17T17:39:58.2475650Z ##[group]Run : enable colors in Cargo output
+2026-05-17T17:39:58.2476000Z [36;1m: enable colors in Cargo output[0m
+2026-05-17T17:39:58.2476230Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-05-17T17:39:58.2476490Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-05-17T17:39:58.2476710Z [36;1mfi[0m
+2026-05-17T17:39:58.2517540Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:58.2517880Z env:
+2026-05-17T17:39:58.2518070Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:58.2518290Z   CARGO_INCREMENTAL: 0
+2026-05-17T17:39:58.2518500Z ##[endgroup]
+2026-05-17T17:39:58.2799960Z ##[group]Run : enable Cargo sparse registry
+2026-05-17T17:39:58.2800240Z [36;1m: enable Cargo sparse registry[0m
+2026-05-17T17:39:58.2800520Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-05-17T17:39:58.2801070Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/Users/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-05-17T17:39:58.2801660Z [36;1m  if rustc +stable --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-05-17T17:39:58.2802110Z [36;1m    touch "/Users/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-05-17T17:39:58.2802620Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-05-17T17:39:58.2803010Z [36;1m  elif rustc +stable --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-05-17T17:39:58.2803460Z [36;1m    touch "/Users/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-05-17T17:39:58.2803870Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-05-17T17:39:58.2804140Z [36;1m  fi[0m
+2026-05-17T17:39:58.2804270Z [36;1mfi[0m
+2026-05-17T17:39:58.2840990Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:58.2841250Z env:
+2026-05-17T17:39:58.2841430Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:58.2841660Z   CARGO_INCREMENTAL: 0
+2026-05-17T17:39:58.2841820Z   CARGO_TERM_COLOR: always
+2026-05-17T17:39:58.2841990Z ##[endgroup]
+2026-05-17T17:39:58.4040700Z ##[group]Run : work around spurious network errors in curl 8.0
+2026-05-17T17:39:58.4041730Z [36;1m: work around spurious network errors in curl 8.0[0m
+2026-05-17T17:39:58.4042860Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-05-17T17:39:58.4044120Z [36;1mif rustc +stable --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-05-17T17:39:58.4045080Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-05-17T17:39:58.4045740Z [36;1mfi[0m
+2026-05-17T17:39:58.4131330Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:58.4131610Z env:
+2026-05-17T17:39:58.4131790Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:58.4131980Z   CARGO_INCREMENTAL: 0
+2026-05-17T17:39:58.4132140Z   CARGO_TERM_COLOR: always
+2026-05-17T17:39:58.4132670Z ##[endgroup]
+2026-05-17T17:39:58.4623330Z ##[group]Run rustc +stable --version --verbose
+2026-05-17T17:39:58.4623700Z [36;1mrustc +stable --version --verbose[0m
+2026-05-17T17:39:58.4656520Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:39:58.4656770Z env:
+2026-05-17T17:39:58.4656950Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:58.4657140Z   CARGO_INCREMENTAL: 0
+2026-05-17T17:39:58.4657310Z   CARGO_TERM_COLOR: always
+2026-05-17T17:39:58.4657470Z ##[endgroup]
+2026-05-17T17:39:58.5062210Z rustc 1.95.0 (59807616e 2026-04-14)
+2026-05-17T17:39:58.5062480Z binary: rustc
+2026-05-17T17:39:58.5062790Z commit-hash: 59807616e1fa2540724bfbac14d7976d7e4a3860
+2026-05-17T17:39:58.5063050Z commit-date: 2026-04-14
+2026-05-17T17:39:58.5063250Z host: aarch64-apple-darwin
+2026-05-17T17:39:58.5063420Z release: 1.95.0
+2026-05-17T17:39:58.5066500Z LLVM version: 22.1.2
+2026-05-17T17:39:58.5123630Z ##[group]Run npm install
+2026-05-17T17:39:58.5123850Z [36;1mnpm install[0m
+2026-05-17T17:39:58.5156550Z shell: /bin/bash -e {0}
+2026-05-17T17:39:58.5156720Z env:
+2026-05-17T17:39:58.5156870Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:39:58.5157050Z   CARGO_INCREMENTAL: 0
+2026-05-17T17:39:58.5157220Z   CARGO_TERM_COLOR: always
+2026-05-17T17:39:58.5157370Z ##[endgroup]
+2026-05-17T17:39:59.8661570Z npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+2026-05-17T17:40:00.6862380Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-05-17T17:40:02.3173660Z npm warn deprecated glob@8.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-05-17T17:40:02.5892730Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-05-17T17:40:05.6075370Z 
+2026-05-17T17:40:05.6083750Z added 667 packages, and audited 668 packages in 7s
+2026-05-17T17:40:05.6084730Z 
+2026-05-17T17:40:05.6085100Z 164 packages are looking for funding
+2026-05-17T17:40:05.6185920Z   run `npm fund` for details
+2026-05-17T17:40:05.6286690Z 
+2026-05-17T17:40:05.6287380Z 12 vulnerabilities (3 low, 3 moderate, 6 high)
+2026-05-17T17:40:05.6287760Z 
+2026-05-17T17:40:05.6288120Z To address issues that do not require attention, run:
+2026-05-17T17:40:05.6288640Z   npm audit fix
+2026-05-17T17:40:05.6289060Z 
+2026-05-17T17:40:05.6289700Z To address all issues (including breaking changes), run:
+2026-05-17T17:40:05.6290870Z   npm audit fix --force
+2026-05-17T17:40:05.6291110Z 
+2026-05-17T17:40:05.6291470Z Run `npm audit` for details.
+2026-05-17T17:40:05.6593920Z ##[group]Run npm run build
+2026-05-17T17:40:05.6595250Z [36;1mnpm run build[0m
+2026-05-17T17:40:05.6642020Z shell: /bin/bash -e {0}
+2026-05-17T17:40:05.6642450Z env:
+2026-05-17T17:40:05.6642740Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:40:05.6643060Z   CARGO_INCREMENTAL: 0
+2026-05-17T17:40:05.6643370Z   CARGO_TERM_COLOR: always
+2026-05-17T17:40:05.6643670Z ##[endgroup]
+2026-05-17T17:40:06.0206460Z 
+2026-05-17T17:40:06.0207550Z > waypoint@0.2.27 build
+2026-05-17T17:40:06.0208300Z > vite build
+2026-05-17T17:40:06.0208770Z 
+2026-05-17T17:40:06.2488570Z ▲ [WARNING] Cannot find base config file "./.svelte-kit/tsconfig.json" [tsconfig.json]
+2026-05-17T17:40:06.2494800Z 
+2026-05-17T17:40:06.2495270Z     tsconfig.json:2:13:
+2026-05-17T17:40:06.2495900Z       2 │   "extends": "./.svelte-kit/tsconfig.json",
+2026-05-17T17:40:06.2496390Z         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-05-17T17:40:06.2496710Z 
+2026-05-17T17:40:07.1084180Z [36mvite v6.4.2 [32mbuilding SSR bundle for production...[36m[39m
+2026-05-17T17:40:07.1420480Z transforming...
+2026-05-17T17:40:07.3888450Z 5:40:07 PM [vite-plugin-svelte] src/windows/NoteWindow.svelte:254:4 `<div>` with a contextmenu handler must have an ARIA role
+2026-05-17T17:40:07.3988430Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:07.4089910Z 252:     </div>
+2026-05-17T17:40:07.4190550Z 253: 
+2026-05-17T17:40:07.4292460Z 254:     <div class="editor-area" on:contextmenu|preventDefault={handleContextMenu}>
+2026-05-17T17:40:07.4421350Z                ^
+2026-05-17T17:40:07.4521840Z 255:       <Editor
+2026-05-17T17:40:07.4644400Z 256:         bind:this={editorRef}
+2026-05-17T17:40:07.4757930Z 5:40:07 PM [vite-plugin-svelte] src/windows/DraggableTitlebar.svelte:15:0 `<div>` with a mousedown handler must have an ARIA role
+2026-05-17T17:40:07.4758760Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:07.4859620Z 13: </script>
+2026-05-17T17:40:07.4963870Z 14: 
+2026-05-17T17:40:07.5065130Z 15: <div class="draggable-titlebar titlebar" data-tauri-drag-region on:mousedown={handleMousedown}>
+2026-05-17T17:40:07.5166490Z           ^
+2026-05-17T17:40:07.5267520Z 16:   <slot />
+2026-05-17T17:40:07.5368550Z 17: </div>
+2026-05-17T17:40:07.5469580Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:97:2 `<div>` with a contextmenu handler must have an ARIA role
+2026-05-17T17:40:07.5570090Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:07.5671370Z  95: 
+2026-05-17T17:40:07.5753900Z  96: <div class="section">
+2026-05-17T17:40:07.5768990Z  97:   <div class="section-header" on:contextmenu={showContextMenu}>
+2026-05-17T17:40:07.5769450Z              ^
+2026-05-17T17:40:07.5770270Z  98:     <span class="section-label">{contextId} 筆記</span>
+2026-05-17T17:40:07.5771150Z  99:     <button class="add-btn" on:click|stopPropagation={addNote} title="新增筆記">+</button>
+2026-05-17T17:40:07.5772690Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:124:2 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+2026-05-17T17:40:07.5773820Z https://svelte.dev/e/a11y_click_events_have_key_events
+2026-05-17T17:40:07.5774070Z 122: 
+2026-05-17T17:40:07.5774310Z 123: {#if menuVisible}
+2026-05-17T17:40:07.5774530Z 124:   <div
+2026-05-17T17:40:07.5774660Z            ^
+2026-05-17T17:40:07.5774990Z 125:     class="context-menu"
+2026-05-17T17:40:07.5775240Z 126:     style="left:{menuX}px;top:{menuY}px"
+2026-05-17T17:40:07.5775960Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:124:2 `<div>` with a click handler must have an ARIA role
+2026-05-17T17:40:07.5776530Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:07.5776790Z 122: 
+2026-05-17T17:40:07.5777060Z 123: {#if menuVisible}
+2026-05-17T17:40:07.5777350Z 124:   <div
+2026-05-17T17:40:07.5777600Z            ^
+2026-05-17T17:40:07.5778510Z 125:     class="context-menu"
+2026-05-17T17:40:07.5778930Z 126:     style="left:{menuX}px;top:{menuY}px"
+2026-05-17T17:40:07.5779920Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:131:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:07.5780680Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:07.5781470Z 129:     <button on:click={() => setMatchBy("process")}>識別方式：程序名稱</button>
+2026-05-17T17:40:07.5782130Z 130:     <button on:click={() => setMatchBy("title")}>識別方式：視窗標題</button>
+2026-05-17T17:40:07.5782420Z 131:     <div class="divider" />
+2026-05-17T17:40:07.5782610Z                                 ^
+2026-05-17T17:40:07.5782820Z 132:     {#if !showAliasInput}
+2026-05-17T17:40:07.5783430Z 133:       <button on:click={() => showAliasInput = true}>對應到現有 context...</button>
+2026-05-17T17:40:07.5784420Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:143:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:07.5785390Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:07.5785980Z 141:       <button on:click={() => aliasTarget && setAlias(aliasTarget)}>確認</button>
+2026-05-17T17:40:07.5786270Z 142:     {/if}
+2026-05-17T17:40:07.5786490Z 143:     <div class="divider" />
+2026-05-17T17:40:07.5786770Z                                 ^
+2026-05-17T17:40:07.5786980Z 144:     {#if !showRenameInput}
+2026-05-17T17:40:07.5787550Z 145:       <button on:click={() => { showRenameInput = true; newContextName = contextId; }}>重新命名</button>
+2026-05-17T17:40:07.5788660Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:155:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:07.5789310Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:07.5789680Z 153:       <button on:click={renameCtx}>確認</button>
+2026-05-17T17:40:07.5789890Z 154:     {/if}
+2026-05-17T17:40:07.5790140Z 155:     <div class="divider" />
+2026-05-17T17:40:07.5790410Z                                 ^
+2026-05-17T17:40:07.5790880Z 156:     <button class="danger" on:click={deleteCtx}>刪除此 context</button>
+2026-05-17T17:40:07.5791150Z 157:   </div>
+2026-05-17T17:40:07.5792060Z 5:40:07 PM [vite-plugin-svelte] src/windows/note/Editor.svelte:84:0 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:07.5792780Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:07.5793130Z 82: </script>
+2026-05-17T17:40:07.5793300Z 83: 
+2026-05-17T17:40:07.5793530Z 84: <div class="editor-wrap" bind:this={element} />
+2026-05-17T17:40:07.5793800Z                                                    ^
+2026-05-17T17:40:07.5793990Z 85: 
+2026-05-17T17:40:07.5794180Z 86: <style>
+2026-05-17T17:40:07.5794640Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:139:6 Avoid using autofocus
+2026-05-17T17:40:07.5795070Z https://svelte.dev/e/a11y_autofocus
+2026-05-17T17:40:07.5795320Z 137:       }}
+2026-05-17T17:40:07.5795520Z 138:       on:blur={submitRename}
+2026-05-17T17:40:07.5795710Z 139:       autofocus
+2026-05-17T17:40:07.5795910Z                     ^
+2026-05-17T17:40:07.5796120Z 140:     />
+2026-05-17T17:40:07.5796290Z 141:   </div>
+2026-05-17T17:40:07.5797460Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:163:2 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+2026-05-17T17:40:07.5798380Z https://svelte.dev/e/a11y_click_events_have_key_events
+2026-05-17T17:40:07.5798660Z 161: 
+2026-05-17T17:40:07.5798860Z 162: {#if menuVisible}
+2026-05-17T17:40:07.5799310Z 163:   <div class="context-menu" style="left:{menuX}px;top:{menuY}px" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:07.5799990Z              ^
+2026-05-17T17:40:07.5800380Z 164:     <button on:click={startRename}>重新命名…</button>
+2026-05-17T17:40:07.5800640Z 165:     <div class="divider" />
+2026-05-17T17:40:07.5801310Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:163:2 `<div>` with a click handler must have an ARIA role
+2026-05-17T17:40:07.5801830Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:07.5802050Z 161: 
+2026-05-17T17:40:07.5802180Z 162: {#if menuVisible}
+2026-05-17T17:40:07.5802730Z 163:   <div class="context-menu" style="left:{menuX}px;top:{menuY}px" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:07.5803140Z              ^
+2026-05-17T17:40:07.5803420Z 164:     <button on:click={startRename}>重新命名…</button>
+2026-05-17T17:40:07.5803780Z 165:     <div class="divider" />
+2026-05-17T17:40:07.5804630Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:165:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:07.5805540Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:07.5806130Z 163:   <div class="context-menu" style="left:{menuX}px;top:{menuY}px" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:07.5806710Z 164:     <button on:click={startRename}>重新命名…</button>
+2026-05-17T17:40:07.5806970Z 165:     <div class="divider" />
+2026-05-17T17:40:07.5807170Z                                 ^
+2026-05-17T17:40:07.5807400Z 166:     {#if submenu !== "copy"}
+2026-05-17T17:40:07.5807810Z 167:       <button on:click={() => submenu = "copy"}>複製到 ▸</button>
+2026-05-17T17:40:07.5808810Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:184:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:07.5809460Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:07.5809690Z 182:       {/each}
+2026-05-17T17:40:07.5809910Z 183:     {/if}
+2026-05-17T17:40:07.5810150Z 184:     <div class="divider" />
+2026-05-17T17:40:07.5810420Z                                 ^
+2026-05-17T17:40:07.5810890Z 185:     <button class="danger" on:click={doDelete}>刪除筆記</button>
+2026-05-17T17:40:07.5811120Z 186:   </div>
+2026-05-17T17:40:07.5811800Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:198:4 Non-interactive element `<div>` should not be assigned mouse or keyboard event listeners
+2026-05-17T17:40:07.5812500Z https://svelte.dev/e/a11y_no_noninteractive_element_interactions
+2026-05-17T17:40:07.5812880Z 196:     tabindex="-1"
+2026-05-17T17:40:07.5813010Z 197:   >
+2026-05-17T17:40:07.5813390Z 198:     <div class="dialog" on:click|stopPropagation on:keydown|stopPropagation role="document">
+2026-05-17T17:40:07.5813830Z                ^
+2026-05-17T17:40:07.5814020Z 199:       <div class="dialog-msg">
+2026-05-17T17:40:07.5814410Z 200:         刪除筆記「<strong>{note.title || "Untitled"}</strong>」？
+2026-05-17T17:40:07.5815020Z 5:40:07 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:204:56 Avoid using autofocus
+2026-05-17T17:40:07.5815480Z https://svelte.dev/e/a11y_autofocus
+2026-05-17T17:40:07.5815790Z 202:       <div class="dialog-actions">
+2026-05-17T17:40:07.5816250Z 203:         <button on:click={cancelDelete}>取消</button>
+2026-05-17T17:40:07.5816740Z 204:         <button class="danger" on:click={confirmDelete} autofocus>刪除</button>
+2026-05-17T17:40:07.5817160Z                                                                       ^
+2026-05-17T17:40:07.5817420Z 205:       </div>
+2026-05-17T17:40:07.5817540Z 206:     </div>
+2026-05-17T17:40:07.5818590Z 5:40:07 PM [vite-plugin-svelte] src/windows/ConfirmDialog.svelte:9:0 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+2026-05-17T17:40:07.5819480Z https://svelte.dev/e/a11y_click_events_have_key_events
+2026-05-17T17:40:07.5819690Z  7: </script>
+2026-05-17T17:40:07.5819980Z  8: 
+2026-05-17T17:40:07.5820150Z  9: <div class="overlay" on:click={onCancel}>
+2026-05-17T17:40:07.5820360Z           ^
+2026-05-17T17:40:07.5820620Z 10:   <div class="dialog" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:07.5820900Z 11:     <p class="msg">{message}</p>
+2026-05-17T17:40:07.5821580Z 5:40:07 PM [vite-plugin-svelte] src/windows/ConfirmDialog.svelte:9:0 `<div>` with a click handler must have an ARIA role
+2026-05-17T17:40:07.5822120Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:07.5822350Z  7: </script>
+2026-05-17T17:40:07.5822570Z  8: 
+2026-05-17T17:40:07.5822810Z  9: <div class="overlay" on:click={onCancel}>
+2026-05-17T17:40:07.5822990Z           ^
+2026-05-17T17:40:07.5823230Z 10:   <div class="dialog" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:07.5823500Z 11:     <p class="msg">{message}</p>
+2026-05-17T17:40:07.5824610Z 5:40:07 PM [vite-plugin-svelte] src/windows/ConfirmDialog.svelte:10:2 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+2026-05-17T17:40:07.5825650Z https://svelte.dev/e/a11y_click_events_have_key_events
+2026-05-17T17:40:07.5825950Z  8: 
+2026-05-17T17:40:07.5826170Z  9: <div class="overlay" on:click={onCancel}>
+2026-05-17T17:40:07.5826510Z 10:   <div class="dialog" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:07.5826720Z             ^
+2026-05-17T17:40:07.5826900Z 11:     <p class="msg">{message}</p>
+2026-05-17T17:40:07.5827290Z 12:     <button class="danger" on:click={onConfirm}>{confirmText}</button>
+2026-05-17T17:40:07.5827970Z 5:40:07 PM [vite-plugin-svelte] src/windows/ConfirmDialog.svelte:10:2 `<div>` with a click handler must have an ARIA role
+2026-05-17T17:40:07.5828460Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:07.5828660Z  8: 
+2026-05-17T17:40:07.5828820Z  9: <div class="overlay" on:click={onCancel}>
+2026-05-17T17:40:07.5829200Z 10:   <div class="dialog" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:07.5829510Z             ^
+2026-05-17T17:40:07.5829760Z 11:     <p class="msg">{message}</p>
+2026-05-17T17:40:07.5830170Z 12:     <button class="danger" on:click={onConfirm}>{confirmText}</button>
+2026-05-17T17:40:07.8986420Z [32m✓[39m 173 modules transformed.
+2026-05-17T17:40:07.9705690Z rendering chunks...
+2026-05-17T17:40:08.3036330Z [36mvite v6.4.2 [32mbuilding for production...[36m[39m
+2026-05-17T17:40:08.3140900Z transforming...
+2026-05-17T17:40:08.6244240Z 5:40:08 PM [vite-plugin-svelte] src/windows/NoteWindow.svelte:254:4 `<div>` with a contextmenu handler must have an ARIA role
+2026-05-17T17:40:08.6350530Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:08.6471230Z 252:     </div>
+2026-05-17T17:40:08.6572130Z 253: 
+2026-05-17T17:40:08.6692910Z 254:     <div class="editor-area" on:contextmenu|preventDefault={handleContextMenu}>
+2026-05-17T17:40:08.6812350Z                ^
+2026-05-17T17:40:08.6913360Z 255:       <Editor
+2026-05-17T17:40:08.7015330Z 256:         bind:this={editorRef}
+2026-05-17T17:40:08.7217750Z 5:40:08 PM [vite-plugin-svelte] src/windows/note/Editor.svelte:84:0 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:08.7289200Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:08.7289540Z 82: </script>
+2026-05-17T17:40:08.7289790Z 83: 
+2026-05-17T17:40:08.7290410Z 84: <div class="editor-wrap" bind:this={element} />
+2026-05-17T17:40:08.7290730Z                                                    ^
+2026-05-17T17:40:08.7291030Z 85: 
+2026-05-17T17:40:08.7291190Z 86: <style>
+2026-05-17T17:40:08.7291850Z 5:40:08 PM [vite-plugin-svelte] src/windows/DraggableTitlebar.svelte:15:0 `<div>` with a mousedown handler must have an ARIA role
+2026-05-17T17:40:08.7292480Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:08.7292770Z 13: </script>
+2026-05-17T17:40:08.7292940Z 14: 
+2026-05-17T17:40:08.7293870Z 15: <div class="draggable-titlebar titlebar" data-tauri-drag-region on:mousedown={handleMousedown}>
+2026-05-17T17:40:08.7294280Z           ^
+2026-05-17T17:40:08.7294430Z 16:   <slot />
+2026-05-17T17:40:08.7294630Z 17: </div>
+2026-05-17T17:40:08.7455330Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:97:2 `<div>` with a contextmenu handler must have an ARIA role
+2026-05-17T17:40:08.7607120Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:08.7614630Z  95: 
+2026-05-17T17:40:08.7788580Z  96: <div class="section">
+2026-05-17T17:40:08.7885620Z  97:   <div class="section-header" on:contextmenu={showContextMenu}>
+2026-05-17T17:40:08.7986650Z              ^
+2026-05-17T17:40:08.8088050Z  98:     <span class="section-label">{contextId} 筆記</span>
+2026-05-17T17:40:08.8140380Z  99:     <button class="add-btn" on:click|stopPropagation={addNote} title="新增筆記">+</button>
+2026-05-17T17:40:08.8142650Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:124:2 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+2026-05-17T17:40:08.8143960Z https://svelte.dev/e/a11y_click_events_have_key_events
+2026-05-17T17:40:08.8144360Z 122: 
+2026-05-17T17:40:08.8144610Z 123: {#if menuVisible}
+2026-05-17T17:40:08.8144860Z 124:   <div
+2026-05-17T17:40:08.8145160Z            ^
+2026-05-17T17:40:08.8145440Z 125:     class="context-menu"
+2026-05-17T17:40:08.8145860Z 126:     style="left:{menuX}px;top:{menuY}px"
+2026-05-17T17:40:08.8146630Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:124:2 `<div>` with a click handler must have an ARIA role
+2026-05-17T17:40:08.8147280Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:08.8147600Z 122: 
+2026-05-17T17:40:08.8147870Z 123: {#if menuVisible}
+2026-05-17T17:40:08.8148140Z 124:   <div
+2026-05-17T17:40:08.8148480Z            ^
+2026-05-17T17:40:08.8148800Z 125:     class="context-menu"
+2026-05-17T17:40:08.8149260Z 126:     style="left:{menuX}px;top:{menuY}px"
+2026-05-17T17:40:08.8150410Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:131:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:08.8151460Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:08.8152070Z 129:     <button on:click={() => setMatchBy("process")}>識別方式：程序名稱</button>
+2026-05-17T17:40:08.8152670Z 130:     <button on:click={() => setMatchBy("title")}>識別方式：視窗標題</button>
+2026-05-17T17:40:08.8153110Z 131:     <div class="divider" />
+2026-05-17T17:40:08.8153410Z                                 ^
+2026-05-17T17:40:08.8153730Z 132:     {#if !showAliasInput}
+2026-05-17T17:40:08.8154320Z 133:       <button on:click={() => showAliasInput = true}>對應到現有 context...</button>
+2026-05-17T17:40:08.8155450Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:143:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:08.8156240Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:08.8156910Z 141:       <button on:click={() => aliasTarget && setAlias(aliasTarget)}>確認</button>
+2026-05-17T17:40:08.8157350Z 142:     {/if}
+2026-05-17T17:40:08.8157710Z 143:     <div class="divider" />
+2026-05-17T17:40:08.8158120Z                                 ^
+2026-05-17T17:40:08.8158520Z 144:     {#if !showRenameInput}
+2026-05-17T17:40:08.8159260Z 145:       <button on:click={() => { showRenameInput = true; newContextName = contextId; }}>重新命名</button>
+2026-05-17T17:40:08.8160480Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/ContextSection.svelte:155:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:08.8161250Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:08.8162360Z 153:       <button on:click={renameCtx}>確認</button>
+2026-05-17T17:40:08.8162820Z 154:     {/if}
+2026-05-17T17:40:08.8163120Z 155:     <div class="divider" />
+2026-05-17T17:40:08.8163410Z                                 ^
+2026-05-17T17:40:08.8163980Z 156:     <button class="danger" on:click={deleteCtx}>刪除此 context</button>
+2026-05-17T17:40:08.8164370Z 157:   </div>
+2026-05-17T17:40:08.8165740Z 5:40:08 PM [vite-plugin-svelte] src/windows/ConfirmDialog.svelte:9:0 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+2026-05-17T17:40:08.8167670Z https://svelte.dev/e/a11y_click_events_have_key_events
+2026-05-17T17:40:08.8168020Z  7: </script>
+2026-05-17T17:40:08.8168240Z  8: 
+2026-05-17T17:40:08.8168540Z  9: <div class="overlay" on:click={onCancel}>
+2026-05-17T17:40:08.8168870Z           ^
+2026-05-17T17:40:08.8185550Z 10:   <div class="dialog" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:08.8186280Z 11:     <p class="msg">{message}</p>
+2026-05-17T17:40:08.8187180Z 5:40:08 PM [vite-plugin-svelte] src/windows/ConfirmDialog.svelte:9:0 `<div>` with a click handler must have an ARIA role
+2026-05-17T17:40:08.8187880Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:08.8202200Z  7: </script>
+2026-05-17T17:40:08.8202820Z  8: 
+2026-05-17T17:40:08.8203130Z  9: <div class="overlay" on:click={onCancel}>
+2026-05-17T17:40:08.8203420Z           ^
+2026-05-17T17:40:08.8203880Z 10:   <div class="dialog" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:08.8204330Z 11:     <p class="msg">{message}</p>
+2026-05-17T17:40:08.8205920Z 5:40:08 PM [vite-plugin-svelte] src/windows/ConfirmDialog.svelte:10:2 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+2026-05-17T17:40:08.8213410Z https://svelte.dev/e/a11y_click_events_have_key_events
+2026-05-17T17:40:08.8213750Z  8: 
+2026-05-17T17:40:08.8214090Z  9: <div class="overlay" on:click={onCancel}>
+2026-05-17T17:40:08.8214610Z 10:   <div class="dialog" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:08.8214950Z             ^
+2026-05-17T17:40:08.8215250Z 11:     <p class="msg">{message}</p>
+2026-05-17T17:40:08.8215700Z 12:     <button class="danger" on:click={onConfirm}>{confirmText}</button>
+2026-05-17T17:40:08.8216450Z 5:40:08 PM [vite-plugin-svelte] src/windows/ConfirmDialog.svelte:10:2 `<div>` with a click handler must have an ARIA role
+2026-05-17T17:40:08.8217090Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:08.8217410Z  8: 
+2026-05-17T17:40:08.8217680Z  9: <div class="overlay" on:click={onCancel}>
+2026-05-17T17:40:08.8218120Z 10:   <div class="dialog" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:08.8218450Z             ^
+2026-05-17T17:40:08.8218740Z 11:     <p class="msg">{message}</p>
+2026-05-17T17:40:08.8219200Z 12:     <button class="danger" on:click={onConfirm}>{confirmText}</button>
+2026-05-17T17:40:08.8432150Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:139:6 Avoid using autofocus
+2026-05-17T17:40:08.8432650Z https://svelte.dev/e/a11y_autofocus
+2026-05-17T17:40:08.8432910Z 137:       }}
+2026-05-17T17:40:08.8433100Z 138:       on:blur={submitRename}
+2026-05-17T17:40:08.8433280Z 139:       autofocus
+2026-05-17T17:40:08.8433420Z                     ^
+2026-05-17T17:40:08.8433550Z 140:     />
+2026-05-17T17:40:08.8433660Z 141:   </div>
+2026-05-17T17:40:08.8434760Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:163:2 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+2026-05-17T17:40:08.8436120Z https://svelte.dev/e/a11y_click_events_have_key_events
+2026-05-17T17:40:08.8436370Z 161: 
+2026-05-17T17:40:08.8437040Z 162: {#if menuVisible}
+2026-05-17T17:40:08.8437510Z 163:   <div class="context-menu" style="left:{menuX}px;top:{menuY}px" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:08.8437860Z              ^
+2026-05-17T17:40:08.8438310Z 164:     <button on:click={startRename}>重新命名…</button>
+2026-05-17T17:40:08.8438570Z 165:     <div class="divider" />
+2026-05-17T17:40:08.8439210Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:163:2 `<div>` with a click handler must have an ARIA role
+2026-05-17T17:40:08.8439780Z https://svelte.dev/e/a11y_no_static_element_interactions
+2026-05-17T17:40:08.8440040Z 161: 
+2026-05-17T17:40:08.8440250Z 162: {#if menuVisible}
+2026-05-17T17:40:08.8440800Z 163:   <div class="context-menu" style="left:{menuX}px;top:{menuY}px" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:08.8441130Z              ^
+2026-05-17T17:40:08.8441410Z 164:     <button on:click={startRename}>重新命名…</button>
+2026-05-17T17:40:08.8441930Z 165:     <div class="divider" />
+2026-05-17T17:40:08.8442780Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:165:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:08.8443480Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:08.8443990Z 163:   <div class="context-menu" style="left:{menuX}px;top:{menuY}px" on:click|stopPropagation={() => {}}>
+2026-05-17T17:40:08.8444490Z 164:     <button on:click={startRename}>重新命名…</button>
+2026-05-17T17:40:08.8444870Z 165:     <div class="divider" />
+2026-05-17T17:40:08.8445110Z                                 ^
+2026-05-17T17:40:08.8445370Z 166:     {#if submenu !== "copy"}
+2026-05-17T17:40:08.8445790Z 167:       <button on:click={() => submenu = "copy"}>複製到 ▸</button>
+2026-05-17T17:40:08.8446710Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:184:4 Self-closing HTML tags for non-void elements are ambiguous — use `<div ...></div>` rather than `<div ... />`
+2026-05-17T17:40:08.8447380Z https://svelte.dev/e/element_invalid_self_closing_tag
+2026-05-17T17:40:08.8447600Z 182:       {/each}
+2026-05-17T17:40:08.8447720Z 183:     {/if}
+2026-05-17T17:40:08.8447950Z 184:     <div class="divider" />
+2026-05-17T17:40:08.8448180Z                                 ^
+2026-05-17T17:40:08.8448530Z 185:     <button class="danger" on:click={doDelete}>刪除筆記</button>
+2026-05-17T17:40:08.8448800Z 186:   </div>
+2026-05-17T17:40:08.8449440Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:198:4 Non-interactive element `<div>` should not be assigned mouse or keyboard event listeners
+2026-05-17T17:40:08.8450070Z https://svelte.dev/e/a11y_no_noninteractive_element_interactions
+2026-05-17T17:40:08.8450330Z 196:     tabindex="-1"
+2026-05-17T17:40:08.8450460Z 197:   >
+2026-05-17T17:40:08.8450840Z 198:     <div class="dialog" on:click|stopPropagation on:keydown|stopPropagation role="document">
+2026-05-17T17:40:08.8451160Z                ^
+2026-05-17T17:40:08.8451350Z 199:       <div class="dialog-msg">
+2026-05-17T17:40:08.8451710Z 200:         刪除筆記「<strong>{note.title || "Untitled"}</strong>」？
+2026-05-17T17:40:08.8452200Z 5:40:08 PM [vite-plugin-svelte] src/windows/list/NoteItem.svelte:204:56 Avoid using autofocus
+2026-05-17T17:40:08.8452570Z https://svelte.dev/e/a11y_autofocus
+2026-05-17T17:40:08.8452870Z 202:       <div class="dialog-actions">
+2026-05-17T17:40:08.8453220Z 203:         <button on:click={cancelDelete}>取消</button>
+2026-05-17T17:40:08.8453740Z 204:         <button class="danger" on:click={confirmDelete} autofocus>刪除</button>
+2026-05-17T17:40:08.8454160Z                                                                       ^
+2026-05-17T17:40:08.8454420Z 205:       </div>
+2026-05-17T17:40:08.8454550Z 206:     </div>
+2026-05-17T17:40:10.2092600Z [32m✓[39m 445 modules transformed.
+2026-05-17T17:40:10.3147090Z rendering chunks...
+2026-05-17T17:40:10.4687200Z [33m[plugin vite:reporter] 
+2026-05-17T17:40:10.4690870Z (!) /Users/runner/work/waypoint/waypoint/waypoint/node_modules/@tauri-apps/api/core.js is dynamically imported by /Users/runner/work/waypoint/waypoint/waypoint/src/windows/ListWindow.svelte but also statically imported by /Users/runner/work/waypoint/waypoint/waypoint/node_modules/@tauri-apps/api/dpi.js, /Users/runner/work/waypoint/waypoint/waypoint/node_modules/@tauri-apps/api/event.js, /Users/runner/work/waypoint/waypoint/waypoint/node_modules/@tauri-apps/api/image.js, /Users/runner/work/waypoint/waypoint/waypoint/node_modules/@tauri-apps/api/window.js, /Users/runner/work/waypoint/waypoint/waypoint/src/lib/api.ts, dynamic import will not move module into another chunk.
+2026-05-17T17:40:10.4693060Z [39m
+2026-05-17T17:40:10.5038060Z computing gzip size...
+2026-05-17T17:40:10.5279810Z [2m.svelte-kit/output/client/[22m[32m_app/version.json                       [39m[1m[2m  0.03 kB[22m[1m[22m[2m │ gzip:   0.05 kB[22m
+2026-05-17T17:40:10.5280800Z [2m.svelte-kit/output/client/[22m[32m.vite/manifest.json                     [39m[1m[2m  3.09 kB[22m[1m[22m[2m │ gzip:   0.61 kB[22m
+2026-05-17T17:40:10.5282260Z [33m
+2026-05-17T17:40:10.5283090Z [2m.svelte-kit/output/client/[22m[35m_app/immutable/assets/0.CkmnEqie.css    [39m[1m[2m  1.38 kB[22m[1m[22m[2m │ gzip:   0.58 kB[22m
+2026-05-17T17:40:10.5283730Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2026-05-17T17:40:10.5284210Z - Using dynamic import() to code-split the application
+2026-05-17T17:40:10.5284950Z - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2026-05-17T17:40:10.5285660Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+2026-05-17T17:40:10.5286440Z [2m.svelte-kit/output/client/[22m[35m_app/immutable/assets/2.DB3SlkHb.css    [39m[1m[2m 13.41 kB[22m[1m[22m[2m │ gzip:   2.69 kB[22m
+2026-05-17T17:40:10.5287310Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/entry/start.BblQ0mVR.js  [39m[1m[2m  0.08 kB[22m[1m[22m[2m │ gzip:   0.09 kB[22m
+2026-05-17T17:40:10.5288290Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/CceS8zpo.js       [39m[1m[2m  0.20 kB[22m[1m[22m[2m │ gzip:   0.18 kB[22m
+2026-05-17T17:40:10.5289280Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/0.DBFiIURM.js      [39m[1m[2m  0.34 kB[22m[1m[22m[2m │ gzip:   0.26 kB[22m
+2026-05-17T17:40:10.5290210Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/1.Dh5Og7jA.js      [39m[1m[2m  0.54 kB[22m[1m[22m[2m │ gzip:   0.34 kB[22m
+2026-05-17T17:40:10.5291180Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/5XPmvqP6.js       [39m[1m[2m  1.30 kB[22m[1m[22m[2m │ gzip:   0.71 kB[22m
+2026-05-17T17:40:10.5292070Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/CNunGkfA.js       [39m[1m[2m  1.55 kB[22m[1m[22m[2m │ gzip:   0.81 kB[22m
+2026-05-17T17:40:10.5293000Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/entry/app.cz_Uw7DQ.js    [39m[1m[2m  4.97 kB[22m[1m[22m[2m │ gzip:   2.26 kB[22m
+2026-05-17T17:40:10.5294100Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/S0vk11m0.js       [39m[1m[2m  5.79 kB[22m[1m[22m[2m │ gzip:   2.73 kB[22m
+2026-05-17T17:40:10.5295130Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/CQdjeBKC.js       [39m[1m[2m  8.22 kB[22m[1m[22m[2m │ gzip:   3.49 kB[22m
+2026-05-17T17:40:10.5296140Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/ki2vWl03.js       [39m[1m[2m 26.84 kB[22m[1m[22m[2m │ gzip:  10.42 kB[22m
+2026-05-17T17:40:10.5297070Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/chunks/qownd6he.js       [39m[1m[2m 28.07 kB[22m[1m[22m[2m │ gzip:  10.84 kB[22m
+2026-05-17T17:40:10.5297930Z [2m.svelte-kit/output/client/[22m[36m_app/immutable/nodes/2.C2cKYEdk.js      [39m[1m[33m698.66 kB[39m[22m[2m │ gzip: 220.43 kB[22m
+2026-05-17T17:40:10.5298530Z [32m✓ built in 2.23s[39m
+2026-05-17T17:40:10.8444100Z [2m.svelte-kit/output/server/[22m[32m.vite/manifest.json                         [39m[1m[2m  3.18 kB[22m[1m[22m
+2026-05-17T17:40:10.8445260Z [2m.svelte-kit/output/server/[22m[35m_app/immutable/assets/_layout.lky48kXk.css  [39m[1m[2m  1.36 kB[22m[1m[22m
+2026-05-17T17:40:10.8446310Z [2m.svelte-kit/output/server/[22m[35m_app/immutable/assets/_page.CcHApp_Y.css    [39m[1m[2m  9.69 kB[22m[1m[22m
+2026-05-17T17:40:10.8447260Z [2m.svelte-kit/output/server/[22m[36mentries/pages/_layout.ts.js                 [39m[1m[2m  0.04 kB[22m[1m[22m
+2026-05-17T17:40:10.8448300Z [2m.svelte-kit/output/server/[22m[36mentries/pages/_layout.svelte.js             [39m[1m[2m  0.24 kB[22m[1m[22m
+2026-05-17T17:40:10.8449250Z [2m.svelte-kit/output/server/[22m[36minternal.js                                 [39m[1m[2m  0.35 kB[22m[1m[22m
+2026-05-17T17:40:10.8450180Z [2m.svelte-kit/output/server/[22m[36mchunks/environment.js                       [39m[1m[2m  0.62 kB[22m[1m[22m
+2026-05-17T17:40:10.8451210Z [2m.svelte-kit/output/server/[22m[36mchunks/utils.js                             [39m[1m[2m  1.15 kB[22m[1m[22m
+2026-05-17T17:40:10.8452800Z [2m.svelte-kit/output/server/[22m[36mentries/fallbacks/error.svelte.js           [39m[1m[2m  1.41 kB[22m[1m[22m
+2026-05-17T17:40:10.8453760Z [2m.svelte-kit/output/server/[22m[36mchunks/index.js                             [39m[1m[2m  1.42 kB[22m[1m[22m
+2026-05-17T17:40:10.8454510Z [2m.svelte-kit/output/server/[22m[36mchunks/render-context.js                    [39m[1m[2m  1.97 kB[22m[1m[22m
+2026-05-17T17:40:10.8455370Z [2m.svelte-kit/output/server/[22m[36mchunks/internal.js                          [39m[1m[2m  3.79 kB[22m[1m[22m
+2026-05-17T17:40:10.8456360Z [2m.svelte-kit/output/server/[22m[36mchunks/exports.js                           [39m[1m[2m  5.54 kB[22m[1m[22m
+2026-05-17T17:40:10.8457190Z [2m.svelte-kit/output/server/[22m[36mentries/pages/_page.svelte.js               [39m[1m[2m 15.03 kB[22m[1m[22m
+2026-05-17T17:40:10.8458290Z [2m.svelte-kit/output/server/[22m[36mremote-entry.js                             [39m[1m[2m 24.22 kB[22m[1m[22m
+2026-05-17T17:40:10.8459020Z [2m.svelte-kit/output/server/[22m[36mchunks/root.js                              [39m[1m[2m 28.24 kB[22m[1m[22m
+2026-05-17T17:40:10.8459760Z [2m.svelte-kit/output/server/[22m[36mchunks/shared.js                            [39m[1m[2m 33.63 kB[22m[1m[22m
+2026-05-17T17:40:10.8460530Z [2m.svelte-kit/output/server/[22m[36mchunks/renderer.js                          [39m[1m[2m 93.92 kB[22m[1m[22m
+2026-05-17T17:40:10.8461330Z [2m.svelte-kit/output/server/[22m[36mindex.js                                    [39m[1m[2m127.28 kB[22m[1m[22m
+2026-05-17T17:40:10.8462160Z [32m✓ built in 3.71s[39m
+2026-05-17T17:40:10.8462340Z 
+2026-05-17T17:40:10.8462560Z Run npm run preview to preview your production build locally.
+2026-05-17T17:40:10.8478850Z 
+2026-05-17T17:40:10.8479220Z > Using @sveltejs/adapter-static
+2026-05-17T17:40:11.2024730Z   Wrote site to "dist"
+2026-05-17T17:40:11.2132530Z   ✔ done
+2026-05-17T17:40:11.2742040Z ##[group]Run tauri-apps/tauri-action@v0
+2026-05-17T17:40:11.2742280Z with:
+2026-05-17T17:40:11.2742490Z   projectPath: waypoint
+2026-05-17T17:40:11.2742640Z   tagName: v0.2.27
+2026-05-17T17:40:11.2742770Z   releaseName: Waypoint v0.2.27
+2026-05-17T17:40:11.2744710Z   releaseBody: ## 本版修正
+
+- 透明度滑桿改為撐滿可用 titlebar 寬度，100% 時 thumb 真正貼到右側
+- 新增：穿透模式關閉時，自動把焦點與游標移到當前 context 最後編輯的筆記末，可立刻接著打字
+
+---
+
+## 安裝方式
+- **Windows**：下載 `.msi` 或 `-setup.exe` 安裝
+- **Steam Deck（Flatpak，推薦）**：下載 `_x86_64.flatpak`，Desktop Mode 執行 `flatpak install --user ./io.github.i321i.waypoint_x86_64.flatpak`
+- **Linux x86_64（AppImage）**：下載 `_amd64.AppImage`，賦予執行權限後執行
+- **Linux aarch64（Flatpak）**：下載 `_aarch64.flatpak`，執行 `flatpak install --user ./io.github.i321i.waypoint_aarch64.flatpak`
+- **Linux aarch64（AppImage）**：下載 `_aarch64.AppImage`，賦予執行權限後執行
+- **macOS**：下載 `.dmg` 安裝
+2026-05-17T17:40:11.2746170Z   releaseDraft: false
+2026-05-17T17:40:11.2746330Z   prerelease: false
+2026-05-17T17:40:11.2746520Z   args: --target universal-apple-darwin
+2026-05-17T17:40:11.2746700Z   includeDebug: false
+2026-05-17T17:40:11.2746830Z   includeRelease: true
+2026-05-17T17:40:11.2746980Z   includeUpdaterJson: true
+2026-05-17T17:40:11.2747140Z   updaterJsonKeepUniversal: false
+2026-05-17T17:40:11.2747310Z   isGitea: false
+2026-05-17T17:40:11.2747440Z   uploadPlainBinary: false
+2026-05-17T17:40:11.2747600Z   generateReleaseNotes: false
+2026-05-17T17:40:11.2747750Z env:
+2026-05-17T17:40:11.2747860Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:40:11.2748030Z   CARGO_INCREMENTAL: 0
+2026-05-17T17:40:11.2748170Z   CARGO_TERM_COLOR: always
+2026-05-17T17:40:11.2749020Z   GITHUB_TOKEN: ***
+2026-05-17T17:40:11.2749160Z ##[endgroup]
+2026-05-17T17:40:11.6746490Z running npm [ 'run', 'tauri', 'build', '--', '--target', 'universal-apple-darwin' ]
+2026-05-17T17:40:11.8018590Z 
+2026-05-17T17:40:11.8018990Z > waypoint@0.2.27 tauri
+2026-05-17T17:40:11.8019520Z > tauri build --target universal-apple-darwin
+2026-05-17T17:40:11.8021520Z 
+2026-05-17T17:40:11.9861400Z         Info Looking up installed tauri packages to check mismatched versions...
+2026-05-17T17:40:12.5636260Z         Warn The bundle identifier "com.waypoint.app" set in `"tauri.conf.json" identifier` ends with `.app`. This is not recommended because it conflicts with the application bundle extension on macOS.
+2026-05-17T17:40:12.8952980Z [1m[92m    Updating[0m crates.io index
+2026-05-17T17:40:13.9270300Z [1m[92m Downloading[0m crates ...
+2026-05-17T17:40:14.0112270Z [1m[92m  Downloaded[0m adler2 v2.0.1
+2026-05-17T17:40:14.0195800Z [1m[92m  Downloaded[0m block-buffer v0.10.4
+2026-05-17T17:40:14.0288870Z [1m[92m  Downloaded[0m alloc-no-stdlib v2.0.4
+2026-05-17T17:40:14.0361070Z [1m[92m  Downloaded[0m alloc-stdlib v0.2.2
+2026-05-17T17:40:14.0404570Z [1m[92m  Downloaded[0m cfg-if v1.0.4
+2026-05-17T17:40:14.0429150Z [1m[92m  Downloaded[0m serialize-to-javascript-impl v0.1.2
+2026-05-17T17:40:14.0460360Z [1m[92m  Downloaded[0m ident_case v1.0.1
+2026-05-17T17:40:14.0481180Z [1m[92m  Downloaded[0m dyn-clone v1.0.20
+2026-05-17T17:40:14.0516240Z [1m[92m  Downloaded[0m dpi v0.1.2
+2026-05-17T17:40:14.0532480Z [1m[92m  Downloaded[0m dirs v6.0.0
+2026-05-17T17:40:14.0558200Z [1m[92m  Downloaded[0m block2 v0.5.1
+2026-05-17T17:40:14.0612590Z [1m[92m  Downloaded[0m futures-io v0.3.32
+2026-05-17T17:40:14.0631850Z [1m[92m  Downloaded[0m fnv v1.0.7
+2026-05-17T17:40:14.0660410Z [1m[92m  Downloaded[0m serde_json v1.0.149
+2026-05-17T17:40:14.0905530Z [1m[92m  Downloaded[0m matches v0.1.10
+2026-05-17T17:40:14.1030430Z [1m[92m  Downloaded[0m objc2-core-image v0.2.2
+2026-05-17T17:40:14.1177540Z [1m[92m  Downloaded[0m proc-macro-hack v0.5.20+deprecated
+2026-05-17T17:40:14.1331970Z [1m[92m  Downloaded[0m rand v0.7.3
+2026-05-17T17:40:14.1537310Z [1m[92m  Downloaded[0m phf_generator v0.11.3
+2026-05-17T17:40:14.1637820Z [1m[92m  Downloaded[0m phf v0.11.3
+2026-05-17T17:40:14.1727720Z [1m[92m  Downloaded[0m scopeguard v1.2.0
+2026-05-17T17:40:14.1787940Z [1m[92m  Downloaded[0m kuchikiki v0.8.8-speedreader
+2026-05-17T17:40:14.1881340Z [1m[92m  Downloaded[0m schemars v1.2.1
+2026-05-17T17:40:14.2254480Z [1m[92m  Downloaded[0m zerovec v0.11.6
+2026-05-17T17:40:14.2387370Z [1m[92m  Downloaded[0m lock_api v0.4.14
+2026-05-17T17:40:14.2424400Z [1m[92m  Downloaded[0m notify-rust v4.16.1
+2026-05-17T17:40:14.2491240Z [1m[92m  Downloaded[0m objc-sys v0.3.5
+2026-05-17T17:40:14.2532870Z [1m[92m  Downloaded[0m nodrop v0.1.14
+2026-05-17T17:40:14.2555550Z [1m[92m  Downloaded[0m objc2-core-data v0.2.2
+2026-05-17T17:40:14.2630300Z [1m[92m  Downloaded[0m new_debug_unreachable v1.0.6
+2026-05-17T17:40:14.2653900Z [1m[92m  Downloaded[0m time v0.3.47
+2026-05-17T17:40:14.2885780Z [1m[92m  Downloaded[0m memchr v2.8.0
+2026-05-17T17:40:14.2992580Z [1m[92m  Downloaded[0m tauri v2.10.3
+2026-05-17T17:40:14.3205630Z [1m[92m  Downloaded[0m image v0.25.10
+2026-05-17T17:40:14.3374090Z [1m[92m  Downloaded[0m tao v0.34.8
+2026-05-17T17:40:14.3565720Z [1m[92m  Downloaded[0m syn v2.0.117
+2026-05-17T17:40:14.3744600Z [1m[92m  Downloaded[0m zerocopy v0.8.48
+2026-05-17T17:40:14.4139910Z [1m[92m  Downloaded[0m moxcms v0.8.1
+2026-05-17T17:40:14.4311200Z [1m[92m  Downloaded[0m syn v1.0.109
+2026-05-17T17:40:14.4478450Z [1m[92m  Downloaded[0m objc2 v0.5.2
+2026-05-17T17:40:14.4594000Z [1m[92m  Downloaded[0m mime v0.3.17
+2026-05-17T17:40:14.4613230Z [1m[92m  Downloaded[0m markup5ever v0.14.1
+2026-05-17T17:40:14.4644100Z [1m[92m  Downloaded[0m objc2 v0.6.4
+2026-05-17T17:40:14.4858780Z [1m[92m  Downloaded[0m mac-notification-sys v0.6.12
+2026-05-17T17:40:14.4883270Z [1m[92m  Downloaded[0m mac v0.1.1
+2026-05-17T17:40:14.4901770Z [1m[92m  Downloaded[0m wry v0.54.4
+2026-05-17T17:40:14.5024960Z [1m[92m  Downloaded[0m serde_with v3.18.0
+2026-05-17T17:40:14.5253790Z [1m[92m  Downloaded[0m num-traits v0.2.19
+2026-05-17T17:40:14.5298050Z [1m[92m  Downloaded[0m muda v0.17.2
+2026-05-17T17:40:14.5374720Z [1m[92m  Downloaded[0m miniz_oxide v0.8.9
+2026-05-17T17:40:14.5414000Z [1m[92m  Downloaded[0m match_token v0.1.0
+2026-05-17T17:40:14.5425000Z [1m[92m  Downloaded[0m litemap v0.8.2
+2026-05-17T17:40:14.5461660Z [1m[92m  Downloaded[0m objc2-app-kit v0.3.2
+2026-05-17T17:40:14.5908000Z [1m[92m  Downloaded[0m libc v0.2.184
+2026-05-17T17:40:14.6525790Z [1m[92m  Downloaded[0m winnow v0.7.15
+2026-05-17T17:40:14.6678170Z [1m[92m  Downloaded[0m regex-automata v0.4.14
+2026-05-17T17:40:14.6896780Z [1m[92m  Downloaded[0m winnow v1.0.1
+2026-05-17T17:40:14.7059430Z [1m[92m  Downloaded[0m regex-syntax v0.8.10
+2026-05-17T17:40:14.7172240Z [1m[92m  Downloaded[0m idna v1.1.0
+2026-05-17T17:40:14.7222240Z [1m[92m  Downloaded[0m tauri-plugin-shell v2.3.5
+2026-05-17T17:40:14.7302520Z [1m[92m  Downloaded[0m tauri-plugin-notification v2.3.3
+2026-05-17T17:40:14.7407140Z [1m[92m  Downloaded[0m unicode-segmentation v1.13.2
+2026-05-17T17:40:14.7445170Z [1m[92m  Downloaded[0m tauri-utils v2.8.3
+2026-05-17T17:40:14.7516370Z [1m[92m  Downloaded[0m regex v1.12.3
+2026-05-17T17:40:14.7648610Z [1m[92m  Downloaded[0m tokio v1.51.1
+2026-05-17T17:40:14.8479440Z [1m[92m  Downloaded[0m rand v0.8.5
+2026-05-17T17:40:14.8530760Z [1m[92m  Downloaded[0m url v2.5.8
+2026-05-17T17:40:14.8574110Z [1m[92m  Downloaded[0m tauri-plugin-global-shortcut v2.3.1
+2026-05-17T17:40:14.8619010Z [1m[92m  Downloaded[0m jsonptr v0.6.3
+2026-05-17T17:40:14.8653240Z [1m[92m  Downloaded[0m schemars v0.8.22
+2026-05-17T17:40:14.8879560Z [1m[92m  Downloaded[0m same-file v1.0.6
+2026-05-17T17:40:14.8902560Z [1m[92m  Downloaded[0m ref-cast-impl v1.0.25
+2026-05-17T17:40:14.8916300Z [1m[92m  Downloaded[0m raw-window-handle v0.6.2
+2026-05-17T17:40:14.8947340Z [1m[92m  Downloaded[0m rand_core v0.9.5
+2026-05-17T17:40:14.8978580Z [1m[92m  Downloaded[0m rand_core v0.6.4
+2026-05-17T17:40:14.9001080Z [1m[92m  Downloaded[0m rand_core v0.5.1
+2026-05-17T17:40:14.9018200Z [1m[92m  Downloaded[0m rand_chacha v0.9.0
+2026-05-17T17:40:14.9034430Z [1m[92m  Downloaded[0m rand_chacha v0.3.1
+2026-05-17T17:40:14.9051110Z [1m[92m  Downloaded[0m rand_chacha v0.2.2
+2026-05-17T17:40:14.9068350Z [1m[92m  Downloaded[0m rand v0.9.4
+2026-05-17T17:40:14.9131620Z [1m[92m  Downloaded[0m phf_shared v0.11.3
+2026-05-17T17:40:14.9145580Z [1m[92m  Downloaded[0m phf_shared v0.10.0
+2026-05-17T17:40:14.9154440Z [1m[92m  Downloaded[0m phf_shared v0.8.0
+2026-05-17T17:40:14.9162400Z [1m[92m  Downloaded[0m phf_macros v0.11.3
+2026-05-17T17:40:14.9176740Z [1m[92m  Downloaded[0m phf_macros v0.10.0
+2026-05-17T17:40:14.9183900Z [1m[92m  Downloaded[0m objc2-foundation v0.3.2
+2026-05-17T17:40:14.9516430Z [1m[92m  Downloaded[0m mio v1.2.0
+2026-05-17T17:40:14.9613120Z [1m[92m  Downloaded[0m indexmap v2.14.0
+2026-05-17T17:40:14.9674420Z [1m[92m  Downloaded[0m zerotrie v0.2.4
+2026-05-17T17:40:14.9734330Z [1m[92m  Downloaded[0m typenum v1.19.0
+2026-05-17T17:40:14.9781800Z [1m[92m  Downloaded[0m schemars_derive v0.8.22
+2026-05-17T17:40:14.9807680Z [1m[92m  Downloaded[0m rustc_version v0.4.1
+2026-05-17T17:40:14.9838840Z [1m[92m  Downloaded[0m window-vibrancy v0.6.0
+2026-05-17T17:40:14.9969710Z [1m[92m  Downloaded[0m ref-cast v1.0.25
+2026-05-17T17:40:15.0014480Z [1m[92m  Downloaded[0m rand_pcg v0.2.1
+2026-05-17T17:40:15.0033310Z [1m[92m  Downloaded[0m pin-project-lite v0.2.17
+2026-05-17T17:40:15.0172340Z [1m[92m  Downloaded[0m phf v0.10.1
+2026-05-17T17:40:15.0173980Z [1m[92m  Downloaded[0m open v5.3.3
+2026-05-17T17:40:15.0198180Z [1m[92m  Downloaded[0m objc2-web-kit v0.3.2
+2026-05-17T17:40:15.1471610Z [1m[92m  Downloaded[0m objc2-metal v0.2.2
+2026-05-17T17:40:15.1612030Z [1m[92m  Downloaded[0m objc2-io-surface v0.3.2
+2026-05-17T17:40:15.1633450Z [1m[92m  Downloaded[0m objc2-foundation v0.2.2
+2026-05-17T17:40:15.2336580Z [1m[92m  Downloaded[0m objc2-exception-helper v0.1.1
+2026-05-17T17:40:15.2350600Z [1m[92m  Downloaded[0m objc2-encode v4.1.0
+2026-05-17T17:40:15.2369490Z [1m[92m  Downloaded[0m objc2-core-foundation v0.3.2
+2026-05-17T17:40:15.2507040Z [1m[92m  Downloaded[0m unicode-ident v1.0.24
+2026-05-17T17:40:15.2546590Z [1m[92m  Downloaded[0m tray-icon v0.21.3
+2026-05-17T17:40:15.2582500Z [1m[92m  Downloaded[0m tauri-runtime-wry v2.10.1
+2026-05-17T17:40:15.2631480Z [1m[92m  Downloaded[0m tauri-codegen v2.5.5
+2026-05-17T17:40:15.2658030Z [1m[92m  Downloaded[0m serde_derive v1.0.228
+2026-05-17T17:40:15.2720960Z [1m[92m  Downloaded[0m serde_core v1.0.228
+2026-05-17T17:40:15.2770020Z [1m[92m  Downloaded[0m phf v0.8.0
+2026-05-17T17:40:15.2792900Z [1m[92m  Downloaded[0m parking v2.2.1
+2026-05-17T17:40:15.2809760Z [1m[92m  Downloaded[0m os_pipe v1.2.3
+2026-05-17T17:40:15.3445650Z [1m[92m  Downloaded[0m option-ext v0.2.0
+2026-05-17T17:40:15.3498370Z [1m[92m  Downloaded[0m objc2-quartz-core v0.2.2
+2026-05-17T17:40:15.3523490Z [1m[92m  Downloaded[0m pxfm v0.1.29
+2026-05-17T17:40:15.4024460Z [1m[92m  Downloaded[0m indexmap v1.9.3
+2026-05-17T17:40:15.4088100Z [1m[92m  Downloaded[0m uuid v1.23.0
+2026-05-17T17:40:15.4213900Z [1m[92m  Downloaded[0m toml v0.9.12+spec-1.1.0
+2026-05-17T17:40:15.4285020Z [1m[92m  Downloaded[0m tendril v0.4.3
+2026-05-17T17:40:15.4318640Z [1m[92m  Downloaded[0m tauri-runtime v2.10.1
+2026-05-17T17:40:15.4367830Z [1m[92m  Downloaded[0m tauri-build v2.5.6
+2026-05-17T17:40:15.4484030Z [1m[92m  Downloaded[0m socket2 v0.6.3
+2026-05-17T17:40:15.4540060Z [1m[92m  Downloaded[0m signal-hook v0.3.18
+2026-05-17T17:40:15.4550590Z [1m[92m  Downloaded[0m encoding_rs v0.8.35
+2026-05-17T17:40:15.4931930Z [1m[92m  Downloaded[0m brotli v8.0.2
+2026-05-17T17:40:15.5257760Z [1m[92m  Downloaded[0m phf_generator v0.10.0
+2026-05-17T17:40:15.5325540Z [1m[92m  Downloaded[0m phf_generator v0.8.0
+2026-05-17T17:40:15.5326510Z [1m[92m  Downloaded[0m phf_codegen v0.11.3
+2026-05-17T17:40:15.5327090Z [1m[92m  Downloaded[0m phf_codegen v0.8.0
+2026-05-17T17:40:15.5327630Z [1m[92m  Downloaded[0m quick-xml v0.38.4
+2026-05-17T17:40:15.5646050Z [1m[92m  Downloaded[0m objc2-app-kit v0.2.2
+2026-05-17T17:40:15.6375200Z [1m[92m  Downloaded[0m infer v0.19.0
+2026-05-17T17:40:15.6410950Z [1m[92m  Downloaded[0m zmij v1.0.21
+2026-05-17T17:40:15.6450230Z [1m[92m  Downloaded[0m yoke v0.8.2
+2026-05-17T17:40:15.6484120Z [1m[92m  Downloaded[0m writeable v0.6.3
+2026-05-17T17:40:15.6517090Z [1m[92m  Downloaded[0m urlpattern v0.3.0
+2026-05-17T17:40:15.6563570Z [1m[92m  Downloaded[0m toml_parser v1.1.2+spec-1.1.0
+2026-05-17T17:40:15.6605880Z [1m[92m  Downloaded[0m thiserror-impl v2.0.18
+2026-05-17T17:40:15.6632980Z [1m[92m  Downloaded[0m thiserror-impl v1.0.69
+2026-05-17T17:40:15.6661480Z [1m[92m  Downloaded[0m thiserror v2.0.18
+2026-05-17T17:40:15.6837960Z [1m[92m  Downloaded[0m tauri-winres v0.3.5
+2026-05-17T17:40:15.6885630Z [1m[92m  Downloaded[0m tauri-plugin v2.5.4
+2026-05-17T17:40:15.6890430Z [1m[92m  Downloaded[0m tauri-macros v2.5.5
+2026-05-17T17:40:15.6935600Z [1m[92m  Downloaded[0m synstructure v0.13.2
+2026-05-17T17:40:15.6944480Z [1m[92m  Downloaded[0m swift-rs v1.0.7
+2026-05-17T17:40:15.6977120Z [1m[92m  Downloaded[0m strsim v0.11.1
+2026-05-17T17:40:15.7000040Z [1m[92m  Downloaded[0m string_cache v0.8.9
+2026-05-17T17:40:15.7023610Z [1m[92m  Downloaded[0m smallvec v1.15.1
+2026-05-17T17:40:15.7059820Z [1m[92m  Downloaded[0m simd-adler32 v0.3.9
+2026-05-17T17:40:15.7111280Z [1m[92m  Downloaded[0m signal-hook-registry v1.4.8
+2026-05-17T17:40:15.7115670Z [1m[92m  Downloaded[0m shlex v1.3.0
+2026-05-17T17:40:15.7147230Z [1m[92m  Downloaded[0m sha2 v0.10.9
+2026-05-17T17:40:15.7198510Z [1m[92m  Downloaded[0m servo_arc v0.2.0
+2026-05-17T17:40:15.7202990Z [1m[92m  Downloaded[0m serde-untagged v0.1.9
+2026-05-17T17:40:15.7235380Z [1m[92m  Downloaded[0m serde v1.0.228
+2026-05-17T17:40:15.7307340Z [1m[92m  Downloaded[0m semver v1.0.28
+2026-05-17T17:40:15.7343700Z [1m[92m  Downloaded[0m quote v1.0.45
+2026-05-17T17:40:15.7384810Z [1m[92m  Downloaded[0m proc-macro2 v1.0.106
+2026-05-17T17:40:15.7502630Z [1m[92m  Downloaded[0m png v0.18.1
+2026-05-17T17:40:15.7605310Z [1m[92m  Downloaded[0m png v0.17.16
+2026-05-17T17:40:15.7706870Z [1m[92m  Downloaded[0m plist v1.8.0
+2026-05-17T17:40:15.7768060Z [1m[92m  Downloaded[0m num-conv v0.2.1
+2026-05-17T17:40:15.7834490Z [1m[92m  Downloaded[0m json-patch v3.0.1
+2026-05-17T17:40:15.7851980Z [1m[92m  Downloaded[0m zerovec-derive v0.11.3
+2026-05-17T17:40:15.7983900Z [1m[92m  Downloaded[0m zerofrom v0.1.7
+2026-05-17T17:40:15.7992200Z [1m[92m  Downloaded[0m yoke-derive v0.8.2
+2026-05-17T17:40:15.8013170Z [1m[92m  Downloaded[0m walkdir v2.5.0
+2026-05-17T17:40:15.8055840Z [1m[92m  Downloaded[0m unic-common v0.9.0
+2026-05-17T17:40:15.8091070Z [1m[92m  Downloaded[0m typeid v1.0.3
+2026-05-17T17:40:15.8107860Z [1m[92m  Downloaded[0m toml_writer v1.1.1+spec-1.1.0
+2026-05-17T17:40:15.8129190Z [1m[92m  Downloaded[0m toml_datetime v0.7.5+spec-1.1.0
+2026-05-17T17:40:15.8152280Z [1m[92m  Downloaded[0m tinystr v0.8.3
+2026-05-17T17:40:15.8186330Z [1m[92m  Downloaded[0m time-macros v0.2.27
+2026-05-17T17:40:15.8232110Z [1m[92m  Downloaded[0m thiserror v1.0.69
+2026-05-17T17:40:15.8408460Z [1m[92m  Downloaded[0m siphasher v0.3.11
+2026-05-17T17:40:15.8510030Z [1m[92m  Downloaded[0m serde_spanned v1.1.1
+2026-05-17T17:40:15.8510890Z [1m[92m  Downloaded[0m icu_properties_data v2.2.0
+2026-05-17T17:40:15.8687610Z [1m[92m  Downloaded[0m hashbrown v0.17.0
+2026-05-17T17:40:15.8799440Z [1m[92m  Downloaded[0m chrono v0.4.44
+2026-05-17T17:40:15.8902380Z [1m[92m  Downloaded[0m brotli-decompressor v5.0.0
+2026-05-17T17:40:15.8999850Z [1m[92m  Downloaded[0m precomputed-hash v0.1.1
+2026-05-17T17:40:15.9011320Z [1m[92m  Downloaded[0m ppv-lite86 v0.2.21
+2026-05-17T17:40:15.9034120Z [1m[92m  Downloaded[0m powerfmt v0.2.0
+2026-05-17T17:40:15.9048880Z [1m[92m  Downloaded[0m potential_utf v0.1.5
+2026-05-17T17:40:15.9059880Z [1m[92m  Downloaded[0m percent-encoding v2.3.2
+2026-05-17T17:40:15.9073830Z [1m[92m  Downloaded[0m pathdiff v0.2.3
+2026-05-17T17:40:15.9087980Z [1m[92m  Downloaded[0m parking_lot_core v0.9.12
+2026-05-17T17:40:15.9124500Z [1m[92m  Downloaded[0m parking_lot v0.12.5
+2026-05-17T17:40:15.9183690Z [1m[92m  Downloaded[0m once_cell v1.21.4
+2026-05-17T17:40:15.9239700Z [1m[92m  Downloaded[0m objc2-core-graphics v0.3.2
+2026-05-17T17:40:15.9355350Z [1m[92m  Downloaded[0m log v0.4.29
+2026-05-17T17:40:15.9431440Z [1m[92m  Downloaded[0m idna_adapter v1.2.1
+2026-05-17T17:40:15.9438980Z [1m[92m  Downloaded[0m zerofrom-derive v0.1.7
+2026-05-17T17:40:15.9451070Z [1m[92m  Downloaded[0m version_check v0.9.5
+2026-05-17T17:40:15.9472140Z [1m[92m  Downloaded[0m utf8_iter v1.0.4
+2026-05-17T17:40:15.9526040Z [1m[92m  Downloaded[0m utf-8 v0.7.6
+2026-05-17T17:40:15.9533720Z [1m[92m  Downloaded[0m unic-ucd-version v0.9.0
+2026-05-17T17:40:15.9552470Z [1m[92m  Downloaded[0m unic-ucd-ident v0.9.0
+2026-05-17T17:40:15.9580160Z [1m[92m  Downloaded[0m unic-char-range v0.9.0
+2026-05-17T17:40:15.9608250Z [1m[92m  Downloaded[0m unic-char-property v0.9.0
+2026-05-17T17:40:15.9632210Z [1m[92m  Downloaded[0m string_cache_codegen v0.5.4
+2026-05-17T17:40:15.9640460Z [1m[92m  Downloaded[0m stable_deref_trait v1.2.1
+2026-05-17T17:40:15.9656530Z [1m[92m  Downloaded[0m shared_child v1.1.1
+2026-05-17T17:40:15.9705090Z [1m[92m  Downloaded[0m serde_repr v0.1.20
+2026-05-17T17:40:15.9773110Z [1m[92m  Downloaded[0m serde_derive_internals v0.29.1
+2026-05-17T17:40:15.9842890Z [1m[92m  Downloaded[0m schemars v0.9.0
+2026-05-17T17:40:16.0170540Z [1m[92m  Downloaded[0m icu_provider v2.2.0
+2026-05-17T17:40:16.0259240Z [1m[92m  Downloaded[0m icu_properties v2.2.0
+2026-05-17T17:40:16.0289010Z [1m[92m  Downloaded[0m icu_normalizer_data v2.2.0
+2026-05-17T17:40:16.0341790Z [1m[92m  Downloaded[0m icu_normalizer v2.2.0
+2026-05-17T17:40:16.0418830Z [1m[92m  Downloaded[0m icu_locale_core v2.2.0
+2026-05-17T17:40:16.0518050Z [1m[92m  Downloaded[0m icu_collections v2.2.0
+2026-05-17T17:40:16.0927680Z [1m[92m  Downloaded[0m ico v0.5.0
+2026-05-17T17:40:16.0979250Z [1m[92m  Downloaded[0m http v1.4.0
+2026-05-17T17:40:16.1041670Z [1m[92m  Downloaded[0m html5ever v0.29.1
+2026-05-17T17:40:16.1099130Z [1m[92m  Downloaded[0m hashbrown v0.12.3
+2026-05-17T17:40:16.1173100Z [1m[92m  Downloaded[0m global-hotkey v0.7.0
+2026-05-17T17:40:16.1222210Z [1m[92m  Downloaded[0m getrandom v0.4.2
+2026-05-17T17:40:16.1290860Z [1m[92m  Downloaded[0m getrandom v0.3.4
+2026-05-17T17:40:16.1344430Z [1m[92m  Downloaded[0m flate2 v1.1.9
+2026-05-17T17:40:16.1449390Z [1m[92m  Downloaded[0m dispatch2 v0.3.1
+2026-05-17T17:40:16.1538520Z [1m[92m  Downloaded[0m derive_more v0.99.20
+2026-05-17T17:40:16.1695160Z [1m[92m  Downloaded[0m darling_core v0.23.0
+2026-05-17T17:40:16.1857630Z [1m[92m  Downloaded[0m cssparser v0.29.6
+2026-05-17T17:40:16.1914220Z [1m[92m  Downloaded[0m crossbeam-utils v0.8.21
+2026-05-17T17:40:16.1957550Z [1m[92m  Downloaded[0m crossbeam-channel v0.5.15
+2026-05-17T17:40:16.2041490Z [1m[92m  Downloaded[0m crc32fast v1.5.0
+2026-05-17T17:40:16.2072570Z [1m[92m  Downloaded[0m core-graphics v0.25.0
+2026-05-17T17:40:16.2107150Z [1m[92m  Downloaded[0m cc v1.2.60
+2026-05-17T17:40:16.2142730Z [1m[92m  Downloaded[0m bytes v1.11.1
+2026-05-17T17:40:16.2235480Z [1m[92m  Downloaded[0m block2 v0.6.2
+2026-05-17T17:40:16.2267960Z [1m[92m  Downloaded[0m base64 v0.22.1
+2026-05-17T17:40:16.2335550Z [1m[92m  Downloaded[0m base64 v0.21.7
+2026-05-17T17:40:16.2399260Z [1m[92m  Downloaded[0m aho-corasick v1.1.4
+2026-05-17T17:40:16.2491130Z [1m[92m  Downloaded[0m keyboard-types v0.7.0
+2026-05-17T17:40:16.2517910Z [1m[92m  Downloaded[0m selectors v0.24.0
+2026-05-17T17:40:16.2560580Z [1m[92m  Downloaded[0m iana-time-zone v0.1.65
+2026-05-17T17:40:16.2630040Z [1m[92m  Downloaded[0m glob v0.3.3
+2026-05-17T17:40:16.2635830Z [1m[92m  Downloaded[0m getrandom v0.2.17
+2026-05-17T17:40:16.2703140Z [1m[92m  Downloaded[0m getrandom v0.1.16
+2026-05-17T17:40:16.2724410Z [1m[92m  Downloaded[0m generic-array v0.14.7
+2026-05-17T17:40:16.2744380Z [1m[92m  Downloaded[0m futures-lite v2.6.1
+2026-05-17T17:40:16.2767220Z [1m[92m  Downloaded[0m foreign-types-shared v0.3.1
+2026-05-17T17:40:16.2776020Z [1m[92m  Downloaded[0m erased-serde v0.4.10
+2026-05-17T17:40:16.2831930Z [1m[92m  Downloaded[0m dunce v1.0.5
+2026-05-17T17:40:16.2842890Z [1m[92m  Downloaded[0m dtoa v1.0.11
+2026-05-17T17:40:16.2869590Z [1m[92m  Downloaded[0m displaydoc v0.2.5
+2026-05-17T17:40:16.2927520Z [1m[92m  Downloaded[0m digest v0.10.7
+2026-05-17T17:40:16.2966530Z [1m[92m  Downloaded[0m darling v0.23.0
+2026-05-17T17:40:16.3113160Z [1m[92m  Downloaded[0m crypto-common v0.1.7
+2026-05-17T17:40:16.3149230Z [1m[92m  Downloaded[0m cpufeatures v0.2.17
+2026-05-17T17:40:16.3184060Z [1m[92m  Downloaded[0m core-foundation-sys v0.8.7
+2026-05-17T17:40:16.3226360Z [1m[92m  Downloaded[0m core-foundation v0.10.1
+2026-05-17T17:40:16.3262280Z [1m[92m  Downloaded[0m cookie v0.18.1
+2026-05-17T17:40:16.3328570Z [1m[92m  Downloaded[0m cfb v0.7.3
+2026-05-17T17:40:16.3365390Z [1m[92m  Downloaded[0m cargo_toml v0.22.3
+2026-05-17T17:40:16.3384770Z [1m[92m  Downloaded[0m cargo_metadata v0.19.2
+2026-05-17T17:40:16.3436440Z [1m[92m  Downloaded[0m cargo-platform v0.1.9
+2026-05-17T17:40:16.3448280Z [1m[92m  Downloaded[0m camino v1.2.2
+2026-05-17T17:40:16.3479230Z [1m[92m  Downloaded[0m bytemuck v1.25.0
+2026-05-17T17:40:16.3532550Z [1m[92m  Downloaded[0m bitflags v2.11.0
+2026-05-17T17:40:16.3615820Z [1m[92m  Downloaded[0m anyhow v1.0.102
+2026-05-17T17:40:16.3685030Z [1m[92m  Downloaded[0m itoa v1.0.18
+2026-05-17T17:40:16.3717400Z [1m[92m  Downloaded[0m time-core v0.1.8
+2026-05-17T17:40:16.3733890Z [1m[92m  Downloaded[0m siphasher v1.0.2
+2026-05-17T17:40:16.3756370Z [1m[92m  Downloaded[0m sigchld v0.2.4
+2026-05-17T17:40:16.3779480Z [1m[92m  Downloaded[0m serialize-to-javascript v0.1.2
+2026-05-17T17:40:16.3796070Z [1m[92m  Downloaded[0m serde_with_macros v3.18.0
+2026-05-17T17:40:16.3827780Z [1m[92m  Downloaded[0m hex v0.4.3
+2026-05-17T17:40:16.3850030Z [1m[92m  Downloaded[0m heck v0.5.0
+2026-05-17T17:40:16.3896720Z [1m[92m  Downloaded[0m fxhash v0.2.1
+2026-05-17T17:40:16.3902350Z [1m[92m  Downloaded[0m futures-core v0.3.32
+2026-05-17T17:40:16.3916110Z [1m[92m  Downloaded[0m futf v0.1.5
+2026-05-17T17:40:16.3932050Z [1m[92m  Downloaded[0m foreign-types-macros v0.2.3
+2026-05-17T17:40:16.3946970Z [1m[92m  Downloaded[0m find-msvc-tools v0.1.9
+2026-05-17T17:40:16.3976980Z [1m[92m  Downloaded[0m fdeflate v0.3.7
+2026-05-17T17:40:16.4014260Z [1m[92m  Downloaded[0m fastrand v2.4.1
+2026-05-17T17:40:16.4038490Z [1m[92m  Downloaded[0m dirs-sys v0.5.0
+2026-05-17T17:40:16.4056820Z [1m[92m  Downloaded[0m dirs-sys v0.4.1
+2026-05-17T17:40:16.4077900Z [1m[92m  Downloaded[0m ctor v0.2.9
+2026-05-17T17:40:16.4094360Z [1m[92m  Downloaded[0m core-graphics-types v0.2.0
+2026-05-17T17:40:16.4108220Z [1m[92m  Downloaded[0m byteorder-lite v0.1.0
+2026-05-17T17:40:16.4123130Z [1m[92m  Downloaded[0m form_urlencoded v1.2.2
+2026-05-17T17:40:16.4139130Z [1m[92m  Downloaded[0m foreign-types v0.5.0
+2026-05-17T17:40:16.4153240Z [1m[92m  Downloaded[0m equivalent v1.0.2
+2026-05-17T17:40:16.4170630Z [1m[92m  Downloaded[0m embed_plist v1.2.2
+2026-05-17T17:40:16.4190010Z [1m[92m  Downloaded[0m embed-resource v3.0.8
+2026-05-17T17:40:16.4230780Z [1m[92m  Downloaded[0m dtoa-short v0.3.5
+2026-05-17T17:40:16.4235640Z [1m[92m  Downloaded[0m deranged v0.5.8
+2026-05-17T17:40:16.4264400Z [1m[92m  Downloaded[0m darling_macro v0.23.0
+2026-05-17T17:40:16.4291020Z [1m[92m  Downloaded[0m cssparser-macros v0.6.1
+2026-05-17T17:40:16.4321010Z [1m[92m  Downloaded[0m convert_case v0.4.0
+2026-05-17T17:40:16.4325290Z [1m[92m  Downloaded[0m byteorder v1.5.0
+2026-05-17T17:40:16.4363390Z [1m[92m  Downloaded[0m bitflags v1.3.2
+2026-05-17T17:40:16.4464980Z [1m[92m  Downloaded[0m autocfg v1.5.0
+2026-05-17T17:40:16.4477730Z [1m[92m  Downloaded[0m errno v0.3.14
+2026-05-17T17:40:16.4503820Z [1m[92m  Downloaded[0m dirs v5.0.1
+2026-05-17T17:40:16.6024520Z [1m[92m   Compiling[0m proc-macro2 v1.0.106
+2026-05-17T17:40:16.6028530Z [1m[92m   Compiling[0m unicode-ident v1.0.24
+2026-05-17T17:40:16.6028980Z [1m[92m   Compiling[0m quote v1.0.45
+2026-05-17T17:40:17.2730130Z [1m[92m   Compiling[0m libc v0.2.184
+2026-05-17T17:40:19.8963110Z [1m[92m   Compiling[0m cfg-if v1.0.4
+2026-05-17T17:40:19.9428230Z [1m[92m   Compiling[0m serde_core v1.0.228
+2026-05-17T17:40:20.1373460Z [1m[92m   Compiling[0m zerocopy v0.8.48
+2026-05-17T17:40:20.5729290Z [1m[92m   Compiling[0m syn v2.0.117
+2026-05-17T17:40:23.0114080Z [1m[92m   Compiling[0m synstructure v0.13.2
+2026-05-17T17:40:23.3964670Z [1m[92m   Compiling[0m getrandom v0.2.17
+2026-05-17T17:40:23.4862730Z [1m[92m   Compiling[0m rand_core v0.6.4
+2026-05-17T17:40:23.5764150Z [1m[92m   Compiling[0m icu_normalizer_data v2.2.0
+2026-05-17T17:40:23.7210730Z [1m[92m   Compiling[0m icu_properties_data v2.2.0
+2026-05-17T17:40:23.8633800Z [1m[92m   Compiling[0m find-msvc-tools v0.1.9
+2026-05-17T17:40:23.9023630Z [1m[92m   Compiling[0m zerofrom-derive v0.1.7
+2026-05-17T17:40:24.0228500Z [1m[92m   Compiling[0m serde_derive v1.0.228
+2026-05-17T17:40:24.3023130Z [1m[92m   Compiling[0m yoke-derive v0.8.2
+2026-05-17T17:40:24.6566860Z [1m[92m   Compiling[0m zerovec-derive v0.11.3
+2026-05-17T17:40:24.9797220Z [1m[92m   Compiling[0m displaydoc v0.2.5
+2026-05-17T17:40:25.3407060Z [1m[92m   Compiling[0m ppv-lite86 v0.2.21
+2026-05-17T17:40:25.3781740Z [1m[92m   Compiling[0m shlex v1.3.0
+2026-05-17T17:40:25.4607420Z [1m[92m   Compiling[0m rand_chacha v0.3.1
+2026-05-17T17:40:25.4610070Z [1m[92m   Compiling[0m cc v1.2.60
+2026-05-17T17:40:25.6274940Z [1m[92m   Compiling[0m rand v0.8.5
+2026-05-17T17:40:25.8507460Z [1m[92m   Compiling[0m serde v1.0.228
+2026-05-17T17:40:26.0040250Z [1m[92m   Compiling[0m zmij v1.0.21
+2026-05-17T17:40:26.0686050Z [1m[92m   Compiling[0m stable_deref_trait v1.2.1
+2026-05-17T17:40:26.1349920Z [1m[92m   Compiling[0m siphasher v1.0.2
+2026-05-17T17:40:26.2136320Z [1m[92m   Compiling[0m memchr v2.8.0
+2026-05-17T17:40:26.2841710Z [1m[92m   Compiling[0m phf_shared v0.11.3
+2026-05-17T17:40:26.3661100Z [1m[92m   Compiling[0m zerofrom v0.1.7
+2026-05-17T17:40:26.4115210Z [1m[92m   Compiling[0m yoke v0.8.2
+2026-05-17T17:40:26.4283050Z [1m[92m   Compiling[0m getrandom v0.4.2
+2026-05-17T17:40:26.4989890Z [1m[92m   Compiling[0m smallvec v1.15.1
+2026-05-17T17:40:26.5186090Z [1m[92m   Compiling[0m itoa v1.0.18
+2026-05-17T17:40:26.5553530Z [1m[92m   Compiling[0m phf_generator v0.11.3
+2026-05-17T17:40:26.5928650Z [1m[92m   Compiling[0m siphasher v0.3.11
+2026-05-17T17:40:26.5929400Z [1m[92m   Compiling[0m zerovec v0.11.6
+2026-05-17T17:40:26.6344720Z [1m[92m   Compiling[0m thiserror v2.0.18
+2026-05-17T17:40:26.6723040Z [1m[92m   Compiling[0m getrandom v0.1.16
+2026-05-17T17:40:26.8030020Z [1m[92m   Compiling[0m typeid v1.0.3
+2026-05-17T17:40:26.9006490Z [1m[92m   Compiling[0m thiserror-impl v2.0.18
+2026-05-17T17:40:26.9344630Z [1m[92m   Compiling[0m tinystr v0.8.3
+2026-05-17T17:40:26.9682620Z [1m[92m   Compiling[0m rand_core v0.5.1
+2026-05-17T17:40:27.0369360Z [1m[92m   Compiling[0m thiserror v1.0.69
+2026-05-17T17:40:27.0486420Z [1m[92m   Compiling[0m writeable v0.6.3
+2026-05-17T17:40:27.1301120Z [1m[92m   Compiling[0m litemap v0.8.2
+2026-05-17T17:40:27.1916120Z [1m[92m   Compiling[0m erased-serde v0.4.10
+2026-05-17T17:40:27.2471110Z [1m[92m   Compiling[0m serde_json v1.0.149
+2026-05-17T17:40:27.3152230Z [1m[92m   Compiling[0m autocfg v1.5.0
+2026-05-17T17:40:27.3865910Z [1m[92m   Compiling[0m strsim v0.11.1
+2026-05-17T17:40:27.5256210Z [1m[92m   Compiling[0m ident_case v1.0.1
+2026-05-17T17:40:27.5261860Z [1m[92m   Compiling[0m syn v1.0.109
+2026-05-17T17:40:27.5625110Z [1m[92m   Compiling[0m darling_core v0.23.0
+2026-05-17T17:40:27.7028600Z [1m[92m   Compiling[0m icu_locale_core v2.2.0
+2026-05-17T17:40:27.9586790Z [1m[92m   Compiling[0m potential_utf v0.1.5
+2026-05-17T17:40:28.0299910Z [1m[92m   Compiling[0m phf_macros v0.11.3
+2026-05-17T17:40:28.4494660Z [1m[92m   Compiling[0m zerotrie v0.2.4
+2026-05-17T17:40:28.5952370Z [1m[92m   Compiling[0m bitflags v2.11.0
+2026-05-17T17:40:28.6256440Z [1m[92m   Compiling[0m utf8_iter v1.0.4
+2026-05-17T17:40:28.6859730Z [1m[92m   Compiling[0m icu_collections v2.2.0
+2026-05-17T17:40:28.8665150Z [1m[92m   Compiling[0m icu_provider v2.2.0
+2026-05-17T17:40:29.5409930Z [1m[92m   Compiling[0m darling_macro v0.23.0
+2026-05-17T17:40:29.7190260Z [1m[92m   Compiling[0m rand_pcg v0.2.1
+2026-05-17T17:40:29.7291800Z [1m[92m   Compiling[0m rand_chacha v0.2.2
+2026-05-17T17:40:29.7824690Z [1m[92m   Compiling[0m phf_shared v0.8.0
+2026-05-17T17:40:29.8366710Z [1m[92m   Compiling[0m thiserror-impl v1.0.69
+2026-05-17T17:40:29.8900970Z [1m[92m   Compiling[0m anyhow v1.0.102
+2026-05-17T17:40:30.0550200Z [1m[92m   Compiling[0m proc-macro-hack v0.5.20+deprecated
+2026-05-17T17:40:30.2124330Z [1m[92m   Compiling[0m parking_lot_core v0.9.12
+2026-05-17T17:40:30.5129850Z [1m[92m   Compiling[0m rand v0.7.3
+2026-05-17T17:40:30.5331980Z [1m[92m   Compiling[0m darling v0.23.0
+2026-05-17T17:40:30.5644270Z [1m[92m   Compiling[0m phf_shared v0.10.0
+2026-05-17T17:40:30.6486780Z [1m[92m   Compiling[0m objc2-exception-helper v0.1.1
+2026-05-17T17:40:30.7882800Z [1m[92m   Compiling[0m objc2-encode v4.1.0
+2026-05-17T17:40:31.0168330Z [1m[92m   Compiling[0m scopeguard v1.2.0
+2026-05-17T17:40:31.0453050Z [1m[92m   Compiling[0m num-conv v0.2.1
+2026-05-17T17:40:31.0954490Z [1m[92m   Compiling[0m new_debug_unreachable v1.0.6
+2026-05-17T17:40:31.1267960Z [1m[92m   Compiling[0m byteorder v1.5.0
+2026-05-17T17:40:31.2554180Z [1m[92m   Compiling[0m time-core v0.1.8
+2026-05-17T17:40:31.2862350Z [1m[92m   Compiling[0m lock_api v0.4.14
+2026-05-17T17:40:31.3177170Z [1m[92m   Compiling[0m phf_generator v0.8.0
+2026-05-17T17:40:31.4201880Z [1m[92m   Compiling[0m phf_generator v0.10.0
+2026-05-17T17:40:31.4614480Z [1m[92m   Compiling[0m serde_with_macros v3.18.0
+2026-05-17T17:40:32.0181970Z [1m[92m   Compiling[0m icu_properties v2.2.0
+2026-05-17T17:40:32.0873000Z [1m[92m   Compiling[0m icu_normalizer v2.2.0
+2026-05-17T17:40:32.7391930Z [1m[92m   Compiling[0m phf_codegen v0.11.3
+2026-05-17T17:40:32.7826550Z [1m[92m   Compiling[0m string_cache_codegen v0.5.4
+2026-05-17T17:40:32.8028320Z [1m[92m   Compiling[0m winnow v1.0.1
+2026-05-17T17:40:32.8377450Z [1m[92m   Compiling[0m precomputed-hash v0.1.1
+2026-05-17T17:40:32.8619100Z [1m[92m   Compiling[0m mac v0.1.1
+2026-05-17T17:40:32.9024220Z [1m[92m   Compiling[0m futf v0.1.5
+2026-05-17T17:40:32.9974620Z [1m[92m   Compiling[0m parking_lot v0.12.5
+2026-05-17T17:40:33.0769790Z [1m[92m   Compiling[0m markup5ever v0.14.1
+2026-05-17T17:40:33.1273680Z [1m[92m   Compiling[0m toml_parser v1.1.2+spec-1.1.0
+2026-05-17T17:40:33.4040850Z [1m[92m   Compiling[0m phf_macros v0.10.0
+2026-05-17T17:40:33.4561250Z [1m[92m   Compiling[0m idna_adapter v1.2.1
+2026-05-17T17:40:33.5169660Z [1m[92m   Compiling[0m cssparser v0.29.6
+2026-05-17T17:40:33.6786050Z [1m[92m   Compiling[0m phf_codegen v0.8.0
+2026-05-17T17:40:33.7857580Z [1m[92m   Compiling[0m semver v1.0.28
+2026-05-17T17:40:33.9261030Z [1m[92m   Compiling[0m toml_datetime v0.7.5+spec-1.1.0
+2026-05-17T17:40:34.0007910Z [1m[92m   Compiling[0m serde_spanned v1.1.1
+2026-05-17T17:40:34.0552660Z [1m[92m   Compiling[0m percent-encoding v2.3.2
+2026-05-17T17:40:34.1269300Z [1m[92m   Compiling[0m bitflags v1.3.2
+2026-05-17T17:40:34.1791420Z [1m[92m   Compiling[0m log v0.4.29
+2026-05-17T17:40:34.2333260Z [1m[92m   Compiling[0m dtoa v1.0.11
+2026-05-17T17:40:34.2963950Z [1m[92m   Compiling[0m toml_writer v1.1.1+spec-1.1.0
+2026-05-17T17:40:34.3105460Z [1m[92m   Compiling[0m utf-8 v0.7.6
+2026-05-17T17:40:34.4083140Z [1m[92m   Compiling[0m winnow v0.7.15
+2026-05-17T17:40:34.4523430Z [1m[92m   Compiling[0m objc2 v0.6.4
+2026-05-17T17:40:34.6331540Z [1m[92m   Compiling[0m tendril v0.4.3
+2026-05-17T17:40:34.6761250Z [1m[92m   Compiling[0m dtoa-short v0.3.5
+2026-05-17T17:40:34.8212450Z [1m[92m   Compiling[0m form_urlencoded v1.2.2
+2026-05-17T17:40:34.8576760Z [1m[92m   Compiling[0m phf v0.10.1
+2026-05-17T17:40:34.8887040Z [1m[92m   Compiling[0m selectors v0.24.0
+2026-05-17T17:40:34.9700470Z [1m[92m   Compiling[0m idna v1.1.0
+2026-05-17T17:40:35.3830380Z [1m[92m   Compiling[0m uuid v1.23.0
+2026-05-17T17:40:35.4722720Z [1m[92m   Compiling[0m string_cache v0.8.9
+2026-05-17T17:40:35.6268460Z [1m[92m   Compiling[0m toml v0.9.12+spec-1.1.0
+2026-05-17T17:40:35.6527990Z [1m[92m   Compiling[0m phf v0.11.3
+2026-05-17T17:40:35.6561330Z [1m[92m   Compiling[0m indexmap v1.9.3
+2026-05-17T17:40:35.7693180Z [1m[92m   Compiling[0m aho-corasick v1.1.4
+2026-05-17T17:40:35.7767230Z [1m[92m   Compiling[0m ctor v0.2.9
+2026-05-17T17:40:36.0752870Z [1m[92m   Compiling[0m cssparser-macros v0.6.1
+2026-05-17T17:40:36.2838230Z [1m[92m   Compiling[0m camino v1.2.2
+2026-05-17T17:40:36.4527970Z [1m[92m   Compiling[0m hashbrown v0.17.0
+2026-05-17T17:40:36.5442130Z [1m[92m   Compiling[0m matches v0.1.10
+2026-05-17T17:40:36.7254040Z [1m[92m   Compiling[0m unic-common v0.9.0
+2026-05-17T17:40:36.7653630Z [1m[92m   Compiling[0m convert_case v0.4.0
+2026-05-17T17:40:36.7696960Z [1m[92m   Compiling[0m unic-char-range v0.9.0
+2026-05-17T17:40:36.8141640Z [1m[92m   Compiling[0m equivalent v1.0.2
+2026-05-17T17:40:36.8538850Z [1m[92m   Compiling[0m nodrop v0.1.14
+2026-05-17T17:40:36.8618510Z [1m[92m   Compiling[0m alloc-no-stdlib v2.0.4
+2026-05-17T17:40:36.8872050Z [1m[92m   Compiling[0m regex-syntax v0.8.10
+2026-05-17T17:40:36.9212610Z [1m[92m   Compiling[0m alloc-stdlib v0.2.2
+2026-05-17T17:40:36.9759970Z [1m[92m   Compiling[0m servo_arc v0.2.0
+2026-05-17T17:40:36.9957230Z [1m[92m   Compiling[0m derive_more v0.99.20
+2026-05-17T17:40:37.0662820Z [1m[92m   Compiling[0m indexmap v2.14.0
+2026-05-17T17:40:37.5668880Z [1m[92m   Compiling[0m unic-char-property v0.9.0
+2026-05-17T17:40:37.6509240Z [1m[92m   Compiling[0m unic-ucd-version v0.9.0
+2026-05-17T17:40:38.2937340Z [1m[92m   Compiling[0m regex-automata v0.4.14
+2026-05-17T17:40:39.7315800Z [1m[92m   Compiling[0m url v2.5.8
+2026-05-17T17:40:40.2714630Z [1m[92m   Compiling[0m fxhash v0.2.1
+2026-05-17T17:40:40.3482760Z [1m[92m   Compiling[0m phf v0.8.0
+2026-05-17T17:40:40.4015980Z [1m[92m   Compiling[0m swift-rs v1.0.7
+2026-05-17T17:40:40.9681000Z [1m[92m   Compiling[0m match_token v0.1.0
+2026-05-17T17:40:40.9896900Z [1m[92m   Compiling[0m serde_derive_internals v0.29.1
+2026-05-17T17:40:41.1241560Z [1m[92m   Compiling[0m fnv v1.0.7
+2026-05-17T17:40:41.1648980Z [1m[92m   Compiling[0m hashbrown v0.12.3
+2026-05-17T17:40:41.3759140Z [1m[92m   Compiling[0m schemars v0.8.22
+2026-05-17T17:40:41.5493950Z [1m[92m   Compiling[0m html5ever v0.29.1
+2026-05-17T17:40:41.6724890Z [1m[92m   Compiling[0m schemars_derive v0.8.22
+2026-05-17T17:40:41.7697190Z [1m[92m   Compiling[0m cfb v0.7.3
+2026-05-17T17:40:42.3492000Z [1m[92m   Compiling[0m regex v1.12.3
+2026-05-17T17:40:42.5491450Z [1m[92m   Compiling[0m unic-ucd-ident v0.9.0
+2026-05-17T17:40:42.5903470Z [1m[92m   Compiling[0m brotli-decompressor v5.0.0
+2026-05-17T17:40:43.0110870Z [1m[92m   Compiling[0m jsonptr v0.6.3
+2026-05-17T17:40:43.0433240Z [1m[92m   Compiling[0m cargo-platform v0.1.9
+2026-05-17T17:40:43.1671720Z [1m[92m   Compiling[0m dyn-clone v1.0.20
+2026-05-17T17:40:43.1769460Z [1m[92m   Compiling[0m dunce v1.0.5
+2026-05-17T17:40:43.2053720Z [1m[92m   Compiling[0m bytes v1.11.1
+2026-05-17T17:40:43.2103580Z [1m[92m   Compiling[0m same-file v1.0.6
+2026-05-17T17:40:43.2577400Z [1m[92m   Compiling[0m base64 v0.21.7
+2026-05-17T17:40:43.2605820Z [1m[92m   Compiling[0m walkdir v2.5.0
+2026-05-17T17:40:43.5322350Z [1m[92m   Compiling[0m http v1.4.0
+2026-05-17T17:40:43.5972710Z [1m[92m   Compiling[0m json-patch v3.0.1
+2026-05-17T17:40:43.8337660Z [1m[92m   Compiling[0m cargo_metadata v0.19.2
+2026-05-17T17:40:44.1981360Z [1m[92m   Compiling[0m brotli v8.0.2
+2026-05-17T17:40:44.2154260Z [1m[92m   Compiling[0m urlpattern v0.3.0
+2026-05-17T17:40:44.7219110Z [1m[92m   Compiling[0m kuchikiki v0.8.8-speedreader
+2026-05-17T17:40:44.8104770Z [1m[92m   Compiling[0m serde-untagged v0.1.9
+2026-05-17T17:40:44.9251100Z [1m[92m   Compiling[0m infer v0.19.0
+2026-05-17T17:40:45.0238250Z [1m[92m   Compiling[0m serde_with v3.18.0
+2026-05-17T17:40:45.1374640Z [1m[92m   Compiling[0m version_check v0.9.5
+2026-05-17T17:40:45.3180920Z [1m[92m   Compiling[0m glob v0.3.3
+2026-05-17T17:40:45.5080320Z [1m[92m   Compiling[0m crc32fast v1.5.0
+2026-05-17T17:40:45.7250550Z [1m[92m   Compiling[0m block2 v0.6.2
+2026-05-17T17:40:45.9547140Z [1m[92m   Compiling[0m objc2-core-foundation v0.3.2
+2026-05-17T17:40:46.1577290Z [1m[92m   Compiling[0m tauri-utils v2.8.3
+2026-05-17T17:40:46.3257260Z [1m[92m   Compiling[0m powerfmt v0.2.0
+2026-05-17T17:40:47.1509590Z [1m[92m   Compiling[0m objc2-foundation v0.3.2
+2026-05-17T17:40:49.0701330Z [1m[92m   Compiling[0m deranged v0.5.8
+2026-05-17T17:40:52.5100220Z [1m[92m   Compiling[0m time v0.3.47
+2026-05-17T17:40:54.3314200Z [1m[92m   Compiling[0m quick-xml v0.38.4
+2026-05-17T17:40:55.0183480Z [1m[92m   Compiling[0m base64 v0.22.1
+2026-05-17T17:40:55.1919930Z [1m[92m   Compiling[0m plist v1.8.0
+2026-05-17T17:40:55.9580470Z [1m[92m   Compiling[0m rustc_version v0.4.1
+2026-05-17T17:40:56.2746970Z [1m[92m   Compiling[0m option-ext v0.2.0
+2026-05-17T17:40:56.3085130Z [1m[92m   Compiling[0m dirs-sys v0.5.0
+2026-05-17T17:40:57.5126570Z [1m[92m   Compiling[0m embed-resource v3.0.8
+2026-05-17T17:40:58.0209930Z [1m[92m   Compiling[0m typenum v1.19.0
+2026-05-17T17:40:58.4781120Z [1m[92m   Compiling[0m heck v0.5.0
+2026-05-17T17:40:59.0208780Z [1m[92m   Compiling[0m tauri-winres v0.3.5
+2026-05-17T17:40:59.3067420Z [1m[92m   Compiling[0m dirs v6.0.0
+2026-05-17T17:40:59.3716570Z [1m[92m   Compiling[0m generic-array v0.14.7
+2026-05-17T17:40:59.5148390Z [1m[92m   Compiling[0m objc2-app-kit v0.3.2
+2026-05-17T17:40:59.6703250Z [1m[92m   Compiling[0m cargo_toml v0.22.3
+2026-05-17T17:41:01.8875520Z [1m[92m   Compiling[0m time-macros v0.2.27
+2026-05-17T17:41:03.6699690Z [1m[92m   Compiling[0m crossbeam-utils v0.8.21
+2026-05-17T17:41:03.9341340Z [1m[92m   Compiling[0m simd-adler32 v0.3.9
+2026-05-17T17:41:07.3939270Z [1m[92m   Compiling[0m tauri-build v2.5.6
+2026-05-17T17:41:08.6417480Z [1m[92m   Compiling[0m adler2 v2.0.1
+2026-05-17T17:41:09.2958430Z [1m[92m   Compiling[0m miniz_oxide v0.8.9
+2026-05-17T17:41:11.6282360Z [1m[92m   Compiling[0m tauri-plugin v2.5.4
+2026-05-17T17:41:12.3300290Z [1m[92m   Compiling[0m dpi v0.1.2
+2026-05-17T17:41:14.5120500Z [1m[92m   Compiling[0m once_cell v1.21.4
+2026-05-17T17:41:18.0242120Z [1m[92m   Compiling[0m crossbeam-channel v0.5.15
+2026-05-17T17:41:19.0436850Z [1m[92m   Compiling[0m flate2 v1.1.9
+2026-05-17T17:41:20.1534210Z [1m[92m   Compiling[0m tauri v2.10.3
+2026-05-17T17:41:21.7645240Z [1m[92m   Compiling[0m fdeflate v0.3.7
+2026-05-17T17:41:22.6660850Z [1m[92m   Compiling[0m cookie v0.18.1
+2026-05-17T17:41:23.3705550Z [1m[92m   Compiling[0m raw-window-handle v0.6.2
+2026-05-17T17:41:23.5855390Z [1m[92m   Compiling[0m core-foundation-sys v0.8.7
+2026-05-17T17:41:23.6216010Z [1m[92m   Compiling[0m getrandom v0.3.4
+2026-05-17T17:41:23.9568710Z [1m[92m   Compiling[0m core-foundation v0.10.1
+2026-05-17T17:41:30.6252980Z [1m[92m   Compiling[0m block-buffer v0.10.4
+2026-05-17T17:41:30.7216510Z [1m[92m   Compiling[0m crypto-common v0.1.7
+2026-05-17T17:41:31.0383120Z [1m[92m   Compiling[0m num-traits v0.2.19
+2026-05-17T17:41:31.1288260Z [1m[92m   Compiling[0m foreign-types-macros v0.2.3
+2026-05-17T17:41:31.7430640Z [1m[92m   Compiling[0m foreign-types-shared v0.3.1
+2026-05-17T17:41:32.0893650Z [1m[92m   Compiling[0m unicode-segmentation v1.13.2
+2026-05-17T17:41:32.6648940Z [1m[92m   Compiling[0m keyboard-types v0.7.0
+2026-05-17T17:41:33.1786720Z [1m[92m   Compiling[0m foreign-types v0.5.0
+2026-05-17T17:41:34.0256400Z [1m[92m   Compiling[0m png v0.17.16
+2026-05-17T17:41:34.7754650Z [1m[92m   Compiling[0m digest v0.10.7
+2026-05-17T17:41:39.5362070Z [1m[92m   Compiling[0m core-graphics-types v0.2.0
+2026-05-17T17:41:40.1131770Z [1m[92m   Compiling[0m objc2-web-kit v0.3.2
+2026-05-17T17:41:41.0768840Z [1m[92m   Compiling[0m cpufeatures v0.2.17
+2026-05-17T17:41:41.1434200Z [1m[92m   Compiling[0m wry v0.54.4
+2026-05-17T17:41:41.5258910Z [1m[92m   Compiling[0m tauri-runtime v2.10.1
+2026-05-17T17:41:41.8307870Z [1m[92m   Compiling[0m pin-project-lite v0.2.17
+2026-05-17T17:41:42.9636190Z [1m[92m   Compiling[0m sha2 v0.10.9
+2026-05-17T17:41:43.3014680Z [1m[92m   Compiling[0m core-graphics v0.25.0
+2026-05-17T17:41:44.2651440Z [1m[92m   Compiling[0m ico v0.5.0
+2026-05-17T17:41:45.0240420Z [1m[92m   Compiling[0m dispatch2 v0.3.1
+2026-05-17T17:41:45.5003600Z [1m[92m   Compiling[0m tauri-runtime-wry v2.10.1
+2026-05-17T17:41:45.7596240Z [1m[92m   Compiling[0m pxfm v0.1.29
+2026-05-17T17:41:46.8343400Z [1m[92m   Compiling[0m tao v0.34.8
+2026-05-17T17:41:52.4865440Z [1m[92m   Compiling[0m moxcms v0.8.1
+2026-05-17T17:41:56.0484600Z [1m[92m   Compiling[0m tauri-codegen v2.5.5
+2026-05-17T17:41:57.5300990Z [1m[92m   Compiling[0m muda v0.17.2
+2026-05-17T17:42:05.7213960Z [1m[92m   Compiling[0m png v0.18.1
+2026-05-17T17:42:08.5519230Z [1m[92m   Compiling[0m objc2-core-graphics v0.3.2
+2026-05-17T17:42:08.6526650Z [1m[92m   Compiling[0m serialize-to-javascript-impl v0.1.2
+2026-05-17T17:42:09.0268600Z [1m[92m   Compiling[0m errno v0.3.14
+2026-05-17T17:42:09.7061540Z [1m[92m   Compiling[0m bytemuck v1.25.0
+2026-05-17T17:42:09.9266140Z [1m[92m   Compiling[0m objc-sys v0.3.5
+2026-05-17T17:42:10.1409470Z [1m[92m   Compiling[0m signal-hook v0.3.18
+2026-05-17T17:42:10.3954130Z [1m[92m   Compiling[0m byteorder-lite v0.1.0
+2026-05-17T17:42:10.6532810Z [1m[92m   Compiling[0m image v0.25.10
+2026-05-17T17:42:15.3615900Z [1m[92m   Compiling[0m signal-hook-registry v1.4.8
+2026-05-17T17:42:15.8515080Z [1m[92m   Compiling[0m serialize-to-javascript v0.1.2
+2026-05-17T17:42:16.0427510Z [1m[92m   Compiling[0m tray-icon v0.21.3
+2026-05-17T17:42:19.5826710Z [1m[92m   Compiling[0m tauri-macros v2.5.5
+2026-05-17T17:42:20.7801090Z [1m[92m   Compiling[0m tokio v1.51.1
+2026-05-17T17:42:21.5848820Z [1m[92m   Compiling[0m window-vibrancy v0.6.0
+2026-05-17T17:42:21.7556560Z [1m[92m   Compiling[0m mac-notification-sys v0.6.12
+2026-05-17T17:42:22.0153920Z [1m[92m   Compiling[0m serde_repr v0.1.20
+2026-05-17T17:42:22.4964360Z [1m[92m   Compiling[0m embed_plist v1.2.2
+2026-05-17T17:42:23.2890640Z [1m[92m   Compiling[0m mime v0.3.17
+2026-05-17T17:42:29.4737970Z [1m[92m   Compiling[0m rand_core v0.9.5
+2026-05-17T17:42:29.6694390Z [1m[92m   Compiling[0m tauri-plugin-shell v2.3.5
+2026-05-17T17:42:30.3850010Z [1m[92m   Compiling[0m tauri-plugin-global-shortcut v2.3.1
+2026-05-17T17:42:30.8748600Z [1m[92m   Compiling[0m tauri-plugin-notification v2.3.3
+2026-05-17T17:42:31.2923550Z [1m[92m   Compiling[0m os_pipe v1.2.3
+2026-05-17T17:42:31.3856720Z [1m[92m   Compiling[0m fastrand v2.4.1
+2026-05-17T17:42:31.6044180Z [1m[92m   Compiling[0m parking v2.2.1
+2026-05-17T17:42:31.7629720Z [1m[92m   Compiling[0m futures-core v0.3.32
+2026-05-17T17:42:31.8568240Z [1m[92m   Compiling[0m futures-io v0.3.32
+2026-05-17T17:42:31.9722190Z [1m[92m   Compiling[0m futures-lite v2.6.1
+2026-05-17T17:42:32.5470850Z [1m[92m   Compiling[0m sigchld v0.2.4
+2026-05-17T17:42:32.8065760Z [1m[92m   Compiling[0m rand_chacha v0.9.0
+2026-05-17T17:42:32.8898730Z [1m[92m   Compiling[0m objc2 v0.5.2
+2026-05-17T17:42:34.5771660Z [1m[92m   Compiling[0m pathdiff v0.2.3
+2026-05-17T17:42:34.5996740Z [1m[92m   Compiling[0m notify-rust v4.16.1
+2026-05-17T17:42:34.6614240Z [1m[92m   Compiling[0m open v5.3.3
+2026-05-17T17:42:34.7677870Z [1m[92m   Compiling[0m objc2-foundation v0.2.2
+2026-05-17T17:42:34.9866150Z [1m[92m   Compiling[0m rand v0.9.4
+2026-05-17T17:42:35.5458830Z [1m[92m   Compiling[0m shared_child v1.1.1
+2026-05-17T17:42:35.8242260Z [1m[92m   Compiling[0m global-hotkey v0.7.0
+2026-05-17T17:42:37.0514270Z [1m[92m   Compiling[0m dirs-sys v0.4.1
+2026-05-17T17:42:37.1580450Z [1m[92m   Compiling[0m waypoint v0.2.27 (/Users/runner/work/waypoint/waypoint/waypoint/src-tauri)
+2026-05-17T17:42:37.6284630Z [1m[92m   Compiling[0m encoding_rs v0.8.35
+2026-05-17T17:42:37.9434180Z [1m[92m   Compiling[0m dirs v5.0.1
+2026-05-17T17:42:38.4431390Z [1m[92m   Compiling[0m objc2-app-kit v0.2.2
+2026-05-17T17:42:45.5626500Z [1m[33mwarning[0m[1m: unused import: `crate::context::derive_context_id`[0m
+2026-05-17T17:42:45.5628160Z  [1m[94m--> [0msrc/hotkey/mod.rs:1:5
+2026-05-17T17:42:45.5628830Z   [1m[94m|[0m
+2026-05-17T17:42:45.5630380Z [1m[94m1[0m [1m[94m|[0m use crate::context::derive_context_id;
+2026-05-17T17:42:45.5631650Z   [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+2026-05-17T17:42:45.5632660Z   [1m[94m|[0m
+2026-05-17T17:42:45.5633840Z   [1m[94m= [0m[1mnote[0m: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+2026-05-17T17:42:45.5634740Z 
+2026-05-17T17:42:45.5635760Z [1m[33mwarning[0m[1m: unused import: `crate::storage::app_config`[0m
+2026-05-17T17:42:45.5636910Z  [1m[94m--> [0msrc/hotkey/mod.rs:4:5
+2026-05-17T17:42:45.5637540Z   [1m[94m|[0m
+2026-05-17T17:42:45.5638490Z [1m[94m4[0m [1m[94m|[0m use crate::storage::app_config;
+2026-05-17T17:42:45.5639590Z   [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+2026-05-17T17:42:45.5640020Z 
+2026-05-17T17:42:45.5640620Z [1m[33mwarning[0m[1m: unused import: `Path`[0m
+2026-05-17T17:42:45.5641510Z  [1m[94m--> [0msrc/storage/autostart.rs:1:17
+2026-05-17T17:42:45.5642840Z   [1m[94m|[0m
+2026-05-17T17:42:45.5644260Z [1m[94m1[0m [1m[94m|[0m use std::path::{Path, PathBuf};
+2026-05-17T17:42:45.5645290Z   [1m[94m|[0m                 [1m[33m^^^^[0m
+2026-05-17T17:42:45.5647340Z 
+2026-05-17T17:42:46.6921100Z [1m[33mwarning[0m[1m: variant `ContextNotFound` is never constructed[0m
+2026-05-17T17:42:46.7020470Z   [1m[94m--> [0msrc/error.rs:13:5
+2026-05-17T17:42:46.7121780Z    [1m[94m|[0m
+2026-05-17T17:42:46.7223890Z [1m[94m 5[0m [1m[94m|[0m pub enum WaypointError {
+2026-05-17T17:42:46.7325850Z    [1m[94m|[0m          [1m[94m-------------[0m [1m[94mvariant in this enum[0m
+2026-05-17T17:42:46.7427340Z [1m[94m...[0m
+2026-05-17T17:42:46.7458620Z [1m[94m13[0m [1m[94m|[0m     ContextNotFound(String),
+2026-05-17T17:42:46.7459260Z    [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^[0m
+2026-05-17T17:42:46.7459760Z    [1m[94m|[0m
+2026-05-17T17:42:46.7460570Z    [1m[94m= [0m[1mnote[0m: `WaypointError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+2026-05-17T17:42:46.7461400Z    [1m[94m= [0m[1mnote[0m: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+2026-05-17T17:42:46.7461840Z 
+2026-05-17T17:42:46.7462210Z [1m[33mwarning[0m[1m: function `decide_event` is never used[0m
+2026-05-17T17:42:46.7462800Z   [1m[94m--> [0msrc/foreground_watcher.rs:25:15
+2026-05-17T17:42:46.7463260Z    [1m[94m|[0m
+2026-05-17T17:42:46.7464790Z [1m[94m25[0m [1m[94m|[0m pub(crate) fn decide_event(
+2026-05-17T17:42:46.7465350Z    [1m[94m|[0m               [1m[33m^^^^^^^^^^^^[0m
+2026-05-17T17:42:46.7465680Z 
+2026-05-17T17:42:46.7466170Z [1m[33mwarning[0m[1m: variant `OpenList` is never constructed[0m
+2026-05-17T17:42:46.7466710Z   [1m[94m--> [0msrc/hotkey/mod.rs:43:5
+2026-05-17T17:42:46.7467690Z    [1m[94m|[0m
+2026-05-17T17:42:46.7470560Z [1m[94m41[0m [1m[94m|[0m pub enum HotkeyAction {
+2026-05-17T17:42:46.7471280Z    [1m[94m|[0m          [1m[94m------------[0m [1m[94mvariant in this enum[0m
+2026-05-17T17:42:46.7471870Z [1m[94m42[0m [1m[94m|[0m     OpenAll,
+2026-05-17T17:42:46.7472370Z [1m[94m43[0m [1m[94m|[0m     OpenList,
+2026-05-17T17:42:46.7475740Z    [1m[94m|[0m     [1m[33m^^^^^^^^[0m
+2026-05-17T17:42:46.7476180Z    [1m[94m|[0m
+2026-05-17T17:42:46.7476970Z    [1m[94m= [0m[1mnote[0m: `HotkeyAction` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+2026-05-17T17:42:46.7479500Z 
+2026-05-17T17:42:46.7480150Z [1m[33mwarning[0m[1m: function `autostart_path` is never used[0m
+2026-05-17T17:42:46.7588260Z   [1m[94m--> [0msrc/storage/autostart.rs:10:4
+2026-05-17T17:42:46.7701330Z    [1m[94m|[0m
+2026-05-17T17:42:46.7806440Z [1m[94m10[0m [1m[94m|[0m fn autostart_path() -> Option<PathBuf> {
+2026-05-17T17:42:46.7912810Z    [1m[94m|[0m    [1m[33m^^^^^^^^^^^^^^[0m
+2026-05-17T17:42:46.7997390Z 
+2026-05-17T17:42:46.8035860Z [1m[33mwarning[0m[1m: function `clear_session` is never used[0m
+2026-05-17T17:42:46.8037200Z   [1m[94m--> [0msrc/storage/session.rs:65:8
+2026-05-17T17:42:46.8037560Z    [1m[94m|[0m
+2026-05-17T17:42:46.8038200Z [1m[94m65[0m [1m[94m|[0m pub fn clear_session(context_id: &str) -> Result<(), WaypointError> {
+2026-05-17T17:42:46.8038820Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^^^^[0m
+2026-05-17T17:42:46.8039080Z 
+2026-05-17T17:43:27.7489550Z [1m[33mwarning[0m: `waypoint` (lib) generated 8 warnings (run `cargo fix --lib -p waypoint` to apply 3 suggestions)
+2026-05-17T17:43:28.2892650Z [1m[92m    Finished[0m `release` profile [optimized] target(s) in 3m 15s
+2026-05-17T17:43:29.9202620Z [1m[92m   Compiling[0m serde_core v1.0.228
+2026-05-17T17:43:29.9209120Z [1m[92m   Compiling[0m libc v0.2.184
+2026-05-17T17:43:29.9353380Z [1m[92m   Compiling[0m objc2-encode v4.1.0
+2026-05-17T17:43:30.6487800Z [1m[92m   Compiling[0m objc2-exception-helper v0.1.1
+2026-05-17T17:43:31.1075420Z [1m[92m   Compiling[0m zerofrom v0.1.7
+2026-05-17T17:43:31.1293020Z [1m[92m   Compiling[0m cfg-if v1.0.4
+2026-05-17T17:43:31.1906520Z [1m[92m   Compiling[0m stable_deref_trait v1.2.1
+2026-05-17T17:43:31.2105370Z [1m[92m   Compiling[0m objc2 v0.6.4
+2026-05-17T17:43:31.2328450Z [1m[92m   Compiling[0m yoke v0.8.2
+2026-05-17T17:43:31.3092960Z [1m[92m   Compiling[0m serde v1.0.228
+2026-05-17T17:43:31.3904570Z [1m[92m   Compiling[0m zerovec v0.11.6
+2026-05-17T17:43:31.9962690Z [1m[92m   Compiling[0m itoa v1.0.18
+2026-05-17T17:43:32.1822890Z [1m[92m   Compiling[0m tinystr v0.8.3
+2026-05-17T17:43:32.2834360Z [1m[92m   Compiling[0m block2 v0.6.2
+2026-05-17T17:43:32.5096970Z [1m[92m   Compiling[0m bitflags v2.11.0
+2026-05-17T17:43:32.8742730Z [1m[92m   Compiling[0m objc2-core-foundation v0.3.2
+2026-05-17T17:43:32.9857710Z [1m[92m   Compiling[0m litemap v0.8.2
+2026-05-17T17:43:33.1149490Z [1m[92m   Compiling[0m memchr v2.8.0
+2026-05-17T17:43:33.1762410Z [1m[92m   Compiling[0m writeable v0.6.3
+2026-05-17T17:43:33.3966570Z [1m[92m   Compiling[0m icu_locale_core v2.2.0
+2026-05-17T17:43:33.8661000Z [1m[92m   Compiling[0m objc2-foundation v0.3.2
+2026-05-17T17:43:34.3106560Z [1m[92m   Compiling[0m potential_utf v0.1.5
+2026-05-17T17:43:34.4256430Z [1m[92m   Compiling[0m zerotrie v0.2.4
+2026-05-17T17:43:34.8245650Z [1m[92m   Compiling[0m utf8_iter v1.0.4
+2026-05-17T17:43:34.9396090Z [1m[92m   Compiling[0m icu_collections v2.2.0
+2026-05-17T17:43:35.5778050Z [1m[92m   Compiling[0m icu_provider v2.2.0
+2026-05-17T17:43:36.1224590Z [1m[92m   Compiling[0m icu_properties_data v2.2.0
+2026-05-17T17:43:36.1338190Z [1m[92m   Compiling[0m icu_normalizer_data v2.2.0
+2026-05-17T17:43:36.3111580Z [1m[92m   Compiling[0m smallvec v1.15.1
+2026-05-17T17:43:36.4357110Z [1m[92m   Compiling[0m icu_properties v2.2.0
+2026-05-17T17:43:36.4645230Z [1m[92m   Compiling[0m icu_normalizer v2.2.0
+2026-05-17T17:43:37.6320140Z [1m[92m   Compiling[0m powerfmt v0.2.0
+2026-05-17T17:43:37.8195960Z [1m[92m   Compiling[0m deranged v0.5.8
+2026-05-17T17:43:37.8307900Z [1m[92m   Compiling[0m idna_adapter v1.2.1
+2026-05-17T17:43:37.9025710Z [1m[92m   Compiling[0m thiserror v2.0.18
+2026-05-17T17:43:37.9449380Z [1m[92m   Compiling[0m zmij v1.0.21
+2026-05-17T17:43:37.9751940Z [1m[92m   Compiling[0m time-core v0.1.8
+2026-05-17T17:43:38.0658270Z [1m[92m   Compiling[0m num-conv v0.2.1
+2026-05-17T17:43:38.1576950Z [1m[92m   Compiling[0m simd-adler32 v0.3.9
+2026-05-17T17:43:38.4355090Z [1m[92m   Compiling[0m percent-encoding v2.3.2
+2026-05-17T17:43:38.7141790Z [1m[92m   Compiling[0m form_urlencoded v1.2.2
+2026-05-17T17:43:39.0166530Z [1m[92m   Compiling[0m crossbeam-utils v0.8.21
+2026-05-17T17:43:39.0401450Z [1m[92m   Compiling[0m serde_json v1.0.149
+2026-05-17T17:43:39.6416320Z [1m[92m   Compiling[0m idna v1.1.0
+2026-05-17T17:43:39.9772290Z [1m[92m   Compiling[0m time v0.3.47
+2026-05-17T17:43:41.9449560Z [1m[92m   Compiling[0m crc32fast v1.5.0
+2026-05-17T17:43:41.9971500Z [1m[92m   Compiling[0m getrandom v0.4.2
+2026-05-17T17:43:42.0174950Z [1m[92m   Compiling[0m adler2 v2.0.1
+2026-05-17T17:43:42.1850510Z [1m[92m   Compiling[0m miniz_oxide v0.8.9
+2026-05-17T17:43:43.9041040Z [1m[92m   Compiling[0m url v2.5.8
+2026-05-17T17:43:47.0688620Z [1m[92m   Compiling[0m aho-corasick v1.1.4
+2026-05-17T17:43:47.3457100Z [1m[92m   Compiling[0m objc2-app-kit v0.3.2
+2026-05-17T17:43:53.6795740Z [1m[92m   Compiling[0m dpi v0.1.2
+2026-05-17T17:43:54.0022380Z [1m[92m   Compiling[0m typeid v1.0.3
+2026-05-17T17:43:54.0950050Z [1m[92m   Compiling[0m regex-syntax v0.8.10
+2026-05-17T17:43:55.2006500Z [1m[92m   Compiling[0m bytes v1.11.1
+2026-05-17T17:43:55.8787830Z [1m[92m   Compiling[0m option-ext v0.2.0
+2026-05-17T17:43:55.9069640Z [1m[92m   Compiling[0m unic-char-range v0.9.0
+2026-05-17T17:43:55.9789620Z [1m[92m   Compiling[0m unic-common v0.9.0
+2026-05-17T17:43:56.0344460Z [1m[92m   Compiling[0m once_cell v1.21.4
+2026-05-17T17:43:56.0677180Z [1m[92m   Compiling[0m alloc-no-stdlib v2.0.4
+2026-05-17T17:43:56.1499090Z [1m[92m   Compiling[0m alloc-stdlib v0.2.2
+2026-05-17T17:43:56.2218190Z [1m[92m   Compiling[0m unic-ucd-version v0.9.0
+2026-05-17T17:43:56.2329230Z [1m[92m   Compiling[0m unic-char-property v0.9.0
+2026-05-17T17:43:56.2676960Z [1m[92m   Compiling[0m regex-automata v0.4.14
+2026-05-17T17:43:56.3615520Z [1m[92m   Compiling[0m crossbeam-channel v0.5.15
+2026-05-17T17:43:56.9141360Z [1m[92m   Compiling[0m flate2 v1.1.9
+2026-05-17T17:43:57.2838380Z [1m[92m   Compiling[0m uuid v1.23.0
+2026-05-17T17:43:57.8228740Z [1m[92m   Compiling[0m fdeflate v0.3.7
+2026-05-17T17:43:58.5122140Z [1m[92m   Compiling[0m thiserror v1.0.69
+2026-05-17T17:43:58.5744600Z [1m[92m   Compiling[0m erased-serde v0.4.10
+2026-05-17T17:43:58.6046440Z [1m[92m   Compiling[0m fnv v1.0.7
+2026-05-17T17:43:58.6643680Z [1m[92m   Compiling[0m winnow v1.0.1
+2026-05-17T17:43:58.9477560Z [1m[92m   Compiling[0m raw-window-handle v0.6.2
+2026-05-17T17:43:59.2785370Z [1m[92m   Compiling[0m byteorder v1.5.0
+2026-05-17T17:43:59.4385820Z [1m[92m   Compiling[0m core-foundation-sys v0.8.7
+2026-05-17T17:43:59.5988470Z [1m[92m   Compiling[0m siphasher v1.0.2
+2026-05-17T17:43:59.7117790Z [1m[92m   Compiling[0m phf_shared v0.11.3
+2026-05-17T17:43:59.8326540Z [1m[92m   Compiling[0m core-foundation v0.10.1
+2026-05-17T17:44:00.1999800Z [1m[92m   Compiling[0m cfb v0.7.3
+2026-05-17T17:44:00.8925170Z [1m[92m   Compiling[0m getrandom v0.3.4
+2026-05-17T17:44:00.9127150Z [1m[92m   Compiling[0m toml_parser v1.1.2+spec-1.1.0
+2026-05-17T17:44:02.2656190Z [1m[92m   Compiling[0m cookie v0.18.1
+2026-05-17T17:44:02.2958440Z [1m[92m   Compiling[0m regex v1.12.3
+2026-05-17T17:44:02.3160990Z [1m[92m   Compiling[0m tauri v2.10.3
+2026-05-17T17:44:02.5051120Z [1m[92m   Compiling[0m unic-ucd-ident v0.9.0
+2026-05-17T17:44:02.8016880Z [1m[92m   Compiling[0m brotli-decompressor v5.0.0
+2026-05-17T17:44:03.9521190Z [1m[92m   Compiling[0m http v1.4.0
+2026-05-17T17:44:05.7561830Z [1m[92m   Compiling[0m jsonptr v0.6.3
+2026-05-17T17:44:06.9863870Z [1m[92m   Compiling[0m serde_spanned v1.1.1
+2026-05-17T17:44:07.0876640Z [1m[92m   Compiling[0m toml_datetime v0.7.5+spec-1.1.0
+2026-05-17T17:44:07.4067740Z [1m[92m   Compiling[0m anyhow v1.0.102
+2026-05-17T17:44:07.4831680Z [1m[92m   Compiling[0m toml_writer v1.1.1+spec-1.1.0
+2026-05-17T17:44:07.5922480Z [1m[92m   Compiling[0m winnow v0.7.15
+2026-05-17T17:44:07.7094430Z [1m[92m   Compiling[0m log v0.4.29
+2026-05-17T17:44:07.8576190Z [1m[92m   Compiling[0m same-file v1.0.6
+2026-05-17T17:44:07.8677980Z [1m[92m   Compiling[0m foreign-types-shared v0.3.1
+2026-05-17T17:44:07.9161370Z [1m[92m   Compiling[0m unicode-segmentation v1.13.2
+2026-05-17T17:44:07.9914920Z [1m[92m   Compiling[0m walkdir v2.5.0
+2026-05-17T17:44:08.5447780Z [1m[92m   Compiling[0m keyboard-types v0.7.0
+2026-05-17T17:44:08.7715180Z [1m[92m   Compiling[0m foreign-types v0.5.0
+2026-05-17T17:44:08.8334550Z [1m[92m   Compiling[0m num-traits v0.2.19
+2026-05-17T17:44:09.2587590Z [1m[92m   Compiling[0m toml v0.9.12+spec-1.1.0
+2026-05-17T17:44:09.4130170Z [1m[92m   Compiling[0m json-patch v3.0.1
+2026-05-17T17:44:10.6687300Z [1m[92m   Compiling[0m brotli v8.0.2
+2026-05-17T17:44:11.2291100Z [1m[92m   Compiling[0m urlpattern v0.3.0
+2026-05-17T17:44:15.4760460Z [1m[92m   Compiling[0m serde-untagged v0.1.9
+2026-05-17T17:44:15.7496400Z [1m[92m   Compiling[0m infer v0.19.0
+2026-05-17T17:44:15.7598130Z [1m[92m   Compiling[0m core-graphics-types v0.2.0
+2026-05-17T17:44:15.7805380Z [1m[92m   Compiling[0m phf v0.11.3
+2026-05-17T17:44:15.8126010Z [1m[92m   Compiling[0m dirs-sys v0.5.0
+2026-05-17T17:44:15.8981900Z [1m[92m   Compiling[0m objc2-web-kit v0.3.2
+2026-05-17T17:44:15.9111280Z [1m[92m   Compiling[0m serde_with v3.18.0
+2026-05-17T17:44:17.0635430Z [1m[92m   Compiling[0m pin-project-lite v0.2.17
+2026-05-17T17:44:17.0737560Z [1m[92m   Compiling[0m glob v0.3.3
+2026-05-17T17:44:17.1460070Z [1m[92m   Compiling[0m dunce v1.0.5
+2026-05-17T17:44:17.2125530Z [1m[92m   Compiling[0m bitflags v1.3.2
+2026-05-17T17:44:17.2643350Z [1m[92m   Compiling[0m semver v1.0.28
+2026-05-17T17:44:17.8451700Z [1m[92m   Compiling[0m tauri-runtime v2.10.1
+2026-05-17T17:44:17.8554880Z [1m[92m   Compiling[0m tauri-utils v2.8.3
+2026-05-17T17:44:17.8665990Z [1m[92m   Compiling[0m png v0.17.16
+2026-05-17T17:44:18.0764560Z [1m[92m   Compiling[0m wry v0.54.4
+2026-05-17T17:44:18.1085210Z [1m[92m   Compiling[0m dirs v6.0.0
+2026-05-17T17:44:18.1989090Z [1m[92m   Compiling[0m core-graphics v0.25.0
+2026-05-17T17:44:19.3942870Z [1m[92m   Compiling[0m dispatch2 v0.3.1
+2026-05-17T17:44:19.6605100Z [1m[92m   Compiling[0m pxfm v0.1.29
+2026-05-17T17:44:19.6771810Z [1m[92m   Compiling[0m equivalent v1.0.2
+2026-05-17T17:44:19.7060140Z [1m[92m   Compiling[0m hashbrown v0.17.0
+2026-05-17T17:44:20.1605310Z [1m[92m   Compiling[0m indexmap v2.14.0
+2026-05-17T17:44:20.6726570Z [1m[92m   Compiling[0m tauri-runtime-wry v2.10.1
+2026-05-17T17:44:20.6849240Z [1m[92m   Compiling[0m tao v0.34.8
+2026-05-17T17:44:25.3681590Z [1m[92m   Compiling[0m moxcms v0.8.1
+2026-05-17T17:44:33.8440390Z [1m[92m   Compiling[0m muda v0.17.2
+2026-05-17T17:44:42.0237160Z [1m[92m   Compiling[0m png v0.18.1
+2026-05-17T17:44:43.7261080Z [1m[92m   Compiling[0m objc2-core-graphics v0.3.2
+2026-05-17T17:44:43.8220330Z [1m[92m   Compiling[0m quick-xml v0.38.4
+2026-05-17T17:44:44.0922540Z [1m[92m   Compiling[0m errno v0.3.14
+2026-05-17T17:44:44.1772970Z [1m[92m   Compiling[0m zerocopy v0.8.48
+2026-05-17T17:44:44.2026870Z [1m[92m   Compiling[0m byteorder-lite v0.1.0
+2026-05-17T17:44:44.4007190Z [1m[92m   Compiling[0m base64 v0.22.1
+2026-05-17T17:44:44.7174290Z [1m[92m   Compiling[0m bytemuck v1.25.0
+2026-05-17T17:44:44.8872700Z [1m[92m   Compiling[0m image v0.25.10
+2026-05-17T17:44:45.0770800Z [1m[92m   Compiling[0m objc-sys v0.3.5
+2026-05-17T17:44:45.0874490Z [1m[92m   Compiling[0m signal-hook v0.3.18
+2026-05-17T17:44:45.0954320Z [1m[92m   Compiling[0m plist v1.8.0
+2026-05-17T17:44:46.3252250Z [1m[92m   Compiling[0m serialize-to-javascript v0.1.2
+2026-05-17T17:44:48.6848970Z [1m[92m   Compiling[0m signal-hook-registry v1.4.8
+2026-05-17T17:44:49.1112200Z [1m[92m   Compiling[0m tray-icon v0.21.3
+2026-05-17T17:44:51.3267030Z [1m[92m   Compiling[0m tokio v1.51.1
+2026-05-17T17:44:52.3932320Z [1m[92m   Compiling[0m window-vibrancy v0.6.0
+2026-05-17T17:44:52.6029760Z [1m[92m   Compiling[0m mime v0.3.17
+2026-05-17T17:44:53.0014110Z [1m[92m   Compiling[0m heck v0.5.0
+2026-05-17T17:44:53.4697690Z [1m[92m   Compiling[0m embed_plist v1.2.2
+2026-05-17T17:44:53.5354440Z [1m[92m   Compiling[0m mac-notification-sys v0.6.12
+2026-05-17T17:44:57.9535870Z [1m[92m   Compiling[0m ppv-lite86 v0.2.21
+2026-05-17T17:44:58.2427440Z [1m[92m   Compiling[0m rand_core v0.9.5
+2026-05-17T17:44:58.3574850Z [1m[92m   Compiling[0m os_pipe v1.2.3
+2026-05-17T17:44:58.4249340Z [1m[92m   Compiling[0m futures-io v0.3.32
+2026-05-17T17:44:58.5130250Z [1m[92m   Compiling[0m parking v2.2.1
+2026-05-17T17:44:58.6151530Z [1m[92m   Compiling[0m fastrand v2.4.1
+2026-05-17T17:44:58.7655060Z [1m[92m   Compiling[0m futures-core v0.3.32
+2026-05-17T17:44:58.8166070Z [1m[92m   Compiling[0m futures-lite v2.6.1
+2026-05-17T17:44:59.5529960Z [1m[92m   Compiling[0m sigchld v0.2.4
+2026-05-17T17:44:59.6674070Z [1m[92m   Compiling[0m tauri-plugin-notification v2.3.3
+2026-05-17T17:44:59.7280220Z [1m[92m   Compiling[0m tauri-plugin-shell v2.3.5
+2026-05-17T17:44:59.7864640Z [1m[92m   Compiling[0m tauri-plugin-global-shortcut v2.3.1
+2026-05-17T17:44:59.8172920Z [1m[92m   Compiling[0m rand_chacha v0.9.0
+2026-05-17T17:45:00.2077470Z [1m[92m   Compiling[0m objc2 v0.5.2
+2026-05-17T17:45:01.7975770Z [1m[92m   Compiling[0m pathdiff v0.2.3
+2026-05-17T17:45:01.8680160Z [1m[92m   Compiling[0m open v5.3.3
+2026-05-17T17:45:01.9584950Z [1m[92m   Compiling[0m notify-rust v4.16.1
+2026-05-17T17:45:02.3015800Z [1m[92m   Compiling[0m objc2-foundation v0.2.2
+2026-05-17T17:45:02.6439020Z [1m[92m   Compiling[0m rand v0.9.4
+2026-05-17T17:45:03.0873320Z [1m[92m   Compiling[0m shared_child v1.1.1
+2026-05-17T17:45:03.2886820Z [1m[92m   Compiling[0m global-hotkey v0.7.0
+2026-05-17T17:45:04.1530080Z [1m[92m   Compiling[0m dirs-sys v0.4.1
+2026-05-17T17:45:04.2233710Z [1m[92m   Compiling[0m encoding_rs v0.8.35
+2026-05-17T17:45:04.7076330Z [1m[92m   Compiling[0m waypoint v0.2.27 (/Users/runner/work/waypoint/waypoint/waypoint/src-tauri)
+2026-05-17T17:45:04.8318670Z [1m[92m   Compiling[0m dirs v5.0.1
+2026-05-17T17:45:08.3762090Z [1m[92m   Compiling[0m objc2-app-kit v0.2.2
+2026-05-17T17:45:11.1306820Z [1m[33mwarning[0m[1m: unused import: `crate::context::derive_context_id`[0m
+2026-05-17T17:45:11.1307670Z  [1m[94m--> [0msrc/hotkey/mod.rs:1:5
+2026-05-17T17:45:11.1308430Z   [1m[94m|[0m
+2026-05-17T17:45:11.1309510Z [1m[94m1[0m [1m[94m|[0m use crate::context::derive_context_id;
+2026-05-17T17:45:11.1310210Z   [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+2026-05-17T17:45:11.1310790Z   [1m[94m|[0m
+2026-05-17T17:45:11.1311590Z   [1m[94m= [0m[1mnote[0m: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+2026-05-17T17:45:11.1312040Z 
+2026-05-17T17:45:11.1312980Z [1m[33mwarning[0m[1m: unused import: `crate::storage::app_config`[0m
+2026-05-17T17:45:11.1315390Z  [1m[94m--> [0msrc/hotkey/mod.rs:4:5
+2026-05-17T17:45:11.1317560Z   [1m[94m|[0m
+2026-05-17T17:45:11.1321510Z [1m[94m4[0m [1m[94m|[0m use crate::storage::app_config;
+2026-05-17T17:45:11.1323200Z   [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+2026-05-17T17:45:11.1323950Z 
+2026-05-17T17:45:11.1324900Z [1m[33mwarning[0m[1m: unused import: `Path`[0m
+2026-05-17T17:45:11.1325520Z  [1m[94m--> [0msrc/storage/autostart.rs:1:17
+2026-05-17T17:45:11.1347140Z   [1m[94m|[0m
+2026-05-17T17:45:11.1348810Z [1m[94m1[0m [1m[94m|[0m use std::path::{Path, PathBuf};
+2026-05-17T17:45:11.1350360Z   [1m[94m|[0m                 [1m[33m^^^^[0m
+2026-05-17T17:45:11.1351060Z 
+2026-05-17T17:45:12.2310800Z [1m[33mwarning[0m[1m: variant `ContextNotFound` is never constructed[0m
+2026-05-17T17:45:12.2409730Z   [1m[94m--> [0msrc/error.rs:13:5
+2026-05-17T17:45:12.2514250Z    [1m[94m|[0m
+2026-05-17T17:45:12.2644530Z [1m[94m 5[0m [1m[94m|[0m pub enum WaypointError {
+2026-05-17T17:45:12.2746550Z    [1m[94m|[0m          [1m[94m-------------[0m [1m[94mvariant in this enum[0m
+2026-05-17T17:45:12.2848300Z [1m[94m...[0m
+2026-05-17T17:45:12.2955520Z [1m[94m13[0m [1m[94m|[0m     ContextNotFound(String),
+2026-05-17T17:45:12.3065020Z    [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^[0m
+2026-05-17T17:45:12.3166890Z    [1m[94m|[0m
+2026-05-17T17:45:12.3284330Z    [1m[94m= [0m[1mnote[0m: `WaypointError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+2026-05-17T17:45:12.3286980Z    [1m[94m= [0m[1mnote[0m: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+2026-05-17T17:45:12.3388430Z 
+2026-05-17T17:45:12.3490780Z [1m[33mwarning[0m[1m: function `decide_event` is never used[0m
+2026-05-17T17:45:12.3592770Z   [1m[94m--> [0msrc/foreground_watcher.rs:25:15
+2026-05-17T17:45:12.3694350Z    [1m[94m|[0m
+2026-05-17T17:45:12.3795710Z [1m[94m25[0m [1m[94m|[0m pub(crate) fn decide_event(
+2026-05-17T17:45:12.3897030Z    [1m[94m|[0m               [1m[33m^^^^^^^^^^^^[0m
+2026-05-17T17:45:12.3997910Z 
+2026-05-17T17:45:12.4099190Z [1m[33mwarning[0m[1m: variant `OpenList` is never constructed[0m
+2026-05-17T17:45:12.4200480Z   [1m[94m--> [0msrc/hotkey/mod.rs:43:5
+2026-05-17T17:45:12.4301510Z    [1m[94m|[0m
+2026-05-17T17:45:12.4430320Z [1m[94m41[0m [1m[94m|[0m pub enum HotkeyAction {
+2026-05-17T17:45:12.4531970Z    [1m[94m|[0m          [1m[94m------------[0m [1m[94mvariant in this enum[0m
+2026-05-17T17:45:12.4633550Z [1m[94m42[0m [1m[94m|[0m     OpenAll,
+2026-05-17T17:45:12.4735100Z [1m[94m43[0m [1m[94m|[0m     OpenList,
+2026-05-17T17:45:12.4836580Z    [1m[94m|[0m     [1m[33m^^^^^^^^[0m
+2026-05-17T17:45:12.4938020Z    [1m[94m|[0m
+2026-05-17T17:45:12.5040530Z    [1m[94m= [0m[1mnote[0m: `HotkeyAction` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+2026-05-17T17:45:12.5141760Z 
+2026-05-17T17:45:12.5244290Z [1m[33mwarning[0m[1m: function `autostart_path` is never used[0m
+2026-05-17T17:45:12.5347000Z   [1m[94m--> [0msrc/storage/autostart.rs:10:4
+2026-05-17T17:45:12.5448560Z    [1m[94m|[0m
+2026-05-17T17:45:12.5551140Z [1m[94m10[0m [1m[94m|[0m fn autostart_path() -> Option<PathBuf> {
+2026-05-17T17:45:12.5653900Z    [1m[94m|[0m    [1m[33m^^^^^^^^^^^^^^[0m
+2026-05-17T17:45:12.5755600Z 
+2026-05-17T17:45:12.5858170Z [1m[33mwarning[0m[1m: function `clear_session` is never used[0m
+2026-05-17T17:45:12.5960290Z   [1m[94m--> [0msrc/storage/session.rs:65:8
+2026-05-17T17:45:12.6061870Z    [1m[94m|[0m
+2026-05-17T17:45:12.6163600Z [1m[94m65[0m [1m[94m|[0m pub fn clear_session(context_id: &str) -> Result<(), WaypointError> {
+2026-05-17T17:45:12.6206490Z    [1m[94m|[0m        [1m[33m^^^^^^^^^^^^^[0m
+2026-05-17T17:45:12.6307830Z 
+2026-05-17T17:45:55.1683000Z [1m[33mwarning[0m: `waypoint` (lib) generated 8 warnings (run `cargo fix --lib -p waypoint` to apply 3 suggestions)
+2026-05-17T17:45:55.6186640Z [1m[92m    Finished[0m `release` profile [optimized] target(s) in 2m 26s
+2026-05-17T17:45:57.7162470Z        Built application at: /Users/runner/work/waypoint/waypoint/waypoint/src-tauri/target/universal-apple-darwin/release/waypoint
+2026-05-17T17:45:57.7459770Z     Bundling Waypoint.app (/Users/runner/work/waypoint/waypoint/waypoint/src-tauri/target/universal-apple-darwin/release/bundle/macos/Waypoint.app)
+2026-05-17T17:45:57.7894760Z     Bundling Waypoint_0.2.27_universal.dmg (/Users/runner/work/waypoint/waypoint/waypoint/src-tauri/target/universal-apple-darwin/release/bundle/dmg/Waypoint_0.2.27_universal.dmg)
+2026-05-17T17:45:57.8041210Z      Running bundle_dmg.sh
+2026-05-17T17:46:04.4429810Z failed to bundle project error running bundle_dmg.sh: `failed to run /Users/runner/work/waypoint/waypoint/waypoint/src-tauri/target/universal-apple-darwin/release/bundle/dmg/bundle_dmg.sh`
+2026-05-17T17:46:04.4439950Z        Error failed to bundle project error running bundle_dmg.sh: `failed to run /Users/runner/work/waypoint/waypoint/waypoint/src-tauri/target/universal-apple-darwin/release/bundle/dmg/bundle_dmg.sh`
+2026-05-17T17:46:04.5950800Z ##[error]Command "npm ["run","tauri","build","--","--target","universal-apple-darwin"]" failed with exit code 1
+2026-05-17T17:46:05.3082410Z ##[group]Run set +e
+2026-05-17T17:46:05.3083050Z [36;1mset +e[0m
+2026-05-17T17:46:05.3083250Z [36;1mcd "$GITHUB_WORKSPACE"[0m
+2026-05-17T17:46:05.3083800Z [36;1mPLATFORM_TAG=$(echo "macos-latest---target universal-apple-darwin" | tr -c 'A-Za-z0-9.-' '_' | cut -c1-60)[0m
+2026-05-17T17:46:05.3084390Z [36;1mBR="ci-logs/0bf40d44d03c80e4450fdb8925a3f7238df4e1d5-release-${PLATFORM_TAG}-1"[0m
+2026-05-17T17:46:05.3084770Z [36;1mmkdir -p logs[0m
+2026-05-17T17:46:05.3085050Z [36;1m# gh CLI 在 ubuntu/macos/windows runner 都預裝，用 GH_TOKEN 認證[0m
+2026-05-17T17:46:05.3085510Z [36;1mgh run view 25998018283 --log-failed > logs/failed-step.log 2>&1 || \[0m
+2026-05-17T17:46:05.3085890Z [36;1m  gh run view 25998018283 --log > logs/all-steps.log 2>&1 || true[0m
+2026-05-17T17:46:05.3086190Z [36;1m{[0m
+2026-05-17T17:46:05.3086420Z [36;1m  echo "platform=macos-latest"[0m
+2026-05-17T17:46:05.3086700Z [36;1m  echo "args=--target universal-apple-darwin"[0m
+2026-05-17T17:46:05.3087190Z [36;1m  echo "runner_os=$(uname -a 2>/dev/null || cmd /c ver 2>/dev/null || echo unknown)"[0m
+2026-05-17T17:46:05.3087660Z [36;1m  echo "rustc=$(rustc --version 2>/dev/null || echo missing)"[0m
+2026-05-17T17:46:05.3088020Z [36;1m  echo "cargo=$(cargo --version 2>/dev/null || echo missing)"[0m
+2026-05-17T17:46:05.3088410Z [36;1m  echo "github.sha=0bf40d44d03c80e4450fdb8925a3f7238df4e1d5"[0m
+2026-05-17T17:46:05.3088770Z [36;1m  echo "github.run_id=25998018283"[0m
+2026-05-17T17:46:05.3089010Z [36;1m  echo "github.run_attempt=1"[0m
+2026-05-17T17:46:05.3090040Z [36;1m} > logs/_meta.txt[0m
+2026-05-17T17:46:05.3090320Z [36;1mls -la logs/ > logs/_INDEX.txt 2>&1 || true[0m
+2026-05-17T17:46:05.3090590Z [36;1mgit config user.email "ci-bot@waypoint"[0m
+2026-05-17T17:46:05.3090840Z [36;1mgit config user.name "ci-bot"[0m
+2026-05-17T17:46:05.3091060Z [36;1mgit checkout --orphan "$BR"[0m
+2026-05-17T17:46:05.3091340Z [36;1mgit rm -rf . >/dev/null 2>&1 || true[0m
+2026-05-17T17:46:05.3091570Z [36;1mgit add -A logs/[0m
+2026-05-17T17:46:05.3091990Z [36;1mgit commit -m "ci log release 0bf40d44d03c80e4450fdb8925a3f7238df4e1d5 ${PLATFORM_TAG} attempt 1" --allow-empty[0m
+2026-05-17T17:46:05.3092510Z [36;1mgit push origin "$BR" --force[0m
+2026-05-17T17:46:06.0265480Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-17T17:46:06.0265900Z env:
+2026-05-17T17:46:06.0266110Z   CARGO_HOME: /Users/runner/.cargo
+2026-05-17T17:46:06.0266500Z   CARGO_INCREMENTAL: 0
+2026-05-17T17:46:06.0266700Z   CARGO_TERM_COLOR: always
+2026-05-17T17:46:06.0267810Z   GH_TOKEN: ***
+2026-05-17T17:46:06.0268060Z ##[endgroup]
+2026-05-17T17:46:09.7677910Z Switched to a new branch 'ci-logs/0bf40d44d03c80e4450fdb8925a3f7238df4e1d5-release-macos-latest---target_universal-apple-darwin_-1'
+2026-05-17T17:46:09.7697090Z M	waypoint/package-lock.json
+2026-05-17T17:46:09.8297530Z [ci-logs/0bf40d44d03c80e4450fdb8925a3f7238df4e1d5-release-macos-latest---target_universal-apple-darwin_-1 (root-commit) caaad51] ci log release 0bf40d44d03c80e4450fdb8925a3f7238df4e1d5 macos-latest---target_universal-apple-darwin_ attempt 1
+2026-05-17T17:46:09.8300560Z  4 files changed, 17 insertions(+)
+2026-05-17T17:46:09.8301110Z  create mode 100644 logs/_INDEX.txt
+2026-05-17T17:46:09.8301440Z  create mode 100644 logs/_meta.txt
+2026-05-17T17:46:09.8301840Z  create mode 100644 logs/all-steps.log
+2026-05-17T17:46:09.8302180Z  create mode 100644 logs/failed-step.log
+2026-05-17T17:46:11.1018670Z remote: 
+2026-05-17T17:46:11.1019920Z remote: Create a pull request for 'ci-logs/0bf40d44d03c80e4450fdb8925a3f7238df4e1d5-release-macos-latest---target_universal-apple-darwin_-1' on GitHub by visiting:        
+2026-05-17T17:46:11.1021360Z remote:      https://github.com/I321I/waypoint/pull/new/ci-logs/0bf40d44d03c80e4450fdb8925a3f7238df4e1d5-release-macos-latest---target_universal-apple-darwin_-1        
+2026-05-17T17:46:11.1022110Z remote: 
+2026-05-17T17:46:11.1038110Z To https://github.com/I321I/waypoint
+2026-05-17T17:46:11.1040070Z  * [new branch]      ci-logs/0bf40d44d03c80e4450fdb8925a3f7238df4e1d5-release-macos-latest---target_universal-apple-darwin_-1 -> ci-logs/0bf40d44d03c80e4450fdb8925a3f7238df4e1d5-release-macos-latest---target_universal-apple-darwin_-1
+2026-05-17T17:46:11.1180930Z Post job cleanup.
+2026-05-17T17:46:11.4821150Z [command]/opt/homebrew/bin/git version
+2026-05-17T17:46:11.4921990Z git version 2.54.0
+2026-05-17T17:46:11.4975160Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/b2a1aad2-0264-4509-bd3c-e5f601a43be6/.gitconfig'
+2026-05-17T17:46:11.4987860Z Temporarily overriding HOME='/Users/runner/work/_temp/b2a1aad2-0264-4509-bd3c-e5f601a43be6' before making global git config changes
+2026-05-17T17:46:11.4989910Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-17T17:46:11.4999310Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/waypoint/waypoint
+2026-05-17T17:46:11.5083900Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-17T17:46:11.5158640Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-17T17:46:11.6124970Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-17T17:46:11.6190740Z http.https://github.com/.extraheader
+2026-05-17T17:46:11.6212130Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-05-17T17:46:11.6320480Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-17T17:46:11.7496960Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-17T17:46:11.7706400Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-17T17:46:11.8971220Z Cleaning up orphan processes
+2026-05-17T17:46:12.4255460Z Terminate orphan process: pid (71748) (diskimages-help)
+2026-05-17T17:46:12.4384000Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-node@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

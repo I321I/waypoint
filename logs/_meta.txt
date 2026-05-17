@@ -1,0 +1,8 @@
+platform=macos-latest
+args=--target universal-apple-darwin
+runner_os=Darwin sat12-dp150-3e674bca-0693-4734-916e-598ae4d13763-4E77F6F5346E.local 24.6.0 Darwin Kernel Version 24.6.0: Mon Jan 19 22:02:01 PST 2026; root:xnu-11417.140.69.708.3~1/RELEASE_ARM64_VMAPPLE arm64
+rustc=rustc 1.95.0 (59807616e 2026-04-14)
+cargo=cargo 1.95.0 (f2d3ce0bd 2026-03-21)
+github.sha=0bf40d44d03c80e4450fdb8925a3f7238df4e1d5
+github.run_id=25998018283
+github.run_attempt=1

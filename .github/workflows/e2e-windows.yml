@@ -82,9 +82,12 @@ jobs:
         # - 精確版本（msedgedriver.azureedge.net）
         # - LATEST_RELEASE_<major>_WINDOWS（同主版本下最新）
         # - 同樣兩種 URL 用 microsoft.com domain（azureedge.net 在 2026 部分區域 deprecated）
+        # 整段輸出 tee 到 logs/05-msedgedriver-setup.log 以便 ci-logs 抓取診斷。
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path logs | Out-Null
+          Start-Transcript -Path "logs\05-msedgedriver-setup.log" -Force
           $edgePath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
           if (-not (Test-Path $edgePath)) {
             $edgePath = "C:\Program Files\Microsoft\Edge\Application\msedge.exe"
@@ -134,7 +137,10 @@ jobs:
           # 傳給 tauri-driver --native-driver，繞掉 PATH 搜尋撿到舊版的問題。
           Add-Content $env:GITHUB_ENV "WAYPOINT_NATIVE_DRIVER=$($driver.FullName)"
           Write-Host "msedgedriver at $($driver.FullName)"
-          & $driver.FullName --version
+          $driverVer = & $driver.FullName --version
+          Write-Host "Downloaded driver: $driverVer"
+          Write-Host "Edge browser was: $version"
+          Stop-Transcript
 
       - name: Run E2E tests (capture stdout/stderr)
         working-directory: waypoint
@@ -143,6 +149,15 @@ jobs:
           WAYPOINT_BINARY: ${{ github.workspace }}\waypoint\src-tauri\target\release\waypoint.exe
         run: |
           New-Item -ItemType Directory -Force -Path logs | Out-Null
+          Write-Host "WAYPOINT_NATIVE_DRIVER=$env:WAYPOINT_NATIVE_DRIVER"
+          if ($env:WAYPOINT_NATIVE_DRIVER -and (Test-Path $env:WAYPOINT_NATIVE_DRIVER)) {
+            Write-Host "native driver --version:"
+            & $env:WAYPOINT_NATIVE_DRIVER --version
+          }
+          # 偵測 Edge browser 真實版本，跟 driver 對比
+          $msedge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+          if (-not (Test-Path $msedge)) { $msedge = "C:\Program Files\Microsoft\Edge\Application\msedge.exe" }
+          if (Test-Path $msedge) { Write-Host "msedge.exe FileVersion: $((Get-Item $msedge).VersionInfo.FileVersion)" }
           npm run test:e2e *>&1 | Tee-Object -FilePath logs/wdio-full.log
           exit $LASTEXITCODE
 

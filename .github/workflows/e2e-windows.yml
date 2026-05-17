@@ -130,6 +130,9 @@ jobs:
           $driver = Get-ChildItem -Path $dest -Recurse -Filter msedgedriver.exe | Select-Object -First 1
           if (-not $driver) { throw "msedgedriver.exe not in archive" }
           Add-Content $env:GITHUB_PATH $driver.DirectoryName
+          # 顯式把 driver 完整路徑寫到 GITHUB_ENV，wdio.conf.js 透過 WAYPOINT_NATIVE_DRIVER
+          # 傳給 tauri-driver --native-driver，繞掉 PATH 搜尋撿到舊版的問題。
+          Add-Content $env:GITHUB_ENV "WAYPOINT_NATIVE_DRIVER=$($driver.FullName)"
           Write-Host "msedgedriver at $($driver.FullName)"
           & $driver.FullName --version
 

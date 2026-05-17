@@ -53,7 +53,13 @@ export const config = {
     // 讓 Tauri 自動開列表視窗（tray-only 啟動不會建 WebView）
     process.env.WAYPOINT_E2E = "1";
 
-    tauriDriver = spawn(tauriDriverBin, [], {
+    // WAYPOINT_NATIVE_DRIVER 顯式指定 msedgedriver/chromedriver 路徑，避免 tauri-driver
+    // 從 PATH 撿到 runner 自帶的舊版（windows-latest 上 msedgedriver 148 vs Edge 147 不匹配）。
+    const tauriDriverArgs = [];
+    if (process.env.WAYPOINT_NATIVE_DRIVER) {
+      tauriDriverArgs.push("--native-driver", process.env.WAYPOINT_NATIVE_DRIVER);
+    }
+    tauriDriver = spawn(tauriDriverBin, tauriDriverArgs, {
       stdio: [null, process.stdout, process.stderr],
       env: process.env,
     });

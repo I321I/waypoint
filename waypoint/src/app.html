@@ -5,16 +5,18 @@
     <link rel="icon" href="%sveltekit.assets%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Waypoint</title>
-    %sveltekit.head%
-  </head>
-  <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
-  <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
-    <!-- note 視窗在 Svelte mount 前先設透明 bg，避免新 webview 開瞬間閃一下深色背景 -->
+    <!-- 在 head 階段先決定 body bg：note 視窗（webview 已 transparent）給透明，
+         其他視窗給深色防白屏。放 body 內 inline style 太晚會閃一下深色。 -->
+    <style id="initial-bg">body{background:#1e1e1e;color:#cccccc}</style>
     <script>
       if (location.hash.indexOf('view=note') !== -1) {
-        document.body.style.background = 'transparent';
+        var s = document.getElementById('initial-bg');
+        if (s) s.textContent = 'body{background:transparent;color:#cccccc}';
       }
     </script>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
     <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>

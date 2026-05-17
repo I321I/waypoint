@@ -340,6 +340,11 @@ pub fn cmd_close_note_window(app: AppHandle, note_id: String) -> Result<(), Stri
         save_geometry_to_settings(&win, &note_id);
         win.close().map_err(|e| e.to_string())?;
     }
+    // 清掉 passthrough_state map 對應 entry：webview 已銷毀，新開的 webview
+    // ignore_cursor_events 預設 false；若留陳舊 true，user 按穿透 hotkey 時會
+    // 被 target_state 判定為 all-on → 目標 off → 沒視覺變化讓 user 以為 hotkey 失效。
+    let state = app.state::<crate::state::AppState>();
+    state.passthrough_state.lock().unwrap().remove(&label);
     Ok(())
 }
 

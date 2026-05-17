@@ -229,7 +229,8 @@ test.describe("筆記視窗", () => {
       el.value = "100";
       el.dispatchEvent(new Event("input", { bubbles: true }));
     });
-    await expect(page.locator(".opacity-bar .val")).toHaveText("100%");
+    // 100% 時 slider title 反映當前值（取代被移除的 .val 文字）
+    await expect(slider).toHaveAttribute("title", /100%/);
 
     const max = await slider.getAttribute("max");
     expect(max).toBe("100");

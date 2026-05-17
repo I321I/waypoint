@@ -16,9 +16,8 @@
     type="range" min="10" max="100" step="5"
     value={Math.round(opacity * 100)}
     on:input={onInput}
-    title="視窗透明度"
+    title="視窗透明度 {Math.round(opacity * 100)}%"
   />
-  <span class="val">{Math.round(opacity * 100)}%</span>
 </div>
 
 <style>
@@ -30,7 +29,7 @@
   }
   .lbl { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.5px; }
   .slider {
-    width: 80px;
+    width: 100px;
     appearance: none;
     -webkit-appearance: none;
     height: 4px;
@@ -56,5 +55,4 @@
     border: none;
     cursor: pointer;
   }
-  .val { font-size: 11px; color: var(--text-secondary); min-width: 36px; text-align: right; font-variant-numeric: tabular-nums; }
 </style>

@@ -59,9 +59,16 @@ pub fn cmd_toggle_passthrough_global(app: AppHandle) -> Result<(), String> {
     let target = target_state(&states);
     let state = app.state::<crate::state::AppState>();
     if target {
-        // going on：snapshot 當下 list_open，廣播給 list 自我 hide
+        // going on：snapshot 當下 list_open，Rust 端直接 hide list（不走
+        // cmd_hide_window，避免 active_mode 被設 false 導致 foreground_watcher
+        // 不再 emit context-changed，穿透中切視窗無法切 context）。
         let list_open = *state.list_window_open.lock().unwrap();
         state.pre_passthrough_list_open.store(list_open, std::sync::atomic::Ordering::SeqCst);
+        if let Some(win) = app.get_webview_window("list") {
+            let _ = win.hide();
+        }
+        *state.list_window_open.lock().unwrap() = false;
+        crate::taskbar::refresh_taskbar_visibility(&app);
         let _ = app.emit("waypoint://passthrough-globally-on", ());
     } else {
         // going off：依 snapshot 還原 list（直接 Rust 端開回，不依賴前端）

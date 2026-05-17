@@ -97,10 +97,10 @@
       }
     );
 
-    // 穿透模式開啟 -> 自我 hide（離開穿透時 Rust 端會重新 open list）
-    unlistenPassthroughOn = await listen("waypoint://passthrough-globally-on", async () => {
-      await windowsApi.hideWindow("list");
-    });
+    // 穿透模式開啟：list 由 Rust 端直接 hide（避免 cmd_hide_window 把 active_mode
+    // 設 false，否則 foreground_watcher 會停 emit context-changed，穿透中切視窗無法
+    // 切 context）。此 listener 仍註冊以利未來擴充，但目前無需動作。
+    unlistenPassthroughOn = await listen("waypoint://passthrough-globally-on", async () => {});
 
     // OS 前景視窗變化 -> 切換 list 顯示的 context（item 8）
     // 不能用 collapseAll：那會把 list 也 hide。

@@ -9,6 +9,12 @@
   </head>
   <!-- background 直接寫在 body，確保 JS 載入前不顯示白屏 -->
   <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
+    <!-- note 視窗在 Svelte mount 前先設透明 bg，避免新 webview 開瞬間閃一下深色背景 -->
+    <script>
+      if (location.hash.indexOf('view=note') !== -1) {
+        document.body.style.background = 'transparent';
+      }
+    </script>
     <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>

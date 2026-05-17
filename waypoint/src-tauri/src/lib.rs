@@ -151,6 +151,7 @@ pub fn run() {
             tray::cmd_open_settings,
             commands::passthrough_cmd::cmd_set_passthrough,
             commands::passthrough_cmd::cmd_toggle_passthrough_global,
+            commands::passthrough_cmd::cmd_mark_note_edited,
             commands::config_cmd::cmd_set_passthrough_hotkey,
             commands::config_cmd::cmd_set_show_in_taskbar,
             commands::config_cmd::get_transparent_includes_text,

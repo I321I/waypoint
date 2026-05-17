@@ -81,6 +81,32 @@ pub fn cmd_toggle_passthrough_global(app: AppHandle) -> Result<(), String> {
     for l in labels {
         cmd_set_passthrough(app.clone(), l, target)?;
     }
+    // 離開穿透時：把焦點 + 游標放到當前 context 最後編輯的筆記末，方便 user 接著打字
+    if !target {
+        let active_ctx = state.active_context_id.lock().unwrap().clone();
+        let key = active_ctx.unwrap_or_else(|| "_global_only_".to_string());
+        let last_note = state.last_edited_per_context.lock().unwrap().get(&key).cloned();
+        if let Some(note_id) = last_note {
+            let label = format!("note-{note_id}");
+            if let Some(win) = app.get_webview_window(&label) {
+                let _ = win.show();
+                // raise 同 open_note_window：toggle always_on_top + set_focus 強制 raise
+                let _ = win.set_always_on_top(true);
+                let _ = win.set_focus();
+            }
+            // NoteWindow listen 並比對 note_id；payload 帶 String，前端比對
+            let _ = app.emit("waypoint://focus-and-cursor-end", &note_id);
+        }
+    }
+    Ok(())
+}
+
+#[tauri::command]
+pub fn cmd_mark_note_edited(app: AppHandle, note_id: String) -> Result<(), String> {
+    let state = app.state::<crate::state::AppState>();
+    let active_ctx = state.active_context_id.lock().unwrap().clone();
+    let key = active_ctx.unwrap_or_else(|| "_global_only_".to_string());
+    state.last_edited_per_context.lock().unwrap().insert(key, note_id);
     Ok(())
 }
 

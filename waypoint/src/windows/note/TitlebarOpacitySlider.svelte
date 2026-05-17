@@ -22,14 +22,16 @@
 
 <style>
   .opacity-bar {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 6px;
-    flex-shrink: 0;
+    flex: 1 1 auto;
+    min-width: 0;
   }
-  .lbl { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.5px; }
+  .lbl { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.5px; flex-shrink: 0; }
   .slider {
-    width: 100px;
+    flex: 1 1 auto;
+    min-width: 60px;
     appearance: none;
     -webkit-appearance: none;
     height: 4px;

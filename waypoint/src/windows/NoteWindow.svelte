@@ -33,6 +33,7 @@
   let unlistenConfigChanged: UnlistenFn | null = null;
   let unlistenMove: UnlistenFn | null = null;
   let unlistenResize: UnlistenFn | null = null;
+  let unlistenFocusEnd: UnlistenFn | null = null;
   let geometrySaveTimer: ReturnType<typeof setTimeout> | null = null;
   let saveGeometry: () => Promise<void> = async () => {};
 
@@ -105,6 +106,14 @@
     };
     unlistenMove = await win.onMoved(scheduleGeometrySave).catch(() => null);
     unlistenResize = await win.onResized(scheduleGeometrySave).catch(() => null);
+
+    // 穿透模式關閉時，Rust 端會 emit 帶 last-edited noteId；比對中就 focus 並把游標放到末
+    unlistenFocusEnd = await listen<string>("waypoint://focus-and-cursor-end", (event) => {
+      if (event.payload !== noteId) return;
+      const ed = editorRef?.getEditor();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (ed as any)?.commands?.focus?.("end");
+    }).catch(() => null);
   });
 
   onDestroy(() => {
@@ -115,6 +124,7 @@
     unlistenDeleted?.();
     unlistenMove?.();
     unlistenResize?.();
+    unlistenFocusEnd?.();
     if (geometrySaveTimer) clearTimeout(geometrySaveTimer);
   });
 
@@ -138,11 +148,19 @@
   function handleTitleInput(e: Event) {
     title = (e.target as HTMLInputElement).value;
     scheduleSave();
+    handleTitleEdit();
   }
 
   function handleContentUpdate(e: CustomEvent<{ markdown: string }>) {
     body = e.detail.markdown;
     scheduleSave();
+    // 標記本 note 為當前 context 最後編輯 → 穿透模式關閉時自動 focus 這裡
+    passthroughApi.markNoteEdited(noteId).catch(() => {});
+  }
+
+  function handleTitleEdit() {
+    // title 改動也算編輯 → 標記 last-edited
+    passthroughApi.markNoteEdited(noteId).catch(() => {});
   }
 
   function handleContextMenu(e: MouseEvent) {

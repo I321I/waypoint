@@ -61,6 +61,7 @@ export const config = {
 export const passthrough = {
   toggleGlobal: () => invoke<void>("cmd_toggle_passthrough_global"),
   setPassthrough: (noteLabel: string, on: boolean) => invoke<void>("cmd_set_passthrough", { noteLabel, on }),
+  markNoteEdited: (noteId: string) => invoke<void>("cmd_mark_note_edited", { noteId }),
 };
 
 export const windows = {

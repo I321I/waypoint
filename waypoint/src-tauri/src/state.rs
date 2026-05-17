@@ -14,6 +14,9 @@ pub struct AppState {
     pub pre_passthrough_list_open: AtomicBool,
     /// 開啟中的筆記視窗：noteId -> contextId（None=global）。close-requested 時用以 emit 正確 isGlobal。
     pub open_notes_context: Mutex<HashMap<String, Option<String>>>,
+    /// 每個 context 最後編輯的筆記 id：context_id（None=global → "_global_only_"）→ note_id。
+    /// 用途：穿透模式關閉時，自動把焦點 + 游標移到該 note 最後，方便 user 接著打字。
+    pub last_edited_per_context: Mutex<HashMap<String, String>>,
     /// active_mode：使用者呼叫 Waypoint 後為 true，foreground_watcher 才會發
     /// active-context-changed event 給前端切換筆記區域。手動收起（hotkey
     /// CollapseAll / list ✕）後為 false，使用者切換 app 不再觸發筆記跳動。
@@ -31,6 +34,7 @@ impl Default for AppState {
             passthrough_hotkey_registered: AtomicBool::new(true),
             pre_passthrough_list_open: AtomicBool::new(false),
             open_notes_context: Mutex::new(HashMap::new()),
+            last_edited_per_context: Mutex::new(HashMap::new()),
             active_mode: AtomicBool::new(true),
         }
     }

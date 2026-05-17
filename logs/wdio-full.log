@@ -1,0 +1,956 @@
+
+> waypoint@0.2.23 test:e2e
+> wdio run e2e/wdio.conf.js
+
+2026-05-17T03:44:46.672Z INFO @wdio/cli:launcher: Run onPrepare hook
+
+Execution of 18 workers started at 2026-05-17T03:44:46.682Z
+
+2026-05-17T03:44:46.685Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:44:46.685Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-05-17T03:44:46.685Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-05-17T03:44:46.687Z INFO @wdio/local-runner: Start worker 0-0 with arg: run e2e/wdio.conf.js
+2026-05-17T03:44:46.721Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:44:46.721Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:44:46.721Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-0] 2026-05-17T03:44:48.244Z INFO @wdio/local-runner: Run worker command: run
+[0-0] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/altf4-close.spec.js
+[0-0] 2026-05-17T03:44:48.672Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-0] 2026-05-17T03:44:48.672Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-0] 2026-05-17T03:44:48.690Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-0] 2026-05-17T03:44:53.147Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-0] 2026-05-17T03:44:53.148Z INFO webdriver: Retrying 1/3
+[0-0] 2026-05-17T03:44:53.148Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-0] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-0] 2026-05-17T03:44:54.641Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-0] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-0] 2026-05-17T03:44:54.642Z INFO webdriver: Retrying 2/3
+[0-0] 2026-05-17T03:44:54.642Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-0] 2026-05-17T03:44:56.573Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-0] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-0] 2026-05-17T03:44:56.573Z INFO webdriver: Retrying 3/3
+[0-0] 2026-05-17T03:44:56.573Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-0] 2026-05-17T03:44:57.761Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-0] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-0] 2026-05-17T03:44:57.761Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-0] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-0]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-0]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-0]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-0]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-0]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-0]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-0]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-0]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-0] 2026-05-17T03:44:57.873Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-0] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-0]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-0]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-0]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-0]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-0]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-0]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-0]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-0] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/altf4-close.spec.js (1 retries)
+2026-05-17T03:44:58.026Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:44:58.027Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:44:58.028Z INFO @wdio/local-runner: Start worker 0-1 with arg: run e2e/wdio.conf.js
+2026-05-17T03:44:58.071Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:44:58.072Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:44:58.072Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-1] 2026-05-17T03:44:59.662Z INFO @wdio/local-runner: Run worker command: run
+[0-1] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/auto-context-switch.spec.js
+[0-1] 2026-05-17T03:45:00.100Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-1] 2026-05-17T03:45:00.101Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-1] 2026-05-17T03:45:00.114Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-1] 2026-05-17T03:45:00.954Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-1] 2026-05-17T03:45:00.955Z INFO webdriver: Retrying 1/3
+[0-1] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-1] 2026-05-17T03:45:00.955Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-1] 2026-05-17T03:45:02.327Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-1] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-1] 2026-05-17T03:45:02.327Z INFO webdriver: Retrying 2/3
+[0-1] 2026-05-17T03:45:02.328Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-1] 2026-05-17T03:45:04.213Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-1] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-1] 2026-05-17T03:45:04.214Z INFO webdriver: Retrying 3/3
+[0-1] 2026-05-17T03:45:04.214Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-1] 2026-05-17T03:45:05.069Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-1] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-1] 2026-05-17T03:45:05.070Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-1] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-1]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-1]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-1]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-1]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-1]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-1]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-1]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-1]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-1] 2026-05-17T03:45:05.168Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-1] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-1]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-1]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-1]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-1]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-1]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-1]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-1]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-1] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/auto-context-switch.spec.js (1 retries)
+2026-05-17T03:45:05.307Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:45:05.308Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:45:05.309Z INFO @wdio/local-runner: Start worker 0-2 with arg: run e2e/wdio.conf.js
+2026-05-17T03:45:05.347Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:45:05.347Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:45:05.347Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-2] 2026-05-17T03:45:06.866Z INFO @wdio/local-runner: Run worker command: run
+[0-2] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/autostart-toggle.spec.js
+[0-2] 2026-05-17T03:45:07.294Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-2] 2026-05-17T03:45:07.295Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-2] 2026-05-17T03:45:07.308Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-2] 2026-05-17T03:45:08.116Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-2] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-2] 2026-05-17T03:45:08.117Z INFO webdriver: Retrying 1/3
+[0-2] 2026-05-17T03:45:08.117Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-2] 2026-05-17T03:45:09.434Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-2] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-2] 2026-05-17T03:45:09.434Z INFO webdriver: Retrying 2/3
+[0-2] 2026-05-17T03:45:09.434Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-2] 2026-05-17T03:45:11.259Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-2] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-2] 2026-05-17T03:45:11.259Z INFO webdriver: Retrying 3/3
+[0-2] 2026-05-17T03:45:11.259Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-2] 2026-05-17T03:45:12.205Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-2] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-2] 2026-05-17T03:45:12.205Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-2] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-2]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-2]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-2]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-2]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-2]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-2]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-2]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-2]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-2] 2026-05-17T03:45:12.330Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-2] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-2]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-2]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-2]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-2]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-2]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-2]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-2]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-2] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/autostart-toggle.spec.js (1 retries)
+2026-05-17T03:45:12.476Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:45:12.476Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:45:12.477Z INFO @wdio/local-runner: Start worker 0-3 with arg: run e2e/wdio.conf.js
+2026-05-17T03:45:12.511Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:45:12.512Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:45:12.512Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-3] 2026-05-17T03:45:14.206Z INFO @wdio/local-runner: Run worker command: run
+[0-3] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/drag.spec.js
+[0-3] 2026-05-17T03:45:14.633Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-3] 2026-05-17T03:45:14.633Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-3] 2026-05-17T03:45:14.646Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-3] 2026-05-17T03:45:15.535Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-3] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-3] 2026-05-17T03:45:15.536Z INFO webdriver: Retrying 1/3
+[0-3] 2026-05-17T03:45:15.536Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-3] 2026-05-17T03:45:16.908Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-3] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-3] 2026-05-17T03:45:16.908Z INFO webdriver: Retrying 2/3
+[0-3] 2026-05-17T03:45:16.908Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-3] 2026-05-17T03:45:18.749Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-3] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-3] 2026-05-17T03:45:18.750Z INFO webdriver: Retrying 3/3
+[0-3] 2026-05-17T03:45:18.750Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-3] 2026-05-17T03:45:19.552Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-3] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-3] 2026-05-17T03:45:19.552Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-3] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-3]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-3]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-3]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-3]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-3]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-3]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-3]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-3]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-3] 2026-05-17T03:45:19.625Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-3] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-3]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-3]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-3]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-3]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-3]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-3]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-3]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-3] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/drag.spec.js (1 retries)
+2026-05-17T03:45:19.757Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:45:19.757Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:45:19.758Z INFO @wdio/local-runner: Start worker 0-4 with arg: run e2e/wdio.conf.js
+2026-05-17T03:45:19.931Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:45:19.931Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:45:19.931Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-4] 2026-05-17T03:45:21.493Z INFO @wdio/local-runner: Run worker command: run
+[0-4] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/foreground-watcher.spec.js
+[0-4] 2026-05-17T03:45:21.934Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-4] 2026-05-17T03:45:21.934Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-4] 2026-05-17T03:45:21.947Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-4] 2026-05-17T03:45:22.780Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-4] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-4] 2026-05-17T03:45:22.780Z INFO webdriver: Retrying 1/3
+[0-4] 2026-05-17T03:45:22.780Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-4] 2026-05-17T03:45:24.129Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-4] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-4] 2026-05-17T03:45:24.129Z INFO webdriver: Retrying 2/3
+[0-4] 2026-05-17T03:45:24.130Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-4] 2026-05-17T03:45:25.947Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-4] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-4] 2026-05-17T03:45:25.947Z INFO webdriver: Retrying 3/3
+[0-4] 2026-05-17T03:45:25.947Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-4] 2026-05-17T03:45:26.736Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-4] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-4] 2026-05-17T03:45:26.736Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-4] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-4]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-4]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-4]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-4]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-4]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-4]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-4]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-4]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-4] 2026-05-17T03:45:26.832Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-4] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-4]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-4]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-4]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-4]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-4]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-4]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-4]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-4] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/foreground-watcher.spec.js (1 retries)
+2026-05-17T03:45:26.963Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:45:26.964Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:45:26.965Z INFO @wdio/local-runner: Start worker 0-5 with arg: run e2e/wdio.conf.js
+2026-05-17T03:45:26.995Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:45:26.996Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:45:26.996Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-5] 2026-05-17T03:45:28.502Z INFO @wdio/local-runner: Run worker command: run
+[0-5] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/hotkey-register.spec.js
+[0-5] 2026-05-17T03:45:28.944Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-5] 2026-05-17T03:45:28.945Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-5] 2026-05-17T03:45:28.958Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-5] 2026-05-17T03:45:29.806Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-5] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-5] 2026-05-17T03:45:29.806Z INFO webdriver: Retrying 1/3
+[0-5] 2026-05-17T03:45:29.806Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-5] 2026-05-17T03:45:31.274Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-5] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-5] 2026-05-17T03:45:31.275Z INFO webdriver: Retrying 2/3
+[0-5] 2026-05-17T03:45:31.275Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-5] 2026-05-17T03:45:33.110Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-5] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-5] 2026-05-17T03:45:33.110Z INFO webdriver: Retrying 3/3
+[0-5] 2026-05-17T03:45:33.110Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-5] 2026-05-17T03:45:33.950Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-5] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-5] 2026-05-17T03:45:33.950Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-5] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-5]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-5]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-5]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-5]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-5]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-5]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-5]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-5]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-5] 2026-05-17T03:45:34.025Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-5] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-5]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-5]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-5]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-5]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-5]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-5]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-5]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-5] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/hotkey-register.spec.js (1 retries)
+2026-05-17T03:45:34.153Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:45:34.153Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:45:34.154Z INFO @wdio/local-runner: Start worker 0-6 with arg: run e2e/wdio.conf.js
+2026-05-17T03:45:34.185Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:45:34.185Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:45:34.186Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-6] 2026-05-17T03:45:35.690Z INFO @wdio/local-runner: Run worker command: run
+[0-6] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/hotkey-serialize.spec.js
+[0-6] 2026-05-17T03:45:36.113Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-6] 2026-05-17T03:45:36.114Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-6] 2026-05-17T03:45:36.126Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-6] 2026-05-17T03:45:37.067Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-6] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-6] 2026-05-17T03:45:37.067Z INFO webdriver: Retrying 1/3
+[0-6] 2026-05-17T03:45:37.068Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-6] 2026-05-17T03:45:38.515Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-6] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-6] 2026-05-17T03:45:38.515Z INFO webdriver: Retrying 2/3
+[0-6] 2026-05-17T03:45:38.515Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-6] 2026-05-17T03:45:40.303Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-6] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-6] 2026-05-17T03:45:40.304Z INFO webdriver: Retrying 3/3
+[0-6] 2026-05-17T03:45:40.304Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-6] 2026-05-17T03:45:41.113Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-6] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-6] 2026-05-17T03:45:41.113Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-6] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-6]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-6]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-6]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-6]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-6]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-6]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-6]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-6]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-6] 2026-05-17T03:45:41.192Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-6] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-6]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-6]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-6]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-6]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-6]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-6]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-6]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-6] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/hotkey-serialize.spec.js (1 retries)
+2026-05-17T03:45:41.352Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:45:41.353Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:45:41.354Z INFO @wdio/local-runner: Start worker 0-7 with arg: run e2e/wdio.conf.js
+2026-05-17T03:45:41.385Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:45:41.385Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:45:41.385Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-7] 2026-05-17T03:45:42.907Z INFO @wdio/local-runner: Run worker command: run
+[0-7] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/hotkey-trigger-list.spec.js
+[0-7] 2026-05-17T03:45:43.331Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-7] 2026-05-17T03:45:43.331Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-7] 2026-05-17T03:45:43.344Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-7] 2026-05-17T03:45:44.177Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-7] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-7] 2026-05-17T03:45:44.177Z INFO webdriver: Retrying 1/3
+[0-7] 2026-05-17T03:45:44.177Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-7] 2026-05-17T03:45:45.492Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-7] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-7] 2026-05-17T03:45:45.493Z INFO webdriver: Retrying 2/3
+[0-7] 2026-05-17T03:45:45.493Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-7] 2026-05-17T03:45:47.310Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-7] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-7] 2026-05-17T03:45:47.310Z INFO webdriver: Retrying 3/3
+[0-7] 2026-05-17T03:45:47.310Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-7] 2026-05-17T03:45:48.124Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-7] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-7] 2026-05-17T03:45:48.125Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-7] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-7]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-7]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-7]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-7]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-7]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-7]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-7]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-7]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-7] 2026-05-17T03:45:48.225Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-7] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-7]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-7]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-7]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-7]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-7]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-7]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-7]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-7] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/hotkey-trigger-list.spec.js (1 retries)
+2026-05-17T03:45:48.370Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:45:48.371Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:45:48.372Z INFO @wdio/local-runner: Start worker 0-8 with arg: run e2e/wdio.conf.js
+2026-05-17T03:45:48.405Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:45:48.405Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:45:48.405Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-8] 2026-05-17T03:45:49.916Z INFO @wdio/local-runner: Run worker command: run
+[0-8] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/multi-window.spec.js
+[0-8] 2026-05-17T03:45:50.336Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-8] 2026-05-17T03:45:50.336Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-8] 2026-05-17T03:45:50.349Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-8] 2026-05-17T03:45:51.228Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-8] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-8] 2026-05-17T03:45:51.229Z INFO webdriver: Retrying 1/3
+[0-8] 2026-05-17T03:45:51.229Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-8] 2026-05-17T03:45:52.563Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-8] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-8] 2026-05-17T03:45:52.564Z INFO webdriver: Retrying 2/3
+[0-8] 2026-05-17T03:45:52.564Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-8] 2026-05-17T03:45:54.385Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-8] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-8] 2026-05-17T03:45:54.385Z INFO webdriver: Retrying 3/3
+[0-8] 2026-05-17T03:45:54.385Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-8] 2026-05-17T03:45:55.180Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-8] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-8] 2026-05-17T03:45:55.180Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-8] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-8]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-8]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-8]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-8]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-8]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-8]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-8]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-8]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-8] 2026-05-17T03:45:55.247Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-8] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-8]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-8]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-8]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-8]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-8]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-8]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-8]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-8] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/multi-window.spec.js (1 retries)
+2026-05-17T03:45:55.375Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:45:55.376Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:45:55.377Z INFO @wdio/local-runner: Start worker 0-9 with arg: run e2e/wdio.conf.js
+2026-05-17T03:45:55.407Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:45:55.407Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:45:55.407Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-9] 2026-05-17T03:45:56.893Z INFO @wdio/local-runner: Run worker command: run
+[0-9] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/no-stray-window.spec.js
+[0-9] 2026-05-17T03:45:57.322Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-9] 2026-05-17T03:45:57.322Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-9] 2026-05-17T03:45:57.335Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-9] 2026-05-17T03:45:58.199Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-9] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-9] 2026-05-17T03:45:58.200Z INFO webdriver: Retrying 1/3
+[0-9] 2026-05-17T03:45:58.200Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-9] 2026-05-17T03:45:59.585Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-9] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-9] 2026-05-17T03:45:59.585Z INFO webdriver: Retrying 2/3
+[0-9] 2026-05-17T03:45:59.585Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-9] 2026-05-17T03:46:01.397Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-9] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-9] 2026-05-17T03:46:01.398Z INFO webdriver: Retrying 3/3
+[0-9] 2026-05-17T03:46:01.398Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-9] 2026-05-17T03:46:02.263Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-9] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-9] 2026-05-17T03:46:02.263Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-9] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-9]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-9]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-9]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-9]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-9]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-9]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-9]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-9]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-9] 2026-05-17T03:46:02.346Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-9] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-9]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-9]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-9]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-9]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-9]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-9]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-9]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-9] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/no-stray-window.spec.js (1 retries)
+2026-05-17T03:46:02.481Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:46:02.482Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:46:02.484Z INFO @wdio/local-runner: Start worker 0-10 with arg: run e2e/wdio.conf.js
+2026-05-17T03:46:02.528Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:46:02.528Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:46:02.528Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-10] 2026-05-17T03:46:04.082Z INFO @wdio/local-runner: Run worker command: run
+[0-10] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-collapse-button.spec.js
+[0-10] 2026-05-17T03:46:04.513Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-10] 2026-05-17T03:46:04.513Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-10] 2026-05-17T03:46:04.526Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-10] 2026-05-17T03:46:05.474Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-10] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-10] 2026-05-17T03:46:05.475Z INFO webdriver: Retrying 1/3
+[0-10] 2026-05-17T03:46:05.475Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-10] 2026-05-17T03:46:06.866Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-10] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-10] 2026-05-17T03:46:06.867Z INFO webdriver: Retrying 2/3
+[0-10] 2026-05-17T03:46:06.867Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-10] 2026-05-17T03:46:08.691Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-10] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-10] 2026-05-17T03:46:08.692Z INFO webdriver: Retrying 3/3
+[0-10] 2026-05-17T03:46:08.692Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-10] 2026-05-17T03:46:09.922Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-10] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-10] 2026-05-17T03:46:09.923Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-10] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-10]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-10]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-10]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-10]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-10]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-10]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-10]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-10]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-10] 2026-05-17T03:46:10.023Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-10] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-10]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-10]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-10]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-10]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-10]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-10]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-10]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-10] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-collapse-button.spec.js (1 retries)
+2026-05-17T03:46:10.155Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:46:10.156Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:46:10.157Z INFO @wdio/local-runner: Start worker 0-11 with arg: run e2e/wdio.conf.js
+2026-05-17T03:46:10.191Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:46:10.191Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:46:10.191Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-11] 2026-05-17T03:46:11.851Z INFO @wdio/local-runner: Run worker command: run
+[0-11] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-content-persistence.spec.js
+[0-11] 2026-05-17T03:46:12.290Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-11] 2026-05-17T03:46:12.290Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-11] 2026-05-17T03:46:12.306Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-11] 2026-05-17T03:46:13.148Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-11] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-11] 2026-05-17T03:46:13.148Z INFO webdriver: Retrying 1/3
+[0-11] 2026-05-17T03:46:13.149Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-11] 2026-05-17T03:46:14.562Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-11] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-11] 2026-05-17T03:46:14.563Z INFO webdriver: Retrying 2/3
+[0-11] 2026-05-17T03:46:14.563Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-11] 2026-05-17T03:46:16.418Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-11] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-11] 2026-05-17T03:46:16.418Z INFO webdriver: Retrying 3/3
+[0-11] 2026-05-17T03:46:16.419Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-11] 2026-05-17T03:46:17.246Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-11] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-11] 2026-05-17T03:46:17.247Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-11] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-11]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-11]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-11]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-11]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-11]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-11]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-11]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-11]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-11] 2026-05-17T03:46:17.333Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-11] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-11]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-11]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-11]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-11]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-11]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-11]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-11]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-11] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-content-persistence.spec.js (1 retries)
+2026-05-17T03:46:17.462Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:46:17.463Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:46:17.464Z INFO @wdio/local-runner: Start worker 0-12 with arg: run e2e/wdio.conf.js
+2026-05-17T03:46:17.500Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:46:17.500Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:46:17.500Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-12] 2026-05-17T03:46:19.136Z INFO @wdio/local-runner: Run worker command: run
+[0-12] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-deletion.spec.js
+[0-12] 2026-05-17T03:46:19.578Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-12] 2026-05-17T03:46:19.578Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-12] 2026-05-17T03:46:19.592Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-12] 2026-05-17T03:46:20.482Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-12] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-12] 2026-05-17T03:46:20.482Z INFO webdriver: Retrying 1/3
+[0-12] 2026-05-17T03:46:20.482Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-12] 2026-05-17T03:46:21.841Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-12] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-12] 2026-05-17T03:46:21.841Z INFO webdriver: Retrying 2/3
+[0-12] 2026-05-17T03:46:21.842Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-12] 2026-05-17T03:46:23.680Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-12] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-12] 2026-05-17T03:46:23.681Z INFO webdriver: Retrying 3/3
+[0-12] 2026-05-17T03:46:23.681Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-12] 2026-05-17T03:46:24.651Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-12] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-12] 2026-05-17T03:46:24.651Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-12] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-12]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-12]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-12]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-12]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-12]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-12]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-12]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-12]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-12] 2026-05-17T03:46:24.752Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-12] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-12]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-12]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-12]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-12]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-12]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-12]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-12]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-12] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-deletion.spec.js (1 retries)
+2026-05-17T03:46:24.896Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:46:24.896Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:46:24.897Z INFO @wdio/local-runner: Start worker 0-13 with arg: run e2e/wdio.conf.js
+2026-05-17T03:46:24.930Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:46:24.930Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:46:24.931Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-13] 2026-05-17T03:46:26.527Z INFO @wdio/local-runner: Run worker command: run
+[0-13] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-geometry.spec.js
+[0-13] 2026-05-17T03:46:26.977Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-13] 2026-05-17T03:46:26.978Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-13] 2026-05-17T03:46:26.992Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-13] 2026-05-17T03:46:27.848Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-13] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-13] 2026-05-17T03:46:27.848Z INFO webdriver: Retrying 1/3
+[0-13] 2026-05-17T03:46:27.848Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-13] 2026-05-17T03:46:29.205Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-13] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-13] 2026-05-17T03:46:29.205Z INFO webdriver: Retrying 2/3
+[0-13] 2026-05-17T03:46:29.206Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-13] 2026-05-17T03:46:31.091Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-13] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-13] 2026-05-17T03:46:31.092Z INFO webdriver: Retrying 3/3
+[0-13] 2026-05-17T03:46:31.092Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-13] 2026-05-17T03:46:31.984Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-13] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-13] 2026-05-17T03:46:31.984Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-13] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-13]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-13]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-13]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-13]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-13]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-13]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-13]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-13]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-13] 2026-05-17T03:46:32.067Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-13] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-13]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-13]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-13]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-13]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-13]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-13]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-13]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-13] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/note-geometry.spec.js (1 retries)
+2026-05-17T03:46:32.200Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:46:32.201Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:46:32.202Z INFO @wdio/local-runner: Start worker 0-14 with arg: run e2e/wdio.conf.js
+2026-05-17T03:46:32.239Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:46:32.239Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:46:32.239Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-14] 2026-05-17T03:46:33.897Z INFO @wdio/local-runner: Run worker command: run
+[0-14] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/passthrough-chrome.spec.js
+[0-14] 2026-05-17T03:46:34.341Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-14] 2026-05-17T03:46:34.341Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-14] 2026-05-17T03:46:34.355Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-14] 2026-05-17T03:46:35.282Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-14] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-14] 2026-05-17T03:46:35.282Z INFO webdriver: Retrying 1/3
+[0-14] 2026-05-17T03:46:35.283Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-14] 2026-05-17T03:46:36.643Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-14] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-14] 2026-05-17T03:46:36.644Z INFO webdriver: Retrying 2/3
+[0-14] 2026-05-17T03:46:36.644Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-14] 2026-05-17T03:46:38.493Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-14] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-14] 2026-05-17T03:46:38.493Z INFO webdriver: Retrying 3/3
+[0-14] 2026-05-17T03:46:38.493Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-14] 2026-05-17T03:46:39.336Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-14] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-14] 2026-05-17T03:46:39.337Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-14] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-14]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-14]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-14]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-14]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-14]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-14]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-14]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-14]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-14] 2026-05-17T03:46:39.442Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-14] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-14]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-14]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-14]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-14]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-14]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-14]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-14]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-14] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/passthrough-chrome.spec.js (1 retries)
+2026-05-17T03:46:39.587Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:46:39.587Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:46:39.588Z INFO @wdio/local-runner: Start worker 0-15 with arg: run e2e/wdio.conf.js
+2026-05-17T03:46:39.631Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:46:39.631Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:46:39.631Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-15] 2026-05-17T03:46:41.233Z INFO @wdio/local-runner: Run worker command: run
+[0-15] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/smoke.spec.js
+[0-15] 2026-05-17T03:46:41.681Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-15] 2026-05-17T03:46:41.681Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-15] 2026-05-17T03:46:41.695Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-15] 2026-05-17T03:46:42.562Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-15] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-15] 2026-05-17T03:46:42.562Z INFO webdriver: Retrying 1/3
+[0-15] 2026-05-17T03:46:42.562Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-15] 2026-05-17T03:46:43.942Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-15] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-15] 2026-05-17T03:46:43.943Z INFO webdriver: Retrying 2/3
+[0-15] 2026-05-17T03:46:43.943Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-15] 2026-05-17T03:46:45.790Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-15] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-15] 2026-05-17T03:46:45.791Z INFO webdriver: Retrying 3/3
+[0-15] 2026-05-17T03:46:45.791Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-15] 2026-05-17T03:46:46.654Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-15] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-15] 2026-05-17T03:46:46.654Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-15] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-15]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-15]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-15]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-15]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-15]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-15]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-15]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-15]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-15] 2026-05-17T03:46:46.759Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-15] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-15]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-15]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-15]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-15]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-15]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-15]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-15]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-15] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/smoke.spec.js (1 retries)
+2026-05-17T03:46:46.893Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:46:46.894Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:46:46.895Z INFO @wdio/local-runner: Start worker 0-16 with arg: run e2e/wdio.conf.js
+2026-05-17T03:46:46.930Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:46:46.930Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:46:46.930Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-16] 2026-05-17T03:46:48.530Z INFO @wdio/local-runner: Run worker command: run
+[0-16] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/system-windows-drag.spec.js
+[0-16] 2026-05-17T03:46:48.973Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-16] 2026-05-17T03:46:48.973Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-16] 2026-05-17T03:46:48.986Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-16] 2026-05-17T03:46:49.847Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-16] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-16] 2026-05-17T03:46:49.847Z INFO webdriver: Retrying 1/3
+[0-16] 2026-05-17T03:46:49.847Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-16] 2026-05-17T03:46:51.262Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-16] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-16] 2026-05-17T03:46:51.262Z INFO webdriver: Retrying 2/3
+[0-16] 2026-05-17T03:46:51.263Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-16] 2026-05-17T03:46:53.170Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-16] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-16] 2026-05-17T03:46:53.170Z INFO webdriver: Retrying 3/3
+[0-16] 2026-05-17T03:46:53.170Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-16] 2026-05-17T03:46:54.032Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-16] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-16] 2026-05-17T03:46:54.033Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-16] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-16]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-16]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-16]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-16]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-16]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-16]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-16]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-16]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-16] 2026-05-17T03:46:54.105Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-16] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-16]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-16]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-16]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-16]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-16]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-16]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-16]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-16] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/system-windows-drag.spec.js (1 retries)
+2026-05-17T03:46:54.246Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-05-17T03:46:54.246Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-05-17T03:46:54.247Z INFO @wdio/local-runner: Start worker 0-17 with arg: run e2e/wdio.conf.js
+2026-05-17T03:46:54.281Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-05-17T03:46:54.281Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-05-17T03:46:54.281Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+[0-17] 2026-05-17T03:46:55.857Z INFO @wdio/local-runner: Run worker command: run
+[0-17] RUNNING in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/tray-setup.spec.js
+[0-17] 2026-05-17T03:46:56.297Z INFO webdriver: Initiate new session using the WebDriver protocol
+[0-17] 2026-05-17T03:46:56.298Z INFO @wdio/utils: Connecting to existing driver at http://127.0.0.1:4444/
+[0-17] 2026-05-17T03:46:56.312Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-17] 2026-05-17T03:46:57.187Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-17] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-17] 2026-05-17T03:46:57.188Z INFO webdriver: Retrying 1/3
+[0-17] 2026-05-17T03:46:57.188Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-17] 2026-05-17T03:46:58.603Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-17] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-17] 2026-05-17T03:46:58.603Z INFO webdriver: Retrying 2/3
+[0-17] 2026-05-17T03:46:58.604Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-17] 2026-05-17T03:47:00.456Z WARN webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-17] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-17] 2026-05-17T03:47:00.456Z INFO webdriver: Retrying 3/3
+[0-17] 2026-05-17T03:47:00.456Z INFO webdriver: [POST] http://127.0.0.1:4444/session
+[0-17] 2026-05-17T03:47:01.413Z ERROR webdriver: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-17] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-17] 2026-05-17T03:47:01.413Z ERROR webdriver: session not created: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-17] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-17]     at FetchRequest._request (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:2008:19)
+[0-17]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-17]     at async startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1110:16)
+[0-17]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-17]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-17]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-17]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-17]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-17] 2026-05-17T03:47:01.518Z ERROR @wdio/runner: Error: WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+[0-17] Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[0-17]     at startWebDriverSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1114:11)
+[0-17]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[0-17]     at async _WebDriver.newSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/webdriver/build/node.js:1532:41)
+[0-17]     at async remote (D:\a\waypoint\waypoint\waypoint\node_modules\webdriverio\build\node.js:9848:20)
+[0-17]     at async Runner._startSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:828:23)
+[0-17]     at async Runner._initSession (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:802:22)
+[0-17]     at async Runner.run (file:///D:/a/waypoint/waypoint/waypoint/node_modules/@wdio/runner/build/index.js:704:16)
+[0-17] FAILED in undefined - file:///D:/a/waypoint/waypoint/waypoint/e2e/specs/tray-setup.spec.js (1 retries)
+2026-05-17T03:47:01.664Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[(unknown) #0-0] Running: on (unknown)
+[(unknown) #0-0]
+[(unknown) #0-0] ✖ Failed to create a session:
+[(unknown) #0-0] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-0]
+------------------------------------------------------------------
+[(unknown) #0-1] Running: on (unknown)
+[(unknown) #0-1]
+[(unknown) #0-1] ✖ Failed to create a session:
+[(unknown) #0-1] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-1]
+------------------------------------------------------------------
+[(unknown) #0-2] Running: on (unknown)
+[(unknown) #0-2]
+[(unknown) #0-2] ✖ Failed to create a session:
+[(unknown) #0-2] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-2]
+------------------------------------------------------------------
+[(unknown) #0-3] Running: on (unknown)
+[(unknown) #0-3]
+[(unknown) #0-3] ✖ Failed to create a session:
+[(unknown) #0-3] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-3]
+------------------------------------------------------------------
+[(unknown) #0-4] Running: on (unknown)
+[(unknown) #0-4]
+[(unknown) #0-4] ✖ Failed to create a session:
+[(unknown) #0-4] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-4]
+------------------------------------------------------------------
+[(unknown) #0-5] Running: on (unknown)
+[(unknown) #0-5]
+[(unknown) #0-5] ✖ Failed to create a session:
+[(unknown) #0-5] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-5]
+------------------------------------------------------------------
+[(unknown) #0-6] Running: on (unknown)
+[(unknown) #0-6]
+[(unknown) #0-6] ✖ Failed to create a session:
+[(unknown) #0-6] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-6]
+------------------------------------------------------------------
+[(unknown) #0-7] Running: on (unknown)
+[(unknown) #0-7]
+[(unknown) #0-7] ✖ Failed to create a session:
+[(unknown) #0-7] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-7]
+------------------------------------------------------------------
+[(unknown) #0-8] Running: on (unknown)
+[(unknown) #0-8]
+[(unknown) #0-8] ✖ Failed to create a session:
+[(unknown) #0-8] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-8]
+------------------------------------------------------------------
+[(unknown) #0-9] Running: on (unknown)
+[(unknown) #0-9]
+[(unknown) #0-9] ✖ Failed to create a session:
+[(unknown) #0-9] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-9]
+------------------------------------------------------------------
+[(unknown) #0-10] Running: on (unknown)
+[(unknown) #0-10]
+[(unknown) #0-10] ✖ Failed to create a session:
+[(unknown) #0-10] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-10]
+------------------------------------------------------------------
+[(unknown) #0-11] Running: on (unknown)
+[(unknown) #0-11]
+[(unknown) #0-11] ✖ Failed to create a session:
+[(unknown) #0-11] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-11]
+------------------------------------------------------------------
+[(unknown) #0-12] Running: on (unknown)
+[(unknown) #0-12]
+[(unknown) #0-12] ✖ Failed to create a session:
+[(unknown) #0-12] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-12]
+------------------------------------------------------------------
+[(unknown) #0-13] Running: on (unknown)
+[(unknown) #0-13]
+[(unknown) #0-13] ✖ Failed to create a session:
+[(unknown) #0-13] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-13]
+------------------------------------------------------------------
+[(unknown) #0-14] Running: on (unknown)
+[(unknown) #0-14]
+[(unknown) #0-14] ✖ Failed to create a session:
+[(unknown) #0-14] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-14]
+------------------------------------------------------------------
+[(unknown) #0-15] Running: on (unknown)
+[(unknown) #0-15]
+[(unknown) #0-15] ✖ Failed to create a session:
+[(unknown) #0-15] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-15]
+------------------------------------------------------------------
+[(unknown) #0-16] Running: on (unknown)
+[(unknown) #0-16]
+[(unknown) #0-16] ✖ Failed to create a session:
+[(unknown) #0-16] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-16]
+------------------------------------------------------------------
+[(unknown) #0-17] Running: on (unknown)
+[(unknown) #0-17]
+[(unknown) #0-17] ✖ Failed to create a session:
+[(unknown) #0-17] WebDriverError: session not created: This version of Microsoft Edge WebDriver only supports Microsoft Edge version 148
+Current browser version is 147.0.3912.98 with binary path D:\a\waypoint\waypoint\waypoint\src-tauri\target\release\waypoint.exe when running "http://127.0.0.1:4444/session" with method "POST"
+[(unknown) #0-17]
+
+
+Spec Files:	 0 passed, 18 failed, 18 total (100% completed) in 00:02:14  
+
+2026-05-17T03:47:01.666Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-05-17T03:47:01.922Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully
+2026-05-17T03:47:01.922Z INFO @wdio/local-runner: shutting down
+2026-05-17T03:47:01.922Z INFO @wdio/cli:launcher: Run onComplete hook

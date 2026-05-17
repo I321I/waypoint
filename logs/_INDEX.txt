@@ -1,0 +1,10 @@
+total 164
+drwxr-xr-x 1 runneradmin 197121      0 May 17 03:47 .
+drwxr-xr-x 1 runneradmin 197121      0 May 17 03:47 ..
+-rw-r--r-- 1 runneradmin 197121   2373 May 17 03:47 01-tauri-driver.log
+-rw-r--r-- 1 runneradmin 197121   1270 May 17 03:47 02-npm-install.log
+-rw-r--r-- 1 runneradmin 197121  24778 May 17 03:47 03-build-frontend.log
+-rw-r--r-- 1 runneradmin 197121   3371 May 17 03:47 04-tauri-build.log
+-rw-r--r-- 1 runneradmin 197121   1670 May 17 03:44 05-msedgedriver-setup.log
+-rw-r--r-- 1 runneradmin 197121      0 May 17 03:47 _INDEX.txt
+-rw-r--r-- 1 runneradmin 197121 111499 May 17 03:47 wdio-full.log

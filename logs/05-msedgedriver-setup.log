@@ -1,0 +1,35 @@
+**********************
+PowerShell transcript start
+Start time: 20260517034443
+Username: runnervmp4gaq\runneradmin
+RunAs User: runnervmp4gaq\runneradmin
+Configuration Name: 
+Machine: runnervmp4gaq (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -command . 'D:\a\_temp\b5890797-5d6b-495b-afe1-6ad997c8aaf0.ps1'
+Process ID: 9832
+PSVersion: 7.4.15
+PSEdition: Core
+GitCommitId: 7.4.15
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is logs\05-msedgedriver-setup.log
+Edge browser version: 148.0.3967.54 (major=148)
+PS>TerminatingError(Invoke-WebRequest): "No such host is known."
+LATEST_RELEASE query failed on https://msedgedriver.azureedge.net : No such host is known.
+LATEST_RELEASE query failed on https://msedgedriver.microsoft.com : Method invocation failed because [System.Byte] does not contain a method named 'Trim'.
+Trying https://msedgedriver.azureedge.net/148.0.3967.54/edgedriver_win64.zip
+PS>TerminatingError(Invoke-WebRequest): "No such host is known."
+  failed: No such host is known.
+Trying https://msedgedriver.microsoft.com/148.0.3967.54/edgedriver_win64.zip
+msedgedriver at C:\Users\runneradmin\AppData\Local\Temp\edgedriver\msedgedriver.exe
+Downloaded driver: Microsoft Edge WebDriver 148.0.3967.54 (c994e204927e169f407ef8cd1bd301774deefc6e)
+Edge browser was: 148.0.3967.54
+**********************
+PowerShell transcript end
+End time: 20260517034444
+**********************

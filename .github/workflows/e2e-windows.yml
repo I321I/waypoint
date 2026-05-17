@@ -65,25 +65,57 @@ jobs:
       - name: Download msedgedriver matching installed Edge version
         # runner 內建的 msedgedriver (C:\SeleniumWebDrivers) 跟 Edge browser 各自更新，
         # 經常不對版（v0.2.21~v0.2.23 e2e-windows 連續紅，driver 148 / browser 147）。
-        # 改成偵測 Edge 真實版本後從 Microsoft CDN 抓對應 driver。
+        # 改成偵測 Edge 真實版本後從 Microsoft CDN 抓對應 driver。多個 URL fallback：
+        # - 精確版本（msedgedriver.azureedge.net）
+        # - LATEST_RELEASE_<major>_WINDOWS（同主版本下最新）
+        # - 同樣兩種 URL 用 microsoft.com domain（azureedge.net 在 2026 部分區域 deprecated）
         shell: pwsh
         run: |
+          $ErrorActionPreference = 'Stop'
           $edgePath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
           if (-not (Test-Path $edgePath)) {
             $edgePath = "C:\Program Files\Microsoft\Edge\Application\msedge.exe"
           }
-          if (-not (Test-Path $edgePath)) { throw "msedge.exe 找不到" }
+          if (-not (Test-Path $edgePath)) { throw "msedge.exe not found" }
           $version = (Get-Item $edgePath).VersionInfo.FileVersion
-          Write-Host "Edge browser version: $version"
-          $url = "https://msedgedriver.azureedge.net/$version/edgedriver_win64.zip"
+          $major = $version.Split('.')[0]
+          Write-Host "Edge browser version: $version (major=$major)"
+
+          # 蒐集 candidate URLs（順序 = 嘗試順序）
+          $urls = @(
+            "https://msedgedriver.azureedge.net/$version/edgedriver_win64.zip",
+            "https://msedgedriver.microsoft.com/$version/edgedriver_win64.zip"
+          )
+          foreach ($host_url in @('https://msedgedriver.azureedge.net','https://msedgedriver.microsoft.com')) {
+            try {
+              $latestVer = (Invoke-WebRequest -Uri "$host_url/LATEST_RELEASE_${major}_WINDOWS" -UseBasicParsing -TimeoutSec 30).Content.Trim() -replace "`0",""
+              Write-Host "LATEST_RELEASE_${major}_WINDOWS from $host_url => $latestVer"
+              $urls += "$host_url/$latestVer/edgedriver_win64.zip"
+            } catch {
+              Write-Host "LATEST_RELEASE query failed on $host_url : $_"
+            }
+          }
+
           $zip = "$env:TEMP\edgedriver.zip"
           $dest = "$env:TEMP\edgedriver"
-          Write-Host "Downloading $url"
-          Invoke-WebRequest -Uri $url -OutFile $zip
+          $ok = $false
+          foreach ($url in $urls) {
+            Write-Host "Trying $url"
+            try {
+              Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing -TimeoutSec 60
+              if ((Get-Item $zip).Length -lt 1024) { throw "downloaded file too small (likely error page)" }
+              $ok = $true
+              break
+            } catch {
+              Write-Host "  failed: $_"
+            }
+          }
+          if (-not $ok) { throw "All msedgedriver download URLs failed" }
+
           if (Test-Path $dest) { Remove-Item -Recurse -Force $dest }
           Expand-Archive -Path $zip -DestinationPath $dest -Force
           $driver = Get-ChildItem -Path $dest -Recurse -Filter msedgedriver.exe | Select-Object -First 1
-          if (-not $driver) { throw "msedgedriver.exe 解壓後找不到" }
+          if (-not $driver) { throw "msedgedriver.exe not in archive" }
           Add-Content $env:GITHUB_PATH $driver.DirectoryName
           Write-Host "msedgedriver at $($driver.FullName)"
           & $driver.FullName --version

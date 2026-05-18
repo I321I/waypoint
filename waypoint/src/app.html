@@ -5,18 +5,21 @@
     <link rel="icon" href="%sveltekit.assets%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Waypoint</title>
-    <!-- 在 head 階段先決定 body bg：note 視窗（webview 已 transparent）給透明，
-         其他視窗給深色防白屏。放 body 內 inline style 太晚會閃一下深色。 -->
-    <style id="initial-bg">body{background:#1e1e1e;color:#cccccc}</style>
+    <!-- 在 head 階段就在 <html> 上加 view-note class，給 note 視窗用，
+         app.css 會根據這個 class 套透明背景，避免新 webview 開瞬間閃一下深色。
+         注意：純 inline <style> 沒辦法贏 app.css 的 body{background:var(--bg-primary)}
+         （CSS specificity 一樣，後載入的 stylesheet 蓋掉），所以走 class 路線。 -->
+    <style>html.view-note,html.view-note body{background:transparent !important}</style>
     <script>
       if (location.hash.indexOf('view=note') !== -1) {
-        var s = document.getElementById('initial-bg');
-        if (s) s.textContent = 'body{background:transparent;color:#cccccc}';
+        document.documentElement.classList.add('view-note');
       }
     </script>
     %sveltekit.head%
   </head>
-  <body data-sveltekit-preload-data="hover">
+  <!-- 非 note 視窗 (list/help/settings) 需要深色 bg 避免 webview 白屏；note 視窗
+       由 head 的 html.view-note 規則覆蓋成 transparent -->
+  <body data-sveltekit-preload-data="hover" style="background:#1e1e1e;color:#cccccc">
     <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>

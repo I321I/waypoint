@@ -34,6 +34,7 @@
   let unlistenMove: UnlistenFn | null = null;
   let unlistenResize: UnlistenFn | null = null;
   let unlistenFocusEnd: UnlistenFn | null = null;
+  let unlistenWinFocus: UnlistenFn | null = null;
   let geometrySaveTimer: ReturnType<typeof setTimeout> | null = null;
   let saveGeometry: () => Promise<void> = async () => {};
 
@@ -114,6 +115,14 @@
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (ed as any)?.commands?.focus?.("end");
     }).catch(() => null);
+
+    // 視窗取得焦點時也標記為 last-edited（user 用滑鼠點到的筆記應該被當成「最後互動」，
+    // 不只是有打字的才算；解穿透時的自動 focus 對象才符合預期）
+    unlistenWinFocus = await win.onFocusChanged(({ payload: focused }) => {
+      if (focused) {
+        passthroughApi.markNoteEdited(noteId).catch(() => {});
+      }
+    }).catch(() => null);
   });
 
   onDestroy(() => {
@@ -125,6 +134,7 @@
     unlistenMove?.();
     unlistenResize?.();
     unlistenFocusEnd?.();
+    unlistenWinFocus?.();
     if (geometrySaveTimer) clearTimeout(geometrySaveTimer);
   });
 

@@ -81,21 +81,28 @@ pub fn cmd_toggle_passthrough_global(app: AppHandle) -> Result<(), String> {
     for l in labels {
         cmd_set_passthrough(app.clone(), l, target)?;
     }
-    // 離開穿透時：把焦點 + 游標放到當前 context 最後編輯的筆記末，方便 user 接著打字
+    // 離開穿透時：把焦點 + 游標放到當前 context 最後編輯的筆記末，方便 user 接著打字。
+    // 在 spawned thread 內 delay 200ms 才執行，讓上面的 open_list_window + set_focus
+    // 跟 cmd_set_passthrough 全部 settle 完；否則 Linux KDE 上 list 的 set_focus 會贏過
+    // 我們對 note 的 set_focus，導致 list 拿走焦點，user 打字進不去筆記。
     if !target {
         let active_ctx = state.active_context_id.lock().unwrap().clone();
         let key = active_ctx.unwrap_or_else(|| "_global_only_".to_string());
         let last_note = state.last_edited_per_context.lock().unwrap().get(&key).cloned();
         if let Some(note_id) = last_note {
-            let label = format!("note-{note_id}");
-            if let Some(win) = app.get_webview_window(&label) {
-                let _ = win.show();
-                // raise 同 open_note_window：toggle always_on_top + set_focus 強制 raise
-                let _ = win.set_always_on_top(true);
-                let _ = win.set_focus();
-            }
-            // NoteWindow listen 並比對 note_id；payload 帶 String，前端比對
-            let _ = app.emit("waypoint://focus-and-cursor-end", &note_id);
+            let app_clone = app.clone();
+            std::thread::spawn(move || {
+                std::thread::sleep(std::time::Duration::from_millis(200));
+                let label = format!("note-{note_id}");
+                if let Some(win) = app_clone.get_webview_window(&label) {
+                    let _ = win.show();
+                    // raise 同 open_note_window：toggle always_on_top + set_focus 強制 raise
+                    let _ = win.set_always_on_top(true);
+                    let _ = win.set_focus();
+                }
+                // NoteWindow listen 並比對 note_id；payload 帶 String，前端比對
+                let _ = app_clone.emit("waypoint://focus-and-cursor-end", &note_id);
+            });
         }
     }
     Ok(())

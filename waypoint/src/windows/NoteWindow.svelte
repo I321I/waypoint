@@ -301,7 +301,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    flex: 1;
+    /* 與 .opacity-bar 一起 share titlebar 剩餘寬度，但 title 有 2x 權重；
+       太短 title（如 "123"）不會被 slider 擠到只剩 50%。 */
+    flex: 2 1 auto;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     pointer-events: none;  /* 讓 mousedown 打到 .titlebar 本體而非 span */
   }
   .titlebar-buttons { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }

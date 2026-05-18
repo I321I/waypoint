@@ -34,17 +34,32 @@
     min-width: 60px;
     appearance: none;
     -webkit-appearance: none;
-    height: 4px;
+    height: 12px;
     margin: 0;
-    background: var(--border);
-    border-radius: 2px;
+    padding: 0;
+    background: transparent;
+    border: none;
     outline: none;
     accent-color: var(--accent);
+  }
+  /* 用 ::runnable-track 自定軌道，避免 Linux WebKitGTK 預設留內距讓 thumb 在 100% 也不貼右 */
+  .slider::-webkit-slider-runnable-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    width: 100%;
+  }
+  .slider::-moz-range-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    width: 100%;
   }
   .slider::-webkit-slider-thumb {
     appearance: none;
     -webkit-appearance: none;
     width: 12px; height: 12px;
+    margin-top: -4px;   /* 把 thumb 中心對齊 4px 軌道中線 */
     border-radius: 50%;
     background: var(--accent);
     border: none;

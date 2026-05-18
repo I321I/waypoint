@@ -14,6 +14,7 @@
   stroke-linecap="round"
   stroke-linejoin="round"
   aria-hidden="true"
+  style="width: {size}px; height: {size}px; flex: none; min-width: {size}px; min-height: {size}px;"
 >
   <circle cx="12" cy="12" r="9" />
   <path d="M3 12h18" />

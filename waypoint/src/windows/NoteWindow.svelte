@@ -24,6 +24,7 @@
   let menuX = 0;
   let menuY = 0;
   let saveTimeout: ReturnType<typeof setTimeout>;
+  let lastSelectionPos: number | null = null;
   let passthrough = false;
   let transparentIncludesText = true;
   let unlistenPassthrough: UnlistenFn | null = null;
@@ -108,12 +109,26 @@
     unlistenMove = await win.onMoved(scheduleGeometrySave).catch(() => null);
     unlistenResize = await win.onResized(scheduleGeometrySave).catch(() => null);
 
-    // 穿透模式關閉時，Rust 端會 emit 帶 last-edited noteId；比對中就 focus 並把游標放到末
+    // Rust 端建構 webview 時 visible(false)，等 HTML/CSS ready 才顯示，避免 Linux
+    // WebKitGTK 透明 webview 在 paint 完成前露 OS 預設視窗 bg 的深色閃爍。
+    win.show().catch(() => {});
+    win.setAlwaysOnTop(true).catch(() => {});
+    win.setFocus().catch(() => {});
+
+    // 穿透模式關閉時，Rust 端會 emit 帶 last-edited noteId；比對中就 focus 並把游標放回
+    // 進入穿透前的最後位置（user 進入穿透前在 3 和 4 中間點過，回來就回到 3 和 4 中間）。
+    // 若沒記錄過位置（剛開沒互動過）就 fallback 到末。
     unlistenFocusEnd = await listen<string>("waypoint://focus-and-cursor-end", (event) => {
       if (event.payload !== noteId) return;
       const ed = editorRef?.getEditor();
+      if (!ed) return;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (ed as any)?.commands?.focus?.("end");
+      const focus = (ed as any).commands?.focus;
+      if (lastSelectionPos != null) {
+        focus?.(lastSelectionPos);
+      } else {
+        focus?.("end");
+      }
     }).catch(() => null);
 
     // 視窗取得焦點時也標記為 last-edited（user 用滑鼠點到的筆記應該被當成「最後互動」，
@@ -165,6 +180,13 @@
     body = e.detail.markdown;
     scheduleSave();
     // 標記本 note 為當前 context 最後編輯 → 穿透模式關閉時自動 focus 這裡
+    passthroughApi.markNoteEdited(noteId).catch(() => {});
+  }
+
+  function handleSelectionUpdate(e: CustomEvent<{ from: number; to: number }>) {
+    // 記住游標位置：穿透模式關閉時，focus-and-cursor-end 會用它把游標放回原處
+    lastSelectionPos = e.detail.from;
+    // selection 變化也算「互動」 → 標記為 last-edited，含「在某位置點一下」這種沒打字的場景
     passthroughApi.markNoteEdited(noteId).catch(() => {});
   }
 
@@ -267,6 +289,7 @@
         content={body}
         fontSize={note.settings.fontSize}
         on:update={handleContentUpdate}
+        on:selection={handleSelectionUpdate}
       />
       {#if menuOpen}
         <ContextMenu

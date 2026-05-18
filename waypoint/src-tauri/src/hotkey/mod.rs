@@ -302,7 +302,12 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .decorations(false)
         .always_on_top(true)
         .skip_taskbar(true)
-        .transparent(true);
+        .transparent(true)
+        // Linux/WebKitGTK 上 transparent webview 在 HTML 載入完成前會先顯示一格深色
+        // OS 預設視窗 bg，造成「開新筆記閃一下深色」。建構時 visible(false)，由
+        // frontend NoteWindow.onMount 在 note 載完才呼叫 win.show() + setFocus()，
+        // 此時 HTML body bg=transparent 已生效。
+        .visible(false);
 
     // 套用 settings.window_bounds（item 7：每次 move/resize 即時記憶）
     if let Ok(note) = crate::storage::notes::read_note(context_id, note_id) {

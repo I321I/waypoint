@@ -14,7 +14,10 @@
   export let content: string = "";
   export let fontSize: number = 14;
 
-  const dispatch = createEventDispatcher<{ update: { markdown: string } }>();
+  const dispatch = createEventDispatcher<{
+    update: { markdown: string };
+    selection: { from: number; to: number };
+  }>();
 
   let element: HTMLElement;
   let editor: Editor;
@@ -50,6 +53,10 @@
         // tiptap v3：API 從 storage.markdown.getMarkdown 改為 editor.getMarkdown()
         const markdown = (editor as any).getMarkdown?.() ?? "";
         dispatch("update", { markdown });
+      },
+      onSelectionUpdate({ editor }) {
+        const sel = editor.state.selection;
+        dispatch("selection", { from: sel.from, to: sel.to });
       },
     });
 

@@ -42,6 +42,14 @@
   onMount(async () => {
     // 同步加上 class（不等 await），避免閃爍
     document.body.classList.add('note-view');
+    // Rust 端建構 webview 時 visible(false)，避免 Linux WebKitGTK 透明 webview 在
+    // HTML/CSS paint 完成前露 OS 預設視窗 bg；JS 進到 onMount 表示 HTML+CSS 已 parse
+    // 完成，body bg 已是 transparent，這時 show 就不會閃。**必須在所有 await 之前**，
+    // 否則 E2E start_dragging 會在視窗還沒可見時呼叫導致 GTK assertion 失敗。
+    const winEarly = getCurrentWindow();
+    winEarly.show().catch(() => {});
+    winEarly.setAlwaysOnTop(true).catch(() => {});
+    winEarly.setFocus().catch(() => {});
     note = await notesApi.read(contextId, noteId);
     if (note) {
       passthrough = note.settings.passthrough ?? false;
@@ -108,12 +116,6 @@
     };
     unlistenMove = await win.onMoved(scheduleGeometrySave).catch(() => null);
     unlistenResize = await win.onResized(scheduleGeometrySave).catch(() => null);
-
-    // Rust 端建構 webview 時 visible(false)，等 HTML/CSS ready 才顯示，避免 Linux
-    // WebKitGTK 透明 webview 在 paint 完成前露 OS 預設視窗 bg 的深色閃爍。
-    win.show().catch(() => {});
-    win.setAlwaysOnTop(true).catch(() => {});
-    win.setFocus().catch(() => {});
 
     // 穿透模式關閉時，Rust 端會 emit 帶 last-edited noteId；比對中就 focus 並把游標放回
     // 進入穿透前的最後位置（user 進入穿透前在 3 和 4 中間點過，回來就回到 3 和 4 中間）。

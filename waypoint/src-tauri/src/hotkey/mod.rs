@@ -302,12 +302,13 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .decorations(false)
         .always_on_top(true)
         .skip_taskbar(true)
-        .transparent(true)
-        // Linux/WebKitGTK 上 transparent webview 在 HTML 載入完成前會先顯示一格深色
-        // OS 預設視窗 bg，造成「開新筆記閃一下深色」。建構時 visible(false)，由
-        // frontend NoteWindow.onMount 在 note 載完才呼叫 win.show() + setFocus()，
-        // 此時 HTML body bg=transparent 已生效。
-        .visible(false);
+        .transparent(true);
+        // 註：曾試過 .visible(false) + frontend onMount show 來防 Linux/WebKitGTK
+        // 透明 webview 在 paint 完成前露 OS 預設視窗 bg 的閃爍，但 GTK 對 hidden
+        // window 的 set_position/start_dragging 行為不一致（drag E2E test 會失敗：
+        // hidden window 的位置不會被 GTK 真正套用），所以走 app.html 內 head
+        // <style> + html.view-note class 那條路線即可。Linux 上仍可能殘留極短閃爍，
+        // 屬已知 WebKitGTK 限制。
 
     // 套用 settings.window_bounds（item 7：每次 move/resize 即時記憶）
     if let Ok(note) = crate::storage::notes::read_note(context_id, note_id) {

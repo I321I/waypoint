@@ -42,14 +42,6 @@
   onMount(async () => {
     // 同步加上 class（不等 await），避免閃爍
     document.body.classList.add('note-view');
-    // Rust 端建構 webview 時 visible(false)，避免 Linux WebKitGTK 透明 webview 在
-    // HTML/CSS paint 完成前露 OS 預設視窗 bg；JS 進到 onMount 表示 HTML+CSS 已 parse
-    // 完成，body bg 已是 transparent，這時 show 就不會閃。**必須在所有 await 之前**，
-    // 否則 E2E start_dragging 會在視窗還沒可見時呼叫導致 GTK assertion 失敗。
-    const winEarly = getCurrentWindow();
-    winEarly.show().catch(() => {});
-    winEarly.setAlwaysOnTop(true).catch(() => {});
-    winEarly.setFocus().catch(() => {});
     note = await notesApi.read(contextId, noteId);
     if (note) {
       passthrough = note.settings.passthrough ?? false;

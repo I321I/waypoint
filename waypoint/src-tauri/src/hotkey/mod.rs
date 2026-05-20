@@ -6,6 +6,7 @@ use std::sync::atomic::{AtomicBool, AtomicU64, AtomicU8, Ordering};
 use std::sync::{Mutex, OnceLock};
 use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder, WebviewUrl};
+use tauri::utils::config::Color;
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
 
 /// 序列化主 hotkey callback：拿不到鎖 = inflight，把 pending counter +1。
@@ -302,13 +303,11 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         .decorations(false)
         .always_on_top(true)
         .skip_taskbar(true)
-        .transparent(true);
-        // 註：曾試過 .visible(false) + frontend onMount show 來防 Linux/WebKitGTK
-        // 透明 webview 在 paint 完成前露 OS 預設視窗 bg 的閃爍，但 GTK 對 hidden
-        // window 的 set_position/start_dragging 行為不一致（drag E2E test 會失敗：
-        // hidden window 的位置不會被 GTK 真正套用），所以走 app.html 內 head
-        // <style> + html.view-note class 那條路線即可。Linux 上仍可能殘留極短閃爍，
-        // 屬已知 WebKitGTK 限制。
+        .transparent(true)
+        // background_color(透明) → webview 自身底色 (HTML 載入前) 也是 alpha=0；
+        // 不設預設是 OS 視窗背景色 (Windows 上常見白/灰)，導致 HTML+CSS ready 前
+        // 露一格深淺色，user 視為「開筆記閃一下」。Linux/WebKitGTK 上也一樣有效。
+        .background_color(Color(0, 0, 0, 0));
 
     // 套用 settings.window_bounds（item 7：每次 move/resize 即時記憶）
     if let Ok(note) = crate::storage::notes::read_note(context_id, note_id) {

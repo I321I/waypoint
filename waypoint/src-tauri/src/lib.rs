@@ -21,6 +21,7 @@ fn resolve_log_path(
     data_local: Option<&std::path::Path>,
     xdg_state: Option<&std::ffi::OsStr>,
     home: Option<&std::ffi::OsStr>,
+    date: &str,
 ) -> Option<std::path::PathBuf> {
     // 優先序：dirs::data_local_dir → XDG_STATE_HOME（Linux 慣例）→ HOME/.local/state → HOME
     let base = data_local
@@ -28,14 +29,18 @@ fn resolve_log_path(
         .or_else(|| xdg_state.map(std::path::PathBuf::from))
         .or_else(|| home.map(|h| std::path::PathBuf::from(h).join(".local/state")))
         .or_else(|| home.map(std::path::PathBuf::from))?;
-    Some(base.join("waypoint").join("error.log"))
+    Some(base.join("waypoint").join(format!("error-{}.log", date)))
+}
+
+fn today_date_string() -> String {
+    chrono::Local::now().format("%Y-%m-%d").to_string()
 }
 
 fn waypoint_log_path() -> Option<std::path::PathBuf> {
     let data_local = dirs::data_local_dir();
     let xdg = std::env::var_os("XDG_STATE_HOME");
     let home = std::env::var_os("HOME");
-    resolve_log_path(data_local.as_deref(), xdg.as_deref(), home.as_deref())
+    resolve_log_path(data_local.as_deref(), xdg.as_deref(), home.as_deref(), &today_date_string())
 }
 
 pub(crate) fn write_log_line(msg: &str) {
@@ -83,6 +88,16 @@ pub fn run() {
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .manage(AppState::default())
+        .on_page_load(|window, payload| {
+            // 記錄 webview 載入事件，輔助定位「白屏」issue：可比對
+            // 「open_list/note_window build OK」與「page load Started/Finished」之間是否中斷。
+            write_log_line(&format!(
+                "webview page-load: label={} event={:?} url={}",
+                window.label(),
+                payload.event(),
+                payload.url()
+            ));
+        })
         .on_window_event(|window, event| {
             // 筆記視窗的 close-requested（含 Alt+F4）-> emit note-closed 給 list 做 session 記帳
             if let tauri::WindowEvent::CloseRequested { .. } = event {
@@ -268,32 +283,41 @@ mod tests {
 
     #[test]
     fn log_path_prefers_xdg_state_home() {
-        let p = resolve_log_path(None, Some(OsStr::new("/tmp/xdg")), Some(OsStr::new("/tmp/home"))).unwrap();
-        assert_eq!(p, std::path::PathBuf::from("/tmp/xdg/waypoint/error.log"));
+        let p = resolve_log_path(None, Some(OsStr::new("/tmp/xdg")), Some(OsStr::new("/tmp/home")), "2026-05-20").unwrap();
+        assert_eq!(p, std::path::PathBuf::from("/tmp/xdg/waypoint/error-2026-05-20.log"));
     }
 
     #[test]
     fn log_path_falls_back_to_home_local_state() {
-        let p = resolve_log_path(None, None, Some(OsStr::new("/tmp/home"))).unwrap();
-        assert_eq!(p, std::path::PathBuf::from("/tmp/home/.local/state/waypoint/error.log"));
+        let p = resolve_log_path(None, None, Some(OsStr::new("/tmp/home")), "2026-05-20").unwrap();
+        assert_eq!(p, std::path::PathBuf::from("/tmp/home/.local/state/waypoint/error-2026-05-20.log"));
     }
 
     #[test]
     fn log_path_returns_none_without_env() {
-        assert!(resolve_log_path(None, None, None).is_none());
+        assert!(resolve_log_path(None, None, None, "2026-05-20").is_none());
     }
 
     #[test]
     fn log_path_uses_data_local_first() {
         let dl = std::path::PathBuf::from("/AppData/Local");
-        let p = resolve_log_path(Some(&dl), Some(OsStr::new("/tmp/xdg")), Some(OsStr::new("/tmp/home"))).unwrap();
-        assert_eq!(p, std::path::PathBuf::from("/AppData/Local/waypoint/error.log"));
+        let p = resolve_log_path(Some(&dl), Some(OsStr::new("/tmp/xdg")), Some(OsStr::new("/tmp/home")), "2026-05-20").unwrap();
+        assert_eq!(p, std::path::PathBuf::from("/AppData/Local/waypoint/error-2026-05-20.log"));
     }
 
     #[test]
     fn log_path_works_with_only_data_local() {
         let dl = std::path::PathBuf::from("/AppData/Local");
-        let p = resolve_log_path(Some(&dl), None, None).unwrap();
-        assert_eq!(p, std::path::PathBuf::from("/AppData/Local/waypoint/error.log"));
+        let p = resolve_log_path(Some(&dl), None, None, "2026-05-20").unwrap();
+        assert_eq!(p, std::path::PathBuf::from("/AppData/Local/waypoint/error-2026-05-20.log"));
+    }
+
+    #[test]
+    fn today_date_string_format_is_ymd() {
+        let d = today_date_string();
+        // 形如 2026-05-20
+        assert_eq!(d.len(), 10);
+        assert_eq!(&d[4..5], "-");
+        assert_eq!(&d[7..8], "-");
     }
 }

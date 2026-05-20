@@ -10,10 +10,28 @@ pub struct FocusedWindowInfo {
     pub pid: Option<u32>,
 }
 
+/// 應排除於 context 切換的 Windows 系統 shell 視窗 class。
+/// - Shell_TrayWnd / Shell_SecondaryTrayWnd：工作列（主/副螢幕）
+/// - Progman / WorkerW：桌面背景視窗
+/// - Windows.UI.Core.CoreWindow：開始選單、搜尋、通知中心等 UWP shell
+/// 這些 hwnd 的 process 都是 explorer.exe / ShellExperienceHost.exe，
+/// 不過濾的話使用者點工作列就會把 active context 切到 explorer，造成筆記亂跳。
+#[cfg(target_os = "windows")]
+fn is_shell_class(class: &str) -> bool {
+    matches!(
+        class,
+        "Shell_TrayWnd"
+            | "Shell_SecondaryTrayWnd"
+            | "Progman"
+            | "WorkerW"
+            | "Windows.UI.Core.CoreWindow"
+    )
+}
+
 #[cfg(target_os = "windows")]
 pub fn get_focused_window() -> Option<FocusedWindowInfo> {
     use windows::Win32::Foundation::HWND;
-    use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowTextW, GetWindowThreadProcessId};
+    use windows::Win32::UI::WindowsAndMessaging::{GetClassNameW, GetForegroundWindow, GetWindowTextW, GetWindowThreadProcessId};
     use windows::Win32::System::Threading::{OpenProcess, PROCESS_QUERY_LIMITED_INFORMATION};
     use std::ffi::OsString;
     use std::os::windows::ffi::OsStringExt;
@@ -21,6 +39,20 @@ pub fn get_focused_window() -> Option<FocusedWindowInfo> {
     unsafe {
         let hwnd = GetForegroundWindow();
         if hwnd == HWND(std::ptr::null_mut()) { return None; }
+
+        // 先讀 class name 過濾 shell 視窗（工作列 / 桌面 / 開始選單）。
+        // 比 process_name 過濾更精確：explorer.exe 同時是檔案總管與工作列宿主，
+        // 只能靠 class name 區分。
+        let mut class_buf = [0u16; 256];
+        let class_len = GetClassNameW(hwnd, &mut class_buf);
+        if class_len > 0 {
+            let class = OsString::from_wide(&class_buf[..class_len as usize])
+                .to_string_lossy()
+                .to_string();
+            if is_shell_class(&class) {
+                return None;
+            }
+        }
 
         let mut title_buf = [0u16; 512];
         let len = GetWindowTextW(hwnd, &mut title_buf);
@@ -149,4 +181,33 @@ fn read_wm_class(
 #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
 pub fn get_focused_window() -> Option<FocusedWindowInfo> {
     None
+}
+
+#[cfg(all(test, target_os = "windows"))]
+mod tests {
+    use super::is_shell_class;
+
+    #[test]
+    fn taskbar_classes_excluded() {
+        assert!(is_shell_class("Shell_TrayWnd"));
+        assert!(is_shell_class("Shell_SecondaryTrayWnd"));
+    }
+
+    #[test]
+    fn desktop_classes_excluded() {
+        assert!(is_shell_class("Progman"));
+        assert!(is_shell_class("WorkerW"));
+    }
+
+    #[test]
+    fn start_menu_excluded() {
+        assert!(is_shell_class("Windows.UI.Core.CoreWindow"));
+    }
+
+    #[test]
+    fn explorer_window_not_excluded() {
+        // 檔案總管的 hwnd class 是 CabinetWClass，不是 shell class，必須能正常觸發 context 切換
+        assert!(!is_shell_class("CabinetWClass"));
+        assert!(!is_shell_class("Chrome_WidgetWin_1"));
+    }
 }

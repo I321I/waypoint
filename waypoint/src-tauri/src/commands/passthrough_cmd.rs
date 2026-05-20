@@ -50,6 +50,17 @@ pub fn cmd_set_passthrough(app: AppHandle, note_label: String, on: bool) -> Resu
 
 #[tauri::command]
 pub fn cmd_toggle_passthrough_global(app: AppHandle) -> Result<(), String> {
+    // Waypoint 已收起（list + 所有 note 都隱藏）時，穿透 hotkey 不該叫出視窗。
+    // 舊行為：collapse 不清 passthrough_state，hidden notes 的 states 還是上次的 true，
+    // target_state 算成 false → 走 going-off path → spawn thread show 最後編輯的 note，
+    // 結果 user 連按穿透 hotkey 就「莫名其妙叫出 waypoint」。
+    {
+        let state = app.state::<crate::state::AppState>();
+        if !state.active_mode.load(std::sync::atomic::Ordering::SeqCst) {
+            crate::write_log_line("passthrough hotkey ignored: waypoint collapsed (active_mode=false)");
+            return Ok(());
+        }
+    }
     let labels = collect_note_labels(&app);
     let states: Vec<bool> = {
         let state = app.state::<crate::state::AppState>();

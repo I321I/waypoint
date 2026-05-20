@@ -244,7 +244,8 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         let _ = app.emit("waypoint://list-shown", ());
         return Ok(());
     }
-    let _win = WebviewWindowBuilder::new(app, "list", WebviewUrl::App("/#view=list".into()))
+    crate::write_log_line("open_list_window: building new list webview");
+    let build_res = WebviewWindowBuilder::new(app, "list", WebviewUrl::App("/#view=list".into()))
         .title("Waypoint")
         .inner_size(220.0, 500.0)
         .min_inner_size(180.0, 300.0)
@@ -252,7 +253,12 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
         .decorations(false)
         .always_on_top(true)
         .skip_taskbar(true)
-        .build()?;
+        .build();
+    match &build_res {
+        Ok(_) => crate::write_log_line("open_list_window: build OK"),
+        Err(e) => crate::write_log_line(&format!("open_list_window: build FAILED: {e}")),
+    }
+    let _win = build_res?;
     *state.list_window_open.lock().unwrap() = true;
     crate::taskbar::refresh_taskbar_visibility(app);
     Ok(())
@@ -318,7 +324,13 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
         }
     }
 
-    builder.build()?;
+    crate::write_log_line(&format!("open_note_window: building new note webview label={label}"));
+    let build_res = builder.build();
+    match &build_res {
+        Ok(_) => crate::write_log_line(&format!("open_note_window: build OK label={label}")),
+        Err(e) => crate::write_log_line(&format!("open_note_window: build FAILED label={label}: {e}")),
+    }
+    build_res?;
     crate::taskbar::refresh_taskbar_visibility(app);
     Ok(())
 }

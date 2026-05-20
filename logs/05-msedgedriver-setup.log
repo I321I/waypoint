@@ -1,0 +1,36 @@
+**********************
+PowerShell transcript start
+Start time: 20260520131549
+Username: runnervmp4gaq\runneradmin
+RunAs User: runnervmp4gaq\runneradmin
+Configuration Name: 
+Machine: runnervmp4gaq (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -command . 'D:\a\_temp\705c4da0-7d15-43f1-99f9-065f9060242e.ps1'
+Process ID: 9160
+PSVersion: 7.4.15
+PSEdition: Core
+GitCommitId: 7.4.15
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is logs\05-msedgedriver-setup.log
+WebView2 runtime version: 147.0.3912.98 (major=147)
+(reference) Edge browser version: 148.0.3967.54
+PS>TerminatingError(Invoke-WebRequest): "No such host is known."
+LATEST_RELEASE query failed on https://msedgedriver.azureedge.net : No such host is known.
+LATEST_RELEASE_147_WINDOWS from https://msedgedriver.microsoft.com => 147.0.3912.98
+Trying https://msedgedriver.azureedge.net/147.0.3912.98/edgedriver_win64.zip
+PS>TerminatingError(Invoke-WebRequest): "No such host is known."
+  failed: No such host is known.
+Trying https://msedgedriver.microsoft.com/147.0.3912.98/edgedriver_win64.zip
+msedgedriver at C:\Users\runneradmin\AppData\Local\Temp\edgedriver\msedgedriver.exe
+Downloaded driver: Microsoft Edge WebDriver 147.0.3912.98 (6cae4df1a4ff81734385754fe2295f5dc953ecab)
+Edge browser was: 147.0.3912.98
+**********************
+PowerShell transcript end
+End time: 20260520131554
+**********************

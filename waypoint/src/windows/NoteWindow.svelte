@@ -362,13 +362,15 @@
     color: var(--text-primary);
     font-size: 16px;
     font-weight: 600;
+    /* Linux WebKitGTK / Steam Deck KDE 上 input 高度依然被壓扁（v0.2.32 user 回報
+       「title 沒讓文字完全顯示」）。改用：
+       - box-sizing: border-box + 顯式 height（不只是 min-height），WebKitGTK 才真的撐到該數字
+       - height 32px = font-size 16 × line-height 1.4 + 上下 padding 4px buffer
+       - line-height 也提到 24px，不用 unitless 1.4，避免 WebKitGTK 古版本計算錯。 */
+    line-height: 24px;
+    height: 32px;
     padding: 4px 0;
-    /* Linux WebKitGTK 上 input 不認 unitless line-height、預設 box 高 = font-size，
-       導致 baseline 跑出 box 只剩 descender 可見（v0.2.7~0.2.10 user 回報「title 只剩下 1/5」）。
-       顯式 line-height + min-height 強制撐開到正常行高。 */
-    line-height: 1.4;
-    min-height: 28px;
-    box-sizing: content-box;
+    box-sizing: border-box;
   }
   .title-input:focus { outline: none; border-bottom: 1px solid var(--accent); }
   .editor-area { display: flex; flex: 1; overflow: hidden; }

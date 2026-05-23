@@ -54,10 +54,28 @@ pub fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
     let tray_icon = {
         #[cfg(target_os = "linux")]
         {
-            let path = "/app/share/icons/hicolor/128x128/apps/io.github.i321i.waypoint.png";
-            tauri::image::Image::from_path(path)
-                .ok()
-                .unwrap_or_else(|| app.default_window_icon().unwrap().clone())
+            // Steam Deck KDE Plasma 上 user 回報「tray icon 完全看不到」(v0.2.32)。
+            // 先試多個 size，按 KSNI / StatusNotifierWatcher 偏好挑 24px 以下（panel 高度通常 24）。
+            // 任一成功就用，全失敗才 fallback 到 default_window_icon。
+            let candidates = [
+                "/app/share/icons/hicolor/32x32/apps/io.github.i321i.waypoint.png",
+                "/app/share/icons/hicolor/128x128/apps/io.github.i321i.waypoint.png",
+            ];
+            let mut chosen: Option<tauri::image::Image<'_>> = None;
+            for p in &candidates {
+                match tauri::image::Image::from_path(p) {
+                    Ok(img) => {
+                        crate::write_log_line(&format!("tray icon: loaded {p}"));
+                        chosen = Some(img);
+                        break;
+                    }
+                    Err(e) => crate::write_log_line(&format!("tray icon: {p} load failed: {e}")),
+                }
+            }
+            chosen.unwrap_or_else(|| {
+                crate::write_log_line("tray icon: all flatpak paths failed, fallback default_window_icon");
+                app.default_window_icon().unwrap().clone()
+            })
         }
         #[cfg(not(target_os = "linux"))]
         {

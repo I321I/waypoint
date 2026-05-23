@@ -83,6 +83,14 @@ fn install_panic_hook() {
 pub fn run() {
     install_panic_hook();
     write_log_line("startup: waypoint launching");
+    // 印出實際筆記資料目錄，方便使用者（特別是 Flatpak / Steam Deck）回報「重啟後筆記消失」
+    // 時直接比對該路徑與 ~/waypoint 的內容差異。
+    write_log_line(&format!(
+        "data_dir={:?} (HOME={:?}, WAYPOINT_DATA_DIR={:?})",
+        crate::storage::paths::data_dir(),
+        std::env::var_os("HOME"),
+        std::env::var_os("WAYPOINT_DATA_DIR"),
+    ));
     let builder = tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_notification::init())

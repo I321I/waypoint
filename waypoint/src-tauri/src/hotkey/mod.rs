@@ -225,6 +225,29 @@ pub fn reregister_passthrough_hotkey(app: &AppHandle, old_hotkey: &str, new_hotk
     register_passthrough_hotkey(app, new_hotkey)
 }
 
+/// 強制 raise 視窗到最上層 + 拿到焦點。
+///
+/// KDE/GNOME 的 focus stealing prevention 會擋掉一般 set_focus，
+/// 解法是 toggle always_on_top（off→on，bump _NET_WM_USER_TIME）後 set_focus。
+/// 但在 Steam Deck KDE Plasma 上單次 toggle 之後 KWin 還是會延遲幾秒才真的 raise（v0.2.32 user 回報「叫出後不立刻置頂」）。
+/// 多 spawn 一個 thread 在 120ms / 350ms 再各做一次，覆蓋 KWin focus-stealing-prevention 的 grace window，
+/// 同時也涵蓋使用者剛切到別的 app 之後立刻按 hotkey 的情境。
+fn force_raise(win: &tauri::WebviewWindow) {
+    // 立即一次：先 off 再 on 才會被 X11/KDE 視為新事件
+    let _ = win.set_always_on_top(false);
+    let _ = win.set_always_on_top(true);
+    let _ = win.set_focus();
+    let win_clone = win.clone();
+    std::thread::spawn(move || {
+        for delay_ms in [120u64, 350u64] {
+            std::thread::sleep(std::time::Duration::from_millis(delay_ms));
+            let _ = win_clone.set_always_on_top(false);
+            let _ = win_clone.set_always_on_top(true);
+            let _ = win_clone.set_focus();
+        }
+    });
+}
+
 pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
     let state = app.state::<AppState>();
     // tray click、cmd_open_list、初始啟動都會走這裡 → 啟動 active_mode。
@@ -232,10 +255,7 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
     if let Some(win) = app.get_webview_window("list") {
         win.unminimize().ok();
         win.show()?;
-        // raise 到最上：KDE/GNOME focus stealing prevention 會擋一般 set_focus，
-        // 用 set_always_on_top toggle + set_focus 強制 raise（toggle off 確保下次能再 raise）。
-        let _ = win.set_always_on_top(true);
-        win.set_focus()?;
+        force_raise(&win);
         *state.list_window_open.lock().unwrap() = true;
         // re-show 路徑也要 refresh_taskbar_visibility：collapse 時被設 skip_taskbar(true)，
         // re-show 沒重設 → Windows 工作列不顯示 waypoint icon（v0.2.20 user 回報）。
@@ -291,10 +311,7 @@ pub fn open_note_window(app: &AppHandle, note_id: &str, context_id: Option<&str>
     }
     if let Some(win) = app.get_webview_window(&label) {
         win.show()?;
-        // 同 open_list_window：set_always_on_top toggle 強制 raise，KDE/GNOME 才會把
-        // 筆記視窗帶到最上層（v0.2.20 Linux user 回報 hotkey 開出來的筆記不在最上層）。
-        let _ = win.set_always_on_top(true);
-        win.set_focus()?;
+        force_raise(&win);
         // re-show 也要 refresh_taskbar_visibility：避免 collapse 後重開 note 工作列消失。
         crate::taskbar::refresh_taskbar_visibility(app);
         return Ok(());

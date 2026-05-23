@@ -120,6 +120,9 @@ modules:
       - install -Dm755 waypoint /app/bin/waypoint
       - install -Dm644 io.github.i321i.waypoint.desktop /app/share/applications/io.github.i321i.waypoint.desktop
       - install -Dm644 128x128.png /app/share/icons/hicolor/128x128/apps/io.github.i321i.waypoint.png
+      # 32x32 給 panel tray icon 用：KSNI/StatusNotifierWatcher 偏好小尺寸 png，
+      # 128 縮放後在某些 KDE Plasma panel 上會「看不到」（v0.2.32 user 回報）。
+      - install -Dm644 32x32.png /app/share/icons/hicolor/32x32/apps/io.github.i321i.waypoint.png
     sources:
       - type: file
         path: waypoint
@@ -127,3 +130,5 @@ modules:
         path: io.github.i321i.waypoint.desktop
       - type: file
         path: ../src-tauri/icons/128x128.png
+      - type: file
+        path: ../src-tauri/icons/32x32.png

@@ -4919,7 +4919,7 @@ dependencies = [
 
 [[package]]
 name = "waypoint"
-version = "0.2.32"
+version = "0.2.33"
 dependencies = [
  "chrono",
  "dirs 5.0.1",

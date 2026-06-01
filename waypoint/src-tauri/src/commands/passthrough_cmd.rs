@@ -103,16 +103,24 @@ pub fn cmd_toggle_passthrough_global(app: AppHandle) -> Result<(), String> {
         if let Some(note_id) = last_note {
             let app_clone = app.clone();
             std::thread::spawn(move || {
-                std::thread::sleep(std::time::Duration::from_millis(200));
+                // Steam Deck KDE 上 200ms 後 list 的 set_focus 還沒 settle，
+                // 我們對 note 的 set_focus 被吃掉 → 離開穿透後游標進不去筆記。
+                // 拉長到 350ms，並在 700ms 再補一次 raise+emit 涵蓋 grace window。
                 let label = format!("note-{note_id}");
-                if let Some(win) = app_clone.get_webview_window(&label) {
-                    let _ = win.show();
-                    // raise 同 open_note_window：toggle always_on_top + set_focus 強制 raise
-                    let _ = win.set_always_on_top(true);
-                    let _ = win.set_focus();
+                for (delay_ms, emit_cursor) in [(350u64, true), (700u64, true)] {
+                    std::thread::sleep(std::time::Duration::from_millis(delay_ms));
+                    if let Some(win) = app_clone.get_webview_window(&label) {
+                        let _ = win.show();
+                        let _ = win.unminimize();
+                        let _ = win.set_always_on_top(false);
+                        let _ = win.set_always_on_top(true);
+                        let _ = win.set_focus();
+                    }
+                    if emit_cursor {
+                        // NoteWindow listen 並比對 note_id；payload 帶 String，前端比對
+                        let _ = app_clone.emit("waypoint://focus-and-cursor-end", &note_id);
+                    }
                 }
-                // NoteWindow listen 並比對 note_id；payload 帶 String，前端比對
-                let _ = app_clone.emit("waypoint://focus-and-cursor-end", &note_id);
             });
         }
     }

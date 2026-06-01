@@ -12,7 +12,10 @@ finish-args:
   - --socket=fallback-x11
   - --socket=wayland
   - --socket=session-bus
-  - --filesystem=~/waypoint
+  # `:create` 讓 Flatpak 在 host 端尚未存在時自動建立 ~/waypoint，否則
+  # sandbox 寫入會落到 overlay，被銷毀後資料消失（v0.2.33 Steam Deck 使用者
+  # 回報「重啟 waypoint 後筆記全消失」就是這個成因）。
+  - --filesystem=~/waypoint:create
   - --filesystem=~/.config/autostart:create
   - --talk-name=org.kde.StatusNotifierWatcher
   - --talk-name=org.freedesktop.StatusNotifierWatcher

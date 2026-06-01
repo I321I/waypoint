@@ -91,6 +91,17 @@ pub fn run() {
         std::env::var_os("HOME"),
         std::env::var_os("WAYPOINT_DATA_DIR"),
     ));
+    // Flatpak `--filesystem=~/waypoint:create` 在大部分版本會自動建立，但仍
+    // 有版本只在 manifest 改完後第一次啟動時建立失敗（host 端 ~/waypoint
+    // 不存在 → sandbox 寫入落到 overlay → 重啟後資料消失）。在這裡顯式
+    // create_dir_all 觸發 portal 真正落地，並在 log 印出結果供回報。
+    {
+        let d = crate::storage::paths::data_dir();
+        match std::fs::create_dir_all(&d) {
+            Ok(_) => write_log_line(&format!("data_dir ensure ok: {:?}", d)),
+            Err(e) => write_log_line(&format!("data_dir ensure FAILED: {:?} err={e}", d)),
+        }
+    }
     let builder = tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_notification::init())

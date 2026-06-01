@@ -239,8 +239,13 @@ fn force_raise(win: &tauri::WebviewWindow) {
     let _ = win.set_focus();
     let win_clone = win.clone();
     std::thread::spawn(move || {
-        for delay_ms in [120u64, 350u64] {
+        // Steam Deck KDE Plasma 上 120/350ms 還是不夠覆蓋 KWin focus-stealing
+        // grace window，使用者回報「叫出後常常不立刻在最上層」。延長到 700/1500ms。
+        // 多一次 unminimize 也補上：KWin 某些狀況把 hidden window 視為 minimized，
+        // set_always_on_top + set_focus 不會 raise。
+        for delay_ms in [120u64, 350u64, 700u64, 1500u64] {
             std::thread::sleep(std::time::Duration::from_millis(delay_ms));
+            let _ = win_clone.unminimize();
             let _ = win_clone.set_always_on_top(false);
             let _ = win_clone.set_always_on_top(true);
             let _ = win_clone.set_focus();
@@ -286,6 +291,18 @@ pub fn open_list_window(app: &AppHandle) -> tauri::Result<()> {
 
 pub fn collapse_all_waypoint_windows(app: &AppHandle) {
     let windows = app.webview_windows();
+    // hide 前先把 note 視窗目前的位置/尺寸寫進 settings.json。
+    // 舊行為：CollapseAll 只 hide，不存 geometry → 第一次建立筆記後用 hotkey
+    // 收起/呼出，restore 的位置變回 builder 預設（v0.2.33 Steam Deck 使用者
+    // 回報「要按 X 才會記位置」）。close-requested 路徑已做這件事；hotkey
+    // 收起路徑同步保持一致。
+    for (label, window) in &windows {
+        if let Some(note_id) = label.strip_prefix("note-") {
+            if window.is_visible().unwrap_or(false) {
+                save_geometry_to_settings(window, note_id);
+            }
+        }
+    }
     for (label, window) in &windows {
         if label.starts_with("note-") || label == "list" {
             let _ = window.hide();
@@ -641,6 +658,25 @@ mod tests {
         assert!(
             !src.contains(needle),
             "list autohide 函式應已移除（R8）"
+        );
+    }
+
+    /// Regression：hotkey 收起（CollapseAll）路徑必須在 hide 前存 note geometry，
+    /// 否則第一次建立筆記後用 hotkey 收起/呼出，位置回到 builder 預設，
+    /// 必須按 titlebar X 才會記住（v0.2.33 Steam Deck user 回報）。
+    #[test]
+    fn collapse_all_saves_geometry_before_hide() {
+        let src = include_str!("mod.rs");
+        let start = src.find("pub fn collapse_all_waypoint_windows").expect("fn must exist");
+        let end = src[start..].find("\n}\n").map(|i| start + i).unwrap_or(src.len());
+        let body = &src[start..end];
+        let save_pos = body.find("save_geometry_to_settings");
+        let hide_pos = body.find(".hide()");
+        assert!(save_pos.is_some(), "collapse_all 必須呼叫 save_geometry_to_settings");
+        assert!(hide_pos.is_some(), "collapse_all 必須 hide 視窗");
+        assert!(
+            save_pos.unwrap() < hide_pos.unwrap(),
+            "save_geometry_to_settings 必須在 .hide() 之前（hide 後 outer_position 可能取不到）"
         );
     }
 }

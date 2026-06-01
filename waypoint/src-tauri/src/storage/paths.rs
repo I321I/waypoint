@@ -75,6 +75,29 @@ mod tests {
         assert!(s.ends_with("session.json"));
     }
 
+    /// Regression：data_dir 必須能被 create_dir_all 真正建立（多層巢狀也行）。
+    /// Flatpak Steam Deck 上 host ~/waypoint 不存在時，sandbox 寫入會落到
+    /// overlay → 重啟資料消失；lib.rs 啟動時顯式 create_dir_all 之前提是
+    /// data_dir 路徑本身可建。用獨佔 lock 避免與其他改 env 的測試打架。
+    #[test]
+    fn data_dir_is_creatable() {
+        use std::sync::Mutex;
+        static LOCK: Mutex<()> = Mutex::new(());
+        let _g = LOCK.lock().unwrap();
+        let prev_override = std::env::var_os("WAYPOINT_DATA_DIR");
+        let tmp = std::env::temp_dir().join(format!("wp-create-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&tmp);
+        std::env::set_var("WAYPOINT_DATA_DIR", &tmp);
+        let d = data_dir();
+        std::fs::create_dir_all(&d).expect("data_dir must be creatable");
+        assert!(d.exists() && d.is_dir());
+        let _ = std::fs::remove_dir_all(&tmp);
+        match prev_override {
+            Some(v) => std::env::set_var("WAYPOINT_DATA_DIR", v),
+            None => std::env::remove_var("WAYPOINT_DATA_DIR"),
+        }
+    }
+
     /// WAYPOINT_DATA_DIR 應該蓋過所有其他來源（測試 / Flatpak 進階用戶用得到）。
     /// 用獨佔 lock 避免測試平行跑互相干擾 env state。
     #[test]
